@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.wechatpro.dao.MWechatLoginUserMapper">
+
+    <!-- 注册 -->
+    <insert id="insertPhoneLogin" parameterType="java.util.Map">
+	   	INSERT INTO m_wechat_login_user (
+			loginPhone,
+			loginPassword,
+			loginRealName,
+			createTime,
+			loginIdentity,
+			loginState,
+			loginType
+		)
+		VALUES
+			(
+				#{loginPhone},
+				#{loginPassword},
+				#{loginRealName},
+				#{createTime},
+				#{loginIdentity},
+				#{loginState},
+				#{loginType}
+			)
+    </insert>
+   <!-- 回显登录后我的页面 -->
+   <select id="selectPhoneAndScore" parameterType="java.util.Map" resultType="java.util.Map">
+   		SELECT
+	  		loginPhone,
+	  		loginScore
+		FROM
+			m_wechat_login_user
+		WHERE
+			id = #{id}
+   </select>
+   <!-- 查询手机号是否被注册过，并查看其用户类型 -->
+    <select id="selectByLoginPhone" parameterType="java.util.Map" resultType="java.util.Map">
+	    SELECT
+	        id,
+	  		loginPhone,
+			loginRealName,
+			loginIdentity,
+			loginState,
+			loginType
+		FROM
+			m_wechat_login_user
+		WHERE
+			loginPhone = #{loginPhone}
+    </select>
+   
+   <!-- 修改用户类型（密码） -->
+	<update id="updatePasswordAndType" parameterType="java.util.Map">
+			UPDATE
+				m_wechat_login_user
+			SET loginType = #{loginType}, loginPassword=#{loginPasswordAfter}
+			WHERE
+			    loginPhone = #{loginPhone}
+	</update>
+	
+    <select id="selectLoginPassword" parameterType="java.util.Map" resultType="java.util.Map">
+	  	SELECT
+	  		id,
+	  		loginPhone,
+			loginPassword,
+			loginRealName,
+			loginIdentity,
+			loginState,
+			loginType
+		FROM
+			m_wechat_login_user
+		WHERE
+			loginPhone = #{loginPhone}
+	</select>
+   
+   <!-- 忘记密码 -->
+    <update id="updatePassword" parameterType="java.util.Map" >
+    	UPDATE
+			m_wechat_login_user
+		SET loginPassword = #{loginPassword}
+		WHERE loginPhone = #{loginPhone}
+    </update>
+    
+    <!-- 查询所有客户 -->
+    <select id="selectAll" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			loginPhone,
+			loginIdentity,
+			loginRealName,
+			loginScore,
+			loginState,
+			loginType,
+			createTime
+		FROM
+			m_wechat_login_user
+		WHERE 1=1
+		    <if test="loginPhone != '' and loginPhone != null">
+		    	and loginPhone like '%${loginPhone}%'	
+		    </if>
+    </select>
+    
+</mapper>

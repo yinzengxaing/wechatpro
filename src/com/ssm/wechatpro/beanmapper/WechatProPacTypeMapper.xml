@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+          
+<mapper namespace="com.ssm.wechatpro.dao.WechatProPacTypeMapper">
+	<!-- 查询总分类 -->
+	<select id="getPacTypeList" resultType="java.util.Map" parameterType="java.util.Map" >
+		SELECT
+			a.id,
+			a.proPacTypeName,
+			a.proPacTypeDesc,
+			a.createTime,
+			a.createId,
+			b.adminNo
+		FROM
+			wechat_pro_pac_type AS a,
+			wechat_admin_login AS b
+		<where>
+			b.id = a.createId
+			<if test="proPacTypeName != null and proPacTypeName != '' ">
+				AND  a.proPacTypeName LIKE '%${proPacTypeName}%'
+			</if>
+		</where>
+		ORDER BY
+			a.createTime DESC
+	</select>
+	<!-- 根据id获取一个分类 -->
+	<select id="getPacTypeById" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT
+			a.id,
+			a.proPacTypeName,
+			a.proPacTypeDesc,
+			a.createTime,
+			a.createId,
+			b.adminNo
+		FROM
+			wechat_pro_pac_type AS a,
+			wechat_admin_login AS b
+		<where>
+			b.id = a.createId
+		AND a.id = #{id}
+		</where>
+	</select>
+	
+	<!-- 根据名称获取一个分类 -->
+	<select id="getPacTypeByName" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT
+			id,
+			proPacTypeName,
+			proPacTypeDesc,
+			createTime,
+			createId
+		FROM
+			wechat_pro_pac_type
+		<where>
+			proPacTypeName = #{proPacTypeName}
+		</where>
+	</select>
+	
+	<!-- 添加一个分类 -->
+	<insert id="addPacType" parameterType="java.util.Map">
+		INSERT INTO wechat_pro_pac_type (
+			proPacTypeName,
+			<if test="proPacTypeDesc != null and proPacTypeDesc != ''">
+			proPacTypeDesc,
+			</if>
+			createId,
+			createTime
+		)
+		VALUES(
+			#{proPacTypeName},
+			<if test="proPacTypeDesc != null and proPacTypeDesc != ''">
+			#{proPacTypeDesc},
+			</if>
+			#{createId},
+			#{createTime}
+		)
+	</insert>
+	
+	<!-- 修改一个分类 -->
+	<update id="updatePacType" parameterType="java.util.Map">
+		UPDATE wechat_pro_pac_type 
+		<set>
+			<if test="proPacTypeName != null and proPacTypeName != '' ">
+				proPacTypeName=#{proPacTypeName},
+			</if>
+			<if test="proPacTypeDesc != null and proPacTypeDesc !='' ">
+				proPacTypeDesc =#{proPacTypeDesc}
+			</if>
+			<where>
+				id = #{id}
+			</where>
+		</set>
+	</update>
+	
+	<!-- 删除一个分类 -->
+	<delete id="deletePacType" parameterType="java.util.Map">
+		DELETE
+		FROM
+			wechat_pro_pac_type
+		WHERE
+			id = #{id};
+	</delete>
+</mapper>

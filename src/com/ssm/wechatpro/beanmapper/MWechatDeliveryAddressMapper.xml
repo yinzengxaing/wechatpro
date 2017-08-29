@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.wechatpro.dao.MWechatDeliveryAddressMapper">
+	<insert id="insertDeliveryAddress" parameterType="java.util.Map">
+		INSERT INTO m_wechat_delivery_address (
+			deliveryAddressProvince,
+			deliveryAddressCity,
+			deliveryAddressCount,
+			deliveryAddressSpecific,
+			deliveryConsignee,
+			deliveryPhone,
+			deliveryUserId,
+			wetherUse,
+			createTime
+		)
+		VALUES
+			(
+				#{deliveryAddressProvince},
+				#{deliveryAddressCity},
+				#{deliveryAddressCount},
+				#{deliveryAddressSpecific},
+				#{deliveryConsignee},
+				#{deliveryPhone},
+				#{deliveryUserId},
+				#{wetherUse},
+				#{createTime}
+			)
+	</insert>
+	
+	<delete id="deleteById" parameterType="java.util.Map">
+		DELETE
+		FROM
+			m_wechat_delivery_address
+		WHERE
+			id = #{id}
+	</delete>
+	
+	<select id="selectByDeliveryUserId" parameterType="java.util.Map" resultType="java.util.Map">
+    	SELECT
+    	    id,
+			deliveryAddressProvince,
+			deliveryAddressCity,
+			deliveryAddressCount,
+			deliveryAddressSpecific,
+			deliveryConsignee,
+			deliveryPhone,
+			deliveryUserId,
+			wetherUse,
+			createTime
+		FROM
+			m_wechat_delivery_address
+		WHERE
+			deliveryUserId = #{deliveryUserId}
+    </select>
+    
+    <update id="updateAddress" parameterType="java.util.Map">
+    	UPDATE m_wechat_delivery_address
+    	<set>
+    		<if test="deliveryAddressProvince != '' and deliveryAddressProvince != null">
+    			deliveryAddressProvince=#{deliveryAddressProvince},
+    		</if>
+    		<if test="deliveryAddressCity != '' and deliveryAddressCity != null">
+    			deliveryAddressCity=#{deliveryAddressCity},
+    		</if>
+    		<if test="deliveryAddressCount != '' and deliveryAddressCount != null">
+    			deliveryAddressCount=#{deliveryAddressCount},
+    		</if>
+    		<if test="deliveryAddressSpecific != '' and deliveryAddressSpecific != null">
+    			deliveryAddressSpecific=#{deliveryAddressSpecific}
+    		</if>
+    	</set>
+		WHERE
+			id = #{id}
+    </update>
+    
+    <select id="selectById" parameterType="java.util.Map" resultType="java.util.Map">
+    	SELECT
+			deliveryAddressProvince,
+			deliveryAddressCity,
+			deliveryAddressCount,
+			deliveryAddressSpecific,
+			deliveryConsignee,
+			deliveryPhone
+		FROM
+			m_wechat_delivery_address
+		WHERE
+			id = #{id}
+    </select>
+    
+    <update id="updateNoUse" parameterType="java.util.Map">
+    	UPDATE m_wechat_delivery_address
+    	set wetherUse = 0
+		WHERE
+			deliveryUserId = #{deliveryUserId}
+		AND  wetherUse = 1
+    </update>
+    
+    <update id="updateUse" parameterType="java.util.Map">
+    	UPDATE m_wechat_delivery_address
+    	set wetherUse = 1
+		WHERE
+			id = #{id}
+    </update>
+</mapper>

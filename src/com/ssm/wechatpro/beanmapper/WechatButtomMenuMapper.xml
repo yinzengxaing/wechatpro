@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.wechatpro.dao.WechatButtomMenuMapper">
+
+	<!-- 根据id删除该菜单-->
+	<delete id="deleteButtomById" parameterType="java.util.Map">
+		DELETE FROM wechat_buttom_menu
+		WHERE id=#{id}
+	</delete>
+	
+	<!-- 根据菜单父ID删除该菜单-->
+	<delete id="deleteButtomBymenuBelong" parameterType="java.util.Map">
+		DELETE FROM wechat_buttom_menu
+		WHERE menuBelong=#{menuBelong}
+	</delete>
+	
+   <!-- 查询所有的自定义菜单 -->
+    <select id="selectAllMenuList" resultType="java.util.Map"  parameterType="java.util.Map">
+    SELECT
+	wechat_buttom_menu.id AS id,
+	adminNo,
+	menuName,
+	menuType,
+	menuKey,
+	menuLevel,
+	menuBelong,
+	hasChild,
+	rebackInt,
+	rebackContext,
+	createId,
+	createTime,
+	wetherPublish,
+	publishUser,
+	publishTime,
+	menuVersion,
+	wetherUser
+    FROM
+	wechat_buttom_menu,
+	wechat_admin_login 
+	WHERE wechat_buttom_menu.createId = wechat_admin_login.id
+	<if test="menuVersion !='' and menuVersion != null">
+			and	menuVersion like #{menuVersion}
+			GROUP BY menuVersion
+	</if>
+    </select>
+    
+   <select id="SelectAllByLevel" resultType="java.util.Map"  parameterType="java.util.Map">
+	   SELECT
+			id,
+			menuName,
+			menuType,
+			menuKey,
+			menuLevel,
+			menuBelong,
+			rebackInt,
+			rebackContext,
+			hasChild
+		FROM
+			wechat_buttom_menu
+		WHERE
+			menuVersion = #{menuVersion}
+		AND menuLevel = #{menuLevel}
+    </select>
+
+    <select id="selectMenuByVersion" resultType="java.util.Map" parameterType="java.util.Map">
+    SELECT
+	id,
+	menuName
+    FROM
+	wechat_buttom_menu
+	WHERE  
+	menuVersion=#{menuVersion} and menuLevel=#{menuLevel}
+    </select>
+    <!-- 根据id查询菜单项 -->
+    <select id="selectMenuById" resultType="java.util.Map" parameterType="java.util.Map">
+	SELECT
+	id,
+	menuName,
+	menuType,
+	menuKey,
+	menuLevel,
+	menuBelong,
+	hasChild,
+	rebackInt,
+	rebackContext,
+	createId,
+	createTime,
+	wetherPublish,
+	publishUser,
+	publishTime,
+	menuVersion,
+	wetherUser
+	FROM
+	wechat_buttom_menu
+	WHERE
+	id = #{id}
+    </select>
+    
+    <!-- 查询一级菜单的子菜单 -->
+    <select id="selectMenuByBelong" resultType="java.util.Map" parameterType="java.util.Map">
+	SELECT
+	id,
+	menuName
+	FROM
+	wechat_buttom_menu
+	WHERE
+	menuBelong = #{id}
+    </select>
+    
+    <!-- 添加自定义菜单 -->
+    <insert id="addMenu" useGeneratedKeys="true" keyProperty="menuVersion" parameterType="java.util.Map">
+	INSERT INTO
+	wechat_buttom_menu
+	(menuName,menuType,menuKey,menuLevel,menuBelong,hasChild,rebackInt,createId,createTime,wetherPublish,publishTime,menuVersion,wetherUser)
+	VALUES(#{menuName},#{menuType},#{menuKey},#{menuLevel},#{menuBelong},#{hasChild},#{rebackInt},#{createId},#{createTime},#{wetherPublish},#{publishTime},#{menuVersion},#{wetherUser})
+</insert>
+    
+    <!-- 根据id修改菜单项 -->
+    <update id="updateMenu" parameterType="java.util.Map">
+    UPDATE wechat_buttom_menu
+    <set>
+    <if test="menuName !='' and menuName != null">
+			menuName=#{menuName},
+	</if>
+	<if test="menuType !='' and menuType != null">
+			menuType=#{menuType},
+	</if>
+	<if test="menuKey !='' and menuKey != null">
+			menuKey=#{menuKey},
+	</if>
+	<if test="menuLevel !='' and menuLevel != null">
+			menuLevel=#{menuLevel},
+	</if>
+	<if test="menuBelong !='' and menuBelong != null">
+			menuBelong=#{menuBelong},
+	</if>
+	<if test="hasChild != '' and hasChild != null ">
+		hasChild=#{hasChild},
+	</if>
+	
+	<if test="rebackInt !='' and rebackInt != null">
+			rebackInt=#{rebackInt},
+	</if>
+	<if test="rebackContext !='' and rebackContext != null">
+			rebackContext=#{rebackContext},
+	</if>
+	<if test="createId !='' and createId != null">
+			createId=#{createId},
+	</if>
+	<if test="createTime !='' and createTime != null">
+			createTime=#{createTime},
+	</if>
+	<if test="wetherPublish !='' and wetherPublish != null">
+			wetherPublish=#{wetherPublish},
+	</if>
+	<if test="publishUser !='' and publishUser != null">
+			publishUser=#{publishUser},
+	</if>
+	<if test="publishTime !='' and publishTime != null">
+			publishTime=#{publishTime},
+	</if>
+	<if test="menuVersion !='' and menuVersion != null">
+			menuVersion=#{menuVersion},
+	</if>
+	<if test="wetherUser !='' and wetherUser != null">
+			wetherUser=#{wetherUser},
+	</if>
+    </set>
+    where id=#{id}
+    </update>
+    
+    <update id="updatePublish" parameterType="java.util.Map">
+    UPDATE wechat_buttom_menu
+	SET wetherPublish=#{wetherPublish},wetherUser=#{wetherUser},publishUser=#{publishUser},publishTime=#{publishTime}
+	WHERE
+	menuVersion = #{menuVersion}
+    </update>
+    
+    <update id="updatewetherPublish">
+	UPDATE wechat_buttom_menu
+	SET wetherPublish = 2,wetherUser=0
+	WHERE
+	wetherPublish = 1
+    </update>
+</mapper>

@@ -1,0 +1,380 @@
+/*! CSSDevices v2.2.0 | MIT license | Maintained by Stuart Yamartino | http://cssdevices.io */
+
+.cd-iphone-6,.cd-iphone-6>.cd-body {
+	width: 23em;
+	height: 48em
+}
+
+.cd-iphone-6-plus,.cd-iphone-6-plus>.cd-body {
+	width: 25.5em;
+	height: 53em
+}
+
+[class ^='cd-iphone'] .cd-body {
+	position: relative;
+	border-style: solid;
+	background: #1e1e1e
+}
+
+.cd-iphone-5s .cd-body,.cd-iphone-6 .cd-body,.cd-iphone-6-plus .cd-body
+	{
+	border-color: #656565
+}
+
+.cd-iphone-5s.cd-gold .cd-body,.cd-iphone-5s.cd-gold .cd-body .cd-home,.cd-iphone-6.cd-gold .cd-body,.cd-iphone-6.cd-gold .cd-body .cd-home,.cd-iphone-6-plus.cd-gold .cd-body,.cd-iphone-6-plus.cd-gold .cd-body .cd-home
+	{
+	background-color: #fafafa;
+	border-color: #ecdcc8
+}
+
+.cd-iphone-5s.cd-rosegold .cd-body,.cd-iphone-5s.cd-rosegold .cd-body .cd-home,.cd-iphone-6.cd-rosegold .cd-body,.cd-iphone-6.cd-rosegold .cd-body .cd-home,.cd-iphone-6-plus.cd-rosegold .cd-body,.cd-iphone-6-plus.cd-rosegold .cd-body .cd-home
+	{
+	background-color: #fafafa;
+	border-color: #E9C9C5
+}
+
+.cd-iphone-5s.cd-silver .cd-body,.cd-iphone-5s.cd-silver .cd-body .cd-home,.cd-iphone-6.cd-silver .cd-body,.cd-iphone-6.cd-silver .cd-body .cd-home,.cd-iphone-6-plus.cd-silver .cd-body,.cd-iphone-6-plus.cd-silver .cd-body .cd-home
+	{
+	background-color: #fafafa;
+	border-color: #bdbfbe
+}
+
+.cd-iphone-5s .cd-body .cd-home,.cd-iphone-6 .cd-body .cd-home,.cd-iphone-6-plus .cd-body .cd-home
+	{
+	border-color: #2c2b2c
+}
+
+.cd-iphone-5s .cd-sound,.cd-iphone-5s .cd-sound::before,.cd-iphone-5s .cd-sound::after,.cd-iphone-5s .cd-sleep,.cd-iphone-6 .cd-sound,.cd-iphone-6 .cd-sound::before,.cd-iphone-6 .cd-sound::after,.cd-iphone-6 .cd-sleep,.cd-iphone-6-plus .cd-sound,.cd-iphone-6-plus .cd-sound::before,.cd-iphone-6-plus .cd-sound::after,.cd-iphone-6-plus .cd-sleep
+	{
+	background: #656565
+}
+
+.cd-iphone-5s.cd-gold .cd-sound,.cd-iphone-5s.cd-gold .cd-sound::before,.cd-iphone-5s.cd-gold .cd-sound::after,.cd-iphone-5s.cd-gold .cd-sleep,.cd-iphone-6.cd-gold .cd-sound,.cd-iphone-6.cd-gold .cd-sound::before,.cd-iphone-6.cd-gold .cd-sound::after,.cd-iphone-6.cd-gold .cd-sleep,.cd-iphone-6-plus.cd-gold .cd-sound,.cd-iphone-6-plus.cd-gold .cd-sound::before,.cd-iphone-6-plus.cd-gold .cd-sound::after,.cd-iphone-6-plus.cd-gold .cd-sleep
+	{
+	background: #ecdcc8
+}
+
+.cd-iphone-5s.cd-rosegold .cd-sound,.cd-iphone-5s.cd-rosegold .cd-sound::before,.cd-iphone-5s.cd-rosegold .cd-sound::after,.cd-iphone-5s.cd-rosegold .cd-sleep,.cd-iphone-6.cd-rosegold .cd-sound,.cd-iphone-6.cd-rosegold .cd-sound::before,.cd-iphone-6.cd-rosegold .cd-sound::after,.cd-iphone-6.cd-rosegold .cd-sleep,.cd-iphone-6-plus.cd-rosegold .cd-sound,.cd-iphone-6-plus.cd-rosegold .cd-sound::before,.cd-iphone-6-plus.cd-rosegold .cd-sound::after,.cd-iphone-6-plus.cd-rosegold .cd-sleep
+	{
+	background: #E9C9C5
+}
+
+.cd-iphone-5s.cd-silver .cd-sound,.cd-iphone-5s.cd-silver .cd-sound::before,.cd-iphone-5s.cd-silver .cd-sound::after,.cd-iphone-5s.cd-silver .cd-sleep,.cd-iphone-6.cd-silver .cd-sound,.cd-iphone-6.cd-silver .cd-sound::before,.cd-iphone-6.cd-silver .cd-sound::after,.cd-iphone-6.cd-silver .cd-sleep,.cd-iphone-6-plus.cd-silver .cd-sound,.cd-iphone-6-plus.cd-silver .cd-sound::before,.cd-iphone-6-plus.cd-silver .cd-sound::after,.cd-iphone-6-plus.cd-silver .cd-sleep
+	{
+	background: #bdbfbe
+}
+
+[class ^='cd-iphone-6'] .cd-body {
+	border-radius: 3em;
+	border-width: .4em
+}
+
+[class ^='cd-iphone-6'] .cd-camera {
+	background: #3c3d3d;
+	top: 2.4em;
+	left: 50%;
+	margin-left: -4em;
+	width: .7em;
+	height: .7em;
+	border-radius: .35em
+}
+
+[class ^='cd-iphone-6'].cd-gold .cd-camera::after,[class ^='cd-iphone-6'].cd-rosegold .cd-camera::after,[class
+	^='cd-iphone-6'].cd-silver .cd-camera::after {
+	content: "";
+	background: #3c3d3d;
+	top: -1.4em;
+	right: -3.5em;
+	width: .5em;
+	height: .5em;
+	border-radius: .25em
+}
+
+[class ^='cd-iphone-6'] .cd-ear {
+	background: #292728;
+	top: 2.5em;
+	left: 50%;
+	margin-left: -2em;
+	width: 4em;
+	height: .5em;
+	border-radius: .3em
+}
+
+[class ^='cd-iphone-6'] .cd-screen {
+	background: black;
+	top: 5em;
+	left: 50%;
+	margin-left: -10.5em;
+	width: 21em;
+	height: 37em;
+	border: solid .2em black;
+	border-radius: .1em
+}
+
+[class ^='cd-iphone-6'] .cd-home {
+	bottom: .9em;
+	left: 50%;
+	margin-left: -1.75em;
+	width: 3.5em;
+	height: 3.5em;
+	border-radius: 1.75em;
+	border: .2em solid black
+}
+
+[class ^='cd-iphone-6'] .cd-sound {
+	top: 5em;
+	left: -.5em;
+	height: 1.8em;
+	width: .2em
+}
+
+[class ^='cd-iphone-6'] .cd-sound::before {
+	content: "";
+	top: 4.4em;
+	height: 3.4em;
+	width: .2em
+}
+
+[class ^='cd-iphone-6'] .cd-sound::after {
+	content: "";
+	top: 8.8em;
+	height: 3.4em;
+	width: .2em
+}
+
+[class ^='cd-iphone-6'] .cd-sleep {
+	top: 9.3em;
+	right: -.5em;
+	height: 3.4em;
+	width: .2em
+}
+
+.cd-blueprint .cd-sound {
+	left: -2px !important
+}
+
+.cd-blueprint[class ^='cd-iphone-6'] .cd-sleep {
+	background: #000 !important;
+	width: 1px !important;
+	border: none !important;
+	right: -2px
+}
+
+.cd-blueprint[class ^='cd-iphone-5'] .cd-sleep {
+	background: #000 !important;
+	height: 1px !important;
+	border: none !important;
+	top: -2px
+}
+
+[class ^='cd-'],[class ^='cd-']::after,[class ^='cd-']::before {
+	margin: 0;
+	padding: 0;
+	display: block;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	position: relative
+}
+
+[class ^='cd-'] {
+	position: absolute
+}
+
+.cd-screen {
+	overflow: hidden
+}
+
+.cd-screen.cd-screen-scrolling {
+	overflow-y: scroll
+}
+
+.cd-screen.cd-screen-scrolling>* {
+	bottom: none;
+	height: auto
+}
+
+.cd-scale-10 {
+	font-size: 10% !important
+}
+
+.cd-scale-20 {
+	font-size: 20% !important
+}
+
+.cd-scale-30 {
+	font-size: 30% !important
+}
+
+.cd-scale-40 {
+	font-size: 40% !important
+}
+
+.cd-scale-50 {
+	font-size: 50% !important
+}
+
+.cd-scale-60 {
+	font-size: 60% !important
+}
+
+.cd-scale-70 {
+	font-size: 70% !important
+}
+
+.cd-scale-80 {
+	font-size: 80% !important
+}
+
+.cd-scale-90 {
+	font-size: 90% !important
+}
+
+.cd-padded-device {
+	margin: 20px
+}
+
+.cd-fill-parent,.cd-device-loader {
+	visibility: hidden
+}
+
+.cd-center {
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+	display: block
+}
+
+[class ^='cd-'].cd-blueprint *,[class ^='cd-'].cd-blueprint *::after,[class
+	^='cd-'].cd-blueprint *::before {
+	background: white !important;
+	border: 1px solid #000 !important
+}
+
+.cd-blueprint .cd-sound,.cd-blueprint .cd-sound::before,.cd-blueprint .cd-sound::after
+	{
+	background: #000 !important;
+	width: 1px !important;
+	border: none !important
+}
+
+.cd-blueprint .cd-screen * {
+	border: none !important
+}
+
+.cd-slideshow>*:nth-child(n+2) {
+	display: none
+}
+
+.cd-smart-loader>:first-child {
+	display: none
+}
+
+.cd-landscape-left.cd-iphone-6,.cd-landscape-right.cd-iphone-6 {
+	height: 23em;
+	width: 48em
+}
+
+.cd-landscape-left.cd-iphone-6-plus,.cd-landscape-right.cd-iphone-6-plus
+	{
+	height: 25.5em;
+	width: 53em
+}
+
+.cd-landscape-left.cd-ipad,.cd-landscape-right.cd-ipad {
+	height: 33.6em;
+	width: 48em
+}
+
+.cd-landscape-left>.cd-body,.cd-landscape-left>.cd-body>.cd-screen {
+	transform-origin: 0 0;
+	-webkit-transform-origin: 0 0;
+	-ms-transform-origin: 0 0
+}
+
+.cd-landscape-left>.cd-body {
+	transform: rotate(-90deg) translate(-100%, 0);
+	-webkit-transform: rotate(-90deg) translate(-100%, 0);
+	-ms-transform: rotate(-90deg) translate(-100%, 0)
+}
+
+.cd-landscape-left>.cd-body>.cd-screen {
+	transform: rotate(90deg) translate(0, -100%);
+	-webkit-transform: rotate(90deg) translate(0, -100%);
+	-ms-transform: rotate(90deg) translate(0, -100%)
+}
+
+.cd-landscape-left:not (.cd-landscape-fixed-screen ).cd-iphone-5s>.cd-body>.cd-screen,.cd-landscape-left:not
+	(.cd-landscape-fixed-screen ).cd-iphone-5c>.cd-body>.cd-screen {
+	height: 17.8em;
+	width: 31em
+}
+
+.cd-landscape-left:not (.cd-landscape-fixed-screen ).cd-iphone-6>.cd-body>.cd-screen
+	{
+	height: 21em;
+	width: 37em
+}
+
+.cd-landscape-left:not (.cd-landscape-fixed-screen ).cd-iphone-6-plus>.cd-body>.cd-screen
+	{
+	height: 23.6em;
+	width: 42em
+}
+
+.cd-landscape-left:not (.cd-landscape-fixed-screen ).cd-ipad>.cd-body>.cd-screen
+	{
+	height: 30em;
+	width: 40em
+}
+
+.cd-landscape-right>.cd-body,.cd-landscape-right>.cd-body>.cd-screen {
+	transform-origin: 0 0;
+	-webkit-transform-origin: 0 0;
+	-ms-transform-origin: 0 0
+}
+
+.cd-landscape-right>.cd-body {
+	transform: rotate(90deg) translate(0, -100%);
+	-webkit-transform: rotate(90deg) translate(0, -100%);
+	-ms-transform: rotate(90deg) translate(0, -100%)
+}
+
+.cd-landscape-right>.cd-body>.cd-screen {
+	transform: rotate(-90deg) translate(-100%, 0);
+	-webkit-transform: rotate(-90deg) translate(-100%, 0);
+	-ms-transform: rotate(-90deg) translate(-100%, 0)
+}
+
+.cd-landscape-right:not (.cd-landscape-fixed-screen ).cd-iphone-5s>.cd-body>.cd-screen,.cd-landscape-right:not
+	(.cd-landscape-fixed-screen ).cd-iphone-5c>.cd-body>.cd-screen {
+	height: 17.8em;
+	width: 31em
+}
+
+.cd-landscape-right:not (.cd-landscape-fixed-screen ).cd-iphone-6>.cd-body>.cd-screen
+	{
+	height: 21em;
+	width: 37em
+}
+
+.cd-landscape-right:not (.cd-landscape-fixed-screen ).cd-iphone-6-plus>.cd-body>.cd-screen
+	{
+	height: 23.6em;
+	width: 42em
+}
+
+.cd-landscape-right:not (.cd-landscape-fixed-screen ).cd-ipad>.cd-body>.cd-screen
+	{
+	height: 30em;
+	width: 40em
+}
+
+.cd-landscape-fixed-screen>.cd-body>.cd-screen {
+	transform: none;
+	-webkit-transform: none;
+	-ms-transform: none;
+	transform-origin: none;
+	-webkit-transform-origin: none;
+	-ms-transform-origin: none
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>常规套餐</title>
+	<link id="bootstrap-style" href="../../assest/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../../assest/phoneModelFirst/css/ui.css">
+	<link rel="shortcut icon" href="../../assest/icon/maxLogo.jpg">
+</head>
+<body style="font-size:12px">
+	<div class="header">
+		<div class="header-background"></div>
+		<div class="toolbar statusbar-padding">
+			<button class="bar-button back-button" onclick="history.go(-1);" dwz-event-on-click="click"><i class="icon icon-back"></i></button>
+			<div class="header-title">
+				<div class="title">常规套餐</div>
+			</div>
+		</div>
+	</div>
+	<div id="loading"><img src="../../assest/img/netlogo.png" /></div>
+	<div class="con">
+		<aside>
+			<div class="menu-left scrollbar-none r-line" id="sidebar">
+				<ul>
+					<li class="active">常规套餐</li>
+				</ul>
+			</div>
+		</aside>
+		<section class="menu-right padding-all j-content" >
+			<h5 id="typeName">套餐列表</h5>
+			<ul id="packageListUl">
+			</ul>
+		</section>
+	</div>
+	
+	<div class="tab-bar tab-bottom">
+		
+	</div>
+	<div id="navigate"></div>
+	
+	<script id="packageListBean" type="text/x-handlebars-template">
+		{{#each rows}}
+				<li class="w-3">
+					<div class="minBox">
+						<div class="minBoxImg">
+							<img class="img-thumbnail" src="{{#packageLogo pacLogo}}{{/packageLogo}}" />
+						</div>
+						<div class="minBoxFont">
+							<div>
+								<font class="proName">{{packageName}}</font>
+							</div>
+							<div>
+								<font class="proPrice">￥{{packagePrice}}/份</font>
+							</div>
+							<div>
+								<font class="proAddress">{{adminShopName}}</font>
+							</div>
+						</div>
+						<div class="minBoxBtn">
+							<div>
+								<font class="gBagGroung"  buyProductId="{{packageId}}" productType="2" adminId="{{adminId}}" id="toCart">加入购物车</font>
+							</div>
+							<div>
+								<font class="bBagGroung"  buyProductId="{{packageId}}" productType="2" adminId="{{adminId}}" id="buyNow">立即购买</font>
+							</div>
+						</div>
+					</div>
+				</li>
+ 		{{/each}}
+	</script>
+			
+	<script type="text/javascript" src="../../assest/js/jquery.js"></script>
+	<script type="text/javascript" src="../../assest/phoneModelFirst/js/classDefine/swiper-3.2.5.min.js"></script>
+	<script type="text/javascript" src="../../assest/phoneModelFirst/js/classDefine/ectouch.js"></script>
+	<script type="text/javascript" src="../../assest/phoneModelFirst/js/classDefine/jquery.json.js"></script>
+	<script type="text/javascript" src="../../assest/phoneModelFirst/js/classDefine/common.js"></script>
+	<script type="text/javascript" src="../../assest/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../../assest/phoneModelFirst/js/aui-swipe.js"></script>
+	
+	<script type="text/javascript" src="../../assest/bootstrap/qiao.js"></script>
+	<script type="text/javascript" src="../../js/util/main.js"></script>
+	<script type="text/javascript" src="../../js/util/handlebars-v4.0.5.js"></script>
+	<script type="text/javascript" src="../../js/phoneModelOne/common/common.js"></script>
+	<script type="text/javascript" src="../../js/phoneModelOne/common/navigate.js"></script>
+	<script type="text/javascript" src="../../js/phoneModelOne/package.js"></script>
+</body>
+</html>

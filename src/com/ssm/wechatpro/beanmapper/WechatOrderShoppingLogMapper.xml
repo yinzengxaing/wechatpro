@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.ssm.wechatpro.dao.WechatOrderShoppingLogMapper">
+	<!-- 创建订单后将订单中的产品信息存到数据库 -->
+	<insert id="insertProductInfo" parameterType="java.util.Map">
+		insert
+			${tableName1}
+		(
+			orderId,
+			productID,
+			productName,
+			wechatCommodityType,
+			productPrice,
+			wetherDiscount,
+			wetherActivity
+		)
+		values
+		(
+			#{orderId},
+			#{productID},
+			#{productName},
+			#{wechatCommodityType},
+			#{productPrice},
+			#{wetherDiscount},
+			#{wetherActivity}
+		)
+	</insert>
+</mapper>

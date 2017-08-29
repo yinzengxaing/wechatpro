@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="description" content="Bootstrap Metro Dashboard">
+	<meta name="author" content="Dennis Ji">
+	<meta name="keyword" content="Metro, Metro UI, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link id="bootstrap-style" href="../../assest/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../../assest/bootstrap/bootstrap-validator/css/bootstrapValidator.css">
+	<link rel="stylesheet" type="text/css" href="../../assest/bootstrap/bootstrap-select/css/bootstrap-multiselect.css">
+	<link href="../../assest/css/bootstrap-responsive.min.css" rel="stylesheet">
+	<link id="base-style" href="../../assest/css/style.css" rel="stylesheet">
+	<link id="base-style-responsive" href="../../assest/css/style-responsive.css" rel="stylesheet">
+	<!--[if lt IE 9]>
+	  	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<link id="ie-style" href="../../assest/css/ie.css" rel="stylesheet">
+	<![endif]-->
+	<!--[if IE 9]>
+		<link id="ie9style" href="../../assest/css/ie9.css" rel="stylesheet">
+	<![endif]-->
+	<link rel="shortcut icon" href="../../assest/img/favicon.ico">
+</head>
+<body class="childBody">
+	<ul class="breadcrumb">
+		<li>
+			<i class="icon-home"></i>
+			<a href="javascript:;">Home</a>
+			<i class="icon-angle-right"></i> 
+		</li>
+		<li>
+			<i class="icon-edit"></i>
+			<a href="javascript:;"> 套餐列表</a>
+		</li>
+		<li>
+			<i class="icon-edit"></i>
+			<a href="javascript:;">可选套餐新增</a>
+		</li>
+	</ul>
+	
+	<div class="row-fluid sortable">
+		<div class="box span12">
+			<div class="box-header" data-original-title>
+				<h2><i class="halflings-icon edit"></i><span class="break"></span>套餐新增</h2>
+				<div class="box-icon">
+					<a href="#" class="btn-minimize"><i class="halflings-icon chevron-up"></i></a>
+				</div>
+			</div>
+			<div class="box-content contentDiv" style="text-align: center;">
+				<form id="addPackageForm">
+					<div class="controls form-group margin-top-40">
+						<span class="add-on">套餐名称：</span>
+						<input type="text" class="span6 typeahead form-control" id="productPackageName" name="productPackageName"/>
+					</div>
+					<div class="controls form-group margin-top-40">
+						<span class="add-on">套餐Logo：</span>
+						<div class="menuContent" style="border: 0px">
+							<img src="../../assest/img/pictop.png" class="roleLogoPic" id="logo">
+							<input type="file" class="showImgBtn" id="imgFiles" name="imgFiles">
+						</div>
+					</div>
+					<div class="controls form-group margin-top-40">
+						<span class="add-on">套餐积分：</span>
+						<input type="text" class="span6 typeahead form-control" id="productPackageIntegral" name="productPackageIntegral" disabled value="0">
+						<div class="someDesc">
+							<p class="rolePrompt">用户购买此套餐所能获得的积分</p>
+						</div>
+						<div class="input-group-btn-vertical">
+						     <button id="jupdate" class="btn btn-default" type="button"><img src="../../assest/img/shang.png"/></button>
+						     <button id="jiupdate" class="btn btn-default" type="button"><img src="../../assest/img/xia.png"/></button>
+						</div>
+					</div>
+					<div class="controls form-group margin-top-40">
+						<span class="add-on">套餐描述：</span>
+						<textarea class="span6 typeahead form-control addRoleDesc" rows="3" id="productPackageDesc" name="productPackageDesc"></textarea>
+						<div class="someDesc">
+							<p class="rolePrompt">对套餐名称的描述</p>
+						</div>
+					</div>
+					<div class="controls form-group secondMenu margin-top-40">
+						<span class="add-on">套餐折扣：</span>
+						<select id="packagePrice" class="span6 typeahead form-control">
+							<option value="10">原价出售</option>
+							<option value="9">9折出售</option>
+							<option value="8">8折出售</option>
+							<option value="7">7折出售</option>
+							<option value="6">6折出售</option>
+							<option value="5">5折出售</option>
+							<option value="4">4折出售</option>
+							<option value="3">3折出售</option>
+							<option value="2">2折出售</option>
+							<option value="1">1折出售</option>
+						</select>
+					</div>
+					<div id="productTypeList">
+						
+					</div>
+					<div class="controls form-group margin-top-40">
+						<span class="add-on">套餐类型：</span>
+						<label class="radio">
+							<input type="radio" id="optionsRadios1" name="optionsRadios" value="1" checked="checked">长期有效
+						</label>
+						<label class="radio">
+							<input type="radio" id="optionsRadios2" name="optionsRadios" value="2">时间段有效
+						</label>
+					</div>
+					<div class="controls form-group margin-top-40" style="display:none" name = "settime">
+						<span class="add-on">起始时间：</span>
+						<input type="text" class="span6 typeahead form-control" onClick="laydate()" readonly id="starttime" name="starttime"  fromOff = "1"/>
+					</div>
+					<div class="controls form-group margin-top-40" style="display:none" name = "settime">
+						<span class="add-on">结束时间：</span>
+						<input type="text" class="span6 typeahead form-control" onClick="laydate()" readonly id="endtime" name="endtime" fromOff = "1"/>
+					</div>
+					<div class="form-actions form-group margin-top-40">
+					  <button type="submit" id="saveMenu" class="btn btn-primary">保存</button>
+					  <button type="button" id="cancel" class="btn">取消</button>
+					</div>
+				</form>   
+			</div>
+		</div>
+	</div>
+	
+	<script id="productTypeBean" type="text/x-handlebars-template">
+		{{#each rows}}
+			<div  class="controls form-group margin-top-40" name = "rows">
+				<div>
+					<div>
+						<span class="add-on">{{typeName}}</span>					
+							<input type="text" name="productNameList" value=""  class="span6 typeahead form-control" style="margin-left: 30px" disabled/>
+							<div class="controls form-group">
+								<span class="add-on">购买类型：</span>
+								<label class="radio" name = "optionsRadiosC">
+									<input type="radio" name="optionsRadiosC{{typeId}}" value="1" checked="checked" typeId={{typeId}} class="checkedOrNo" fromOff = "1">多选一
+								</label>
+								<label class="radio" >
+									<input type="radio" name="optionsRadiosC{{typeId}}" value="2" typeId={{typeId}} class="checkedOrNo" >多选
+								</label>
+								<label class="radio">
+									<input type="radio" name="optionsRadiosC{{typeId}}" value="3" typeId={{typeId}} class="checkedOrNo" fromOff = "1">全选
+								</label>
+								<label class="radio" name = "labelProductNum{{typeId}}" style="display:none">
+									<input type="text" productIds="" name="productNum" typeId="{{typeId}}" value="0" class="span6 typeahead form-control" style="width: 150px;font: 100" placeholder="可选择购买的数量" fromOff = "1"/>
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="packageDiv">
+						<ul>
+						{{#each productList}}
+							<li>
+								<div>
+									<div class="packageCheck">
+										<input type="checkbox" name="productChecked" value="{{productName}}" productId="{{productId}}" productPrice="{{productPrice}}"/>
+									</div>											
+									<div class="packageImg">
+										<img src="{{#picture optionPath}}{{/picture}}" class="img-thumbnail"/>
+									</div>
+									<div class="packageSelectDsec">
+								 		<font name="productName">{{productName}}</font>
+										<font name="productPrice">价格：{{productPrice}}</font>
+										<font>添加日期：{{#productcreateTime productCreateTime}}{{/productcreateTime}}</font>
+									</div>
+								</div>
+							</li>
+						{{/each}}
+					</ul>
+				</div>
+			</div>
+		{{/each}}
+	</script>
+
+	<script src="../../assest/js/jquery.js"></script>
+	<script src="../../assest/js/jquery-migrate-1.0.0.min.js"></script>
+	<script src="../../assest/js/jquery-ui-1.10.0.custom.min.js"></script>
+	<script src="../../assest/js/jquery.ui.touch-punch.js"></script>
+	<script src="../../assest/js/modernizr.js"></script>
+	<script src="../../assest/js/bootstrap.min.js"></script>
+	<script src="../../assest/bootstrap/bootstrap-validator/js/bootstrapValidator.min.js"></script>
+	<script src="../../assest/bootstrap/bootstrap-select/js/bootstrap-multiselect.js"></script>
+	<script src="../../assest/bootstrap/bootstrap-datetimepicker/laydate/laydate.js"></script>
+	<script src="../../assest/js/jquery.cookie.js"></script>
+	<script src='../../assest/js/fullcalendar.min.js'></script>
+	<script src='../../assest/js/jquery.dataTables.min.js'></script>
+	<script src="../../assest/js/excanvas.js"></script>
+	<script src="../../assest/js/jquery.flot.js"></script>
+	<script src="../../assest/js/jquery.flot.pie.js"></script>
+	<script src="../../assest/js/jquery.flot.stack.js"></script>
+	<script src="../../assest/js/jquery.flot.resize.min.js"></script>
+	<script src="../../assest/js/jquery.chosen.min.js"></script>
+	<script src="../../assest/js/jquery.uniform.min.js"></script>
+	<script src="../../assest/js/jquery.cleditor.min.js"></script>
+	<script src="../../assest/js/jquery.noty.js"></script>
+	<script src="../../assest/js/jquery.elfinder.min.js"></script>
+	<script src="../../assest/js/jquery.raty.min.js"></script>
+	<script src="../../assest/js/jquery.iphone.toggle.js"></script>
+	<script src="../../assest/js/jquery.gritter.min.js"></script>
+	<script src="../../assest/js/jquery.imagesloaded.js"></script>
+	<script src="../../assest/js/jquery.masonry.min.js"></script>
+	<script src="../../assest/js/jquery.knob.modified.js"></script>
+	<script src="../../assest/js/jquery.sparkline.min.js"></script>
+	<script src="../../assest/js/counter.js"></script>
+	<script src="../../assest/js/retina.js"></script>
+	
+	<script type="text/javascript" src="../../assest/jquery-fileupload/preView.js"></script>
+	<script type="text/javascript" src="../../assest/jquery-fileupload/js/jquery.fileupload.js"></script>
+	<script type="text/javascript" src="../../assest/bootstrap/qiao.js"></script>
+	<script type="text/javascript" src="../../js/util/main.js"></script>
+	<script type="text/javascript" src="../../js/util/handlebars-v4.0.5.js"></script>
+	<script type="text/javascript" src="../../js/packageAll/choosePackageAdd.js"></script>
+</body>
+</html>

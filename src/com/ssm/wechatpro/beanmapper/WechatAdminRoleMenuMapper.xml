@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.wechatpro.dao.WechatAdminRoleMenuMapper">
+    
+    <insert id="addUserMenu" parameterType="java.util.Map">
+       insert into wechat_admin_role_menu (wechatAdminRoleId,wechatAdminMenuId,createId,createTime)
+       values(#{wechatAdminRoleId},#{wechatAdminMenuId},#{createId},#{createTime})
+    </insert>
+    
+    <select id="selectMenuByRole" parameterType="java.util.Map" resultType="java.util.Map">
+       SELECT
+		m.id id,
+		m.belongto pId,
+		m.`name` name
+       FROM
+		wechat_admin_menu m,
+		wechat_admin_role_menu mr,
+		wechat_admin_role r
+       where 
+	       r.id=#{id}
+	       and r.id=wechatAdminRoleId 
+	       and m.id=wechatAdminMenuId
+    </select>
+		
+	<select id="selectRoleByMenuId" parameterType="java.util.Map" resultType="java.util.Map">
+	    select * from wechat_admin_role_menu where wechatAdminMenuId=#{id}
+	</select>
+	
+	<delete id="deleteMenu" parameterType="java.util.Map">
+	    DELETE 
+		FROM
+			wechat_admin_role_menu
+		WHERE
+			wechatAdminRoleId=#{id}
+	</delete>
+	
+	<delete id="deleteMenuByRoleId" parameterType="java.util.Map">
+	   DELETE m,u
+	   FROM
+		wechat_admin_menu m,
+		wechat_admin_role_menu u
+	   WHERE
+		wechatAdminMenuId = #{id}
+	    AND wechatAdminMenuId=m.id
+	 </delete>
+	
+</mapper>          

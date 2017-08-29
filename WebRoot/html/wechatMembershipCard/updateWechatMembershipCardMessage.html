@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="description" content="Bootstrap Metro Dashboard">
+	<meta name="author" content="Dennis Ji">
+	<meta name="keyword" content="Metro, Metro UI, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="../../assest/bootstrap/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.css">
+	<link rel="stylesheet" type="text/css" href="../../assest/bootstrap/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css">
+	<link id="bootstrap-style" href="../../assest/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../../assest/bootstrap/bootstrap-validator/css/bootstrapValidator.css">
+	<link href="../../assest/css/bootstrap-responsive.min.css" rel="stylesheet">
+	<link id="base-style" href="../../assest/css/style.css" rel="stylesheet">
+	<link id="base-style-responsive" href="../../assest/css/style-responsive.css" rel="stylesheet">
+	<link id="base-style" href="../../assest/ztree/css/zTreeStyle.css" rel="stylesheet">
+	<!--[if lt IE 9]>
+	  	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<link id="ie-style" href="../../assest/css/ie.css" rel="stylesheet">
+	<![endif]-->
+	<!--[if IE 9]>
+		<link id="ie9style" href="../../assest/css/ie9.css" rel="stylesheet">
+	<![endif]-->
+	<link rel="shortcut icon" href="../../assest/img/favicon.ico">
+</head>
+<body class="childBody">
+	<ul class="breadcrumb">
+		<li>
+			<i class="icon-home"></i>
+			<a href="javascript:;">Home</a>
+			<i class="icon-angle-right"></i> 
+		</li>
+		<li>
+			<i class="icon-edit"></i>
+			<a href="javascript:;">添加会员卡</a>
+		</li>
+	</ul>
+	
+	<div class="row-fluid sortable">
+		<div class="box span12">
+			<div class="box-header" data-original-title>
+				<h2><i class="halflings-icon edit"></i><span class="break"></span>新增会员卡信息</h2>
+				<div class="box-icon">
+					<a href="#" class="btn-minimize"><i class="halflings-icon chevron-up"></i></a>
+				</div>
+			</div>
+			<div class="box-content" style="text-align:center;height:1916px;">
+				<form id="addWechatMembership">
+				<div class="cardmessage_1">
+				<div class="cardmessage_1_left">
+						<div class="cardmessage_1_left_1">
+								</div>
+								<div class="cardmessage_1_left_2">
+									<div class="cardmessage_1_left_2_f">
+										积分<br>
+										<span class="cardmessage_style01">100</span>
+									</div>
+									<div class="cardmessage_1_left_2_s">
+										等级<br>
+										<span><a href="">查看</a></span>
+									</div>
+									<div class="cardmessage_1_left_2_t">
+										优惠券<br>
+										<span><a href="">查看</a></span>
+									</div>
+								</div>
+								<div class="cardmessage_1_left_3">
+									<button class="cardmessage_style03" id="yesBean" type="button" class="btn btn-success" class="cardmessage_style03"> 快速买单</button>
+								</div>
+								<div class="cardmessage_1_left_4">
+									买单立享<span id="vdiscount">0.00</span>折，更有积分相送
+								</div>
+								<div class="cardmessage_1_left_5">
+									<div class="cardmessage_1_left_5_1">
+										会员卡详情
+									</div>
+									<div class="cardmessage_1_left_5_2">
+										>
+									</div>
+								<!-- 	<div class="membercard_clear">
+									</div> -->
+								</div>
+								<div class="cardmessage_1_left_5"  class="cardmessage_style04">
+									<div class="cardmessage_1_left_5_1">
+										适用门店
+									</div>
+									<div class="cardmessage_1_left_5_2">
+										>
+									</div>
+									<!-- <div class="membercard_clear">
+									</div> -->
+				               </div>
+				               <div class="cardmessage_1_left_5"  class="cardmessage_style04">
+									<div class="cardmessage_1_left_5_1">
+										公众号
+									</div>
+									<div class="cardmessage_1_left_5_2">
+										>
+									</div>
+								<!-- 	<div class="membercard_clear">
+									</div> -->
+				               </div>
+				</div>
+				<div class="cardmessage_1_right" style="text-align:left;">
+				  <div class="cardmessage_right_contain">
+					<div class="controls form-group cardmessage-top">
+						<span class="add-on">卡券名称：</span>
+						<input type="text" class="span6 typeahead form-control authenTiCation-input" id="title" name="title" style="width:70%;margin-top: -1px;"/>
+					</div>
+					<div class="controls form-group cardmessage-top">
+					    <span class="add-on">商户名称：</span>
+						<input type="text" class="span6 typeahead form-control authenTiCation-input" id="brand_name" name="brand_name"  style="width:70%;margin-top: -1px;"/>
+					</div>
+				    <div class="controls form-group cardmessage-top">
+					    <span class="add-on">客服电话：</span>
+						<input type="text" class="span6 typeahead form-control authenTiCation-input" id="service_phone" name="service_phone" style="width:70%;margin-top: -1px;"/>
+					</div>
+					<div class="controls form-group cardmessage-top">
+					    <span class="add-on">使用时间：</span>
+						<input type="text" class="span6 typeahead form-control authenTiCation-input" id="time_limit" placeholder="周一到周日全天" disabled="disabled" style="width:70%;margin-top: -1px;"/>
+					</div>
+					<div class="controls form-group cardmessage-top">
+					    <span class="add-on">卡券折扣：</span>
+						<input type="text" class="span6 typeahead form-control authenTiCation-input" id="discount" name="discount" style="width:70%;margin-top: -1px;"/>
+					</div>
+					<div class="controls form-group cardmessage-top">
+					    <span class="add-on">卡券数量：</span>
+						<input type="text" class="span6 typeahead form-control authenTiCation-input" id="quantity" name="quantity" style="width:70%;margin-top: -1px;"/>
+					</div>
+					<div class="controls form-group cardmessage-top1">
+						<span class="add-on">卡券背景：</span>
+						<div class="menuContent" style="border: 0px">
+							<img src="../../assest/img/pictop.png" class="cardmessage_roleLogoPic" id="background_pic_url">
+							<input type="file" class="showImgBtn" id="imgFilesFivebackground" name="imgFilesFivebackground">
+						</div>
+					</div>
+					<div class="controls form-group cardmessage-top1">
+						<span class="add-on">商户logo：</span>
+						<div class="menuContent" style="border: 0px">
+							<img src="../../assest/img/pictop.png" class="cardmessage_roleLogoPic" id="logo_url">
+							<input type="file" class="showImgBtn" id="imgFilesFivelogo" name="imgFilesFivelogo">
+						</div>
+					</div>
+					<div class="controls form-group cardmessage-top1">
+						<span class="add-on">简介图片：</span>
+						<div class="menuContent" style="border: 0px">
+							<img src="../../assest/img/pictop.png" class="cardmessage_roleLogoPic" id="image_url">
+						</div>
+					</div>
+					<div class="controls form-group cardmessage-top2">
+						<span class="add-on">使用说明：</span>
+						<textarea class="span6 typeahead form-control addRoleDesc" id="description" rows="3" name="description" style="width:70%;"></textarea>
+					</div>
+					<div class="controls form-group cardmessage-top2">
+						<span class="add-on">使用提醒：</span>
+						<textarea class="span6 typeahead form-control addRoleDesc" id="notice" rows="3" name="notice" style="width:70%;"></textarea>
+					</div>
+					<div class="controls form-group cardmessage-top2">
+						<span class="add-on">简介说明：</span>
+						<textarea class="span6 typeahead form-control addRoleDesc" id="text" rows="3" name="text" style="width:70%;"></textarea>
+					</div>
+					<div class="controls form-group cardmessage-top2">
+						<span class="add-on">特权说明：</span>
+						<textarea class="span6 typeahead form-control addRoleDesc" id="prerogative" rows="3" name="prerogative" style="width:70%;"></textarea>
+					</div>
+					<div class="controls form-group cardmessage-top3">
+						<span class="add-on"  style="margin-top:-16px;">商家服务：</span>
+						<div class="menuContent" style="border: 0px">
+							<span style="padding-right:10%"><input type="checkbox" class="serviceItem" id="BIZ_SERVICE_DELIVER">外卖服务</span>
+							<span style="padding-right:10%"><input type="checkbox" class="serviceItem" id="BIZ_SERVICE_FREE_PARK" style="margin-left:10%;">停车位</span><br>
+							<span style="padding-right:10%"><input type="checkbox" class="serviceItem" id="BIZ_SERVICE_WITH_PET">可带宠物</span>
+							<span style="padding-right:10%"><input type="checkbox" class="serviceItem" id="BIZ_SERVICE_FREE_WIFI" style="margin-left:10%;">免费wifi</span><br>
+						</div>
+					</div>
+					<div class="controls form-group" style="margin-top:-11px;">
+						<span class="add-on">是否支持全部门店：</span>
+						<div class="menuContent" style="border: 0px">
+							<input type="radio" name="optionsRadiosinline" id="use_all_locations" value="true"checked>是
+							<input type="radio" name="optionsRadiosinline" id="use_all_locations" value="false"checked style="margin-left:10%;">否	
+						</div>
+					</div>
+					<div class="controls form-group cardmessage-top" style="margin-top:-17px;">
+						<span class="add-on">卡券颜色：</span>
+						<div class="menuContent2" style="border:0px;">
+						      
+								<label class="radio-inline" style="margin-top:-28px;margin-left: 74px;">
+									<input type="radio" name="optionsRadiosinline1" id="color" value="Color010" checked>
+									<img src="../../assest/img/color1.png" class="cardmessage_style14">
+								</label>
+									
+								<label class="radio-inline" style="margin-top:-28px;">
+									<input type="radio" name="optionsRadiosinline1" id="color" value="Color020" checked>
+									<img src="../../assest/img/color2.png" class="cardmessage_style14">
+								</label>
+								
+								<label class="radio-inline" style="margin-top:-28px;">
+									<input type="radio" name="optionsRadiosinline1" id="color" value="Color030" checked>
+									<img src="../../assest/img/color3.png" class="cardmessage_style14">
+								</label>
+								
+								<label class="radio-inline" style="margin-top:-28px;">
+									<input type="radio" name="optionsRadiosinline1" id="color" value="Color040" checked>
+									<img src="../../assest/img/color4.png" class="cardmessage_style14">
+								</label>
+								
+								<label class="radio-inline" style="margin-top:-28px;">
+									<input type="radio" name="optionsRadiosinline1" id="color" value="Color050"checked>
+									<img src="../../assest/img/color5.png" class="cardmessage_style14">
+								</label><br/>
+								
+								<label class="radio-inline" style="margin-top: 1px;margin-left: 74px;">
+									<input type="radio" name="optionsRadiosinline1" id="color" value="Color060"  checked>
+									<img src="../../assest/img/color6.png" class="cardmessage_style14">
+								</label>
+								
+								<label class="radio-inline cardmessage-radio1">
+									<input type="radio" name="optionsRadiosinline1" id="color" value="Color070"   checked>
+									<img src="../../assest/img/color7.png" class="cardmessage_style14">
+								</label>
+								
+								<label class="radio-inline cardmessage-radio1">
+									<input type="radio" name="optionsRadiosinline1" id="color" value="Color080" checked>
+									<img src="../../assest/img/color8.png" class="cardmessage_style14">
+								</label>
+								
+								<label class="radio-inline cardmessage-radio">
+									<input type="radio" name="optionsRadiosinline1" id="color" value="Color090"  checked>
+									<img src="../../assest/img/color9.png" class="cardmessage_style14">
+								</label>
+								<label class="radio-inline cardmessage-radio">
+									<input type="radio" name="optionsRadiosinline1" id="color" value="Color100"  checked>
+									<img src="../../assest/img/color10.png" class="cardmessage_style14">
+								</label>
+						</div>
+					<div class="controls form-group" style="margin-top:-1px;">
+						<span class="add-on" style="margin-top:13px;">限领张数：</span>
+							<input type="text" class="span6 typeahead form-control authenTiCation-input" style="width:70%;" placeholder="每人限领一张" disabled="disabled"/>
+					</div>
+					</div>
+					</div>
+					</div>
+					</div>
+					
+					<div  class="cardmessage_style15">
+						<div class="cardmessage_1_left" class="cardmessage_style16">
+								<div class="cardmessage_1_title" class="cardmessage_style17">
+									会员卡详情
+								</div>
+								<div class="membercard_clear"></div>
+								<div class="cardmessage_1_table1">
+									<table class="cardmessage_style18">
+										<thead>
+											<tr>
+												<th class="cardmessage_style19">
+												</th>
+												<th>
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr class="cardmessage_style20">
+												<td class="cardmessage_style25">
+													特权说明
+												</td>
+												<td class="cardmessage_style24">
+													<br> 每消费<span id="vcost_money_unit">N</span>元，赠送<span id="vincrease_bonus">N</span>积分
+													<br> 每使用<span id="vcost_bonus_unit">N</span>积分，抵扣<span id="vreduce_money">N</span>元
+													<br> 订单满<span id="vleast_money_to_use_bonus">N</span>可用积分抵扣，单笔使用上限<span id="vmax_reduce_bonus">N</span>积分					
+													<br>
+													<p id="vprerogative">	
+													    1.每消费1元积10分<br>
+														2.激活送100积分<br>
+														3.本会员们享受五折优惠<br>
+														4.使用卡券买单可享受消费积分<br>
+													</p>
+												</td>
+											</tr>
+											<tr class="cardmessage_style20">
+												<td >
+													有限日期
+												</td>
+												<td class="cardmessage_style21">
+													永久有效
+												</td>
+											</tr>
+											<tr>
+												<td >
+													电话
+												</td>
+												<td class="cardmessage_style21" id="vservice_phone">
+													1667387827
+												</td>
+											</tr>
+											<tr>
+												<td >
+													商户服务
+												</td>
+												<td class="cardmessage_style21" id="vbusiness_service">
+													免费WiFi、可带宠物、免费停车、可外卖
+												</td>
+											</tr>
+											<tr>
+												<td >
+													使用须知
+												</td>
+												<td class="cardmessage_style21" id="vdescription">
+													1.会员积分可在商城换取对应价值商品<br> 
+													2.积分每年最后一天清零
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<div class="membercard_clear">
+								</div>
+							</div>
+							<div class="cardmessage_1_right" style="text-align:left;">
+							<div class="cardmessage_right_contain">
+							   <!--	<div class="controls form-group margin-top-40">
+									<span class="add-on">启用时间：</span>
+									<div class="menuContent" style="border: 0px">
+	                                    <div class="input-append date form_datetime" data-date="2013-02-21T15:25:00Z">
+											    <input size="16" type="text" value="" readonly id="begin_timestamp">
+											    <span class="add-on"><i class="icon-remove"></i></span>
+											    <span class="add-on"><i class="icon-calendar"></i></span>
+										</div>
+								   </div>
+								<div class="controls form-group margin-top-40">
+									<span class="add-on">结束时间：</span>
+									<div class="menuContent" style="border: 0px">
+									    <div class="input-append date form_datetime" data-date="2013-02-21T15:25:00Z">
+										    <input size="16" type="text" value="" readonly id="end_timestamp" >
+										    <span class="add-on"><i class="icon-remove"></i></span>
+										    <span class="add-on"><i class="icon-calendar"></i></span>
+										</div>
+									</div>
+								</div>-->
+								<div class="controls form-group" style="margin-top:35px;">
+									<span class="add-on">固定时长有效类型：</span>
+									<div class="menuContent" style="border: 0px">
+										<input type="radio" name="optionsRadiosinline2" id="type" value="option1" checked>永久
+										<!--<input type="radio" name="optionsRadiosinline" id="type" value="option1" disabled="disabled" style="margin-left:10%;">非永久-->
+									</div>
+								</div>
+								<div class="controls form-group cardmessage-top5">
+									<span class="add-on">使用上限：</span>
+									<input type="text" style="width:70%;margin-top: -1px;" class="span6 typeahead form-control authenTiCation-input" id="max_reduce_bonus" name="max_reduce_bonus" placeholder="单笔积分上限"/>
+					            </div>
+								<div class="controls form-group cardmessage-top5">
+									<span class="add-on">消费金额：</span>
+									<input type="text" style="width:70%;margin-top: -1px;" class="span6 typeahead form-control authenTiCation-input" id="cost_money_unit" name="cost_money_unit" placeholder="以分为单位"/>
+					            </div>
+					            <div class="controls form-group cardmessage-top5">
+									<span class="add-on">增加积分：</span>
+									<input type="text" style="width:70%;margin-top: -1px;" class="span6 typeahead form-control authenTiCation-input" id="increase_bonus" name="increase_bonus" placeholder="消费对应增加积分"/>
+					            </div>
+					            <div class="controls form-group cardmessage-top5">
+									<span class="add-on">积分抵扣：</span>
+								    <input type="text" style="width:70%;margin-top: -1px;" class="span6 typeahead form-control authenTiCation-input" id="cost_bonus_unit" name="cost_bonus_unit" placeholder="每次使用积分量"/>
+					            </div>
+					            <div class="controls form-group cardmessage-top5">
+									<span class="add-on">抵扣金额：</span>
+									    <input type="text" style="width:70%;margin-top: -1px;" class="span6 typeahead form-control authenTiCation-input" id="reduce_money" name="increase_bonus"  placeholder="可抵扣金额数"/>
+								</div>	
+					            
+					             <div class="controls form-group cardmessage-top5">
+									<span class="add-on">抵扣条件：</span>
+									<input type="text" style="width:70%;margin-top: -1px;" class="span6 typeahead form-control authenTiCation-input" id="least_money_to_use_bonus" name="least_money_to_use_bonus" placeholder="可使用积分抵扣的消费金额" />
+					            </div>
+					             <div class="form-actions form-group" style="margin-top: 65px;background:white;">
+									  <button type="button" id="returnBack" class="btn" style="margin-left: 29%;">返回</button>
+									  <button type="button" id="saveBean" class="btn btn-primary" style="margin-left:17%;">保存</button>
+								</div>
+						   </div>
+						   	<div class="membercard_clear"></div>
+						  
+					</div>
+					
+				</form> 
+			</div>
+		</div>
+	</div>
+
+	<script src="../../assest/js/jquery.js"></script>
+	<script src="../../assest/js/jquery-migrate-1.0.0.min.js"></script>
+	<script src="../../assest/js/jquery-ui-1.10.0.custom.min.js"></script>
+	<script src="../../assest/js/jquery.ui.touch-punch.js"></script>
+	<script src="../../assest/js/modernizr.js"></script>
+	<script src="../../assest/js/bootstrap.min.js"></script>
+	<script src="../../assest/bootstrap/bootstrap-validator/js/bootstrapValidator.min.js"></script>
+	<script src="../../assest/js/jquery.cookie.js"></script>
+	<script src='../../assest/js/fullcalendar.min.js'></script>
+	<script src='../../assest/js/jquery.dataTables.min.js'></script>
+	<script src="../../assest/js/excanvas.js"></script>
+	<script src="../../assest/js/jquery.flot.js"></script>
+	<script src="../../assest/js/jquery.flot.pie.js"></script>
+	<script src="../../assest/js/jquery.flot.stack.js"></script>
+	<script src="../../assest/js/jquery.flot.resize.min.js"></script>
+	<script src="../../assest/js/jquery.chosen.min.js"></script>
+	<script src="../../assest/js/jquery.uniform.min.js"></script>
+	<script src="../../assest/js/jquery.cleditor.min.js"></script>
+	<script src="../../assest/js/jquery.noty.js"></script>
+	<script src="../../assest/js/jquery.elfinder.min.js"></script>
+	<script src="../../assest/js/jquery.raty.min.js"></script>
+	<script src="../../assest/js/jquery.iphone.toggle.js"></script>
+	<script src="../../assest/js/jquery.gritter.min.js"></script>
+	<script src="../../assest/js/jquery.imagesloaded.js"></script>
+	<script src="../../assest/js/jquery.masonry.min.js"></script>
+	<script src="../../assest/js/jquery.knob.modified.js"></script>
+	<script src="../../assest/js/jquery.sparkline.min.js"></script>
+	<script src="../../assest/js/counter.js"></script>
+	<script src="../../assest/js/retina.js"></script>
+	
+	<script type="text/javascript" src="../../assest/jquery-fileupload/preView.js"></script>
+	<script type="text/javascript" src="../../assest/jquery-fileupload/js/jquery.fileupload.js"></script>
+	<script type="text/javascript" src="../../assest/ztree/js/jquery.ztree.all-3.5.js"></script>
+	<script type="text/javascript" src="../../assest/bootstrap/qiao.js"></script>
+	<script type="text/javascript" src="../../js/util/main.js"></script>
+	<script type="text/javascript" src="../../js/util/handlebars-v4.0.5.js"></script>
+	<script type="text/javascript" src="../../js/wechatMembershipCard/updateWechatMembershipCardMessage.js"></script>
+	<script src="../../assest/bootstrap/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
+	<script src="../../assest/bootstrap/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="../../assest/bootstrap/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.fr.js"></script>
+		<script src="../../assest/bootstrap/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+</body>
+</html>

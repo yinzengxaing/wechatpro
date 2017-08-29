@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>storeDetail.html</title>
+	<meta name="description" content="Bootstrap Metro Dashboard">
+	<meta name="author" content="Dennis Ji">
+	<meta name="keyword" content="Metro, Metro UI, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link id="bootstrap-style" href="../../assest/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../../assest/bootstrap/bootstrap-validator/css/bootstrapValidator.css">
+	<link href="../../assest/css/bootstrap-responsive.min.css" rel="stylesheet">
+	<link id="base-style" href="../../assest/css/style.css" rel="stylesheet">
+	<link id="base-style-responsive" href="../../assest/css/style-responsive.css" rel="stylesheet">
+	<link id="base-style" href="../../assest/ztree/css/zTreeStyle.css" rel="stylesheet">
+	<!--[if lt IE 9]>
+	  	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<link id="ie-style" href="../../assest/css/ie.css" rel="stylesheet">
+	<![endif]-->
+	<!--[if IE 9]>
+		<link id="ie9style" href="../../assest/css/ie9.css" rel="stylesheet">
+	<![endif]-->
+	<link rel="shortcut icon" href="../../assest/img/favicon.ico">
+</head>
+<body class="childBody">
+	<ul class="breadcrumb">
+		<li>
+			<i class="icon-home"></i>
+			<a href="javascript:;">Home</a>
+			<i class="icon-angle-right"></i> 
+		</li>
+		<li>
+			<i class="icon-edit"></i>
+			<a href="javascript:;">门店详情</a>
+		</li>
+	</ul>
+	<div class="row-fluid sortable" id="showByMyself" >
+		<div class="box span12" style="display:none" id="ifCoincidence">
+			<div class="box-header" data-original-title>
+				<div class="box-icon">
+					<a href="#" class="btn-minimize"><i class="halflings-icon chevron-up"></i></a>
+				</div>
+			</div>
+			<div id="" class="box-content">
+				<div class="form-group dialog-50">
+			    	<label for="txt_departmentname" class="dialog-label-20" >餐厅人员号：</label>
+			    	<div class="dialog-div-75">
+			    		<font id="adminNo"></font>
+			    	</div>
+			    </div>
+			    <div class="form-group dialog-50">
+			    	<label for="txt_departmentname" class="dialog-label-20" >门店名：</label>
+			    	<div class="dialog-div-75">
+			    		<font id="adminShopName"></font>
+			    	</div>
+			    </div>
+			    <div class="form-group dialog-50">
+			    	<label for="txt_departmentname" class="dialog-label-20" >门店电话：</label>
+			    	<div class="dialog-div-75">
+			    		<font id="adminKfPhone"></font>
+			    	</div>
+			    </div>
+			    <div class="form-group dialog-50">
+			    	<label for="txt_departmentname" class="dialog-label-20" >门店特色：</label>
+			    	<div class="dialog-div-75">
+			    		<font id="adminCharacteristic"></font>
+			    	</div>
+			    </div>
+			    <div class="form-group dialog-50">
+			    	<label for="txt_departmentname" class="dialog-label-20" >营业时间：</label>
+			    	<div class="dialog-div-75">
+			    		<font id="adminKfBusinessHours"></font>
+			    	</div>
+			    </div>
+			    <div class="form-group dialog-50">
+			   		<label for="txt_departmentname" class="dialog-label-20" >门店推荐：</label>
+			   		<div class="dialog-div-75">
+			   			<font id="adminRecommend"></font>
+		    		</div>
+		    	</div>
+		    	<div class="form-group dialog-50">
+		    		<label for="txt_departmentname" class="dialog-label-20" >门店地址：</label>
+		    		<div class="dialog-div-75">
+		    			<font id="adminWorkPlace"></font>
+		    		</div>
+		    	</div>
+		    	<div class="form-group dialog-50">
+		    		<label for="txt_departmentname" class="dialog-label-20" >门店经度：</label>
+		    		<div class="dialog-div-75">
+		    			<font id="adminWorkXCoordinate"></font>
+		    		</div>
+		    	</div>
+		    	<div class="form-group dialog-50">
+		    		<label for="txt_departmentname" class="dialog-label-20" >门店纬度：</label>
+		    		<div class="dialog-div-75">
+		    			<font id="adminWorkYCoordinate"></font>
+		    		</div>
+		    	</div>
+		    	<div class="form-group dialog-100" id="ditu" style="height: 200px;">
+		    		<label for="txt_departmentname" class="dialog-label-10" >地图：</label>
+		    		<div class="dialog-div-80" id="container" style="height: 100%;">
+	    				
+    				</div>
+   				</div>	
+		    </div>
+		</div>
+	</div>
+	    
+	<script src="../../assest/js/jquery.js"></script>
+	<script src="../../assest/js/jquery-migrate-1.0.0.min.js"></script>
+	<script src="../../assest/js/jquery-ui-1.10.0.custom.min.js"></script>
+	<script src="../../assest/js/jquery.ui.touch-punch.js"></script>
+	<script src="../../assest/js/modernizr.js"></script>
+	<script src="../../assest/js/bootstrap.min.js"></script>
+	<script src="../../assest/bootstrap/bootstrap-validator/js/bootstrapValidator.min.js"></script>
+	<script src="../../assest/bootstrap/bootstrap-table-develop/src/bootstrap-table.js"></script>
+	<script src="../../assest/bootstrap/bootstrap-table-develop/src/locale/bootstrap-table-zh-CN.js"></script>
+	<script src="../../assest/js/jquery.cookie.js"></script>
+	<script src='../../assest/js/fullcalendar.min.js'></script>
+	<script src='../../assest/js/jquery.dataTables.min.js'></script>
+	<script src="../../assest/js/excanvas.js"></script>
+	<script src="../../assest/js/jquery.flot.js"></script>
+	<script src="../../assest/js/jquery.flot.pie.js"></script>
+	<script src="../../assest/js/jquery.flot.stack.js"></script>
+	<script src="../../assest/js/jquery.flot.resize.min.js"></script>
+	<script src="../../assest/js/jquery.chosen.min.js"></script>
+	<script src="../../assest/js/jquery.uniform.min.js"></script>
+	<script src="../../assest/js/jquery.cleditor.min.js"></script>
+	<script src="../../assest/js/jquery.noty.js"></script>
+	<script src="../../assest/js/jquery.elfinder.min.js"></script>
+	<script src="../../assest/js/jquery.raty.min.js"></script>
+	<script src="../../assest/js/jquery.iphone.toggle.js"></script>
+	<script src="../../assest/js/jquery.uploadify-3.1.min.js"></script>
+	<script src="../../assest/js/jquery.gritter.min.js"></script>
+	<script src="../../assest/js/jquery.imagesloaded.js"></script>
+	<script src="../../assest/js/jquery.masonry.min.js"></script>
+	<script src="../../assest/js/jquery.knob.modified.js"></script>
+	<script src="../../assest/js/jquery.sparkline.min.js"></script>
+	<script src="../../assest/js/counter.js"></script>
+	<script src="../../assest/js/retina.js"></script>
+	<script src="../../assest/js/custom.js"></script>
+	
+	<script type="text/javascript" src="../../js/util/handlebars-v4.0.5.js"></script>
+	<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=5274f1262f62ca7b4094b5e7b29cfbcd"></script> 
+	<script type="text/javascript" src="https://webapi.amap.com/demos/js/liteToolbar.js"></script>
+	<script type="text/javascript" src="../../assest/bootstrap/qiao.js"></script>
+	<script type="text/javascript" src="../../assest/ztree/js/jquery.ztree.all-3.5.js"></script>
+	<script type="text/javascript" src="../../js/util/main.js"></script>
+	<script type="text/javascript" src="../../js/util/handlebars-v4.0.5.js"></script>
+	<script type="text/javascript" src="../../js/restaurant/storeDetail.js"></script>
+	</body>
+</html>

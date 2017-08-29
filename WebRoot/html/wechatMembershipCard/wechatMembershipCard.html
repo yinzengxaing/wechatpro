@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="description" content="Bootstrap Metro Dashboard">
+	<meta name="author" content="Dennis Ji">
+	<meta name="keyword" content="Metro, Metro UI, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link id="bootstrap-style" href="../../assest/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../../assest/bootstrap/bootstrap-validator/css/bootstrapValidator.css">
+	<link href="../../assest/css/bootstrap-responsive.min.css" rel="stylesheet">
+	<link id="base-style-responsive" href="../../assest/css/style-responsive.css" rel="stylesheet">
+	<link id="base-style" href="../../assest/css/style.css" rel="stylesheet">
+	<!--[if lt IE 9]>               0
+	  	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<link id="ie-style" href="../../assest/css/ie.css" rel="stylesheet">
+	<![endif]-->
+	<!--[if IE 9]>
+		<link id="ie9style" href="../../assest/css/ie9.css" rel="stylesheet">
+	<![endif]-->
+	<link rel="shortcut icon" href="../../assest/img/favicon.ico">
+</head>
+<body class="childBody">
+	<ul class="breadcrumb">
+		<li>
+			<i class="icon-home"></i>
+			<a href="javascript:;">Home</a>
+			<i class="icon-angle-right"></i> 
+		</li>
+		<li>
+			<i class="icon-edit"></i>
+			<a href="javascript:;">会员卡信息</a>
+		</li>
+		<div style="width:60%;float:right;text-align:right;">
+	    	<button id="addCard" type="button" class="RoleOfA btn btn-default  btn-sm" style="margin-right:15px;">新添会员卡</button>
+		</div>
+	</ul>
+	
+	<div class="row-fluid sortable">
+		<div class="box span12">
+		<div class="box-content" style="text-align: right;">
+		<button id="updateBean" type="button" class="btn btn-primary">更新</button>
+		</div>
+			<div class="box-header" data-original-title>
+				<h2><i class="halflings-icon edit"></i><span class="break"></span>会员卡列表</h2>
+				<div class="box-icon">
+					<a href="#" class="btn-minimize"><i class="halflings-icon chevron-up"></i></a>
+				</div>
+			</div>
+			<div class="box-content contentDiv" style="text-align: center;">
+				<form id="membersFrom">
+				
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 会员卡信息详情的model -->
+	<div class="modal fade" id="myModal2" tabindex="-1" aria-labelledby="myModalLabel">
+		<div class="modal-dialog dialog-width-800" role="document">
+			<div class="modal-content">
+			    <div class="modal-header">
+			    	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+			    	<h4 class="modal-title" id="myModalLabel1">会员卡详情</h4>
+				</div>
+			    <div class="modal-body dialog-body">
+			    	<div class="form-group dialog-50">
+			    		<label for="txt_departmentname" class="dialog-label-20" >卡券名：</label>
+			    		<div class="dialog-div-75">
+			    			<font id="title"></font>
+			    		</div>
+			    	</div>
+			    	<div class="form-group dialog-50">
+			    		<label for="txt_departmentname" class="dialog-label-20" >卡券ID：</label>
+			    		<div class="dialog-div-75">
+			    			<font id="card_id"></font>
+			    		</div>
+			    	</div>
+			    	<div class="form-group dialog-50">
+			    		<label for="txt_departmentname" class="dialog-label-20" >商户名字：</label>
+			    		<div class="dialog-div-75">
+			    			<font id="brand_name"></font>
+			    		</div>
+			    	</div>
+			    	<div class="form-group dialog-50">
+			    		<label for="txt_departmentname" class="dialog-label-20" >会员卡链接：</label>
+			    		<div class="dialog-div-75">
+			    			<font id="card_url"></font>
+			    		</div>
+			    	</div>
+			    	<div class="form-group dialog-50">
+			    		<label for="txt_departmentname" class="dialog-label-20" >消费金额：</label>
+			    		<div class="dialog-div-75">
+			    			<font id="cost_money_unit"></font>
+			    		</div>
+			    	</div>
+			    	<div class="form-group dialog-50">
+			    		<label for="txt_departmentname" class="dialog-label-20" >增加积分：</label>
+			    		<div class="dialog-div-75">
+			    			<font id="increase_bonus"></font>
+			    		</div>
+			    	</div>
+			    	<div class="form-group dialog-50">
+			    		<label for="txt_departmentname" class="dialog-label-20" >抵扣条件：</label>
+			    		<div class="dialog-div-75">
+			    			<font id="least_money_to_use_bonus"></font>
+			    		</div>
+			    	</div>
+	                <div class="form-group dialog-50">
+			    		<label for="txt_departmentname" class="dialog-label-20" >使用积分：</label>
+			    		<div class="dialog-div-75">
+			    			<font id="cost_bonus_unit"></font>
+			    		</div>
+			    	</div>
+			    	<div class="form-group dialog-50">
+			    		<label for="txt_departmentname" class="dialog-label-20" >抵扣金额：</label>
+			    		<div class="dialog-div-75">
+			    			<font id="reduce_money"></font>
+			    		</div>
+			    	</div>
+			    	<div class="form-group dialog-50">
+			    		<label for="txt_departmentname" class="dialog-label-20" >固定日期有效类型：</label>
+			    		<div class="dialog-div-75">
+			    			<font id="type"></font>
+			    		</div>
+			    	</div>
+			    	<div class="form-group dialog-50">
+			    		<label for="txt_departmentname" class="dialog-label-20" >是否支持全部门店：</label>
+			    		<div class="dialog-div-75">
+			    			<font id="use_all_locations"></font>
+			    		</div>
+			    	</div>
+			    	<div class="form-group dialog-50" id="begintimestamp">
+			    		<label for="txt_departmentname" class="dialog-label-20" >起用时间：</label>
+			    		<div class="dialog-div-75">
+			    			<font id="begin_timestamp"></font>
+			    		</div>
+			    	</div>
+			    	<div class="form-group dialog-50" id="endtimestamp">
+			    		<label for="txt_departmentname" class="dialog-label-20" >结束时间：</label>
+			    		<div class="dialog-div-75">
+			    			<font id="end_timestamp"></font>
+			    		</div>
+			    	</div>
+			    	<div class="form-group dialog-50">
+			    		<label for="txt_departmentname" class="dialog-label-20" >客服电话：</label>
+			    		<div class="dialog-div-75">
+			    			<font id="service_phone"></font>
+			    		</div>
+			    	</div>
+			    	<div class="form-group dialog-50">
+			    		<label for="txt_departmentname" class="dialog-label-20" >简介说明：</label>
+			    		<div class="dialog-div-75">
+			    			<font id="text"></font>
+			    		</div>
+			    	</div>
+			    	<div class="form-group dialog-50">
+			    		<label for="txt_departmentname" class="dialog-label-20" >使用提醒：</label>
+			    		<div class="dialog-div-75">
+			    			<font id="notice"></font>
+			    		</div>
+			    	</div>
+			    	<div class="form-group dialog-50">
+			    		<label for="txt_departmentname" class="dialog-label-20" >特权说明：</label>
+			    		<div class="dialog-div-75">
+			    			<font id="prerogative"></font>
+			    		</div>
+			    	</div>
+			    	<div class="form-group dialog-50">
+			    		<label for="txt_departmentname" class="dialog-label-20" >使用说明：</label>
+			    		<div class="dialog-div-75">
+			    			<font id="description"></font>
+			    		</div>
+			    	</div>
+			    	<div class="form-group dialog-50">
+			    		<label for="txt_departmentname" class="dialog-label-20" >库存数量：</label>
+			    		<div class="dialog-div-75">
+			    			<font id="quantity"></font>
+			    		</div>
+			    	</div>
+			    	<div class="form-group dialog-50">
+			    		<label for="txt_departmentname" class="dialog-label-20" >服务类型：</label>
+			    		<div class="dialog-div-75">
+			    			<font id="business_service"></font>
+			    		</div>
+			    	</div>
+			    	<div class="form-group dialog-50">
+			    		<label for="txt_departmentname" class="dialog-label-20" >折扣：</label>
+			    		<div class="dialog-div-75">
+			    			<font id="discount"></font>
+			    		</div>
+			    	</div>
+			    	<div class="form-group dialog-100">
+			    		<label for="txt_departmentname" class="dialog-label-10" >简介图片：</label>
+			    		<div class="dialog-div-80">
+			    			<img id="image_url" alt="" src="">
+			    		</div>
+			    	</div>
+			    	<div class="form-group dialog-100">
+			    		<label for="txt_departmentname" class="dialog-label-10" >会员卡背景：</label>
+			    		<div class="dialog-div-80">
+			    			<img id="background_pic_url" alt="" src="">
+			    		</div>
+			    	</div>
+			    	<div class="form-group dialog-100">
+			    		<label for="txt_departmentname" class="dialog-label-10" >商户logo：</label>
+			    		<div class="dialog-div-80">
+			    			<img id="logo_url" alt="" src="">
+			    		</div>
+			    	</div>
+			    </div>
+			    <div class="modal-footer">
+			    	<button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
+			    </div>
+			</div>
+	 	</div>
+	</div>
+	
+	
+	<script id="membersBean" type="text/x-handlebars-template">
+		{{#each rows}}
+							   <div class="membercard_whole" style="margin-top:25px;clear:both;">
+				          <div class="membercard_left">
+				          
+				             <img src="{{#compare color}}{{/compare}}" style="width:100%;height:100%;z-index=-1;">
+				               
+				              <div style="width:100%;height:76%;z-index:1;position:absolute;top:0px;">
+				              <div class="membercard_clear"></div>
+				               <div class="membercard_01">
+				                                                               
+				               </div>
+				               <div class="membercard_02">
+				                                                                   会员卡 <font style="font-size: 17px;">【{{title}}】</font><p class="membercard_02_w"></p>
+				                       <br/>
+				                    <p class="membercard_02_w">【仅限会员本人使用】</p>                                                                                   
+				               </div>
+				              </div>
+				               <div style="height:24%;z-index:1;width:100%;position:absolute;top:76%;">
+				               <div class="membercard_03">
+				                                                         使用期限：永久有效                                                                                                                 
+				               </div>
+				              </div>
+				          </div>
+				           <div class="membercard_right">
+				                 <div class="membercard_clear"></div>
+				                <div style="float:left;width:80%;font-size:17px;color:grey;">
+				               <p style="margin-bottom:4px;margin-top:10px;padding-left:2px;text-align:left;">会员卡编号：{{card_id}}</p>
+				               <p style="margin-bottom:4px;margin-top:1px;padding-left:2px;text-align:left;">会员卡类型：会员卡</p>
+				               <p style="margin-bottom:4px;margin-top:1px;padding-left:2px;text-align:left;">商户名称：{{brand_name}}</p>
+				               </div>
+				                <div style="float:right;width:20%">
+				              <div>
+				              <button style="margin-bottom:4px;margin-top:13px;text-align:center;" id="selectBean" rowId="{{card_id}}" type="button" class="btn btn-primary">详情</button>
+				              </div>
+				                <div>
+				              <button style="margin-bottom:4px;margin-top:13px;text-align:center;" id="editBean" rowId="{{card_id}}"  type="button" class="btn btn-primary">编辑</button>
+				              </div>
+				               <div>
+				              <button style="margin-bottom:4px;margin-top:13px;text-align:center;" id="deleteBean" rowId="{{card_id}}"  type="button" class="btn btn-primary">删除</button>
+				              </div>
+				              
+				         </div> 
+				         </div>
+				           </div>
+		{{/each}}
+	</script>
+	<script src="../../assest/js/jquery.js"></script>
+	<script src="../../assest/js/jquery-migrate-1.0.0.min.js"></script>
+	<script src="../../assest/js/jquery-ui-1.10.0.custom.min.js"></script>
+	<script src="../../assest/js/jquery.ui.touch-punch.js"></script>
+	<script src="../../assest/js/modernizr.js"></script>
+	<script src="../../assest/js/bootstrap.min.js"></script>
+	<script src="../../assest/bootstrap/bootstrap-validator/js/bootstrapValidator.min.js"></script>
+	<script src="../../assest/js/jquery.cookie.js"></script>
+	<script src='../../assest/js/fullcalendar.min.js'></script>
+	<script src='../../assest/js/jquery.dataTables.min.js'></script>
+	<script src="../../assest/js/excanvas.js"></script>
+	<script src="../../assest/js/jquery.flot.js"></script>
+	<script src="../../assest/js/jquery.flot.pie.js"></script>
+	<script src="../../assest/js/jquery.flot.stack.js"></script>
+	<script src="../../assest/js/jquery.flot.resize.min.js"></script>
+	<script src="../../assest/js/jquery.chosen.min.js"></script>
+	<script src="../../assest/js/jquery.uniform.min.js"></script>
+	<script src="../../assest/js/jquery.cleditor.min.js"></script>
+	<script src="../../assest/js/jquery.noty.js"></script>
+	<script src="../../assest/js/jquery.elfinder.min.js"></script>
+	<script src="../../assest/js/jquery.raty.min.js"></script>
+	<script src="../../assest/js/jquery.iphone.toggle.js"></script>
+	<script src="../../assest/js/jquery.uploadify-3.1.min.js"></script>
+	<script src="../../assest/js/jquery.gritter.min.js"></script>
+	<script src="../../assest/js/jquery.imagesloaded.js"></script>
+	<script src="../../assest/js/jquery.masonry.min.js"></script>
+	<script src="../../assest/js/jquery.knob.modified.js"></script>
+	<script src="../../assest/js/jquery.sparkline.min.js"></script>
+	<script src="../../assest/js/counter.js"></script>
+	<script src="../../assest/js/retina.js"></script>
+	<script src="../../assest/js/custom.js"></script>
+	
+	<script type="text/javascript" src="../../assest/bootstrap/qiao.js"></script>
+	<script type="text/javascript" src="../../js/util/main.js"></script>
+	<script type="text/javascript" src="../../js/util/handlebars-v4.0.5.js"></script>
+	<script type="text/javascript" src="../../js/wechatMembershipCard/wechatMembershipCard.js"></script>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.wechatpro.dao.WechatScollorPicMapper">
+
+	<!-- 添加通知 -->
+	<insert id="insertScoller" parameterType="java.util.Map">
+		INSERT INTO wechat_scollor_pic (
+			scollor_pic_name,
+			scollor_pic_path,
+			scollor_pic_content,
+			scollor_pic_data,
+			scollor_pic_userid,
+			scollor_pic_introduce
+		)
+		VALUES
+			(
+				#{scollor_pic_name},
+				#{scollor_pic_path},
+				#{scollor_pic_content},
+				#{scollor_pic_data},
+				#{scollor_pic_userid},
+				#{scollor_pic_introduce}
+			)
+	</insert>
+	
+	<!-- 查询所有通知 -->
+	<select id="selectAllScollor" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			id,
+			scollor_pic_name,
+			scollor_pic_path,
+			scollor_pic_content,
+			scollor_pic_data,
+			scollor_pic_userid,
+			scollor_pic_display,
+			scollor_pic_introduce,
+			scollor_pic_fb,
+			scollor_pic_ydl,
+			scollor_num
+		FROM
+			wechat_scollor_pic
+		WHERE 1=1
+		<if test="scollor_pic_name != '' and scollor_pic_name != null">
+			and scollor_pic_name like '%${scollor_pic_name}%'
+		</if>
+		ORDER BY scollor_num
+	</select>
+	
+	<!-- 删除一条通知 -->
+	<delete id="deleteScollor" parameterType="java.util.Map" >
+		DELETE
+		FROM
+			wechat_scollor_pic
+		WHERE
+			id = #{id}
+	</delete>
+	
+	<!-- 回显 -->
+	<select id="selectById" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			id,
+			scollor_pic_name,
+			scollor_pic_path,
+			scollor_pic_content,
+			scollor_pic_data,
+			scollor_pic_userid,
+			scollor_pic_display,
+			scollor_pic_introduce,
+			scollor_pic_fb,
+			scollor_pic_ydl,
+			scollor_num
+		FROM
+			wechat_scollor_pic
+		WHERE
+			id = #{id}
+	</select>
+	
+	<!-- 编辑通知 -->
+	<update id="updateScoller" parameterType="java.util.Map">
+		UPDATE wechat_scollor_pic
+		<set>
+			<if test="scollor_pic_name != '' and scollor_pic_name != null">
+				scollor_pic_name = #{scollor_pic_name},
+			</if>
+			<if test="scollor_pic_content != '' and scollor_pic_content != null">
+				scollor_pic_content = #{scollor_pic_content},
+			</if>
+			<if test="scollor_pic_path != '' and scollor_pic_path != null">
+				scollor_pic_path = #{scollor_pic_path},
+			</if>
+			<if test="scollor_pic_introduce != '' and scollor_pic_introduce != null">
+				scollor_pic_introduce = #{scollor_pic_introduce}
+			</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 发布通知 -->
+	<update id="updateFbScollor" parameterType="java.util.Map">
+		UPDATE wechat_scollor_pic
+		<set>
+			scollor_pic_fb = 1,
+			<if test=" scollor_num != '' and scollor_num != null ">
+				scollor_num = #{scollor_num}
+			</if>
+		</set> 
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 取消发布 -->
+	<update id="updateQxFbScollor" parameterType="java.util.Map">
+		UPDATE wechat_scollor_pic
+		SET scollor_pic_fb = 0
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 上线 -->
+	<update id="updateSxScollor" parameterType="java.util.Map">
+		UPDATE wechat_scollor_pic
+		SET scollor_pic_display = 1
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 下线 -->
+	<update id="updateXxScollor" parameterType="java.util.Map">
+		UPDATE wechat_scollor_pic
+		SET scollor_pic_display = 0
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 查询前五条已发布并且上线的通知 -->
+	<select id="selectFiveScollor" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			id,
+			scollor_pic_name,
+			scollor_pic_path,
+			scollor_pic_content,
+			scollor_pic_data,
+			scollor_pic_display,
+			scollor_pic_introduce,
+			scollor_pic_ydl,
+			scollor_num
+		FROM
+			wechat_scollor_pic
+		WHERE
+			scollor_pic_fb = 1
+		AND scollor_pic_display = 1
+		ORDER BY scollor_num
+		LIMIT 5
+	</select>
+	
+	<!-- 在已发布的通知中，查询展示顺序是否存在 -->
+	<select id="selectScollorNum" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			*
+		FROM
+			wechat_scollor_pic
+		WHERE
+			scollor_pic_fb = 1
+		AND scollor_num = #{scollor_num}
+	</select>
+	
+	<!-- 修改展示顺序 -->
+	<update id="updateScollorNum" parameterType="java.util.Map">
+		UPDATE wechat_scollor_pic
+		set	scollor_num = #{scollor_num}
+		WHERE id = #{id}
+	</update>
+</mapper>          

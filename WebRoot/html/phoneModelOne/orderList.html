@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+	<meta content="yes" name="apple-mobile-web-app-capable">
+	<meta content="black" name="apple-mobile-web-app-status-bar-style">
+	<meta content="telephone=no" name="format-detection">
+	<meta content="email=no" name="format-detection">
+	<meta http-equiv="refresh" content="100">
+	
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>订单支付</title>
+	<link id="bootstrap-style" href="../../assest/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../../assest/phoneModelFirst/css/ui.css">
+	<link type="text/css" rel="stylesheet" href="../../assest/phoneModelFirst/css/module.css"  />
+	<link rel="shortcut icon" href="../../assest/icon/maxLogo.jpg">
+	
+	<script src="../../assest/phoneModelFirst/js/lCalendar.js"></script>
+	<link rel="stylesheet" href="../../assest/phoneModelFirst/css/lCalendar.css">
+</head>
+<body>
+
+	<div class="header">
+		<div class="header-background"></div>
+		<div class="toolbar statusbar-padding">
+			<button class="bar-button back-button" onclick="history.go(-1);" dwz-event-on-click="click"><i class="icon icon-back"></i></button>
+			<!--<a class="bar-button" data-href="home.html?dwz_callback=home_render" target="navTab" rel="home"><i class="icon icon-back"></i></a>-->
+			<div class="header-title">
+				<div class="title">订单支付</div>
+			</div>
+		</div>
+	</div>
+	
+	<div style="height:44px"></div>
+	<div class="wrap">
+		<div class="wrap_top">
+			<a>本单可享受的优惠</a>
+		</div>
+		<div class="wrap_top_mothed">
+			<p>就餐类型</p>
+			<div class="wrap_top_mothed_lf" id="liji" style="cursor:pointer;">
+				<img src="../../assest/img/liji.png"/>
+				<span class"wrap_top_action">立即</span>
+				<div class="triangle-bottomright" id="li"></div>
+			</div>
+			<div class="wrap_top_mothed_rt" id="shaowan" style="cursor:pointer;">
+				<img src="../../assest/img/later.png"/>
+				<span>稍晚</span>
+				<div class="" id="shao"></div>
+			</div>
+		</div>
+		<div class="wrap_top_kind wrap_top_mothed">
+			<p>就餐方式</p>
+			<div class="wrap_top_mothed_lf" id="tangshi" style="cursor:pointer;">
+				<img src="../../assest/img/catch_go.png"/>
+				<span>堂食</span>
+				<div class="triangle-bottomright" id="tang"></div>
+			</div>
+			<div class="wrap_top_mothed_rt" id="waidai" style="cursor:pointer;">
+				<img src="../../assest/img\eat_seat.png"/>
+				<span>外带</span>
+				<div class="" id="wai"></div>
+			</div>
+		</div>
+		<!-- 取餐时间 -->
+		<div  id="eatTimeDiv" class="wrap_phone" style="border-bottom:1px solid #DCDCDC;" hidden>
+			<div class="wrap_phone_d wrap_phone_tel_lf">
+<!-- 			<span class="wrap_phone_ralation">取餐时间</span><span class="wrap_phone_spark">*</span> -->
+		<!-- 		<select id="h"></select>点
+				<select id="min"></select>分-->
+			<input  id="geteateTime" type="text" readonly="" size="100%" name="input_date" placeholder="点击 选择您的取餐时间" />
+			</div> 
+		</div>
+		
+		<!-- 手机号显示 -->
+		<div class="wrap_phone">
+			<div class="wrap_phone_tel_lf">
+				<span class="wrap_phone_ralation">联系方式</span><span class="wrap_phone_spark">*</span>
+			</div>
+			<div class="wrap_phone_tel">
+				<span class="phone_tel"></span>
+				<input text="text" id="phoneNumber" />
+			</div>
+			<div class="wrap_phone_tel_bt"><h5>温馨提示：由于您的订单金额超过100元（含100元），我们将主动电话联系您，电话确认后订单不可取消。</h5></div>
+		</div>
+		
+		 <!-- 支付方式 -->
+		<!--<div class="pay_way">
+			<span class="pay_way_lf">支付方式</span>
+			<span class="pay_wei"></span>
+			<a class="pay_way_rt">微信支付</a>
+		</div> -->
+	</div>
+	
+		<div class="comm-bar-container" id="" >
+		<font class="glyphicon glyphicon-chevron-up" style="position:absolute;top:-25px; cursor:pointer"  id="getCartProduct"></font>
+		
+		<!-- 加入购物车中的商品列表 -->
+		<div id="catProductDiv"  style="display:none ;z-index:99;">
+		
+		</div>
+	</div>
+	
+	<!--遮罩层 -->
+	<div id="wrap" class="mask-layer"></div>
+    
+	
+	<!-- 结算界面 -->
+	<div  id="clearDiv" class="payment-bar">
+		<div class="shop-total">
+			<strong>总价：<i class="total" id="AllTotal">0.00</i></strong>
+		</div>
+		<a  style="cursor:pointer;" class="settlement" id="clearing">结算</a>
+	</div>
+	
+	<!-- <div class="aui-t-content">
+		<div class="aui-tab ">
+			<div class="aui-panes">
+				<div class="aui-pane" style="display:block;">
+					<div class="main_con">
+						<div class="address" id="addressDiv" style="display:none;">
+							<div id="addressInof">
+								<div class="add_map"><span class="glyphicon glyphicon-map-marker"></span></div>
+								<p class="otherMationOrderP">
+									<span class="add_name" id="username" ></span>
+									<span class="add_phone" id="phone"></span>
+								</p> 
+								<p class="addressOrderP">
+									<span class="add_address" id="addressInfo" style="font-size: 13px;"></span>
+								</p>
+							</div>
+							更多地址
+							<div class="add_more"><span style="cursor:pointer;" class="aui-list-cell-fr" id="moreAddr"></span></div>
+						</div>
+					</div>
+					<div class="main_con bgfg">
+						
+					</div>
+					<div class="main_con" id="orderDiv">
+
+					</div>
+					<div class="main_con3">
+						<div class="content">
+							<div class="box-content" style="text-align: left;">
+								<p>取餐类型:</p>
+								<select  id="selectItems" class="selectInput-100">
+									<option value="2">现在，支付成功后直接取餐</option>
+									<option value="3">稍晚，预约当天,在预约时间取餐</option>
+									<option value="1">外卖</option>
+								</select>
+							</div>
+							<div class="add_position" id="eatTimeDiv" hidden>
+								<p>取餐时间:</p>
+								<select id="timeDay">
+									<option>上午</option>
+									<option>下午</option>
+								</select>
+							<select id="h"></select>点
+							<select id="min"></select>分
+							&nbsp&nbsp<input type="text" class="typeahead form-control selectInput-100" id="eatTime"  disabled="disabled" ></input>
+							</div>
+						</div>
+					</div>
+					<div class="main_con">
+						<div class="last_money">
+							<strong>总价：<i class="total" id="AllTotal">0.00</i></strong>
+							<div id="buyNowDiv"><button id="buyNow">立即下单</button></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> -->
+	
+	
+		<!-- 模态框（Modal） -->
+<!-- 	<div class="modal fade Mymmddal" style="width:90%;margin:35% auto;" id="Modal" tabindex="-1" aria-labelledby="myModalLabel">
+		<div class="modal-dialog dialog-width-600" role="document">
+			<div class="modal-content">
+			    <div class="modal-header">
+			    	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+			    	<h4 class="modal-title eat-time">选择取餐时间</h4>
+				</div>
+			    <div class="modal-body dialog-body1">
+			   		<div class="form-group dialog-100">
+			    		<label for="txt_departmentname" class="dialog-label-20" >取餐时间:</label>
+			    		<div class="dialog-div-75" id="eDiv">
+			    			<span class="glyphicon glyphicon-ok-sign font-action" id="eatNow"></span>
+			    			<font>现在，支付成功后直接取餐</font>
+			    		</div>
+			    		<div class="dialog-div-75" id="tDiv">
+			    			<span class="glyphicon glyphicon-ok-sign" id="eatTime"></span>
+			    			<font>稍晚，预约当天，稍晚时间，在预约时间取餐</font>
+			    		</div>
+			    		<div id="eatTimeDiv"  style="display:none;">
+			    			<label>就餐时间：当天   </label>
+			    			<select name="h" id="h" onchange="show()"></select>点
+			    			<select name="min" id="min" onchange="show();"></select>分
+			    		</div>
+			    	</div>
+			    </div>
+			    <div class="btn-group modal-footer-btn">
+			    	<button type="button" id="button_esc" class="btn btn-primary">取消</button>
+			    	<button type="button" id="button_sure" class="btn btn-success">确定</button>
+			    </div>
+			</div>
+	 	</div>
+	</div> -->
+
+	<div id="navigate"></div>
+	
+	<div id="preloader">  
+	  <div id="status"></div>  
+	</div>
+	
+	<script id="cartBenas" type="text/x-handlebars-template">
+		{{#each bean.productList}}
+			<div class="comm-bar">
+				<div class="comm-bar-left">
+					<h6 style=" margin:0;">{{productName}}</h6>
+					<h6 style=" margin:0;">￥{{productPrice}}</h6>
+				</div>
+				<div class="comm-bar-right">
+					<font class="glyphicon glyphicon-plus-sign addInCart" style="font-size:30px;float:right;cursor:pointer;"
+					buyProductId="{{wechatCommodity}}" productType="{{wechatCommodityType}}" adminId="{{wechatCommodityAdminId}}"
+					></font>
+					<font style="font-size:20px;float:right;margin:8px 4px;">{{wechatCommodityCount}}</font>
+					<font class="glyphicon glyphicon-minus-sign redInCart" style="font-size:30px;float:right;cursor:pointer;"
+					buyProductId="{{wechatCommodity}}" productType="{{wechatCommodityType}}" adminId="{{wechatCommodityAdminId}}"
+					></font>
+				</div>
+			</div>
+ 		{{/each}}
+	</script>
+	
+	<!-- ------------------------------------------------------------------------------------------------------------ -->
+	
+	<script id="orderBean" type="text/x-handlebars-template">
+	{{#each rows}}
+		<div class="orders shop-group-item">
+			<div class="shop-name">
+				<input class="check goods-check shopCheck check goods-check goodsCheck">
+				<h4><a id="shopname" href="javascript:;" class="shopname" adminId="{{adminId}}">{{adminShopName}}</a></h4>
+			</div>
+				<ul>
+			{{#each productInfo}}
+					<li class="productLi">
+							<div class="food_name shop-info-text shopSPName" adminId="{{adminId}}" wechatCommodityType="{{wechatCommodityType}}" productID="{{productID}}" cardId="{{cardId}}"><p>{{productName}}</p></div>
+							<div class="food_price shop-pices">￥ <font class="price" id="price">{{productPrice}}</font></div>
+						<div class="food-arithmetic ">
+							<a href="javascript:;" class="minus">-</a>
+							<span class="num" id="count" >{{count}}</span>
+							<a href="javascript:;" class="plus">+</a>
+						</div>
+					</li>
+			{{/each}}
+					</ul>
+		本店总计：￥<span class="shop-total-amount ShopTotal">0.00</span>
+		</div>
+	{{/each}}
+	</script>
+    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+	<script type="text/javascript" src="../../assest/js/jquery.js"></script>
+	<script type="text/javascript" src="../../assest/js/bootstrap.min.js"></script>
+	
+	<script type="text/javascript" src="../../assest/bootstrap/qiao.js"></script>
+	<script type="text/javascript" src="../../js/util/main.js"></script>
+	<script type="text/javascript" src="../../js/util/handlebars-v4.0.5.js"></script>
+	<script type="text/javascript" src="../../js/phoneModelOne/common/navigate.js"></script>
+	<script type="text/javascript" src="../../js/phoneModelOne/orderList.js"></script>
+</body>
+</html>

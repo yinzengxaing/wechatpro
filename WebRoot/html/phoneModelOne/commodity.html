@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>菜单</title>
+	<link id="bootstrap-style" href="../../assest/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../../assest/phoneModelFirst/css/ui.css">
+	<link rel="shortcut icon" href="../../assest/icon/maxLogo.jpg">
+	<link type="text/css" rel="stylesheet" href="../../assest/phoneModelFirst/css/module.css"  />
+</head>
+<body style="font-size:12px">
+	<div class="header">
+		<div class="header-background"></div>
+		<div class="toolbar statusbar-padding">
+			<button class="bar-button back-button" onclick="history.go(-1);" dwz-event-on-click="click"><i class="icon icon-back"></i></button>
+			<div class="header-title">
+				<div class="title">菜单</div>
+			</div>
+		</div>
+	</div>
+	<div id="loading"><img src="../../assest/img/netlogo.png" /></div>
+	<div class="con">
+		<aside>
+			<div class="menu-left scrollbar-none r-line" id="sidebar">
+				<ul id="typeListUl">
+				
+				</ul>
+			</div>
+		</aside>
+		<section class="menu-right padding-all j-content" style="position:absolute;">
+			<h5 id="typeName">美食列表</h5>
+			<ul id="productListUl">
+			</ul>
+		</section>
+	</div>
+	
+	<div class="comm-bar-container" id="" >
+		<font class="glyphicon glyphicon-chevron-up" style="position:absolute;top:-25px; cursor:pointer; display:none;"  id="getCartProduct"></font>
+		
+		<!-- 加入购物车中的商品列表 -->
+		<div id="catProductDiv"  style="display:none ;z-index:99;">
+		
+		</div>
+	</div>
+	
+	<!--遮罩层 -->
+	<div id="wrap" class="mask-layer"></div>
+    
+	
+	<!-- 结算界面 -->
+	<div  id="clearDiv" class="payment-bar"  style="display:none">
+		<div class="shop-total">
+			<strong>总价：<i class="total" id="AllTotal">0.00</i></strong>
+		</div>
+		<a  style="cursor:pointer;" class="settlement" id="selectOver">选好了</a>
+	</div>
+	<div id="navigate"></div>
+	<!-- 页面加载层 -->
+	<div id="preloader">  
+	  <div id="status"></div>  
+	</div>
+	
+	<script id="productListBean" type="text/x-handlebars-template">
+		{{#each rows}}
+				<li class="w-3">
+					<div class="minBox">
+						<div class="minBoxImg">
+							<img class="img-thumbnail" src="{{#productLogo productLogo}}{{/productLogo}}" />
+						</div>
+						<div class="minBoxFont">
+							<div>
+								<font class="proName">{{productName}}</font>
+							</div>
+							<div>
+								<font class="proPrice"><span style="font-size:14px;float:left;">￥</span>{{productPrice}}</font>
+							</div>
+							<div class="product-count">
+								<font class="toCart glyphicon glyphicon-plus-sign" style="font-size:30px;padding:0; float:right;cursor:pointer;"
+								 buyProductId="{{productId}}" productType="{{productType}}" adminId="{{adminId}}">
+								</font>
+								<font class="count" style="font-size:20px;float:right;margin:8px 4px;">{{productCount}}</font>
+								<font class="redCart glyphicon glyphicon-minus-sign" style="font-size:30px;padding:0;float:right;cursor:pointer; cursor:pointer;"
+ 								buyProductId="{{productId}}" productType="{{productType}}" adminId="{{adminId}}">
+								</font>
+							</div>
+						</div>
+						
+					</div>
+				</li>
+ 		{{/each}}
+		<div class="height-50px"></div>
+	</script>
+	
+	<script id="cartBenas" type="text/x-handlebars-template">
+		{{#each bean.productList}}
+			<div class="comm-bar">
+				<div class="comm-bar-left">
+					<h6 style=" margin:0;">{{productName}}</h6>
+					<h6 style=" margin:0;">￥{{productPrice}}</h6>
+				</div>
+				<div class="comm-bar-right">
+					<font class="glyphicon glyphicon-plus-sign addInCart" style="font-size:30px;float:right;cursor:pointer;"
+					buyProductId="{{wechatCommodity}}" productType="{{wechatCommodityType}}" adminId="{{wechatCommodityAdminId}}"
+					></font>
+					<font style="font-size:20px;float:right;margin:8px 4px;">{{wechatCommodityCount}}</font>
+					<font class="glyphicon glyphicon-minus-sign redInCart" style="font-size:30px;float:right;cursor:pointer;"
+					buyProductId="{{wechatCommodity}}" productType="{{wechatCommodityType}}" adminId="{{wechatCommodityAdminId}}"
+					></font>
+				</div>
+			</div>
+ 		{{/each}}
+	
+	</script>
+
+	<!-- 获得该城市所有的分类列表 -->
+	<script id="typeListBean" type="text/x-handlebars-template">
+		{{#each rows}}
+			<li id="{{typeId}}" style="cursor:pointer;">{{typeName}}</li>
+		{{/each}}
+	</script>
+			
+	<script type="text/javascript" src="../../assest/js/jquery.js"></script>
+	<script type="text/javascript" src="../../assest/phoneModelFirst/js/classDefine/swiper-3.2.5.min.js"></script>
+	<script type="text/javascript" src="../../assest/phoneModelFirst/js/classDefine/ectouch.js"></script>
+	<script type="text/javascript" src="../../assest/phoneModelFirst/js/classDefine/jquery.json.js"></script>
+	<script type="text/javascript" src="../../assest/phoneModelFirst/js/classDefine/common.js"></script>
+	<script type="text/javascript" src="../../assest/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../../assest/phoneModelFirst/js/aui-swipe.js"></script>
+	
+	<script type="text/javascript" src="../../assest/bootstrap/qiao.js"></script>
+	<script type="text/javascript" src="../../js/util/main.js"></script>
+	<script type="text/javascript" src="../../js/util/handlebars-v4.0.5.js"></script>
+	<script type="text/javascript" src="../../js/phoneModelOne/common/navigate.js"></script>
+	<script type="text/javascript" src="../../js/phoneModelOne/commodity.js"></script>
+</body>
+</html>

@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.wechatpro.dao.MWechatCustomerOrderMapper">
+	<!-- 批量添订单项 -->
+	<insert id="addOrderItem" parameterType="java.util.Map">
+	INSERT INTO  ${shopping_log} 
+		(
+		orderId,
+		productID,
+		productName,
+		wechatCommodityType,
+		productPrice,
+		wetherDiscount,
+		wetherActivity,
+		productNum
+		)
+		VALUES
+    <foreach collection="ordetItems" item="item" index="index" separator="," >  
+     	(
+		#{item.orderId},
+		#{item.productID},
+		#{item.productName},
+		#{item.wechatCommodityType},
+		#{item.productPrice},
+		#{item.wetherDiscount},
+		#{item.wetherActivity},
+		#{item.productNum}
+		)   
+    </foreach>  
+	</insert>
+	
+	<!-- 添加订单 -->
+	<insert id="addOrder" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.Map"  >
+	INSERT INTO  ${order_log}
+		(
+		orderNumber,
+		createId,
+		createTime,
+		<if test="orderEatTime != null and orderEatTime != '' ">
+		orderEatTime,
+		</if>
+		orderAdminId,
+		orderType,
+		orderPrice,
+		lastUpdateTime,
+		phoneNumber      
+		)
+	VALUES
+		(
+		#{orderNumber},
+		#{createId},
+		#{createTime},
+		<if test="orderEatTime != null and orderEatTime != '' ">
+		#{orderEatTime},
+		</if>
+		#{orderAdminId},
+		#{orderType},
+		#{orderPrice},
+		#{lastUpdateTime},
+		#{phoneNumber}
+		)
+	</insert>
+	
+	<!-- 更改支付状态  默认为0 未支付 1 为已支付-->
+	<update id="updatePayState" parameterType="java.util.Map">
+		UPDATE ${order_log}
+		SET
+			 wetherPayment = 1,
+			 wetherPaymentTime=#{wetherPaymentTime},
+			 lastUpdateTime = #{lastUpdateTime},
+			 dayNo = #{dayNo}
+		WHERE
+		orderNumber = #{orderNumber};
+	</update>
+	
+	<!-- 更改是否做完并给顾客状态  0 未给 1 已给 -->
+	<update id="updateMakeState" parameterType="java.util.Map">
+		UPDATE ${order_log}
+		SET wetherPayment = 1
+		WHERE
+		orderNumber = #{orderNumber};
+	</update>
+	
+	<!-- 查询全部的订单 按条件查询   支付状态  全部订单 (查询近三个月)  -->
+	<select id="getAllOrder" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			id,
+			orderNumber,
+			createId,
+			createTime,
+			wetherPaymentTime,
+			wetherPayment,
+			orderEatTime,
+			orderAdminId,
+			orderType,
+			wetherMake,
+			orderPrice,
+			dayNo,
+			phoneNumber
+		FROM
+			${order_log_1}
+		<where>
+			createId = #{createId}
+			AND wetherPayment = 1
+			<!-- 按照是否已经做完查找 -->
+			<if test="wetherMake != null and wetherMake !='' ">
+			AND wetherMake = #{wetherMake}
+			</if>
+		</where>
+		UNION
+		SELECT
+			id,
+			orderNumber,
+			createId,
+			createTime,
+			wetherPaymentTime,
+			wetherPayment,
+			orderEatTime,
+			orderAdminId,
+			orderType,
+			wetherMake,
+			orderPrice,
+			dayNo,
+			phoneNumber
+		FROM
+			${order_log_2}
+		<where>
+			createId = #{createId}
+			AND wetherPayment = 1
+			<!-- 按照是否已经做完查找 -->
+			<if test="wetherMake != null and wetherMake !='' ">
+			AND wetherMake = #{wetherMake}
+			</if>
+		</where>
+		UNION
+		SELECT
+			id,
+			orderNumber,
+			createId,
+			createTime,
+			wetherPaymentTime,
+			wetherPayment,
+			orderEatTime,
+			orderAdminId,
+			orderType,
+			wetherMake,
+			orderPrice,
+			dayNo,
+			phoneNumber
+		FROM
+			${order_log_3}
+		<where>
+			createId = #{createId}
+			AND wetherPayment = 1
+			<!-- 按照是否已经做完查找 -->
+			<if test="wetherMake != null and wetherMake !='' ">
+			AND wetherMake = #{wetherMake}
+			</if>
+		</where>
+		ORDER BY
+		createTime DESC
+	</select>
+	<!--根据订单id查询一个订单的信息  -->
+	<select id="getOrderDetailByOrderId" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			id,
+			orderNumber,
+			createId,
+			createTime,
+			wetherPaymentTime,
+			wetherPayment,
+			orderEatTime,
+			orderAdminId,
+			orderType,
+			wetherMake,
+			orderPrice,
+			dayNo,
+			phoneNumber
+		FROM
+			${order_log}
+		WHERE 
+			id = #{id}
+	</select>
+	
+	<!-- 根据一个订单id查询订单中的商品信息 -->
+	<select id="getProductDetailByOrderId" parameterType="java.util.Map" resultType="java.util.Map" >
+		SELECT
+			id,
+			orderId,
+			productID,
+			productName,
+			wechatCommodityType,
+			productPrice,
+			wetherDiscount,
+			wetherActivity,
+			productNum
+		FROM
+			${shopping_log}
+		WHERE orderId = #{id}
+	</select>
+	
+	<!-- 根据商店id查找到最新的一条数据获取其订单编号 -->
+	<select id="selsctByShoppindId" parameterType="java.util.Map" resultType="java.util.Map">
+		select
+			orderNumber
+		from
+			${order_log}
+		where
+			orderAdminId = #{orderAdminId}
+		order by
+			id desc
+		LIMIT 1
+	</select>
+
+	<!-- 获取当前商店中最大的日流水号 -->	
+	<select id="selectMaxDayNo" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			MAX(dayNo) as MaxDayNo
+		FROM
+			${tableName}
+		WHERE
+			SUBSTRING(orderNumber, 7, 14) = #{orderIdAndNowDay}
+		AND wetherPayment = 1
+	</select>
+	
+	<!-- 查询一个商品的信息 -->
+	<select id="getProductInfo" parameterType="java.util.Map" resultType="java.util.Map">
+	<!-- 查询产品的信息 -->
+	<if test="productType == 1">
+		SELECT
+			a.id AS productID,
+			a.productName,
+			a.productPrice,
+			b.optionPath AS productLogo
+		FROM
+			wechat_product AS a,
+			wechat_option AS b
+		WHERE
+			a.id = #{productId}
+		AND a.productLogo = b.id
+	</if>
+	
+	<!-- 查询套餐的信息 -->
+	<if test="productType == 2">
+	SELECT
+		a.id  AS productID,
+		a.packageName AS productName,
+		a.packagePrice AS productPrice,
+		b.optionPath AS productLogo
+	FROM
+		wechat_product_package AS a,
+		wechat_option AS b
+	WHERE
+	a.id = #{productId}
+	AND a.packageLogo = b.id
+	</if>
+	
+	<!-- 查询可选套餐的信息 -->
+	<if test="productType == 3">
+	SELECT
+		a.id AS productID,
+		a.packageName AS productName,
+		a.packagePrice AS productPrice,
+		b.optionPath AS productLogo
+	FROM
+		wechat_product_choose_package AS a ,
+		wechat_option AS b
+	WHERE
+		a.id = #{productId}
+	AND a.packageLogo = b.id
+	</if>
+	</select>
+	
+	<!-- 根据门店id 获取门店的信息 -->
+	<select id="getRestaurantInfo" parameterType="java.util.Map" resultType="java.util.Map">
+	SELECT
+		adminId,
+		adminShopName
+	FROM
+		wechat_admin_login_mation
+	WHERE
+		adminId = #{orderAdminId}
+	</select>
+	
+	<!-- 获取当前用户的默认收货地址信息 -->
+	<select id="getAddress" parameterType="java.util.Map" resultType="java.util.Map">
+	SELECT
+		id AS addressId,
+		deliveryAddressProvince AS province,
+		deliveryAddressCity AS city,
+		deliveryAddressCount AS count,
+		deliveryAddressSpecific AS specific_,
+		deliveryConsignee AS username,
+		deliveryPhone AS phone
+	FROM
+		m_wechat_delivery_address
+	WHERE
+		deliveryUserId = #{deliveryUserId}
+	AND wetherUse = 1
+	</select>
+	
+	<!-- 根据id 获取一个用户的地址 -->
+	<select id="getAddressById" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+		id AS addressId,
+		deliveryAddressProvince AS province,
+		deliveryAddressCity AS city,
+		deliveryAddressCount AS count,
+		deliveryAddressSpecific AS specific_,
+		deliveryConsignee AS username,
+		deliveryPhone AS phone
+	FROM
+		m_wechat_delivery_address
+	WHERE
+		id=#{id}
+	</select>
+	
+	<!-- 根据一个订单号 删除该订单号下的所有商品 -->
+	<delete id="deleteOrderItems" parameterType="java.util.Map">
+	DELETE
+		FROM
+			${shopping_log}
+		WHERE orderId = #{orderId}
+	</delete>
+	
+	<!-- 根据一个订单id删除一个订单 -->
+	<delete id="deleteOrder" parameterType="java.util.Map">
+	DELETE
+		FROM
+			${order_log}
+		where
+			id = #{orderId}
+	</delete>
+	
+	<!-- 删除当前用户在该商店中购物车中的商品 -->
+	<delete id="deleteShopCartProduct" parameterType="java.util.Map">
+		DELETE
+		FROM
+			wechat_shopping_cart
+		WHERE
+			wechatCustomerLoginId = #{id}
+		AND wechatCommodityAdminId = #{adminId}
+	</delete>
+</mapper>          

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.wechatpro.dao.WechatProductBrandTagMapper">
+	<!-- 获取全部的产品品牌列表 -->
+	<select id="getProductBrandTagList" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			a.id,
+			a.brandTagName,
+			a.brandTagDesc,
+			a.brandTagState,
+			a.createTime,
+			b.adminNo
+		FROM
+			wechat_product_brand_tag AS a,
+			wechat_admin_login AS b
+		<where>
+			a.createId = b.id
+			<if test="brandTagName != null and brandTagName != ''">
+				AND	a.brandTagName LIKE '%${brandTagName}%'
+			</if>
+			<if test="brandTagState != null and brandTagState != '' ">
+				AND	a.brandTagState = #{brandTagState}
+			</if>
+		</where>
+	</select>
+
+	<!-- 通过id获取一个产品品牌 -->
+	<select id="getProductBrandTagById" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT
+			a.id,
+			a.brandTagName,
+			a.brandTagDesc,
+			a.brandTagState,
+			a.createTime,
+			a.brandTagOpinion,
+			b.adminNo
+		FROM
+			wechat_product_brand_tag AS a,
+			wechat_admin_login AS b
+		WHERE
+			a.createId = b.id
+		AND a.id = #{id}
+	</select>
+	
+	<!-- 通过产品品牌名获取一个产品品牌 -->
+	<select id="getProductBrandTagByName" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT
+			id,
+			brandTagName,
+			brandTagDesc,
+			brandTagState
+		FROM
+			wechat_product_brand_tag
+		WHERE
+			brandTagName = #{brandTagName}
+	
+	</select>
+	
+
+	<!-- 添加一个产品品牌 -->
+	<insert id="addProductBrandTag" parameterType="java.util.Map">
+		INSERT INTO wechat_product_brand_tag 
+			(
+				brandTagName,
+				brandTagState,
+		<if test="brandTagDesc != null and brandTagDesc !='' ">
+				brandTagDesc,
+		</if>
+				createId,createTime
+			)
+		VALUES
+			(
+				#{brandTagName},#{brandTagState},
+		<if test="brandTagDesc != null and brandTagDesc !='' ">
+				#{brandTagDesc},
+		</if>
+				#{createId},#{createTime}
+			)
+	</insert>
+
+	<!-- 修改一个产品品牌 -->
+	<update id="updateProductBrandTag" parameterType="java.util.Map">
+		UPDATE wechat_product_brand_tag
+		<set>
+			<if test="brandTagName != null and brandTagName != '' ">
+				brandTagName = #{brandTagName},
+			</if>
+			<if test="brandTagDesc != null and brandTagDesc != '' ">
+				brandTagDesc = #{brandTagDesc},
+			</if>
+			<if test="brandTagState == null or brandTagState == '' ">
+				brandTagState = 0,
+			</if>
+			<if test="brandTagState != null and brandTagState != '' ">
+				brandTagState = #{brandTagState},
+			</if>
+			<if test="brandTagOpinion != null  ">
+				brandTagOpinion = #{brandTagOpinion},
+			</if>
+		</set>
+		WHERE
+				id = #{id}
+	</update>
+</mapper>        

@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.wechatpro.dao.WechatAdminLoginMapper">
+   <!-- 添加用户、注册 -->
+   <insert id="insertAdminLogin" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.Map">
+	   	INSERT INTO wechat_admin_login (
+			adminNo,
+			adminPassword,
+			creatTime,
+			adminIdentity,
+			adminRole
+		)
+		VALUES
+			(
+				#{adminNo},
+				#{adminPassword},
+				#{creatTime},
+				#{adminIdentity},
+				#{adminRole}
+			)
+   </insert>
+   <delete id="deleteById" parameterType="java.util.Map">
+     	DELETE
+		FROM
+			wechat_admin_login
+		WHERE
+			id = #{id}
+   </delete>
+   
+   <!-- 修改密码 -->
+   <update id="updatePassword" parameterType="java.util.Map">
+    update wechat_admin_login set 
+    <if test="adminPassword != '' and adminPassword != null">
+    	adminPassword=#{adminPassword}
+    </if>
+    where id=#{id}
+   </update> 
+   
+   <!-- 认证未通过 -->
+   <update id="updateUserNoPass" parameterType="java.util.Map">
+   		UPDATE wechat_admin_login
+		SET adminIdentity = 4,
+		adminReason = #{adminReason} where id=#{id}
+   </update>
+   
+   <!-- 认证通过(餐厅人员认证) -->
+   <update id="updateCtUserPass" parameterType="java.util.Map">
+   		UPDATE wechat_admin_login
+		SET adminIdentity = 1,
+		adminReason = #{adminReason},adminRole=#{adminRole} where id=#{id}
+   </update>
+   
+   <!-- 认证通过(管理人员认证) -->
+   <update id="updateGlUserPass" parameterType="java.util.Map">
+   		UPDATE wechat_admin_login
+		SET adminIdentity = 2,
+		adminReason = #{adminReason},adminRole=#{adminRole} where id=#{id}
+   </update>
+   
+   
+   <!-- 认证 -->
+   <update id="updateById" parameterType="java.util.Map">
+	   	update wechat_admin_login
+	   	<set>
+	   		<if test="adminIDCardPositive != '' and adminIDCardPositive != null">
+	   			adminIDCardPositive=#{adminIDCardPositive},
+	   		</if>
+	   		<if test="adminIDCardOtherPositive != '' and adminIDCardOtherPositive != null">
+	   			adminIDCardOtherPositive=#{adminIDCardOtherPositive},
+	   		</if>
+	   		<if test="adminIDCardPeoAndPosi != '' and adminIDCardPeoAndPosi != null">
+	   			adminIDCardPeoAndPosi=#{adminIDCardPeoAndPosi},
+	   		</if>
+	   		<if test="adminIdentity != '' and adminIdentity != null">
+	   			adminIdentity=#{adminIdentity}
+	   		</if>
+	   	</set>
+	   	where id=#{id}
+   </update>
+   
+   <select id="selectAll" parameterType="java.util.Map" resultType="java.util.Map">
+	     select 
+	       a.id,
+	       a.adminNo adminNo,
+	       a.adminIdentity adminIdentity,
+	       a.creatTime creatTime,
+	       c.wechatRoleName adminRole
+	     from 
+	       wechat_admin_login a,
+	       wechat_admin_login_mation b,
+	       wechat_admin_role c 
+	       WHERE 
+	       a.id = b.adminId 
+	       AND a.adminRole = c.id
+	       <if test="adminNo != '' and adminNo != null">
+	        and  a.adminNo like '%${adminNo}%'
+	       </if>
+	       <if test="adminIdentity != '' and adminIdentity != null">
+	        and  a.adminIdentity=#{adminIdentity}
+	       </if>
+	       <if test="adminRole != '' and adminRole != null">
+	        and  a.adminRole=#{adminRole}
+	       </if>       
+   </select>
+   
+   <select id="selectByAdminIdentity" parameterType="java.util.Map" resultType="java.util.Map">
+	   	select 
+	       a.id,
+	       a.adminNo adminNo,
+	       a.adminIdentity adminIdentity,
+	       a.creatTime creatTime,
+	       c.wechatRoleName adminRole
+	     from 
+	       wechat_admin_login a,
+	       wechat_admin_login_mation b,
+	       wechat_admin_role c 
+	       WHERE 
+	       a.id = b.adminId 
+	       AND a.adminRole = c.id 
+	   	   <if test="adminNo != '' and adminNo != null">
+	        and  a.adminNo like '%${adminNo}%'
+	       </if>
+	       <if test="wechatUserState != '' and wechatUserState != null">
+	        and  a.adminIdentity=#{wechatUserState}
+	       </if>  
+	       <if test="wechatUserState == '' or wechatUserState == null">
+	        AND (a.adminIdentity=5 or a.adminIdentity=6)
+	       </if>      
+   </select>
+   
+   <select id="selectByRole" parameterType="java.util.Map" resultType="int">
+      select count(*) from wechat_admin_login where adminRole=#{id}
+   </select>
+   
+   <select id="selectById" parameterType="java.util.Map" resultType="java.util.Map">
+      SELECT
+	  	  a.adminNo adminNo,
+		  a.adminIdentity adminIdentity,
+		  a.adminHeadPoint adminHeadPoint,
+		  a.adminIDCardOtherPositive adminIDCardOtherPositive,
+		  a.adminIDCardPeoAndPosi adminIDCardPeoAndPosi,
+		  a.adminIDCardPositive adminIDCardPositive,
+		  a.creatTime creatTime,
+		  a.adminReason adminReason,
+		  c.wechatRoleName wechatRoleName,
+		  b.realName realName,
+		  b.adminSex adminSex,
+		  b.adminAge adminAge,
+		  b.adminEducation adminEducation,
+		  b.adminNation adminNation,
+		  b.adminWorkPlace adminWorkPlace,
+		  b.adminHomePlace adminHomePlace,
+		  b.adminPoliticalLandscape adminPoliticalLandscape,
+		  b.adminQq adminQq,
+		  b.adminShopName adminShopName,
+		  b.adminShopCard adminShopCard,
+		  b.adminShopKey adminShopKey,
+		  b.adminWorkXCoordinate adminWorkXCoordinate,
+		  b.adminWorkYCoordinate adminWorkYCoordinate,
+		  b.adminKfPhone adminKfPhone,
+		  b.adminKfBusinessHours adminKfBusinessHours,
+		  b.adminRecommend adminRecommend,
+		  b.adminCharacteristic adminCharacteristic
+	  FROM
+		  wechat_admin_login a,
+		  wechat_admin_login_mation b,
+		  wechat_admin_role c
+      WHERE
+	      a.id = #{id}
+	  AND a.id = b.adminId
+      AND a.adminRole = c.id
+   </select>
+   
+   <select id="selectByNo" parameterType="java.util.Map" resultType="int">
+        SELECT
+			count(*)
+		FROM
+			wechat_admin_login
+		WHERE
+			adminNo = #{adminNo}
+   </select>
+   
+   <select id="selectAdminNo" parameterType="java.util.Map" resultType="java.util.Map">
+      	SELECT
+			id
+		FROM
+			wechat_admin_login
+		WHERE
+			adminNo = #{phoneNum}
+   </select>
+   
+   <!-- 登录使用的账号密码 -->
+   <select id="selectUserPassword" parameterType="java.util.Map" resultType="java.util.Map">
+      select 
+      	id,
+      	adminNo,
+      	adminPassword,
+      	adminIdentity,
+      	adminHeadPoint,
+      	adminRole 
+      from wechat_admin_login 
+      where 
+      	adminNo=#{adminNo}
+   </select>
+   
+   <select id="selectByUser" parameterType="java.util.Map" resultType="java.util.Map">
+	   	SELECT
+		  rm.id,
+		  rm.icon 'class',
+		  rm.`name` 'title',
+		  rm.url,
+		  r.wechatRoleState wechatRoleState
+		FROM
+			wechat_admin_login l,
+			wechat_admin_role r,
+			wechat_admin_role_menu m,
+			wechat_admin_menu rm
+		WHERE
+			l.adminRole = r.id
+		AND r.id = m.wechatAdminRoleId
+		AND m.wechatAdminMenuId = rm.id
+		AND l.id = #{id}
+		AND rm.jibie = 1
+   </select>
+   
+   <!-- 显示出餐厅和餐厅人员信息 -->
+   <select id="selectShop" parameterType="java.util.Map" resultType="java.util.Map">
+	   SELECT
+	   		a.id id,
+			b.realName,
+			a.adminIdentity,
+			a.adminNo adminNo,
+			b.adminWorkPlace,
+			b.adminKfPhone,
+			b.adminShopCard,
+		    b.adminShopName 
+		FROM
+			wechat_admin_login a,
+			wechat_admin_login_mation b
+		WHERE
+			a.id = b.adminId
+		AND (
+			a.adminIdentity = '5'
+			OR a.adminIdentity = '1'
+			)
+			<if test="adminNo != '' and adminNo != null">
+				AND	a.adminNo like '%${adminNo}%'
+			</if>
+			<if test="adminWorkPlace != '' and adminWorkPlace != null">
+				AND	b.adminWorkPlace like '%${adminWorkPlace}%'
+			</if>
+			<if test="adminShopName != '' and adminShopName != null">
+				AND	b.adminShopName like '%${adminShopName}%'
+			</if>
+	   </select>
+	   
+	   <!-- 显示餐厅详情 -->
+	   <select id="selectShopXQ" parameterType="java.util.Map" resultType="java.util.Map">
+		   SELECT
+			    a.adminNo, 
+				b.realName,
+				b.adminShopName,
+				b.adminKfPhone,
+				b.adminKfBusinessHours,
+				b.adminRecommend,
+				b.adminShopCard,
+				b.adminShopKey,
+				b.adminWorkPlace,
+				b.adminWorkXCoordinate,
+				b.adminWorkYCoordinate,
+				b.adminCharacteristic
+			FROM
+				wechat_admin_login a,
+				wechat_admin_login_mation b
+			WHERE
+				a.adminNo=#{adminNo}
+			  AND a.id=b.adminId
+			AND(a.adminIdentity='1' OR a.adminIdentity='5')
+	   </select>
+	   
+	   <!-- 编辑餐厅信息 -->
+	   <update id="updateShopXQ" parameterType="java.util.Map">
+	   		UPDATE wechat_admin_login_mation a,
+			 wechat_admin_login b
+			 <set>
+				 <if test="adminShopName != '' and adminShopName != null">
+				 	 a.adminShopName = #{adminShopName},
+				 </if>
+				 <if test="adminKfPhone != '' and adminKfPhone != null">
+				 	 a.adminKfPhone = #{adminKfPhone},
+				 </if>
+				 <if test="adminShopCard != '' and adminShopCard != null">
+				 	 a.adminShopCard = #{adminShopCard},
+				 </if>
+				 <if test="adminShopKey != '' and adminShopKey != null">
+				 	 a.adminShopKey = #{adminShopKey},
+				 </if>
+				 <if test="adminKfBusinessHours != '' and adminKfBusinessHours != null">
+				 	 a.adminKfBusinessHours = #{adminKfBusinessHours},
+				 </if>
+				 <if test="adminRecommend != '' and adminRecommend != null">
+				 	  a.adminRecommend = #{adminRecommend},
+				 </if>
+				 <if test="adminCharacteristic != '' and adminCharacteristic != null">
+				 	  a.adminCharacteristic = #{adminCharacteristic},
+				 </if>
+				 <if test="adminWorkPlace != '' and adminWorkPlace != null">
+				 	 a.adminWorkPlace = #{adminWorkPlace},
+				 </if>
+				 <if test="adminWorkXCoordinate != '' and adminWorkXCoordinate != null">
+				 	 a.adminWorkXCoordinate = #{adminWorkXCoordinate},
+				 </if>
+				 <if test="adminWorkYCoordinate != '' and adminWorkYCoordinate != null">
+				 	 a.adminWorkYCoordinate = #{adminWorkYCoordinate}
+				 </if>
+			 </set>
+			WHERE
+				b.id = a.adminId
+			AND b.adminNo = #{adminNo}	
+	   </update>
+	   
+	   <!-- 查询当前登录的用户所属角色下所拥有的角色 -->
+	   <select id="selectPowerByRole" parameterType="java.util.Map" resultType="java.util.Map">
+	   		SELECT
+				`name`,
+				url
+			FROM
+				wechat_admin_menu
+			WHERE
+				belongto IN (
+					SELECT
+						wechatAdminMenuId
+					FROM
+						wechat_admin_role_menu
+					WHERE
+						wechatAdminRoleId = (
+							SELECT
+								adminRole
+							FROM
+								wechat_admin_login
+							WHERE
+								id = #{id}
+						)
+				)
+			AND jibie = '3'
+	   </select>
+</mapper>

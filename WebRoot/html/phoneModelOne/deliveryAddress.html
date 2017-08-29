@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>收货地址</title>
+	<link id="bootstrap-style" href="../../assest/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../../assest/phoneModelFirst/css/ui.css">
+	<link rel="shortcut icon" href="../../assest/icon/maxLogo.jpg">
+</head>
+<body>
+	
+	<div class="header">
+		<div class="header-background"></div>
+		<div class="toolbar statusbar-padding">
+			<button class="bar-button back-button" onclick="history.go(-1);" dwz-event-on-click="click"><i class="icon icon-back"></i></button>
+			<!--<a class="bar-button" data-href="home.html?dwz_callback=home_render" target="navTab" rel="home"><i class="icon icon-back"></i></a>-->
+			<div class="header-title">
+				<div class="title">管理收货地址</div>
+			</div>
+		</div>
+	</div>
+	<div style="height:44px"></div>
+	<div id="roleListDiv"></div>
+	<div>
+		<ul>
+			<li>
+				<a href="deliveryAddressAdd.html?returnOrder=1">
+					<div class="aui-add-cell"><span class="glyphicon glyphicon-plus center-block" ></span></div>
+					<div class="b-line aui-add-title text-center">添加收货地址</div>
+				</a>
+			</li>
+			<div class="devider"></div>
+		</ul>
+	</div>
+	
+	<div id="navigate"></div>
+	<div id="preloader">  
+	  <div id="status"></div>  
+	</div>
+	<script id="roleListBean" type="text/x-handlebars-template"> 
+		{{#each rows}}
+			<div class="aui-add-cell" rowId="{{id}}">
+				<span class="aui-add-fix">{{deliveryConsignee}}</span>
+                <span>{{deliveryPhone}}</span>
+		 	</div>
+			<div class="b-line aui-add-title">
+				{{#compare1 deliveryAddressProvince deliveryAddressCity deliveryAddressCount deliveryAddressSpecific}}
+				
+				{{/compare1}}
+			</div>
+			<div class="aui-add-cell">
+				<div class="aui-add-fix addressFont">
+					<a class="morenAddress {{#compare2 wetherUse}}{{/compare2}}" rowId="{{id}}">默认地址</a>
+				</div>
+				<div>
+					<span  style="cursor:pointer class="editAd" rowId="{{id}}">编辑</span>
+					<span  style="cursor:pointer class="delAd" rowId="{{id}}">删除</span>
+				</div>
+			</div>
+            <div class="devider"></div>
+		{{/each}}
+	</script>
+	
+	<script type="text/javascript" src="../../assest/js/jquery.js"></script>
+	<script type="text/javascript" src="../../assest/js/bootstrap.min.js"></script>
+	
+	<script type="text/javascript" src="../../assest/bootstrap/qiao.js"></script>
+	<script type="text/javascript" src="../../js/util/main.js"></script>
+	<script type="text/javascript" src="../../js/util/handlebars-v4.0.5.js"></script>
+	<script type="text/javascript" src="../../js/phoneModelOne/common/navigate.js"></script>
+	<script type="text/javascript" src="../../js/phoneModelOne/deliveryAddress.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.wechatpro.dao.WechatAppMapper">
+
+	<!-- 查询公众号信息 -->
+	<select id="getApp" resultType="java.util.Map">
+		SELECT id,appId,appSecret,createId,createTime,wechatType
+		FROM
+		wechat_app
+	</select>
+
+	<!-- 添加一个公众号信息 -->
+	<insert id="addApp" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.Map">
+		INSERT INTO
+		wechat_app(appId,appSecret,createId,createTime,wechatType)
+		VALUES(#{appId},#{appSecret},#{createId},#{createTime},#{wechatType})
+	</insert>
+
+	<!--修改公众号信息 -->
+	<update id="updateApp" parameterType="java.util.Map">
+		update wechat_app
+		<set>
+			<if test="appId !='' and appId != null">
+				appId=#{appId},
+			</if>
+			<if test="appSecret !='' and appSecret != null">
+				appSecret=#{appSecret},
+			</if>
+			<if test="createId !='' and createId != null">
+				createId=#{createId},
+			</if>
+			<if test="createTime !='' and createTime != null">
+				createTime=#{createTime},
+			</if>
+			<if test="wechatType !='' and wechatType != null">
+				wechatType=#{wechatType}
+			</if>
+
+		</set>
+		where id=#{id}
+	</update>
+</mapper>  

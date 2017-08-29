@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html"; charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
+	<meta name="format-detection" content="telephone=no">
+	<title>新增地址</title>
+
+	<link id="bootstrap-style" href="../../assest/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../../assest/phoneModelFirst/css/ui.css">
+	<link rel="stylesheet" type="text/css" href="../../assest/phoneModelFirst/css/deliveryAddressAdd.css">
+	<link rel="shortcut icon" href="../../assest/icon/maxLogo.jpg">
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body>
+	<div class="page_topbar ">
+		<a href="javascript:;" class="back" onclick="history.back()"><i
+			class="fa fa-angle-left"></i>
+		</a>
+		<div style="text-align:center; padding-top:10px">新增地址信息</div>
+	</div>
+
+	<div id="containers">
+		<div class="address_main">
+			<input type="hidden" id="addressid" value=""> <input
+				type="hidden" id="spuid" value="3074">
+			<div class="line">
+				<input type="text" placeholder="收件人" id="realname" value="">
+			</div>
+			<div class="line">
+				<input type="text" placeholder="联系电话" maxlength="11" id="mobile" value="">
+			</div>
+			<div class="line">
+				<select id="s_province" name="s_province"></select><br>
+			</div>
+			<div class="line">
+				<select id="s_city" name="s_city"></select><br>
+			</div>
+			<div class="line">
+				<select id="s_county" name="s_county"></select><br>
+			</div>
+			<div class="line">
+				<input type="text" placeholder="详细地址" id="address" value="">
+			</div>
+		</div>
+
+		<div class="address_sub1" type="button" id="sureAddress">确认</div>
+		<div class="address_sub2" type="button" id="cancel">取消</div>
+	</div>
+	<br>
+	<!-- <div id="toastId2" class="toasttj2" style="display: none; opacity: 0;"></div>
+	<div id="BgDiv1"></div>
+	<div class="U-login-con">
+		<div class="DialogDiv" style="display:none; ">
+			<div class="U-guodu-box">
+				<div>
+					<table width="100%" cellpadding="0" cellspacing="0" border="0">
+						<tr>
+							<td align="center"><img src="img/loading.gif">
+							</td>
+						</tr>
+						<tr>
+							<td valign="middle" align="center">提交中，请稍后！</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="cl"></div>
+	</div> -->
+	<div id="navigate"></div>
+	<div id="preloader">  
+	  <div id="status"></div>  
+	</div>
+	<script type="text/javascript" src="../../assest/js/jquery.js"></script>
+	<script type="text/javascript" src="../../assest/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../../assest/phoneModelFirst/js/area.js"></script>
+	<script language="javascript" src="../../assest/phoneModelFirst/js/jquery.gcjs.js"></script>
+	
+	<script type="text/javascript" src="../../assest/bootstrap/qiao.js"></script>
+	<script type="text/javascript" src="../../js/util/main.js"></script>
+	<script type="text/javascript" src="../../js/util/handlebars-v4.0.5.js"></script>
+	<script type="text/javascript" src="../../js/phoneModelOne/common/navigate.js"></script>
+	<script type="text/javascript" src="../../js/phoneModelOne/deliveryAddressAdd.js"></script>
+</body>
+</html>

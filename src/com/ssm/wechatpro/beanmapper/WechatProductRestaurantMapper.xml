@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.wechatpro.dao.WechatProductRestaurantMapper">
+	 <insert id="insertProduct" parameterType="java.util.List">
+		INSERT INTO wechat_product_restaurant (
+			adminRestaurantId,
+			productId,
+			productType,
+			productState,
+			productNum,
+			productNowNum
+		)
+		VALUES
+		 	<foreach collection ="list" item="item" index= "index" separator =",">
+			(
+				#{item.adminRestaurantId},
+			    #{item.productId}, 
+			    #{item.productType}, 
+			    #{item.productState}, 
+			    #{item.productNum}, 
+			    #{item.productNowNum}
+			 ) 
+			</foreach>
+	</insert>
+
+	<!-- 获取指定门店下的所有产品 -->
+	<select id="getProductListById" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			a.id AS productId,
+			a.productName,
+			a.productPrice,
+			a.createTime AS proCreatTime,
+			b.optionPath AS proLogo,
+			c.productState AS proState,
+			c.productNum AS proNum,
+			c.productNowNum AS proNowNum
+		FROM
+			wechat_product AS a,
+			wechat_option AS b,
+			wechat_product_restaurant AS c
+		WHERE
+			a.id IN (
+				SELECT
+					productId
+				FROM
+					wechat_product_restaurant
+				WHERE
+					productType = 1
+				AND adminRestaurantId = #{adminRestaurantId}
+			)
+		AND a.productState = 2
+		AND a.productLogo = b.id
+		AND a.id = c.productId
+		GROUP BY
+			a.id
+		ORDER BY
+			a.createTime DESC
+	</select>
+	<!-- 获取该门店下的所有套餐 -->
+	<select id="getPackageListById" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			a.id AS packageId,
+			a.packageName,
+			a.packagePrice,
+			a.createTime AS pacCreatTime,
+			b.optionPath AS pacLogo,
+			c.productState AS pacState,
+			c.productNum AS pacNum,
+			c.productNowNum AS pacNowNum
+		FROM
+			wechat_product_package AS a,
+			wechat_option AS b,
+			wechat_product_restaurant AS c
+		WHERE
+			a.id IN (
+				SELECT
+					productId
+				FROM
+					wechat_product_restaurant
+				WHERE
+					productType = 2
+				AND adminRestaurantId = #{adminRestaurantId}
+			)
+		AND a.packageState = 2
+		AND a.packageLogo = b.id
+		AND a.id = c.productId
+		GROUP BY
+			a.id
+		ORDER BY
+			a.createTime DESC
+	</select>
+	<!-- 获取该门店下的所有可选套餐 -->
+	<select id="getChooPackListById" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			a.id AS choosePackageId,
+			a.packageName AS choosePackageName,
+			a.packagePrice AS choosePackagePrice,
+			a.createTime AS chooCreatTime,
+			b.optionPath AS chooLogo,
+			c.productState AS chooState,
+			c.productNum AS chooNum,
+			c.productNowNum AS chooNowNum
+		FROM
+			wechat_product_choose_package AS a,
+			wechat_option AS b,
+			wechat_product_restaurant AS c
+		WHERE
+			a.id IN (
+				SELECT
+					productId
+				FROM
+					wechat_product_restaurant
+				WHERE
+					productType = 3
+				AND adminRestaurantId = #{adminRestaurantId}
+			)
+		AND a.packageState = 2
+		AND a.packageLogo = b.id
+		AND a.id = c.productId
+		GROUP BY
+			a.id
+		ORDER BY
+			a.createTime DESC
+	</select>
+	<!-- 删除该门店下的所有商品 -->
+	<delete id="deleteProductById" parameterType="java.util.Map">
+	DELETE 
+		FROM
+			wechat_product_restaurant
+		WHERE
+			adminRestaurantId = #{adminRestaurantId}
+	</delete>
+	
+	<!-- 查询认证通过的门店card值和对应的key -->
+	<select id="selectCardAndKey" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			b.adminShopCard,
+			b.adminShopKey
+		FROM
+			wechat_admin_login a,
+			wechat_admin_login_mation b
+		WHERE
+			a.adminIdentity = 1
+		AND a.id = b.adminId
+		AND a.id = #{adminId}
+	</select>
+	<!-- 系统定时修改商品状态 -->
+	<update id="updateStoreState" parameterType="java.util.Map">
+		UPDATE wechat_product_restaurant
+		SET productState = '0'
+		WHERE
+			(
+				productNowNum > productNum
+				OR productNowNum = productNum
+			)
+	</update>
+	
+	<!-- 系统定时创建月表 -->
+	<insert id="insertTable" parameterType="java.util.Map">
+		CREATE TABLE
+		IF NOT EXISTS ${tableName} LIKE
+		${table}
+	</insert>
+	
+	<!-- 根据商店id 和类别查询该商店的商品id -->
+	<select id="getProductByType" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			productId
+		FROM
+			wechat_product_restaurant
+		WHERE
+			adminRestaurantId = #{adminRestaurantId} 
+		AND productType = #{productType}
+	</select>
+	
+	<!-- 根据商店id 类别 产品id 来查询商店 -->
+	<select id="getProductById" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			productId
+		FROM
+			wechat_product_restaurant
+		WHERE
+			adminRestaurantId = #{adminRestaurantId} 
+		AND productType = #{productType}
+		AND productId = #{productId}
+	</select>
+	
+		<!-- 删除该门店下的所有商品 -->
+	<delete id="deleteProductByPid" parameterType="java.util.Map">
+	DELETE 
+		FROM
+			wechat_product_restaurant
+		WHERE
+			adminRestaurantId = #{adminRestaurantId} 
+		AND productType = #{productType}
+		AND productId = #{productId}
+	</delete>
+	
+	<!-- 系统定时任务，清空购物车 -->
+	<delete id="deleteAllCart" parameterType="java.util.Map">
+		DELETE FROM wechat_shopping_cart
+	</delete>
+	
+</mapper>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>麦克思首页</title>
+	<link id="bootstrap-style" href="../../assest/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../../assest/phoneModelFirst/css/ui.css">
+	<link  rel="iphone-click" type="text/css" href="../../assest/css/iphoneOnclick.css">
+	<link rel="shortcut icon" href="../../assest/icon/maxLogo.jpg">
+</head>
+<div class="aui-container">
+	<div class="aui-page">
+			<!-- 头部标题 -->
+			<span id="city" style="float:left;line-height:50px; margin-left:16px;"></span>
+			<div class="header header_twostyle">
+				<div class="aui-header-bg" style="background:#FFFFFF;"></div>
+				<div class="toolbar statusbar-padding" style="min-height:50px;">
+					<span id="username"></span>
+				</div>
+			</div>	
+			<!--间隔 -->
+			<div style="height:50px"></div>
+			
+			<!-- 轮播图广告位 -->
+		<div id="carousel-ad" class="carousel slide" data-ride="carousel">
+			<ol class="carousel-indicators">
+				<li data-target="#carousel-ad" data-slide-to="0" class="active"></li>
+				<li data-target="#carousel-ad" data-slide-to="1"></li>
+				<li data-target="#carousel-ad" data-slide-to="2"></li>
+			</ol>
+			<div class="carousel-inner" role="listbox" style="width: 100%;height: 100%;">
+				<div class="item active">
+					<img class="img-responsive" src="../../assest/img/index_03.jpg" style="width: 100%;height: 100%;">
+				</div>
+				<div class="item">
+					<img class="img-responsive" src="../../assest/img/index_02.jpg" style="width: 100%;height: 100%;">
+				</div>
+				<div class="item">
+					<img class="img-responsive" src="../../assest/img/index_01.jpg" style="width: 100%;height: 100%;">
+				</div>
+			</div>
+		</div>
+
+		<!--间隔 -->
+		<div style="height:20px;"></div>
+		<!-- 按钮 -->
+			<div class="buttonDiv">
+				<button type="button" class="btn btn-default begin_eat" id="begin_eat_btn">开始点餐</button>
+			</div>
+			<div class="change_line"></div>
+				<div style="width:80%;height:auto;">
+					<div style="float:left;padding: 15px;">
+						<!-- <img alt="" src="../../assest/icon/new.png" style="margin-left: 20px;width: 30px;height: 50px;"> -->
+						<span class="glyphicon glyphicon-user"></span>
+						<a style="font-size: 13px;">个人中心</a>
+					</div>
+					<div  style="cursor:pointer;float:right;margin-top: 24px;margin-right: -59px;" id="userDetail">
+						<a style="font-size: 13px;margin-right: 20px;">个人中心详情</a>
+						<span>>></span>
+					</div>
+				</div>
+				<div style="clear:both;"></div>
+				<div class="change_line"></div>
+				<div style="width:80%;height:auto;">
+					<div style="float:left;padding: 15px;">
+						<!-- <img alt="" src="../../assest/icon/new.png" style="margin-left: 20px;width: 30px;height: 50px;"> -->
+						<span class="glyphicon glyphicon-shopping-cart"></span>
+						<a style="font-size: 13px;">我的收货地址</a>
+					</div>
+					<div  style="cursor:pointer; float:right;margin-top: 24px;margin-right: -59px;" id="addressDeatil"> 
+						<a style="font-size: 13px;margin-right: 20px;">收货地址详情</a>
+						<span>>></span>
+					</div>
+				</div>
+				<div style="clear:both;"></div>
+				<div class="change_line"></div>
+				<div style="width:80%;height:auto;">
+					<div style="float:left;padding: 15px;">
+						<!-- <img alt="" src="../../assest/icon/new.png" style="margin-left: 20px;width: 30px;height: 50px;"> -->
+						<span class="glyphicon glyphicon-list-alt"></span>
+						<a style="font-size: 13px;">我的订单</a>
+					</div>
+					<div style=" cursor:pointer; float:right;margin-top: 24px;margin-right: -59px;" id="waitDetail">
+						<a style="font-size: 13px;margin-right: 20px;">订单详情</a>
+						<span>>></span>
+					</div>
+				</div>
+				<div class="change_line"></div>
+	</div>
+</div>
+		<!-- 页面加载层 -->
+	<div id="preloader">  
+	  <div id="status"></div>  
+	</div>
+  </body>
+  
+  	<script type="text/javascript" src="../../assest/js/jquery.js"></script>
+	<script type="text/javascript" src="../../assest/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../../assest/phoneModelFirst/js/aui-swipe.js"></script>
+	
+	<script type="text/javascript" src="../../assest/bootstrap/qiao.js"></script>
+	<script type="text/javascript" src="../../js/util/main.js"></script>
+	<script type="text/javascript" src="../../js/util/handlebars-v4.0.5.js"></script>
+	<script type="text/javascript" src="../../js/phoneModelOne/common/common.js"></script>
+	<script type="text/javascript" src="../../js/phoneModelOne/common/navigate.js"></script>
+	<script type="text/javascript" src="../../js/phoneModelOne/index.js"></script>
+</html>

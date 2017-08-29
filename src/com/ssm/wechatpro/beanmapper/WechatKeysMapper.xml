@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.wechatpro.dao.WechatKeysMapper">
+	<!-- 查询所有关键系 -->
+	<select id="selectAllKeys" resultType="java.util.Map"
+		parameterType="java.util.Map">
+		SELECT
+		adminNo,
+		wechat_keys.id AS id,
+		context,
+		wetherClose,
+		wechatKey,
+		wechatKeyType,
+		createId,
+		createTime,
+		wetherComplet
+		FROM
+		wechat_keys,
+		wechat_admin_login
+		WHERE wechat_keys.createId = wechat_admin_login.id
+			and wechatKey like #{wechatKey}
+		<if test="id !='' and id != null">
+			and wechat_keys.id=#{id}
+		</if>
+		order by wechat_keys.createTime desc
+	</select>
+
+	<!-- 查询关键字 -->
+	<select id="selectKeybyId" resultType="java.util.Map"
+		parameterType="java.util.Map">
+		SELECT
+		id,context,wetherClose,wechatKey,wechatKeyType,createId,createTime,wetherComplet
+		FROM
+		wechat_keys
+		WHERE id = #{id}
+	</select>
+
+	<select id="selectKeybyWechatKey" resultType="java.util.Map"
+		parameterType="java.util.Map">
+		SELECT
+		id,context,wetherClose,wechatKey,wechatKeyType,createId,createTime,wetherComplet
+		FROM
+		wechat_keys
+		WHERE wechatKey = #{wechatKey}
+	</select>
+
+	<!-- 添加关键字 -->
+	<insert id="addKey" parameterType="java.util.Map">
+		INSERT INTO
+		wechat_keys(context,wetherClose,wechatKey,wechatKeyType,createId,createTime,wetherComplet)
+		VALUES(#{context},#{wetherClose},#{wechatKey},#{wechatKeyType},#{createId},#{createTime},#{wetherComplet})
+	</insert>
+
+	<!-- 修改关键字 -->
+	<update id="updateKey" parameterType="java.util.Map">
+		update wechat_Keys
+		<set>
+			<if test="context !='' and context != null">
+				context=#{context},
+			</if>
+			<if test="wetherClose !='' and wetherClose != null">
+				wetherClose=#{wetherClose},
+			</if>
+			<if test="wechatKey !='' and wechatKey != null">
+				wechatKey=#{wechatKey},
+			</if>
+			<if test="wechatKeyType !='' and wechatKeyType != null">
+				wechatKeyType=#{wechatKeyType},
+			</if>
+			<if test="createId !='' and createId != null">
+				createId=#{createId},
+			</if>
+			<if test="createTime !='' and createTime != null">
+				createTime=#{createTime},
+			</if>
+			<if test="wetherComplet !='' and wetherComplet != null">
+				wetherComplet=#{wetherComplet}
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+
+	<!-- 删除关键字 -->
+	<delete id="deleteKey" parameterType="java.util.Map">
+		DELETE FROM wechat_keys
+		WHERE id=#{id}
+	</delete>
+</mapper>  

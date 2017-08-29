@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.wechatpro.dao.WechatUserMapper">
+    <!-- 查询所有用户信息 -->
+	<select id="selectWechatUser" resultType="java.util.Map" parameterType="java.util.Map">
+	SELECT
+	id,
+	openid,
+	nickname,
+	city,
+	country,
+	subscribeTime,
+	sex,
+	province,
+	groupid,
+	headimgurl,
+	subscribe,
+	remark,
+	user_id,
+	frozen,
+	appId,
+	wechatIntegral,
+	wechatLoginId,
+	wechatNowUser,
+	Location
+	FROM
+	wechat_user
+		WHERE
+	1 = 1
+		<if test="nickname !='' and nickname != null">
+			and nickname like #{nickname}
+		</if>
+		<if test="openid !='' and openid != null">
+			and openid = #{openid}
+		</if>
+	</select>
+	
+	<select id="selectWechatUserByOpenId" resultType="java.util.Map" parameterType="java.util.Map">
+	SELECT
+	id,
+	openid,
+	nickname,
+	city,
+	country,
+	subscribeTime,
+	sex,
+	province,
+	groupid,
+	headimgurl,
+	subscribe,
+	remark,
+	user_id,
+	frozen,
+	appId,
+	wechatIntegral,
+	wechatLoginId,
+	wechatNowUser,
+	Location
+	FROM
+	wechat_user
+		WHERE
+	1 = 1 and openid = #{openid}
+	</select>
+	
+	<!-- 查询用户关注情况 -->
+	<select id="selectWechatSubscribe" resultType="java.util.Map" parameterType="java.util.Map">
+	SELECT
+	subscribe
+	FROM
+	wechat_user
+	WHERE
+	openid = #{openid}
+	</select>
+	
+	<!--查询已存储的用户的openid -->
+	<select id="selectWechatOpenid" resultType="java.util.Map" parameterType="java.util.Map">
+	SELECT
+	openid
+	FROM
+	wechat_user
+	</select>
+    
+    <!--<select id="alertWechatUser" parameterType="java.util.Map" resultType="java.util.Map">
+		ALTER IGNORE TABLE `wechat_user` ADD UNIQUE INDEX( `openid`)
+	</select>-->
+    
+    <!-- 添加用户信息 -->
+    <insert id="insertAllWechatUser" parameterType="java.util.List">
+	INSERT INTO wechat_user (
+	openid,
+	nickname,
+	city,
+	country,
+	sex,
+	province,
+	groupid,
+	headimgurl,
+	subscribe,
+	remark,
+	user_id,
+	frozen,
+	appId,
+	wechatIntegral
+	)
+	VALUES
+	<foreach collection ="list" item="item" index= "index" separator =",">
+	(
+	#{item.openid},
+	#{item.nickname},
+	#{item.city},
+	#{item.country},
+	#{item.sex},
+	#{item.province},
+	#{item.groupid},
+	#{item.headimgurl},
+	#{item.subscribe},
+	#{item.remark},
+	#{item.user_id},
+	#{item.frozen},
+	#{item.appId},
+	#{item.wechatIntegral}
+	)
+	</foreach>
+    </insert>
+    
+    <insert id="insertWechatUser" parameterType="java.util.Map">
+	INSERT INTO wechat_user (
+	openid,
+	nickname,
+	city,
+	country,
+	sex,
+	province,
+	groupid,
+	headimgurl,
+	subscribe,
+	remark,
+	user_id,
+	frozen,
+	appId,
+	wechatIntegral
+	)
+	VALUES(
+	#{openid},
+	#{nickname},
+	#{city},
+	#{country},
+	#{sex},
+	#{province},
+	#{groupid},
+	#{headimgurl},
+	#{subscribe},
+	#{remark},
+	#{user_id},
+	#{frozen},
+	#{appId},
+	#{wechatIntegral}
+	)
+    </insert>
+    
+    <!-- 修改用户关注情况 -->
+    <update id="updateWechatSubscribe" parameterType="java.util.Map">
+	UPDATE wechat_user
+	SET subscribe = #{subscribe}
+	WHERE
+	openid = #{openid}
+    </update> 
+    
+    <!-- 修改wechatUser地理位置信息 -->
+    <update id="updateWechatUserLoaction" parameterType="java.util.Map">
+	UPDATE wechat_user
+	SET Latitude = #{Latitude},Longitude = #{Longitude},Accuracy = #{Precision},Location=#{Location}
+	WHERE
+	openid = #{openid}
+    </update>
+    
+    <!-- 根据openid获取经纬度 -->
+    <select id="selectLatitudeAndLongtitude" parameterType="java.util.Map" resultType="java.util.Map">
+    	SELECT
+			Latitude,
+			Longitude
+		FROM
+			wechat_user
+		WHERE
+			openid = #{openid}
+    </select>
+    
+    <!-- 修改微信用户信息 -->
+    <update id="updateWechatUser" parameterType="java.util.Map">
+    UPDATE wechat_user
+	<set>
+	<if test="wechatIntegral !='' and wechatIntegral != null">
+	wechatIntegral=#{wechatIntegral},
+	</if>
+	<if test="wechatLoginId !='' and wechatLoginId != null">
+	wechatLoginId=#{wechatLoginId},
+	</if>
+	<if test="wechatNowUser !='' and wechatNowUser != null">
+	wechatNowUser=#{wechatNowUser},
+	</if>
+	<if test="nickname !='' and nickname != null">
+	nickname=#{nickname},
+	</if>
+	<if test="city !='' and city != null">
+	city=#{city},
+	</if>
+	<if test="country !='' and country != null">
+	country=#{country},
+	</if>
+	<if test="subscribeTime !='' and subscribeTime != null">
+	subscribeTime=#{subscribeTime},
+	</if>
+	<if test="sex !='' and sex != null">
+	sex=#{sex},
+	</if>
+	<if test="province !='' and province != null">
+	province=#{province},
+	</if>
+	<if test="groupid !='' and groupid != null">
+	groupid=#{groupid},
+	</if>
+	<if test="headimgurl !='' and headimgurl != null">
+	headimgurl=#{headimgurl},
+	</if>
+	<if test="wechatIntegral !='' and wechatIntegral != null">
+	wechatIntegral=#{wechatIntegral},
+	</if>
+	<if test="wechatLoginId !='' and wechatLoginId != null">
+	wechatLoginId=#{wechatLoginId},
+	</if>
+	<if test="wechatNowUser !='' and wechatNowUser != null">
+	wechatNowUser=#{wechatNowUser},
+	</if>
+	</set>
+	WHERE
+	openid = #{openid}
+	</update>
+	
+	<!-- 添加新的登陆用户 -->
+	<insert id="insertMWechatLoginUser" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.Map">
+	INSERT INTO m_wechat_login_user (
+	loginPhone,
+	createTime,
+	loginIdentity,
+	loginState,
+	loginType,
+	loginScore,
+	membershipCardId
+	)
+	VALUES
+	(#{loginPhone},#{createTime},#{loginIdentity},#{loginState},#{loginType},#{loginScore},#{membershipCardId})
+	</insert>
+</mapper>   

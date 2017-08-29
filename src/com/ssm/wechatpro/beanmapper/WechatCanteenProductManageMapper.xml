@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.wechatpro.dao.WechatCanteenProductManageMapper">
+
+
+	<!-- 根据商店与产品的绑定关系来获得商品的分类 信息 -->
+	<select id="selectProductTypeByChoose" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT
+			productType.id AS productTYpeId,
+			productType.typeName
+		FROM
+			wechat_product_restaurant AS restaurant,
+			wechat_product AS product,
+			wechat_option AS wechatOption,
+			wechat_product_type AS productType
+		WHERE
+			adminRestaurantId = #{id}
+		AND product.id = restaurant.productId
+		AND restaurant.productType = 1
+		AND wechatOption.id = product.productLogo
+		AND product.productType = productType.id
+		group by productType.id
+	</select>
+	<!-- 根据商店与商品的绑定关系来获得特定中类的商品的信息 -->
+	<select id="selectProductByChoose" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT
+			product.id,
+			wechatOption.optionPath,
+			product.productName,
+			product.productPrice,
+			product.productKeyStr,
+			product.productDesc,
+			product.createTime,
+			product.productIntegral,
+			restaurant.productState,
+			restaurant.productNum,
+			restaurant.productNowNum
+		FROM
+			wechat_product_restaurant AS restaurant,
+			wechat_product AS product,
+			wechat_option AS wechatOption,
+			wechat_product_type AS productType
+		WHERE
+			adminRestaurantId = #{id}
+		AND product.id = restaurant.productId
+		AND restaurant.productType = 1
+		AND wechatOption.id = product.productLogo
+		AND product.productType = productType.id
+		AND productType.id = #{productTypeId}
+		<if test="productName != null and productName != ''">
+			AND product.productName LIKE "%${productName}%"
+		</if>
+		ORDER BY product.id ASC
+	</select>
+	<!-- 根据商店与套餐的绑定关系来获得套餐的信息 -->
+	<select id="selectPackageProductByChoose" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT
+			productPackage.id,
+			wechatOption.id AS optionId,
+			wechatOption.optionPath,
+			productPackage.packageName,
+			productPackage.packageDesc,
+			productPackage.packagePrice,
+			productPackage.createTime,
+			productPackage.packageIntegral,
+			productPackage.packageType,
+			productPackage.packageStartTime,
+			productPackage.packageEndTime,
+			restaurant.productId,
+			restaurant.productState,
+			restaurant.productNum,
+			restaurant.productNowNum
+		FROM
+			wechat_product_restaurant AS restaurant,
+			wechat_product_package AS productPackage,
+			wechat_option AS wechatOption
+		WHERE
+			adminRestaurantId = #{id}
+		AND productPackage.id = restaurant.productId
+		AND restaurant.productType = 2
+		AND wechatOption.id = productPackage.packageLogo
+		<if test="packageName != null and packageName != ''">
+			AND productPackage.packageName LIKE '%${packageName}%'
+		</if>
+	</select>
+	<!-- 根据商店与可选套餐的绑定关系来获得可选套餐的信息 -->
+	<select id="selectChoosePackageByChoose" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT
+			choosePakage.id,
+			wechatOption.id AS optionId,
+			wechatOption.optionPath,
+			choosePakage.packageName,
+			choosePakage.packageDesc,
+			choosePakage.packagePrice,
+			choosePakage.createTime,
+			choosePakage.packageIntegral,
+			choosePakage.packageType,
+			choosePakage.packageStartTime,
+			choosePakage.packageEndTime,
+			restaurant.productId,
+			restaurant.productState,
+			restaurant.productNum,
+			restaurant.productNowNum
+		FROM
+			wechat_product_restaurant AS restaurant,
+			wechat_product_choose_package AS choosePakage,
+			wechat_option AS wechatOption
+		WHERE
+			adminRestaurantId = #{id}
+		AND 
+			choosePakage.id = restaurant.productId
+		AND
+			restaurant.productType = 3
+		AND
+			wechatOption.id = choosePakage.packageLogo
+		<if test="packageName != null and packageName !=''">
+			AND choosePakage.packageName LIKE '%${packageName}%'
+		</if>
+	</select>
+	
+	<!-- 产品数量 -->
+	<select id="selectNum" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT
+			COUNT(id) as productNumber
+		FROM
+			wechat_product_restaurant
+		WHERE
+			adminRestaurantId = #{adminRestaurantId}
+		AND productType = #{productType}
+	</select>
+	<!-- 更新商品的总数量 -->
+	<update id="updateProductNum" parameterType="java.util.Map">
+		UPDATE wechat_product_restaurant
+		SET productNum = #{productNum}
+		WHERE
+			adminRestaurantId = #{id}
+		AND productType = #{productType}
+		AND productId in
+		<foreach collection="productId" index="index" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</update>
+	
+	<!-- 重置卖出的数量 -->
+	<update id="updateProductNowNum" parameterType="java.util.Map">
+		UPDATE wechat_product_restaurant
+		SET productNowNum = 0
+		WHERE
+			adminRestaurantId = #{id}
+		AND productType = #{productType}
+		AND productId in
+		<foreach collection="productId" index="index" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</update>
+	
+	<!-- 商品上下线操作 -->
+	<update id="updateProductState" parameterType="java.util.Map">
+		UPDATE wechat_product_restaurant
+		SET
+			productState = #{productState}
+		WHERE
+			adminRestaurantId = #{adminRestaurantId}
+		AND productType = #{productType}
+		AND productId = #{productId}
+	</update>
+	
+	<!-- 表示用现金支付 -->
+	<update id="updateCashProple" parameterType="java.util.Map">
+		UPDATE wechat_product_restaurant
+		SET productNowNum = productNowNum + 1
+		WHERE adminRestaurantId = #{id}
+		AND productType = #{productType}
+		AND productId = #{productId}
+	</update>
+	<!-- 查看商店的详细信息 -->
+	<select id="selectForShopInfo" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT
+			a.adminNo,
+			b.realName,
+			b.adminShopName,
+			b.adminKfPhone,
+			b.adminKfBusinessHours,
+			b.adminRecommend,
+			b.adminWorkPlace,
+			b.adminWorkXCoordinate,
+			b.adminWorkYCoordinate,
+			b.adminCharacteristic
+		FROM
+			wechat_admin_login a,
+			wechat_admin_login_mation b
+		WHERE
+			a.adminNo = #{adminNo}
+		AND a.id = b.adminId
+		AND (
+			a.adminIdentity = '1'
+		)
+	</select>
+</mapper>

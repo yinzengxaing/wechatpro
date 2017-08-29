@@ -1,0 +1,285 @@
+[
+  {
+    "bean": "",
+    "returnCode": 0,
+    "returnMessage": "成功",
+    "rows": [
+      {
+        "menuList": "",
+        "class": "icon-bar-chart",
+        "title": "主页",
+        "url": "../../html/user/main.html"
+      },
+      {
+        "menuList": [
+          {
+            "class": "icon-file-alt",
+            "title": "用户列表",
+            "url": "../../html/user/userList.html"
+          },
+          {
+            "class": "icon-file-alt",
+            "title": "角色列表",
+            "url": "../../html/role/roleList.html"
+          },
+          {
+            "class": "icon-file-alt",
+            "title": "权限列表",
+            "url": "../../html/permission/permissionList.html"
+          },
+          {
+            "class": "icon-file-alt",
+            "title": "通知",
+            "url": "../../html/scollor/scollorList.html"
+          }
+        ],
+        "class": "icon-tasks",
+        "title": "系统安全管理",
+        "url": "#",
+        "size": 3
+      },
+      {
+        "menuList": [
+          {
+            "class": "icon-file-alt",
+            "title": "普通商品",
+            "url": "../../html/restaurant/commonProduct.html"
+          },
+          {
+            "class": "icon-file-alt",
+            "title": "可选套餐",
+            "url": "../../html/restaurant/optionalPackage.html"
+          },
+          {
+            "class": "icon-file-alt",
+            "title": "常规套餐",
+            "url": "../../html/restaurant/commonPackage.html"
+          },
+          {
+            "class": "icon-file-alt",
+            "title": "订单管理",
+            "url": "../../html/restaurant/orderManager.html"
+          },
+          {
+            "class": "icon-file-alt",
+            "title": "门店详情",
+            "url": "../../html/restaurant/storeDetail.html"
+          }
+        ],
+        "class": "icon-tasks",
+        "title": "餐厅商店",
+        "url": "#",
+        "size": 2
+      },
+      {
+        "menuList": [
+          {
+            "class": "icon-file-alt",
+            "title": "基础信息",
+            "url": "../../html/wechatApp/wechatApp.html"
+          },
+          {
+            "class": "icon-file-alt",
+            "title": "关键字信息",
+            "url": "../../html/wechatKey/wechatKey.html"
+          },
+           {
+            "class": "icon-file-alt",
+            "title": "URL链接",
+            "url": "../../html/wechatURLLink/wechatURLLink.html"
+          },
+          {
+            "class": "icon-file-alt",
+            "title": "菜单按钮信息",
+            "url": "../../html/wechatButtomMenu/wechatButtomMenu.html"
+          },
+        ],
+        "class": "icon-tasks",
+        "title": "公众号信息管理",
+        "url": "#",
+        "size": 3
+      },
+      {
+        "menuList": [
+          {
+            "class": "icon-file-alt",
+            "title": "身份认证",
+            "url": "../../html/role/authenTiCation.html"
+          },
+        ],
+        "class": "icon-tasks",
+        "title": "身份认证",
+        "url": "#",
+        "size": 1
+      },
+      {
+        "menuList": [
+          {
+            "class": "icon-file-alt",
+            "title": "品牌信息",
+            "url": "../../html/productBandTag/productBandTag.html"
+          },
+        ],
+        "class": "icon-tasks",
+        "title": "品牌信息管理",
+        "url": "#",
+        "size": 1
+      },
+      {
+        "menuList": [
+          {
+            "class": "icon-file-alt",
+            "title": "产品分类信息",
+            "url": "../../html/productType/productTypeList.html"
+          },
+          {
+            "class": "icon-file-alt",
+            "title": "产品信息",
+            "url": "../../html/product/productList.html"
+          },
+          {
+            "class": "icon-file-alt",
+            "title": "常规套餐信息",
+            "url": "../../html/packageAll/packageList.html"
+          },
+          {
+            "class": "icon-file-alt",
+            "title": "可选套餐信息",
+            "url": "../../html/packageAll/addChoosePackage.html"
+          },
+        ],
+        "class": "icon-tasks",
+        "title": "商品信息管理",
+        "url": "#",
+        "size": 2
+      },
+      {
+        "menuList": [
+          {
+            "class": "icon-file-alt",
+            "title": "角色上线审核",
+            "url": "../../html/examineManage/roleOnlineList.html"
+          },
+           {
+            "class": "icon-file-alt",
+            "title": "用户认证审核",
+            "url": "../../html/user/userOnlineList.html"
+          },
+          {
+            "class": "icon-file-alt",
+            "title": "产品上线审核",
+            "url": "../../html/wechatApp/wechatApp.html"
+          },
+          {
+            "class": "icon-file-alt",
+            "title": "套餐上线审核",
+            "url": "../../html/packageAll/packageOnList.html"
+          },
+          {
+            "class": "icon-file-alt",
+            "title": "产品分类上线审核",
+            "url": "../../html/wechatApp/wechatApp.html"
+          },
+          {
+            "class": "icon-file-alt",
+            "title": "品牌信息审核",
+            "url": "../../html/wechatApp/wechatApp.html"
+          },
+          {
+            "class": "icon-file-alt",
+            "title": "可选套餐上线审核",
+            "url": "../../html/packageAll/choosePackageOnList.html"
+          },
+        ],
+        "class": "icon-tasks",
+        "title": "代办审核管理",
+        "url": "#",
+        "size": 1
+      },
+      {
+        "menuList": "",
+        "class": "icon-eye-open",
+        "title": "UI Features",
+        "url": "../../html/user/main.html"
+      },
+      {
+        "menuList": "",
+        "class": "icon-dashboard",
+        "title": "Widgets",
+        "url": "charts.html"
+      },
+      {
+        "menuList": [
+          {
+            "class": "icon-file-alt",
+            "title": "Sub Menu 1",
+            "url": "forms.html"
+          },
+          {
+            "class": "icon-file-alt",
+            "title": "Sub Menu 2",
+            "url": "form-validation.html"
+          },
+          {
+            "class": "icon-file-alt",
+            "title": "Sub Menu 3",
+            "url": "form-wizard.html"
+          }
+        ],
+        "class": "icon-folder-close-alt",
+        "title": "Dropdown",
+        "url": "#",
+        "size": "3"
+      },
+      {
+        "menuList": "",
+        "class": "icon-bar-chart",
+        "title": "Forms",
+        "url": "../../html/user/main.html"
+      },
+      {
+        "menuList": "",
+        "class": "icon-list-alt",
+        "title": "Charts",
+        "url": "charts.html"
+      },
+      {
+        "menuList": "",
+        "class": "icon-font",
+        "title": "Typography",
+        "url": "../../html/user/main.html"
+      },
+      {
+        "menuList": "",
+        "class": "icon-picture",
+        "title": "Gallery",
+        "url": "charts.html"
+      },
+      {
+        "menuList": "",
+        "class": "icon-align-justify",
+        "title": "Tables",
+        "url": "../../html/user/main.html"
+      },
+      {
+        "menuList": "",
+        "class": "icon-calendar",
+        "title": "Calendar",
+        "url": "charts.html"
+      },
+      {
+        "menuList": "",
+        "class": "icon-folder-open",
+        "title": "File Manager",
+        "url": "../../html/user/main.html"
+      },
+      {
+        "menuList": "",
+        "class": "icon-star",
+        "title": "Icons",
+        "url": "charts.html"
+      }
+    ],
+    "total": 5
+  }
+]

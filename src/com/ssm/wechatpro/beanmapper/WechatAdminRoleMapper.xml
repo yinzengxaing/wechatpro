@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.wechatpro.dao.WechatAdminRoleMapper">
+   <insert id="addRole" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.Map">
+      INSERT INTO wechat_admin_role (
+			wechatRoleName,
+			wechatRoleDesc,
+			wechatRoleHeadPortrait,
+			wechatRoleState,
+			createTime,
+			createId
+		)
+		VALUES
+			(
+				#{wechatRoleName},#{wechatRoleDesc},#{wechatRoleHeadPortrait},#{wechatRoleState},#{createTime},#{createId})
+   </insert>
+   
+   <delete id="deleteById" parameterType="java.util.Map">
+      	DELETE
+		FROM
+			wechat_admin_role
+		WHERE
+			id = #{id}
+   </delete>
+   
+   <select id="selectAll" resultType="java.util.Map" parameterType="java.util.Map">
+      select 
+      	   a.id,
+      	   a.wechatRoleName,
+      	   a.wechatRoleState,
+      	   a.wechatRoleDesc,
+      	   a.wechatRoleHeadPortrait,
+      	   b.optionPath optionPath
+      from
+           wechat_admin_role a,wechat_option b 
+      where 
+      1=1 and a.wechatRoleHeadPortrait = b.id
+      <if test="wechatRoleName != '' and wechatRoleName != null">
+        and wechatRoleName like '%${wechatRoleName}%'
+      </if>
+      <if test="wechatRoleState != '' and wechatRoleState != null">
+        and wechatRoleState like '%${wechatRoleState}%'
+      </if>
+   </select>
+   
+   <select id="selectAllSx" resultType="java.util.Map">
+      select 
+      	id,
+      	wechatRoleName  
+      from
+        wechat_admin_role
+      where      
+      	wechatRoleState=2
+   </select>
+   
+   <select id="selectById" parameterType="java.util.Map" resultType="java.util.Map">
+     SELECT
+		a.id,
+		a.wechatRoleName,
+		a.wechatRoleDesc,
+		a.wechatRoleHeadPortrait,
+		a.wechatRoleState,
+		a.wechatRoleOpinion,
+		c.adminNo createId,
+		a.createTime,
+		b.optionPath
+	FROM
+		wechat_admin_role a,
+		wechat_option b,
+		wechat_admin_login c
+	WHERE
+		a.id = #{id}
+	AND a.wechatRoleHeadPortrait = b.id
+	AND a.createId = c.id
+   </select>
+   
+   <select id="selectByState" parameterType="java.util.Map" resultType="java.util.Map">
+      SELECT
+		a.wechatRoleName,
+		a.wechatRoleDesc,
+		a.wechatRoleState,
+		a.id,
+		a.createTime,
+		b.adminNo
+	FROM
+		wechat_admin_role a,
+		wechat_admin_login b
+	WHERE
+		a.wechatRoleState = '1'
+	AND a.createId = b.id
+      <if test="wechatRoleName != '' and wechatRoleName != null">
+        and a.wechatRoleName = #{wechatRoleName}
+      </if>
+   </select>
+   
+   <update id="updateById" parameterType="java.util.Map">
+      update wechat_admin_role 
+      <set>
+         <if test="wechatRoleName != null and wechatRoleName!= ''">
+            wechatRoleName=#{wechatRoleName},
+         </if>
+         <if test="wechatRoleDesc != null and wechatRoleDesc != ''">
+            wechatRoleDesc=#{wechatRoleDesc},
+         </if>
+         <if test="wechatRoleOpinion != null and wechatRoleOpinion != ''">
+            wechatRoleOpinion=#{wechatRoleOpinion},
+         </if>
+         <if test="wechatRoleHeadPortrait != null and wechatRoleHeadPortrait != ''">
+            wechatRoleHeadPortrait=#{wechatRoleHeadPortrait},
+         </if>
+         <if test="wechatRoleState != null and wechatRoleState != ''">
+            wechatRoleState=#{wechatRoleState},
+         </if>
+      </set>
+      where id=#{id}
+   </update>
+   
+   <update id="updateState" parameterType="java.util.Map">
+      update wechat_admin_role set wechatRoleState=1 where id=#{id}
+   </update>
+   
+   <update id="updateStatePass" parameterType="java.util.Map">
+      update wechat_admin_role set wechatRoleState=2,wechatRoleOpinion=#{wechatRoleOpinion} where id=#{id} 
+   </update>
+   
+   <update id="updateStateNoPass" parameterType="java.util.Map">
+      update wechat_admin_role set wechatRoleState=3,wechatRoleOpinion=#{wechatRoleOpinion} where id=#{id}
+   </update>
+</mapper>

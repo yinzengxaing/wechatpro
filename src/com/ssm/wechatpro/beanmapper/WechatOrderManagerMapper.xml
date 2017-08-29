@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.wechatpro.dao.WechatOrderManagerMapper">
+	<!-- 表示做完给顾客 -->
+	<update id="updateMake" parameterType="java.util.Map">
+		UPDATE ${tableName}
+		SET wetherMake = 1,
+			lastUpdateTime = #{nowTime}
+		WHERE id = #{orderId}
+		AND orderNumber = #{orderNumber}
+	</update>
+	
+	<!-- 表示做完之卖出数量相加 -->
+	<update id="updateMakeAddNum" parameterType="java.util.Map">
+		UPDATE wechat_product_restaurant
+		SET productNowNum = productNowNum + #{productNum}
+		WHERE
+			adminRestaurantId = #{id}
+		AND productId = #{productId}
+		AND productType = #{productType}
+	</update>
+	
+	<!-- 查询该商店当天所有已经付款的但是没有给顾客的订单（按照流水号排序） -->
+	<select id="selectPaiedOrderForm" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			orderLog.id,
+			orderLog.orderNumber,
+			orderLog.wetherPaymentTime,
+			orderLog.wetherPayment,
+			orderLog.orderType,
+		 	orderLog.dayNo,
+		 	orderLog.phoneNumber,
+		 	orderLog.orderEatTime
+		FROM
+			${tableName} AS orderLog
+		WHERE
+			orderLog.wetherPayment = 1
+		AND orderLog.orderAdminId = #{orderAdminId}
+		AND wetherMake = 0
+		AND SUBSTRING(orderNumber, 7, 14) = #{shopIdAndDay}
+		<if test="orderType != null and orderType != ''">
+				AND orderType = #{orderType}
+		</if>
+		ORDER BY orderLog.dayNo ASC
+	</select>
+	
+	<!-- 查看订单的基本信息 -->
+	<select id="selectOrderFormBasic" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			orderLog.orderNumber,
+			orderLog.wetherPayment,
+			orderLog.wetherPaymentTime,
+			CASE
+		WHEN orderType = 1 THEN
+			"立即堂食"
+		WHEN orderType = 2 THEN
+			"稍后堂食"
+		WHEN orderType = 3 THEN
+			"立即外带"
+		WHEN orderType = 4 THEN
+			"稍后外带"
+		ELSE
+			"外卖"
+		END AS orderType,
+		 orderLog.orderPrice,
+		 orderLog.orderEatTime,
+		 orderLog.dayNo,
+		 orderLog.phoneNumber
+		FROM
+			${tableName} AS orderLog 
+		WHERE
+		 orderLog.id = #{orderId}
+		AND orderLog.orderNumber = #{orderNumber}
+	</select>
+	
+	<!-- 查看订单中含有的商品 -->
+	<select id="selectOrderFormDetail" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			orderShopping.productName,
+			orderShopping.productPrice,
+			orderShopping.wetherDiscount,
+			orderShopping.wetherActivity,
+			orderShopping.productNum,
+			logo.optionPath AS optionLogo
+		FROM
+			${detailTableName} AS orderShopping,
+			wechat_product AS product,
+			wechat_option AS logo
+		WHERE
+			orderShopping.orderId = #{orderId}
+		AND orderShopping.wechatCommodityType = 1
+		AND orderShopping.productID = product.id
+		AND product.productLogo = logo.id
+	</select>
+	
+	<!-- 查看该该订单中包含的商品 -->
+	<select id="selectProductTotal" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			orderShopping.productNum,
+			orderShopping.productID AS productId,
+			orderShopping.wechatCommodityType AS productType
+		FROM
+			${detailTableName} AS orderShopping,
+			wechat_product AS product
+		WHERE
+			orderShopping.orderId = #{orderId}
+		AND orderShopping.wechatCommodityType = 1
+		AND orderShopping.productID = product.id
+	</select>
+</mapper>          

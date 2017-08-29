@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+          
+<mapper namespace="com.ssm.wechatpro.dao.WechatProPacTypeRestaurantMapper">
+	<!-- 获取所有的商品分类 -->
+	<select id="getRestaurantList" parameterType="java.util.Map" resultType="java.util.Map">
+	 	SELECT
+			id,
+			proPacTypeName,
+			proPacTypeDesc
+		FROM
+			wechat_pro_pac_type
+		<where>
+			<if test="proPacTypeName != null and proPacTypeName != '' ">
+		AND proPacTypeName LIKE  '%${proPacTypeName}%'
+			</if>
+		</where>
+		ORDER BY
+			createTime DESC
+	 </select>
+	 
+	<!-- 获取所有的商品 -->
+	<select id="getProductList" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			a.id AS productId,
+			a.productName,
+			a.productPrice,
+			a.createTime AS proCreatTime,
+			a.productType,
+			c.typeName,
+			b.optionPath AS proLogo
+		FROM
+			wechat_product AS a,
+			wechat_option AS b,
+			wechat_product_type AS c
+		WHERE
+			a.productState = 2
+		AND a.productLogo = b.id
+		AND a.productType = c.id
+		ORDER BY
+			a.createTime DESC
+	</select>
+	
+	<!--获取所有的套餐  -->
+	<select id="getPackageList" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			a.id AS packageId,
+			a.packageName,
+			a.packagePrice,
+			a.createTime AS pacCreatTime,
+			b.optionPath AS pacLogo
+		FROM
+			wechat_product_package AS a,
+			wechat_option AS b
+		WHERE
+			a.packageState = 2
+		AND a.packageLogo = b.id
+		ORDER BY
+			a.createTime DESC
+	</select>
+	
+	<!-- 获取所有的可选套餐 -->
+	<select id="getChoosePackageList" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			a.id AS choosePackageId ,
+			a.packageName  AS choosePackageName,
+			a.packagePrice AS choosePackagePrice,
+			a.createTime AS chooCreatTime ,
+			b.optionPath AS chooLogo
+		FROM
+			wechat_product_choose_package AS a,
+			wechat_option AS b
+		WHERE
+				a.packageState = 2
+		AND a.packageLogo = b.id
+		ORDER BY
+			a.createTime DESC
+	</select>
+	
+	<!-- 获取该分类下所有已经被选择的商品 -->
+	<select id="getProductSelect" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			a.id AS productId,
+			a.productName,
+			a.productPrice,
+			a.createTime AS proCreatTime,
+			b.optionPath AS proLogo
+		FROM
+			wechat_product AS a,
+			wechat_option AS b
+		WHERE
+			a.id IN (
+				SELECT
+					proPacId
+				FROM
+					wechat_pro_pac_type_restaurant
+				WHERE
+					proPacType = 1
+				AND proPacTypeId = #{proPacTypeId}
+			)
+		AND a.productState = 2
+		AND a.productLogo = b.id
+		ORDER BY
+			a.createTime DESC
+	</select>
+	
+	<!-- 获取该分类下所有被选择的套餐 -->
+	<select id="getPackageListSelect" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			a.id AS packageId,
+			a.packageName,
+			a.packagePrice,
+			a.createTime AS pacCreatTime,
+			b.optionPath AS pacLogo
+		FROM
+			wechat_product_package AS a,
+			wechat_option AS b
+		WHERE
+			a.id IN (
+				SELECT
+					proPacId
+				FROM
+					wechat_pro_pac_type_restaurant
+				WHERE
+					proPacType = 2
+				AND proPacTypeId = #{proPacTypeId}
+			)
+		AND a.packageState = 2
+		AND a.packageLogo = b.id
+		ORDER BY
+			a.createTime DESC
+	</select>
+	
+	<!-- 获得该分类下所有被选择的可选套餐 -->
+	<select id="getChoosePackageSelect" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			a.id AS choosePackageId,
+			a.packageName AS choosePackageName,
+			a.packagePrice AS choosePackagePrice,
+			a.createTime AS chooCreatTime,
+			b.optionPath AS chooLogo
+		FROM
+			wechat_product_choose_package AS a,
+			wechat_option AS b
+		WHERE
+			a.id IN (
+				SELECT
+					proPacId
+				FROM
+					wechat_pro_pac_type_restaurant
+				WHERE
+					proPacType = 3
+				AND proPacTypeId = #{proPacTypeId}
+			)
+		AND a.packageState = 2
+		AND a.packageLogo = b.id
+		ORDER BY
+			a.createTime DESC
+	</select>
+	
+	<!-- 插入一条分类信息 -->
+	<insert id="updateRestaurant" parameterType="java.util.List">
+	INSERT INTO wechat_pro_pac_type_restaurant (
+		proPacTypeId,
+		proPacId,
+		proPacType,
+		createTime,
+		createId
+		)
+	VALUES
+	 <foreach collection ="list" item="item" index= "index" separator =",">
+		(
+		#{item.proPacTypeId}, 
+		#{item.proPacId}, 
+		#{item.proPacType}, 
+		#{item.createTime}, 
+		#{item.createId}
+		)
+	 </foreach >
+	</insert>
+	
+	<!-- 查看一个分类套餐的创建人和创建时间 -->
+	<select id="selectRestaurantById" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			a.createTime,
+			b.adminNo AS createId
+		FROM
+			wechat_pro_pac_type_restaurant AS a,
+			wechat_admin_login AS b
+		WHERE
+			a.createId = b.id
+		AND a.proPacTypeId = #{proPacTypeId}
+	</select>
+	
+	<!-- 删除一个分类下的所有商品 -->
+	<delete id="deleteRestaurantById" parameterType="java.util.Map">
+		DELETE 
+		FROM
+			wechat_pro_pac_type_restaurant
+		WHERE
+			proPacTypeId = #{proPacTypeId}
+	</delete>
+	<!-- 获取该分类下所有商品的数量 -->
+	<select id="getProductCount" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			proPacType,
+			COUNT(*) AS proCount
+		FROM
+			wechat_pro_pac_type_restaurant
+		WHERE 
+			proPacTypeId= #{proPacTypeId}
+		GROUP BY
+			proPacType
+	</select>
+</mapper>

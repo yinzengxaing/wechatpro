@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.wechatpro.dao.WechatMembershipMapper">
+
+    <!-- 查询所有会员卡 -->
+	<select id="selectMemberships" resultType="java.util.Map" parameterType="java.util.Map">
+	SELECT
+	card_id,
+	brand_name,
+	color,
+	title
+	FROM
+	wechat_membership_card_base_info
+	</select>
+	
+	<!-- 添加会员卡 -->
+	<insert id="insertMembership" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.Map" >
+	INSERT INTO wechat_membership_card_base_info (
+	logo_url,
+	code_type,
+	brand_name,
+	title,
+	color,
+	notice,
+	description,
+	sku,
+	quantity,
+	date_info,
+	type,
+	use_custom_code,
+	bind_openid,
+	service_phone,
+	use_all_locations,
+	get_limit,
+	can_share,
+	can_give_friend,
+	need_push_on_view,
+	createId,
+	createTime,
+	business_service,
+	card_id,
+	background_pic_url,
+	prerogative,
+	discount,
+	cost_money_unit,
+	increase_bonus,
+	max_increase_bonus,
+	init_increase_bonus,
+	cost_bonus_unit,
+	reduce_money,
+	least_money_to_use_bonus,
+	max_reduce_bonus,
+	image_url,
+	text,
+	blogo_url,
+	bimage_url,
+	bbackground_pic_url
+	)
+	VALUES(
+	#{logo_url},
+	#{code_type},
+	#{brand_name},
+	#{title},
+	#{color},
+	#{notice},
+	#{description},
+	#{sku},
+	#{quantity},
+	#{date_info},
+	#{type},
+	#{use_custom_code},
+	#{bind_openid},
+	#{service_phone},
+	#{use_all_locations},
+	#{get_limit},
+	#{can_share},
+	#{can_give_friend},
+	#{need_push_on_view},
+	#{createId},
+	#{createTime},
+	#{business_service},
+	#{card_id},
+	#{background_pic_url},
+	#{prerogative},
+	#{discount},
+	#{cost_money_unit},
+	#{increase_bonus},
+	#{max_increase_bonus},
+	#{init_increase_bonus},
+	#{cost_bonus_unit},
+	#{reduce_money},
+	#{least_money_to_use_bonus},
+	#{max_reduce_bonus},
+	#{image_url},
+	#{text},
+	#{blogo_url},
+	#{bimage_url},
+	#{bbackground_pic_url}
+	)
+	</insert>
+	
+	<!-- 修改会员卡 -->
+	<update id="updateMembership" parameterType="java.util.Map">
+	update wechat_membership_card_base_info
+		<set>
+			<if test="fixed_begin_term !='' and fixed_begin_term != null">
+				fixed_begin_term=#{fixed_begin_term},
+			</if>
+			<if test="need_push_on_view !='' and need_push_on_view != null">
+				need_push_on_view=#{need_push_on_view},
+			</if>
+			<if test="fixed_term !='' and fixed_term != null">
+				fixed_term=#{fixed_term},
+			</if>
+			<if test="end_timestamp !='' and end_timestamp != null">
+				end_timestamp=#{end_timestamp},
+			</if>
+			<if test="begin_timestamp !='' and begin_timestamp != null">
+				begin_timestamp=#{begin_timestamp},
+			</if>
+			<if test="card_url !='' and card_url != null">
+				card_url=#{card_url},
+			</if>
+			<if test="background_pic_url !='' and background_pic_url != null">
+				background_pic_url=#{background_pic_url},
+			</if>
+			<if test="prerogative !='' and prerogative != null">
+				prerogative=#{prerogative},
+			</if>
+			<if test="discount !='' and discount != null">
+				discount=#{discount},
+			</if>
+			<if test="logo_url !='' and logo_url != null">
+				logo_url=#{logo_url},
+			</if>
+			<if test="title !='' and title != null">
+				title=#{title},
+			</if>
+			<if test="color !='' and color != null">
+				color=#{color},
+			</if>
+			<if test="notice !='' and notice != null">
+				notice=#{notice},
+			</if>
+			<if test="service_phone !='' and service_phone != null">
+				service_phone=#{service_phone},
+			</if>
+			<if test="use_all_locations !='' and use_all_locations != null">
+				use_all_locations=#{use_all_locations},
+			</if>
+			<if test="description !='' and description != null">
+				description=#{description},
+			</if>
+			<if test="cost_money_unit !='' and cost_money_unit != null">
+				cost_money_unit=#{cost_money_unit},
+			</if>
+			<if test="increase_bonus !='' and increase_bonus != null">
+				increase_bonus=#{increase_bonus},
+			</if>
+			<if test="cost_bonus_unit !='' and cost_bonus_unit != null">
+				cost_bonus_unit=#{cost_bonus_unit},
+			</if>
+			<if test="reduce_money !='' and reduce_money != null">
+				reduce_money=#{reduce_money},
+			</if>
+			<if test="least_money_to_use_bonus !='' and least_money_to_use_bonus != null">
+				least_money_to_use_bonus=#{least_money_to_use_bonus},
+			</if>
+			<if test="max_reduce_bonus !='' and max_reduce_bonus != null">
+				max_reduce_bonus=#{max_reduce_bonus},
+			</if>
+			<if test="blogo_url !='' and blogo_url != null">
+				blogo_url=#{blogo_url},
+			</if>
+			<if test="bbackground_pic_url !='' and bbackground_pic_url != null">
+				bbackground_pic_url=#{bbackground_pic_url},
+			</if>
+		</set>
+		where 1=1 
+		<if test="id !='' and id != null">
+		and id=#{id}
+		</if>
+		<if test="card_id !='' and card_id != null">
+		and card_id=#{card_id}
+		</if>
+	</update>
+	
+	<!-- 删除会员卡 -->
+	<delete id="deleteMembership" parameterType="java.util.Map">
+		DELETE FROM wechat_membership_card_base_info
+		WHERE card_id=#{card_id}
+	</delete>
+	
+	<!-- 查看会员卡详情 -->
+	<select id="selectMembership" resultType="java.util.Map" parameterType="java.util.Map">
+	SELECT
+	logo_url,
+	brand_name,
+	title,
+	color,
+	notice,
+	description,
+	quantity,
+	type,
+	service_phone,
+	use_all_locations,
+	business_service,
+	card_id,
+	background_pic_url,
+	prerogative,
+	discount,
+	cost_money_unit,
+	increase_bonus,
+	cost_bonus_unit,
+	reduce_money,
+	least_money_to_use_bonus,
+	max_reduce_bonus,
+	image_url,
+	text,
+	card_url,
+	bimage_url,
+	bbackground_pic_url,
+	blogo_url
+	FROM
+	wechat_membership_card_base_info
+	WHERE
+	card_id=#{card_id}	
+	</select>
+	
+</mapper>          

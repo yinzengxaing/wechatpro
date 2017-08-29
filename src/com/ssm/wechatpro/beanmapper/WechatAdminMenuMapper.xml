@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.wechatpro.dao.WechatAdminMenuMapper">
+    
+    <insert id="insertAdminMenu" parameterType="java.util.Map">
+       insert into wechat_admin_menu (belongto,jibie,name,icon,url,createTime,createId)
+       values(#{belongto},#{jibie},#{name},#{icon},#{url},#{createTime},#{createId})
+    </insert>
+	
+	<delete id="deleteById" parameterType="java.util.Map">
+	   delete from wechat_admin_menu 
+	   where id=#{id}
+	</delete>
+	
+	<update id="updateById" parameterType="java.util.Map">
+	  update wechat_admin_menu 
+	  <set>
+	  <if test="name != '' and name != null">
+	    name=#{name},
+	  </if>
+	  <if test="icon != '' and icon != null">
+	    icon=#{icon},
+	  </if>
+	  <if test="belongto != '' and belongto != null">
+	    belongto=#{belongto},
+	  </if>
+	  <if test="url != '' and url != null">
+	    url=#{url}
+	  </if>
+	  </set> 
+	    where id=#{id}
+	</update>
+	
+	<select id="selectAll" parameterType="java.util.Map" resultType="java.util.Map">
+	   select id,belongto pId,name from wechat_admin_menu where (jibie = 1 or jibie = 2)
+	</select>
+	
+	<select id="selectAllMenuList" parameterType="java.util.Map" resultType="java.util.Map">
+	   select id,belongto pId,name,jibie,url,createTime from wechat_admin_menu 
+	   where 1=1
+	   <if test="menuName !='' and menuName != null">
+	    and name like '%${menuName}%'
+	   </if>
+	   <if test="jibie !='' and jibie != null">
+	    and jibie like '%${jibie}%'
+	   </if>
+	</select>
+	
+	<select id="selectById" parameterType="java.util.Map" resultType="java.util.Map">
+	   select * from wechat_admin_menu
+	   where id=#{id}
+	</select>
+	
+	<select id="selectFirst" resultType="java.util.Map">
+	   select * from wechat_admin_menu where jibie = '1'
+	</select>
+	
+	<select id="selectBybelong" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			*
+		FROM
+			wechat_admin_menu
+		WHERE
+			belongto = #{belongto}
+	</select>
+	
+	<select id="selectByBelongto" parameterType="java.util.Map" resultType="java.util.Map">
+	   SELECT
+			a.id,
+			a.icon 'class',
+			a.`name` 'title',
+			a.url
+		FROM
+			wechat_admin_menu a,
+			wechat_admin_role_menu b,
+			wechat_admin_login c
+		WHERE
+			a.belongto = #{id}
+		AND b.wechatAdminRoleId = c.adminRole
+		AND a.id = b.wechatAdminMenuId
+		AND c.id = #{userId}
+	</select>
+	
+	<!-- 查询所有二级菜单的名称和id -->
+	<select id="selectSecondMenu" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			id,
+			`name`
+		FROM
+			wechat_admin_menu
+		WHERE
+			belongto = #{id}
+	</select>
+	
+	<!-- 添加菜单所拥有的权限 -->
+	<insert id="insertPower" parameterType="java.util.Map">
+		INSERT INTO wechat_admin_menu (
+			belongto,
+			jibie,
+			name,
+			url,
+			createTime,
+			createId
+		)
+		VALUES
+			(
+				#{belongto},
+				#{jibie},
+				#{name},
+				#{url},
+				#{createTime},
+				#{createId}
+			)
+	</insert>
+	
+	<!-- 根据二级菜单的id来查询菜单所拥有的权限 -->
+	<select id="selectPower" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			id,
+			name,
+			url
+		FROM
+			wechat_admin_menu
+		WHERE
+			belongto = #{id}
+	</select>
+	
+	<!-- 编辑二级菜单所拥有的权限 -->
+	<update id="updatePower" parameterType="java.util.Map">
+		UPDATE wechat_admin_menu
+		<set>
+			<if test="name != null and name != '' ">
+				name = #{name},
+			</if>
+			<if test="url != null and url != '' ">
+				url = #{url},
+			</if>
+			<if test="belongto != null and belongto != '' ">
+				belongto = #{belongto}
+			</if>
+		</set>
+		WHERE
+			id = #{id}
+	</update>
+	
+	<!-- 回显权限的二级菜单一级菜单的id -->
+	<select id="selectFirstAndSecond" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			a.id,
+			a.belongto secondId,
+			a.url,
+			a.`name`,
+			(SELECT b.belongto FROM wechat_admin_menu b WHERE b.id = a.belongto) firstId
+		FROM
+			wechat_admin_menu a
+		WHERE
+			a.id = #{id}
+	</select>
+</mapper>          

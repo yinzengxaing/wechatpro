@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>我的订单</title>
+	<link id="bootstrap-style" href="../../assest/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../../assest/phoneModelFirst/css/ui.css">
+	<link type="text/css" rel="stylesheet" href="../../assest/phoneModelFirst/css/base.css" />
+	<link type="text/css" rel="stylesheet" href="../../assest/phoneModelFirst/css/module.css"  />
+	<link rel="shortcut icon" href="../../assest/icon/maxLogo.jpg">
+</head>
+<body>
+	<div class="header">
+		<div class="header-background"></div>
+		<div class="toolbar statusbar-padding">
+			<button class="bar-button back-button" onclick="history.go(-1);" dwz-event-on-click="click"><i class="icon icon-back"></i></button>
+			<div class="header-title">
+				<div class="title">我的订单</div>
+			</div>
+		</div>
+	</div>
+	<div class="aui-t-content">
+		<div class="aui-tab ">
+			<ul class="aui-b-border">
+				<li class="aui-hit" orderType="1" id="allOrder"  style="cursor:pointer;" >全部订单</li>
+				<li class="" orderType="2" id="sendOrder" style="cursor:pointer;" >待发货</li>
+				<li class="" orderType="3" id="getOrder" style="cursor:pointer;" >已完成订单</li>
+			</ul>
+			<!-- 放置订单的div -->
+			<div class="aui-panes" id="orderDiv">
+
+			</div>
+		</div>
+	</div>
+	
+	<!-- 全部订单的bean -->
+	<script id="allOrderBean" type="text/x-handlebars-template">
+		{{#each rows}}
+				<div class="orders shop-group-item">
+					<div class="shop-name">
+						<input class="goods-check shopCheck goods-check goodsCheck"><font class="fontstyle">{{#compare1 wetherPayment wetherMake }}{{/compare1}}</font></input>
+						<h4 class="dianpu" style="margin-left:10px"><a href="#" id="shopName" adminId="">{{adminShopName}}</a></h4>
+					</div>
+					<ul class="shopbackground" style="background:white;">
+						<li class="productLi">
+							<div class="ordercheck shop-info">
+								<div class="shop-info-img foodshop"><a href="#"><img class="img-thumbnail" src="{{#orderLogo orderLogo}}{{/orderLogo}}" /></a></div>
+								<div class="shop-info-text contentorder">
+									<h3 class="foodname">{{orderName}}</h3>
+									<div class="shop-brief"><span>订单类型:{{#orderType orderType}}{{/orderType}}</span></div>
+									<div class="shop-brief"><span>创建时间:{{createTime}}</span></div>
+									<div class="food_price shop-pices">￥ <font class="price" id="price">{{totalPrice}}元</font></div>
+								</div>
+							</div>
+						</li>
+					</ul>
+					<div class="shop-name"  orderNumber="{{orderNumber}}" orderId={{orderId}}>
+						{{#compare2 wetherPayment wetherMake}}{{/compare2}}
+					</div>
+				</div>
+		{{/each}}
+	</script>
+	<div style="height:44px"></div>
+	<div id="navigate"></div>
+	
+	
+    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+	<script type="text/javascript" src="../../assest/js/jquery.js"></script>
+	<script type="text/javascript" src="../../assest/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../../assest/phoneModelFirst/js/aui-swipe.js"></script>
+	
+	<script type="text/javascript" src="../../assest/bootstrap/qiao.js"></script>
+	<script type="text/javascript" src="../../js/util/main.js"></script>
+	<script type="text/javascript" src="../../js/util/handlebars-v4.0.5.js"></script>
+	<script type="text/javascript" src="../../js/phoneModelOne/common/common.js"></script>
+	<script type="text/javascript" src="../../js/phoneModelOne/common/navigate.js"></script>
+	<script type="text/javascript" src="../../js/phoneModelOne/wait.js"></script>
+</body>
+</html>

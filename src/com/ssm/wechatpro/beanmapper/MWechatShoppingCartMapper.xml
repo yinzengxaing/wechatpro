@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.wechatpro.dao.MWechatShoppingCartMapper">
+	<!-- 向购物车中添加商品 -->
+	<insert id="addProduct" parameterType="java.util.Map">
+		insert wechat_shopping_cart(
+			wechatCustomerLoginId,
+			wechatCommodity,
+			wechatCommodityAdminId,
+			wechatCommodityType,
+			wechatCommodityCount,
+			createTime
+		)
+		values
+		(
+			#{wechatCustomerLoginId},
+			#{wechatCommodity},
+			#{wechatCommodityAdminId},
+			#{wechatCommodityType},
+			#{wechatCommodityCount},
+			#{createTime}
+		)
+	</insert>
+
+	<!-- 删除购物车中的商品信息 -->
+	<delete id="deleteProduct" parameterType="java.util.Map">
+		DELETE
+		FROM
+			wechat_shopping_cart
+		WHERE
+		id = #{id}
+	</delete>
+	
+	
+	<!-- 更改购物车中的一种商品的数量 -->
+	<update id="updateProductCount" parameterType="java.util.Map">
+		UPDATE wechat_shopping_cart
+		SET wechatCommodityCount = #{wechatCommodityCount} 
+		WHERE
+		id = #{id}
+	</update>
+	
+	<!-- 清除用户购物车中的所有商品 -->
+	<delete id="deleteCartAllInfo" parameterType="java.util.Map">
+		DELETE
+		FROM
+			wechat_shopping_cart
+		WHERE
+			wechatCustomerLoginId = #{wechatCustomerLoginId}
+	</delete>
+	
+	<!-- 根据商店的id 获取该用户购物车中的商品信息（商品id  商品类型， 商品id， 商品数量）-->
+	<select id="getCartProductInfo" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			id ,
+			wechatCustomerLoginId,
+			wechatCommodity,
+			wechatCommodityAdminId,
+			wechatCommodityType,
+			wechatCommodityCount,
+			createTime
+		FROM
+			wechat_shopping_cart
+		WHERE
+			wechatCommodityAdminId = #{wechatCommodityAdminId}
+			<if test="wechatCommodity != null and wechatCommodity != '' ">
+			AND wechatCommodity = #{wechatCommodity}
+			</if>
+			<if test="wechatCommodityType != null and wechatCommodityType != '' ">
+			AND wechatCommodityType  =#{wechatCommodityType}
+			</if>
+			<if test="wechatCustomerLoginId != null and wechatCustomerLoginId !='' ">
+			AND wechatCustomerLoginId = #{wechatCustomerLoginId}
+			</if>
+	</select>
+	
+	<!-- 获取该用户购物车中商品的商店id -->
+	<select id="getShopIds" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			id ,
+			wechatCustomerLoginId,
+			wechatCommodity,
+			wechatCommodityAdminId,
+			wechatCommodityType,
+			wechatCommodityCount,
+			createTime
+		FROM
+			wechat_shopping_cart
+		WHERE
+			wechatCustomerLoginId = #{wechatCustomerLoginId}
+		GROUP BY
+			wechatCommodityAdminId
+	</select>
+	
+	<!-- 根据商店id 获取商店id 和名称 -->
+	<select id="getShopName" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			adminId,
+			adminShopName
+		FROM
+			wechat_admin_login_mation
+		WHERE
+			adminId = #{wechatCommodityAdminId}
+	</select>
+	
+	<!-- 产品数量加1 -->
+	<update id="productCountUp" parameterType="java.util.Map">
+			UPDATE wechat_shopping_cart
+		SET wechatCommodityCount = wechatCommodityCount+1 
+		WHERE
+			wechatCommodityAdminId = #{wechatCommodityAdminId}
+		AND wechatCommodity = #{wechatCommodity}
+		AND wechatCommodityType  =#{wechatCommodityType}
+	</update>
+	
+	<!-- 产品数量减1 -->
+	<update id="productCOuntDown" parameterType="java.util.Map">
+			UPDATE wechat_shopping_cart
+		SET wechatCommodityCount = wechatCommodityCount-1 
+		WHERE
+			wechatCommodityAdminId = #{wechatCommodityAdminId}
+		AND wechatCommodity = #{wechatCommodity}
+		AND wechatCommodityType  =#{wechatCommodityType}
+	</update>
+	
+	<!-- 产品的详细信息  (商店的id 产品的id)-->
+	<select id="getProductByCartInfo" parameterType="java.util.Map"  resultType="java.util.Map" >
+		SELECT
+			a.id AS productId,
+			a.productName,
+			a.productPrice,
+			a.createTime AS productCreatTime,
+			a.productDesc AS productDesc,
+			b.optionPath AS productLogo,
+			c.productState AS productState,
+			c.productNum AS productNum,
+			c.productNowNum AS productNowNum,
+			d.typeName,
+			e.adminId,
+			e.adminShopName AS ShopName
+		FROM
+			wechat_product AS a,
+			wechat_option AS b,
+			wechat_product_restaurant AS c,
+			wechat_product_type AS d,
+			wechat_admin_login_mation AS e
+		WHERE
+			a.id IN (
+				SELECT
+					productId
+				FROM
+					wechat_product_restaurant
+				WHERE
+					productType = 1
+				AND c. adminRestaurantId = #{wechatCommodityAdminId}
+			)
+		AND a.productState = 2
+		AND a.productLogo = b.id
+		AND a.id = c.productId
+		AND a.productType = d.id
+		AND e.adminId = #{wechatCommodityAdminId} 
+		AND a.id = #{wechatCommodity}
+		GROUP BY
+			a.id
+		ORDER BY
+			a.createTime DESC
+	</select>
+	<!--套餐的详细信息  (商店的id 套餐的id)  -->
+	<select id="getPackageByCartInfo" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			a.id AS productId,
+			a.packageName AS productName,
+			a.packagePrice AS productPrice,
+			a.packageDesc AS productDesc,
+			a.packageIntegral AS productIntegral,
+			a.createTime AS productCreatTime,
+			b.optionPath AS productLogo,
+			c.productState AS productState,
+			c.productNum AS productNum,
+			c.productNowNum AS productNowNum,
+			e.adminId,
+			e.adminShopName AS ShopName
+		FROM
+			wechat_product_package AS a,
+			wechat_option AS b,
+			wechat_product_restaurant AS c,
+			wechat_admin_login_mation AS e
+			where
+				a.id IN (
+				SELECT
+					productId
+				FROM
+					wechat_product_restaurant
+				WHERE
+					productType = 2
+				AND adminRestaurantId = #{wechatCommodityAdminId}
+					)
+				AND a.packageState = 2
+				AND a.packageLogo = b.id
+				AND a.id = c.productId
+				AND e.adminId = #{wechatCommodityAdminId} 
+				AND a.id = #{wechatCommodity}
+		GROUP BY
+			a.id
+		ORDER BY
+			a.createTime DESC
+	</select>
+	
+	<!-- 可选套餐的详细信息 (商店id 可选套餐id) -->
+	<select id="getChooPackageByCartInfo" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			a.id AS productId,
+			a.packageName AS productName,
+			a.packagePrice AS productPrice,
+ 			a.packageDesc AS productDesc,
+			a.packageIntegral AS productIntegral,
+			a.createTime AS productCreatTime,
+			b.optionPath AS productLogo,
+			c.productState AS productState,
+			c.productNum AS productNum,
+			c.productNowNum AS productNowNum,
+			e.adminId,
+			e.adminShopName AS ShopName
+		FROM
+			wechat_product_choose_package AS a,
+			wechat_option AS b,
+			wechat_product_restaurant AS c,
+			wechat_admin_login_mation AS e
+			where
+				a.id IN (
+				SELECT
+					productId
+				FROM
+					wechat_product_restaurant
+				WHERE
+					productType = 3
+				AND adminRestaurantId = #{wechatCommodityAdminId} 
+					)
+				AND a.packageState = 2
+				AND a.packageLogo = b.id
+				AND a.id = c.productId
+				AND e.adminId = #{wechatCommodityAdminId} 
+				AND a.id = #{wechatCommodity}
+		GROUP BY
+			a.id
+		ORDER BY
+			a.createTime
+	</select>
+	
+	<!-- 查询当前登录人购物车所有商品 -->
+	<select id="selectAllProduct" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			wechatCustomerLoginId,
+			wechatCommodity,
+			wechatCommodityType,
+			wechatCommodityCount,
+			b.productPrice productPrice,
+			b.productName productName
+		FROM
+			wechat_shopping_cart a,
+			wechat_product b
+		WHERE
+			wechatCustomerLoginId = #{id}
+		AND wechatCommodityAdminId = #{adminId}
+		AND wechatCommodity = b.id
+	</select>
+	
+</mapper>

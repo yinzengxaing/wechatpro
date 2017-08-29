@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>commonProduct.html</title>
+	<meta name="description" content="Bootstrap Metro Dashboard">
+	<meta name="author" content="Dennis Ji">
+	<meta name="keyword" content="Metro, Metro UI, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link id="bootstrap-style" href="../../assest/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../../assest/bootstrap/bootstrap-validator/css/bootstrapValidator.css">
+	<link href="../../assest/bootstrap/bootstrap-table-develop/src/bootstrap-table.css" rel="stylesheet" />
+	<link href="../../assest/css/bootstrap-responsive.min.css" rel="stylesheet">
+	<link id="base-style" href="../../assest/css/style.css" rel="stylesheet">
+	<link id="base-style-responsive" href="../../assest/css/style-responsive.css" rel="stylesheet">
+	<link id="base-style" href="../../assest/ztree/css/zTreeStyle.css" rel="stylesheet">
+	<!--[if lt IE 9]>
+	  	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<link id="ie-style" href="../../assest/css/ie.css" rel="stylesheet">
+	<![endif]-->
+	<!--[if IE 9]>
+		<link id="ie9style" href="../../assest/css/ie9.css" rel="stylesheet">
+	<![endif]-->
+	<link rel="shortcut icon" href="../../assest/img/favicon.ico">
+</head>
+<body class="childBody">
+	<ul class="breadcrumb">
+		<li>
+			<i class="icon-home"></i>
+			<a href="javascript:;">Home</a>
+			<i class="icon-angle-right"></i> 
+		</li>
+		<li>
+			<i class="icon-edit"></i>
+			<a href="javascript:;">普通商品</a>
+		</li>
+	</ul>
+	<div class="box-content" style="text-align: left;">
+		商品名称：<input type="text" class="typeahead form-control selectInput-100" id="search"/>
+			<button type="button" id="seachBtn" class="btn btn-primary">查询</button>
+	</div>
+	
+	<div class="row-fluid sortable">
+		<div class="box span12">
+			<div class="box-header" data-original-title>
+				<div class="box-icon">
+					<a href="#" class="btn-minimize"><i class="halflings-icon chevron-up"></i></a>
+				</div>
+			</div>
+			<div class="box-content contentDiv" id="whenUnInvable">
+				<div id= "hideDiv">
+					<ul id="myTabList" class="nav nav-tabs" style="display:none">
+						
+					</ul>
+					<div id="myTabContent" class="tab-content" style="display:none">
+						<div class="tab-pane fade in active" id="home">
+							<div class="panel-body">
+								<table id="message" class="table table-bordered commonProduct_table">
+								 	<div class="table_button" >
+										<button type="button" class="btn btn-info" id="upOrDownbtnMany">上/下线</button>
+										<button type="button" class="btn btn-success" id="enterNowNumButMany">重置卖出数量</button>
+										<button type="button" class="btn btn-default" id="modifyNumbtnMany">修改总数量</button>
+									</div>
+							  	</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 进行单一的操作 -->
+	<div class="modal fade" id="myModal1" tabindex="-1" aria-labelledby="myModalLabel">
+		<div class="modal-dialog dialog-width-800" role="document">
+			<div class="modal-content">
+			    <div class="modal-header">
+			    	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+			    	<h4 class="modal-title" id="">确认操作</h4>
+				</div>
+			    <div class="modal-body">
+			    	是否确定重置卖出数量
+			    </div>
+			    <div class="modal-footer">
+			    	<button type="button" id="enterNowNumBut" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>确认</button>
+			    	<button type="button" id="enterNowNumCancelBut" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>取消</button>
+			    </div>
+			</div>
+	 	</div>
+	</div>
+		
+	<div class="modal fade" id="myModal2" tabindex="-1" aria-labelledby="myModalLabel">
+		<div class="modal-dialog dialog-width-800" role="document">
+			<div class="modal-content">
+			    <div class="modal-header">
+			    	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+			    	<h4 class="modal-title" id="">确认操作</h4>
+				</div>
+			    <div class="modal-body commonProduct_Modal_Body">
+			    	<p>修改总数量为:</p><input id="productNumberId" type="text" class="commonProduct_iput authenTiCation-input" value="">
+			    </div>
+			    <div class="modal-footer">
+			    	<button type="button" id="modifyNumbtn" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>确认</button>
+			    	<button type="button" id="modifyNumCancelbtn" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>取消</button>
+			    </div>
+			</div>
+	 	</div>
+	</div>
+	
+	<!-- 进行上下线操作 -->
+	<div class="modal fade" id="myModal4" tabindex="-1" aria-labelledby="myModalLabel">
+		<div class="modal-dialog dialog-width-800" role="document">
+			<div class="modal-content">
+			    <div class="modal-header">
+			    	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+			    	<h4 class="modal-title" id="">确认操作</h4>
+				</div>
+			    <div class="modal-body commonProduct_Modal_Body">
+			    	<font id="upLineOk">确认更改为上线状态？</font>
+			    	<font id="downLineOk">确认更改为下线状态？</font>
+			    </div>
+			    <div class="modal-footer">
+			    	<button type="button" id="upOrDownbtn" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>确认</button>
+			    	<button type="button" id="upOrDownCancelbtn" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>取消</button>
+			    </div>
+			</div>
+	 	</div>
+	</div>
+	
+	<!-- 进行批量操作显示的模态框 -->
+	<div class="modal fade" id="myModal11" tabindex="-1" aria-labelledby="myModalLabel">
+		<div class="modal-dialog dialog-width-800" role="document">
+			<div class="modal-content">
+			    <div class="modal-header">
+			    	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+			    	<h4 class="modal-title" id="">确认操作</h4>
+				</div>
+			    <div class="modal-body">
+			    	是否重置所选择商品的卖出数量？
+			    </div>
+			    <div class="modal-footer">
+			    	<button type="button" id="enterNowNumModelButMany" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>确认</button>
+			    	<button type="button" id="enterNowNumModelCancelButMany" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>取消</button>
+			    </div>
+			</div>
+	 	</div>
+	</div>
+		
+	<div class="modal fade" id="myModal22" tabindex="-1" aria-labelledby="myModalLabel">
+		<div class="modal-dialog dialog-width-800" role="document">
+			<div class="modal-content">
+			    <div class="modal-header">
+			    	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+			    	<h4 class="modal-title" id="">确认操作</h4>
+				</div>
+			    <div class="modal-body commonProduct_Modal_Body">
+			    	<p>修改总数量为:</p><input id="productNumberIdMany" type="text" class="commonProduct_iput authenTiCation-input" value="">
+			    </div>
+			    <div class="modal-footer">
+			    	<button type="button" id="modifyNumModelbtnMany" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>确认</button>
+			    	<button type="button" id="modifyNumModelCancelbtnMany" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>取消</button>
+			    </div>
+			</div>
+	 	</div>
+	</div>
+	
+	<!-- 进行上下线操作 -->
+	<div class="modal fade" id="myModal44" tabindex="-1" aria-labelledby="myModalLabel">
+		<div class="modal-dialog dialog-width-800" role="document">
+			<div class="modal-content">
+			    <div class="modal-header">
+			    	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+			    	<h4 class="modal-title" id="">确认操作</h4>
+				</div>
+			    <div class="modal-body">
+			    	是否更改所选择商品的状态？
+			    </div>
+			    <div class="modal-footer">
+			    	<button type="button" id="upOrDownModelbtnMany" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>确认</button>
+			    	<button type="button" id="upOrDownModelCancelbtnMany" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>取消</button>
+			    </div>
+			</div>
+	 	</div>
+	</div>
+	
+	<!-- 表示用现金进行支付  -->
+	<div class="modal fade" id="myModal5" tabindex="-1" aria-labelledby="myModalLabel">
+		<div class="modal-dialog dialog-width-800" role="document">
+			<div class="modal-content">
+			    <div class="modal-header">
+			    	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+			    	<h4 class="modal-title" id="">确认操作</h4>
+				</div>
+			    <div class="modal-body">
+			    	确认用现金进行支付？
+			    </div>
+			    <div class="modal-footer">
+			    	<button type="button" id="enterCashBut" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>确认</button>
+			    	<button type="button" id="cancelCashBut" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>取消</button>
+			    </div>
+			</div>
+	 	</div>
+	</div>
+	
+	<!--查看的div  -->
+	<div class="modal fade" id="myModal3" tabindex="-1"	aria-labelledby="myModalLabel">
+		<div class="modal-dialog dialog-width-800" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel1">产品详情</h4>
+				</div>
+				<div class="modal-body dialog-body">
+					<div class="form-group dialog-50">
+						<label for="txt_departmentname" class="dialog-label-20">名称：</label>
+						<div class="dialog-div-75">
+							<font id="productName"></font>
+						</div>
+					</div>
+					<div class="form-group dialog-50">
+						<label for="txt_departmentname" class="dialog-label-20">价格：</label>
+						<div class="dialog-div-75">
+							<font id="productPrice"></font>元
+						</div>
+					</div>
+					<div class="form-group dialog-50">
+						<label for="txt_departmentname" class="dialog-label-20">品牌：</label>
+						<div class="dialog-div-75">
+							<font id="brandTagName"></font>
+						</div>
+					</div>
+					<div class="form-group dialog-50">
+						<label for="txt_departmentname" class="dialog-label-20">类别：</label>
+						<div class="dialog-div-75">
+							<font id="typeName"></font>
+						</div>
+					</div>
+					<div class="form-group dialog-50">
+						<label for="txt_departmentname" class="dialog-label-20">当前状态：</label>
+						<div class="dialog-div-75">
+							<font id="productState"></font>
+						</div>
+					</div>
+					<div class="form-group dialog-50">
+						<label for="txt_departmentname" class="dialog-label-20">创建人：</label>
+						<div class="dialog-div-75">
+							<font id="adminNo"></font>
+						</div>
+					</div>
+					<div class="form-group dialog-50">
+						<label for="txt_departmentname" class="dialog-label-20">创建时间：</label>
+						<div class="dialog-div-75">
+							<font id="createTime"></font>
+						</div>
+					</div>
+					<div class="form-group dialog-50">
+						<label for="txt_departmentname" class="dialog-label-20">早餐推荐:</label>
+						<div class="dialog-div-75">
+							<font id="productWetherBreakfast"></font>
+						</div>
+					</div>
+					<div class="form-group dialog-50">
+						<label for="txt_departmentname" class="dialog-label-20">午餐推荐:</label>
+						<div class="dialog-div-75">
+							<font id="productWetherLunch"></font>
+						</div>
+					</div>
+					<div class="form-group dialog-50">
+						<label for="txt_departmentname" class="dialog-label-20">晚餐推荐:</label>
+						<div class="dialog-div-75">
+							<font id="productWetherDinner"></font>
+						</div>
+					</div>
+					<div class="form-group dialog-50">
+						<label for="txt_departmentname" class="dialog-label-20">是否优惠:</label>
+						<div class="dialog-div-75">
+							<font id="productWetherDiscount"></font>
+						</div>
+					</div>
+					<div class="form-group dialog-50">
+						<label for="txt_departmentname" class="dialog-label-20">积分:</label>
+						<div class="dialog-div-75">
+							<font id="productIntegral"></font>
+						</div>
+					</div>
+					<div class="form-group dialog-50">
+						<label for="txt_departmentname" class="dialog-label-20">商品条码:</label>
+						<div class="dialog-div-75">
+							<font id="productKeyStr"></font>
+						</div>
+					</div>
+					<div class="form-group dialog-50">
+						<label for="txt_departmentname" class="dialog-label-20">商品图片：</label>
+						<div class="dialog-div-75">
+							<img alt="" src="" class="dialogUserImg img-thumbnail"
+								id="imgPath" />
+						</div>
+					</div>
+					<div class="form-group dialog-100">
+						<label for="txt_departmentname" class="dialog-label-10">商品描述：</label>
+						<div class="dialog-div-80">
+							<font id="productDesc"></font>
+						</div>
+					</div>
+					<div class="form-group dialog-100">
+						<label for="txt_departmentname" class="dialog-label-10">所属套餐：</label>
+						<font id="packageFont"></font>
+						<div id="packageListDiv" class="dialog-div-80">
+						
+						</div>
+					</div>
+					<div class="form-group dialog-100">
+						<label for="txt_departmentname" class="dialog-label-10">审核意见：</label>
+						<div class="dialog-div-80">
+							<font id="productOpinion"></font>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">
+						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 显示tab页 -->
+	<script id="myTabBean" type="text/x-handlebars-template">
+		{{#each rows}}
+			<li ><a data-toggle="tab" productTypeId={{productTYpeId}}>{{typeName}}</a></li>
+		{{/each}}
+	</script>
+
+	<!-- 遍历套餐信息 -->
+	<script id="packageListBean" type="text/x-handlebars-template">
+		{{#each rows}}
+			<div class="panel panel-default"
+	    		<div style="height:90px; width:100%">
+					<div style="float:left">
+						<img alt="" src={{#packageLogo packageLogo}}{{/packageLogo}} class="dialogUserImg img-thumbnail"/>
+					</div>
+					<div style="float:left; vertical-align:middle; margin-left:10px">
+						套餐名称：<font>{{packageName}}</font><br/>
+						套餐价格：<font>{{packagePrice}}元</font><br/>
+						套餐积分：<font>{{packageIntegral}}</font><br/>
+						套餐描述：<font>{{#packageDesc packageDesc}}{{/packageDesc}}</font><br/>
+					</div>
+				</div>
+			</div>
+		{{/each}}						
+	</script>
+	<script src="../../assest/js/jquery.js"></script>
+	<script src="../../assest/js/jquery-migrate-1.0.0.min.js"></script>
+	<script src="../../assest/js/jquery-ui-1.10.0.custom.min.js"></script>
+	<script src="../../assest/js/jquery.ui.touch-punch.js"></script>
+	<script src="../../assest/js/modernizr.js"></script>
+	<script src="../../assest/js/bootstrap.min.js"></script>
+	<script src="../../assest/bootstrap/bootstrap-validator/js/bootstrapValidator.min.js"></script>
+	<script src="../../assest/bootstrap/bootstrap-table-develop/src/bootstrap-table.js"></script>
+	<script src="../../assest/bootstrap/bootstrap-table-develop/src/locale/bootstrap-table-zh-CN.js"></script>
+	<script src="../../assest/js/jquery.cookie.js"></script>
+	<script src='../../assest/js/fullcalendar.min.js'></script>
+	<script src='../../assest/js/jquery.dataTables.min.js'></script>
+	<script src="../../assest/js/excanvas.js"></script>
+	<script src="../../assest/js/jquery.flot.js"></script>
+	<script src="../../assest/js/jquery.flot.pie.js"></script>
+	<script src="../../assest/js/jquery.flot.stack.js"></script>
+	<script src="../../assest/js/jquery.flot.resize.min.js"></script>
+	<script src="../../assest/js/jquery.chosen.min.js"></script>
+	<script src="../../assest/js/jquery.uniform.min.js"></script>
+	<script src="../../assest/js/jquery.cleditor.min.js"></script>
+	<script src="../../assest/js/jquery.noty.js"></script>
+	<script src="../../assest/js/jquery.elfinder.min.js"></script>
+	<script src="../../assest/js/jquery.raty.min.js"></script>
+	<script src="../../assest/js/jquery.iphone.toggle.js"></script>
+	<script src="../../assest/js/jquery.uploadify-3.1.min.js"></script>
+	<script src="../../assest/js/jquery.gritter.min.js"></script>
+	<script src="../../assest/js/jquery.imagesloaded.js"></script>
+	<script src="../../assest/js/jquery.masonry.min.js"></script>
+	<script src="../../assest/js/jquery.knob.modified.js"></script>
+	<script src="../../assest/js/jquery.sparkline.min.js"></script>
+	<script src="../../assest/js/counter.js"></script>
+	<script src="../../assest/js/retina.js"></script>
+	<script src="../../assest/js/custom.js"></script>
+	
+	<script type="text/javascript" src="../../assest/bootstrap/qiao.js"></script>
+	<script type="text/javascript" src="../../assest/ztree/js/jquery.ztree.all-3.5.js"></script>
+	<script type="text/javascript" src="../../js/util/main.js"></script>
+	<script type="text/javascript" src="../../js/util/handlebars-v4.0.5.js"></script>
+	<script type="text/javascript" src="../../js/restaurant/commonProduct.js"></script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>个人中心</title>
+	<link id="bootstrap-style" href="../../assest/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../../assest/phoneModelFirst/css/ui.css">
+	<link rel="shortcut icon" href="../../assest/icon/maxLogo.jpg">
+</head>
+<body class="android">
+	<div class="scroll-content" >
+		<div class="">
+			<div class="header home-header" style="" id="headsearch">
+				<div class="toolbar statusbar-padding active">
+					<div class="cityMenu">
+						<font id="city"></font>
+						<span class="glyphicon glyphicon-chevron-down" id="moreCity"></span>
+					</div>
+				</div>
+			</div>
+			<div class="my-info">
+				<div class="my-info-background"></div>
+				<img class="my-avatar" src="" id="headimgurl">
+				<span class="name"><a href="javaScript:;" style="color:#fff" id="accountLogin"></a></span>
+				<span class="my-vip" style="background:none" >积分:<font id="wechatIntegral"></font></span>
+			</div>
+			<div class="my-car-shortcut">
+				<div class="layout-column b-line" style="padding:10px 0">
+					<a class="col" href="wait.html?orderType=1" rel="test" id="allOrders">
+						<span class="img-icon ">
+							<img class="img-icon-home" src="../../assest/img/alldingdan1.png" />
+						</span>
+						<span class="img-icon-name">全部订单</span>
+					</a>
+					<a class="col"  rel="test" href="wait.html?orderType=2" id="payment">
+						<span class="img-icon ">
+							<img class="img-icon-home" src="../../assest/img/daifukuan3.png" />
+						</span>
+						<span class="img-icon-name">待发货</span>
+					</a>
+					<a class="col"  rel="test" href="wait.html?orderType=3" id="takeGoods">
+						<span class="img-icon ">
+							<img class="img-icon-home" src="../../assest/img/order1.png" />
+						</span>
+						<span class="img-icon-name">已完成订单</span>
+					</a>
+
+				</div>
+			</div>
+			<div class="devider b-line"></div>
+			<!-- 个人中心 begin-->
+			<div>
+				<div class="aui-list-cells">
+					<a href="javascript:;" class="aui-list-cell" id="myBalance">
+						<div class="aui-list-cell-fl"><img src="../../assest/img/yue.png"></div>
+						<div class="aui-list-cell-cn">我的余额</div>
+						<div class="aui-list-cell-fr"></div>
+					</a>
+					<a href="javascript:;" class="aui-list-cell" id="myAddress">
+						<div class="aui-list-cell-fl"><img src="../../assest/img/dizhiguanli.png"></div>
+						<div class="aui-list-cell-cn">地址管理</div>
+						<div class="aui-list-cell-fr"></div>
+					</a>
+					<div class="devider b-line"></div>
+					<a href="javascript:;" class="aui-list-cell" id="myCard">
+						<div class="aui-list-cell-fl"><img src="../../assest/img/kaquan.png"></div>
+						<div class="aui-list-cell-cn">我的卡券</div>
+						<div class="aui-list-cell-fr"></div>
+					</a>
+					<a href="javascript:;" class="aui-list-cell" id="scoreShop">
+						<div class="aui-list-cell-fl"><img src="../../assest/img/jifen.png"></div>
+						<div class="aui-list-cell-cn">积分商城</div>
+						<div class="aui-list-cell-fr"></div>
+					</a>
+					<!-- <div class="devider b-line"></div>
+					<a href="login.html" class="aui-list-cell">
+						<div class="aui-list-cell-fl"><img src="../../assest/img/netlogo.png"></div>
+						<div class="aui-list-cell-cn" id="myAccount">退出账号</div>
+						<div class="aui-list-cell-fr"></div>
+					</a> -->
+				</div>
+			</div>
+	
+	
+		</div>
+	</div>
+	<div style="height:48px"></div>
+<!-- 	<div class="tab-bar tab-bottom">
+		
+	</div> -->
+	<div id="navigate"></div>
+	
+	<div id="preloader">  
+	  <div id="status"></div>  
+	</div>
+	<script type="text/javascript" src="../../assest/js/jquery.js"></script>
+	<script type="text/javascript" src="../../assest/js/bootstrap.min.js"></script>
+	
+	<script type="text/javascript" src="../../assest/bootstrap/qiao.js"></script>
+	<script type="text/javascript" src="../../js/util/main.js"></script>
+	<script type="text/javascript" src="../../js/util/handlebars-v4.0.5.js"></script>
+<!-- 	<script type="text/javascript" src="../../js/phoneModelOne/common/common.js"></script> -->
+	<script type="text/javascript" src="../../js/phoneModelOne/common/navigate.js"></script>
+	<script type="text/javascript" src="../../js/phoneModelOne/myMation.js"></script>
+</body>
+</html>

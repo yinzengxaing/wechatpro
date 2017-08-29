@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.wechatpro.dao.WechatProductPackageMapper">
+
+	<!-- 显示所有的套餐 -->
+	<select id="selectAllPackage" parameterType="java.util.Map" resultType="java.util.Map">
+		select
+			packageAll.id as id,
+			packageName,
+			packageState,
+			woption.optionPath as optionPath,
+			packageIntegral,
+			packageAll.createTime as createTime,
+			packageDesc,
+			packagePrice,
+			packageType,
+			packageStartTime,
+			packageEndTime
+		from
+			wechat_product_package AS packageAll,
+			wechat_option AS woption
+		where
+			packageState != 4
+		and
+			packageAll.packageLogo = woption.id 
+		<if test="packageState != null and packageState != ''">
+			and packageState=#{packageState}
+		</if>
+		<if test="packageName != null and packageName != ''">
+			and packageName LIKE '%${packageName}%'
+		</if>
+		ORDER BY packageAll.createTime DESC
+	</select>
+
+	<!-- 通过id查询套餐的信息 -->
+	<select id="selectPackageById" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			packageAll.id as id,
+			packageAll.packageName AS packageName,
+			woption.id AS Imageid,
+			woption.optionPath AS optionPath,
+			packageAll.packagePrice AS packagePrice,
+			packageAll.packageIntegral AS packageIntegral,
+			packageAll.packageType AS packageType,
+			packageAll.packageStartTime AS packageStartTime,
+			packageAll.packageEndTime AS packageEndTime,
+			packageAll.packageWetherDiscount AS packageWetherDiscount,
+			packageAll.packageDesc AS packageDesc,
+			packageAll.createTime AS packageCreateTime,
+			packageAll.packageState AS packageState,
+			packageAll.packageOpinion as packageOpinion,
+			packageAll.productId as productId,
+			admin_login.adminNo AS createName
+		FROM
+			wechat_product_package AS packageAll,
+			wechat_admin_login AS admin_login,
+			wechat_option AS woption
+		WHERE
+			packageAll.id = #{id}
+		AND
+			packageAll.packageLogo = woption.id 
+		AND admin_login.id = (
+			SELECT
+				wechat_product_package.createId
+			FROM
+				wechat_product_package
+			WHERE
+				id = #{id}
+		)
+	</select>
+
+	<!-- 生成一个套餐表单 -->
+	<!-- 套餐状态(packageState) (int)0：创建；1：提交审核；2：审核通过；3：审核不通过；4：删除；5：失效 -->
+	<insert id="insertPackage" parameterType="java.util.Map">
+		INSERT wechat_product_package (
+			packageName,
+			packageLogo,
+			packagePrice,
+			productId,
+			packageIntegral,
+			packageType,
+			packageStartTime,
+			packageEndTime,
+			packageState,
+			packageWetherDiscount,
+			packageDesc,
+			createId,
+			createTime
+		)
+			values
+		(
+			#{packageName},
+			#{packageLogo},
+			#{packagePrice},
+			#{productId},
+			#{packageIntegral},
+			#{packageType},
+		<!-- 等于1表示长久有效，套餐时间段起始结束时间为空，否则的话设置为需要的时间，初始状态为0 -->
+		<if test="packageType == 1">
+			"",
+			"",
+		</if>
+		<if test="packageType == 2">
+			#{packageStartTime},
+			#{packageEndTime},
+		</if>
+			0,
+			'N',
+		<if test="packageDesc != null">		
+			#{packageDesc},
+		</if>
+		<if test="packageDesc == null">
+			"",
+		</if>
+			#{createId},
+			#{createTime}
+		)
+	</insert>
+
+	<!-- 查看提审状态的套餐 -->
+	<select id="selectProductByState" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			packageAll.id AS id,
+			packageName,
+			packageState,
+			woption.optionPath AS optionPath,
+			packageIntegral,
+			packageAll.createTime AS createTime,
+			packageDesc,
+			packagePrice,
+			packageType,
+			packageStartTime,
+			packageEndTime
+		FROM
+			wechat_product_package AS packageAll,
+			wechat_option AS woption
+		WHERE
+			packageState = 1
+		AND packageAll.packageLogo = woption.id
+		<if test="packageName != null and packageName !=''">
+			AND packageAll.packageName LIKE '%${packageName}%'
+		</if>
+	</select>
+	
+	<!-- 更新套餐信息状态-->
+	<update id="updatePackageState" parameterType="java.util.Map">
+		update
+			wechat_product_package
+		set
+			packageState = 1,
+			packageOpinion = ""
+		where
+			id=#{id}
+	</update>
+	
+	<update id="updatePackageStatePass" parameterType="java.util.Map">
+		update
+			wechat_product_package
+		set
+			packageState = 2,
+			packageOpinion = #{packageOpinion}
+		where
+			id=#{id}
+	</update>
+	
+	<update id="updatePackageStateNotPass" parameterType="java.util.Map">
+		update
+			wechat_product_package
+		set
+			packageState = 3,
+			packageOpinion = #{packageOpinion}
+		where
+			id=#{id}
+	</update>
+	
+	<!-- 更新套餐的内容 -->
+	<update id="updatePackageInfo"  parameterType="java.util.Map">
+		update
+			wechat_product_package 
+		set
+			packageName = #{packageName},
+			packageLogo = #{packageLogo},
+			packagePrice = #{packagePrice},
+			productId = #{productId},
+			packageIntegral = #{packageIntegral},
+			packageType = #{packageType},
+			<if test="packageType == 1">
+				packageStartTime = '',
+				packageEndTime = '',
+			</if>
+			<if test="packageType == 2">
+				packageStartTime = #{packageStartTime},
+				packageEndTime = #{packageEndTime},
+			</if>
+			packageState = 0,
+			packageWetherDiscount = 'N',
+			<if test="packageDesc != null and packageDesc != ''">
+				packageDesc = #{packageDesc},
+			</if>
+			createId = #{createId},
+			createTime = #{createTime} 
+		where
+			id=#{id}
+	</update>
+
+	<!-- 通过id删除套餐（进行逻辑删除） -->
+	<update id="deletePackageById" parameterType="java.util.Map">
+		update
+			wechat_product_package
+		set
+			packageState = 4
+		where 
+			id = #{id}
+	</update>
+	
+	<!-- 通过套餐中查询出套餐绑定产品ID,查看套餐的详细信息 -->
+	<select id="selectPackageDetailInfoById" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			product.productName AS productName,
+			product.productIntegral AS productIntegral,
+			woption.optionPath AS optionPath,
+			product.productPrice AS productPrice,
+			product.productDesc AS productDesc,
+			product.productState AS productState
+		FROM
+			wechat_product AS product,
+			wechat_option AS woption
+		WHERE
+			product.productLogo = woption.id
+		AND INSTR(
+			CONCAT(",", #{productId}, ","),
+			CONCAT(",", product.id, ',')
+		)
+	</select>
+	
+	<!-- 通过商品类型ID查询商品信息 -->
+	<select id="selectProductByProductTypeId" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			product.id AS productId,
+			woption.optionPath AS optionPath,
+			product.productName ,
+			product.productPrice,
+			product.createTime AS productCreateTime
+		FROM
+			wechat_product AS product,
+			wechat_option AS woption
+		WHERE
+			product.productLogo = woption.id
+		AND
+			product.productType = #{typeId}
+		AND product.productState = 2
+	</select>
+	
+	<select id="selectAdminIdByAdminNo" parameterType="java.util.Map" resultType="java.util.Map">
+		select id from wechat_admin_login where adminNo = #{adminNo}
+	</select>
+</mapper>

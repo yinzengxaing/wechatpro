@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.wechatpro.dao.MWechatProductMapper">
+	<!-- 获取该地区中的所有商店 -->
+	<select id="getAllRestaurant" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			a.adminId,
+			a.adminShopName,
+			a.adminWorkXCoordinate,
+			a.adminWorkYCoordinate,
+			a.adminKfBusinessHours,
+			adminWorkPlace
+		FROM
+			wechat_admin_login_mation AS a
+		WHERE
+			adminId IN (
+				SELECT
+					id
+				FROM
+					wechat_admin_login
+				WHERE
+					adminIdentity = 1
+			)
+		AND adminWorkPlace LIKE '%${adminWorkPlace}%'
+	</select>
+	
+	<!-- 根据商店id 获取该商店中的所有的商品类型 -->
+	<select id="getAllType" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			a.productType AS typeId,
+			d.typeName
+		FROM
+			wechat_product AS a,
+			wechat_option AS b,
+			wechat_product_restaurant AS c,
+			wechat_product_type AS d
+		WHERE
+			a.id IN (
+				SELECT
+					productId
+				FROM
+					wechat_product_restaurant
+				WHERE
+					productType = 1
+				AND adminRestaurantId  = #{adminId}
+			)
+		AND a.productState = 2
+		AND a.productLogo = b.id
+		AND a.id = c.productId
+		AND a.productType = d.id
+		AND c.productState = 1
+		GROUP BY
+			a.productType
+		ORDER BY
+			a.createTime DESC
+	</select>
+	
+	<!-- 根据分类获取该分类下的所有商品 -->
+	<select id="getProductListByType" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			a.id AS productId,
+			a.productName,
+			a.productIntegral,
+			a.productDesc,
+			a.productPrice,
+			a.productType AS productTypeId,
+			a.createTime ,
+			b.optionPath AS productLogo,
+			c.productState ,
+			c.productNum ,
+			c.productNowNum,
+			d.typeName,
+			e.adminShopName,
+			e.adminId
+		FROM
+			wechat_product AS a,
+			wechat_option AS b,
+			wechat_product_restaurant AS c,
+			wechat_product_type AS d,
+			wechat_admin_login_mation AS e
+		WHERE
+			a.id IN (
+				SELECT
+					productId
+				FROM
+					wechat_product_restaurant
+				WHERE
+					productType = 1
+				AND c.adminRestaurantId  = #{adminId}
+			)
+		AND a.productState = 2
+		AND a.productLogo = b.id
+		AND a.id = c.productId
+		AND a.productType = d.id
+		AND a.productType = #{typeId}
+		AND e.adminId = #{adminId}
+		AND c.productState = 1
+		GROUP BY
+			a.id
+		ORDER BY
+			a.createTime DESC
+	</select>
+	
+	<!-- 获取该商店的套餐 -->
+	<select id="getAllPackageList" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			a.id AS productId,
+			a.packageName AS productName,
+			a.packagePrice AS productPrice,
+			a.packageDesc AS productDesc,
+			a.packageIntegral AS productIntegral,
+			a.createTime,
+			b.optionPath AS productLogo,
+			c.productNum ,
+			c.productNowNum ,
+			e.adminShopName,
+			e.adminId
+		FROM
+			wechat_product_package AS a,
+			wechat_option AS b,
+			wechat_product_restaurant AS c,
+			wechat_admin_login_mation AS e
+			where
+				a.id IN (
+				SELECT
+					productId
+				FROM
+					wechat_product_restaurant
+				WHERE
+					productType = 2
+				AND adminRestaurantId  = #{adminId}
+					)
+				AND a.packageState = 2
+				AND a.packageLogo = b.id
+				AND a.id = c.productId
+				AND e.adminId = #{adminId}
+				AND c.productState = 1
+		GROUP BY
+			a.id
+		ORDER BY
+			a.createTime DESC
+	</select>
+	
+	<!-- 获取所有的可选套餐 -->
+	<select id="getAllChoosePackageList" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			a.id AS productId,
+			a.packageName AS productName,
+			a.packagePrice AS productPrice,
+ 			a.packageDesc AS productDesc,
+			a.packageIntegral AS productIntegral,
+			a.createTime ,
+			b.optionPath AS productLogo,
+			c.productNum ,
+			c.productNowNum,
+			e.adminShopName,
+			e.adminId
+		FROM
+			wechat_product_choose_package AS a,
+			wechat_option AS b,
+			wechat_product_restaurant AS c,
+			wechat_admin_login_mation AS e
+			where
+				a.id IN (
+				SELECT
+					productId
+				FROM
+					wechat_product_restaurant
+				WHERE
+					productType = 3
+				AND adminRestaurantId = #{adminId}
+					)
+				AND a.packageState = 2
+				AND a.packageLogo = b.id
+				AND a.id = c.productId
+				AND e.adminId = #{adminId}
+				AND c.productState = 1
+		GROUP BY
+			a.id
+		ORDER BY
+			a.createTime
+	</select>
+
+	<!-- 根据价格 获取该商店的套餐 -->
+	<select id="getPackageByPrice" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			a.id AS productId,
+			a.packageName AS productName,
+			a.packagePrice AS productPrice,
+			a.packageDesc AS productDesc,
+			a.packageIntegral AS productIntegral,
+			a.createTime,
+			b.optionPath AS productLogo,
+			c.productNum ,
+			c.productNowNum ,
+			e.adminShopName,
+			e.adminId
+		FROM
+			wechat_product_package AS a,
+			wechat_option AS b,
+			wechat_product_restaurant AS c,
+			wechat_admin_login_mation AS e
+			where
+				a.id IN (
+				SELECT
+					productId
+				FROM
+					wechat_product_restaurant
+				WHERE
+					productType = 2
+				AND adminRestaurantId  = #{adminId}
+					)
+				AND a.packageState = 2
+				AND a.packageLogo = b.id
+				AND a.id = c.productId
+				AND e.adminId = #{adminId}
+				AND c.productState = 1
+		GROUP BY
+			a.id
+		ORDER BY
+			a.packagePrice ASC
+		LIMIT 4
+	</select>
+	
+	<!-- 获取当月该商品卖出的数量 -->
+	<select id="getCountByMonth" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			SUM(productNum) AS monthNumber
+		FROM
+			${shopping_log}
+		WHERE
+			wechatCommodityType = #{productType}
+		AND 
+			productID = #{productId}
+	</select>
+	
+	<!-- 获取一个商品的详细信息 -->
+	<select id="getProductDetail" parameterType="java.util.Map" resultType="java.util.Map">
+		<!-- 查询产品的信息 -->
+	<if test="productType == 1">
+		SELECT
+			a.id AS productID,
+			a.productName,
+			a.productPrice,
+			a.productDesc,
+			a.productIntegral,
+			b.optionPath AS productLogo
+		FROM
+			wechat_product AS a,
+			wechat_option AS b
+		WHERE
+			a.id = #{productId}
+		AND a.productLogo = b.id
+	</if>
+	
+	<!-- 查询套餐的信息 -->
+	<if test="productType == 2">
+	SELECT
+		a.id  AS productID,
+		a.packageName AS productName,
+		a.packagePrice AS productPrice,
+		a.packageDesc AS productDesc,
+		a.packageIntegral AS productIntegral,
+		b.optionPath AS productLogo
+	FROM
+		wechat_product_package AS a,
+		wechat_option AS b
+	WHERE
+	a.id = #{productId}
+	AND a.packageLogo = b.id
+	</if>
+	
+	<!-- 查询可选套餐的信息 -->
+	<if test="productType == 3">
+	SELECT
+		a.id AS productID,
+		a.packageName AS productName,
+		a.packagePrice AS productPrice,
+		a.packageDesc AS productDesc,
+		a.packageIntegral AS productIntegral,
+		b.optionPath AS productLogo
+	FROM
+		wechat_product_choose_package AS a ,
+		wechat_option AS b
+	WHERE
+		a.id = #{productId}
+	AND a.packageLogo = b.id
+	</if>
+	</select>
+</mapper>          

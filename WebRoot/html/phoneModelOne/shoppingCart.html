@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="format-detection" content="telephone=no"/>
+	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+	<title>购物车</title>
+	<link id="bootstrap-style" href="../../assest/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link type="text/css" rel="stylesheet" href="../../assest/phoneModelFirst/css/base.css" />
+	<link type="text/css" rel="stylesheet" href="../../assest/phoneModelFirst/css/module.css"  />
+	<link rel="shortcut icon" href="../../assest/icon/maxLogo.jpg">
+</head>
+<body>
+	<!--头部开始-->
+	<div class="header">
+		<h1>购物车</h1>
+		<a href="javaScript:;" class="back" onclick="history.go(-1);"><span></span></a>
+		<a href="#" class=""></a>
+	</div>
+	<!--头部结束-->
+	<div class="shopping" id="productDiv">
+
+	</div>
+	
+	<div class="payment-bar">
+		<div class="all-checkbox"><input type="checkbox" class="check goods-check" id="AllCheck">全选</div>
+		<div class="shop-total">
+			<strong>总价：<i class="total" id="AllTotal">0.00</i></strong>
+		</div>
+		<a  style="cursor:pointer;" class="settlement" id="Clearing">结算</a>
+	</div>
+	<div id="navigate"></div>
+	
+	<script id="productBean" type="text/x-handlebars-template">
+	{{#each rows}}
+		<div class="shop-group-item">
+			<div class="shop-name">
+				<input type="checkbox" class="check goods-check shopCheck">
+				<h4><a href="#" id="shopName" adminId="{{adminId}}">{{adminShopName}}</a></h4>
+				<div class="coupons"><span class="editShoplist">领券</span><em></em><span class="editShoplist"></span><!--<span class="shop-total-amount ShopTotal">0</span>--></div>
+			</div>
+			<ul>
+				{{#each productList}}
+				<li class="productLi">
+					<div class="shop-info">
+						<input type="checkbox" name="chkItem" class="check goods-check goodsCheck productItem" adminId="{{adminId}}" productId="{{productId}}" productType="{{productType}}" cartId="{{cartId}}">
+						<div class="shop-info-img"><a href="#"><img class="img-thumbnail" src="{{#productLogo productLogo}}{{/productLogo}}" /></a></div>
+							<font style="cursor:pointer;" class="deleteProduct" cartId="{{cartId}}">删除</font>
+							<div class="shop-info-text">
+							<h4>{{productName}}</h4>
+							<div class="shop-brief"><span>商品描述:{{productDesc}}</span></div>
+							<div class="shop-price">
+								<div class="shop-pices">￥<b class="price">{{productPrice}}</b></div>
+								<div class="shop-arithmetic">
+									<a href="javascript:;" class="minus">-</a>
+									<span class="num" id="count{{productId}}">{{count}}</span>
+									<a href="javascript:;" class="plus">+</a>
+								</div
+							</div>
+							
+						</div>
+					</div>
+				</li>
+				{{/each}}
+			</ul>
+			<div class="shopPrice">本店总计：￥<span class="shop-total-amount ShopTotal">0.00</span></div>
+		</div>
+	{{/each}}
+	</script>
+	<script type="text/javascript" src="../../assest/js/jquery.js"></script>
+	<script type="text/javascript" src="../../assest/js/bootstrap.min.js"></script>
+	
+	<script type="text/javascript" src="../../assest/bootstrap/qiao.js"></script>
+	<script type="text/javascript" src="../../js/util/main.js"></script>
+	<script type="text/javascript" src="../../js/util/handlebars-v4.0.5.js"></script>
+	<script type="text/javascript" src="../../js/phoneModelOne/common/navigate.js"></script>
+	<script type="text/javascript" src="../../js/phoneModelOne/shoppingCart.js"></script>
+</body>
+</html>

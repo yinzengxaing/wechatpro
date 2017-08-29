@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link id="bootstrap-style" href="../../assest/bootstrap/shopDetails/bootstrap.min.css" rel="stylesheet">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>购物详情页面</title>
+	<link type="text/css" rel="stylesheet" href="../../assest/phoneModelFirst/css/base.css" />
+	<link type="text/css" rel="stylesheet" href="../../assest/phoneModelFirst/css/module.css"  />
+	<link rel="stylesheet" type="text/css" href="../../assest/phoneModelFirst/css/ui.css">
+</head>
+<body>
+<div>
+	<!--头部开始-->
+	<div class="header">
+		<h1>订单详情</h1>
+		<a href="javaScript:;" class="back" onclick="history.go(-1);"><span></span></a>
+		<a href="#" class=""></a>
+	</div>
+	<!--头部结束-->
+	<div class="ordering" id="productDiv">
+	   <div class="orderingDetails_top">
+	    	<img src="../../assest/img/orderWuLiu.jpg" alt="图片"/>
+    	</div>
+	    
+	   <div class="orderingAdress">
+	   			<div class="tubiaodizhi"><span class="glyphicon glyphicon-map-marker"></span></div>
+	   			<div class="shouhuoren">
+   					<h4 class="orderingName" id="username"></h4>
+   				</div>
+   				<div class="shouhuodizhi">
+   				<p class="orderingDizhi" id="addressInfo"></p>
+   				</div>
+	   </div>
+	    
+	    <div class="orders shop-group-item">
+			<div class="shop-name">
+				<input class="goods-check shopCheck goods-check goodsCheck"><font class="fontstyle"></font></input>
+				<h4 class="dianpu" style="margin-left:10px"><a href="#" id="shopName" adminId=""></a></h4>
+			</div>
+			<ul class="shopbackground" style="background:white;" id="orderDetailUl">
+
+			</ul>
+<!-- 			<div class="tuikuan">
+				<h5>退款</h5>
+			</div> -->
+		</div>
+		
+		<div class="orderingShopXQ">
+			<div class="shopZprice">
+				<p>商品总价： <font class="price" id="price"></font></p>
+			</div>
+<!-- 			<div class="shopZprice">
+				<p>运费： <font class="price" id="price"><span>￥ </span>20元</font></p>
+			</div>
+			<div class="shopZprice">
+				<p>运费险： <font class="price" id="price"><span>￥ </span>20元</font></p>
+			</div>
+			<div class="shopZprice">
+				<p>店铺优惠： <font class="price" id="price"><span>￥ </span>20元</font></p>
+			</div> -->
+			<div class="shopZprice">
+				<p class="orderLast">订单总价： <font class="priceLast" id="totalPrice"></font></p>
+			</div>
+			<div class="shopSprice">
+				<p class="orderLast">实付款： <font class="priceSLast" id="reailPrice"></font></p>
+			</div>
+		</div>
+	    
+<!-- 	    <div class="shopPhone">
+	    	<div>
+	 			<button type="button" class="btphone">
+	   				<span class="glyphicon glyphicon-user"></span>联系卖家
+	  			</button>
+  			</div>
+  			<div>
+	   			<button type="button" class="btphone2">
+	     			<span class="glyphicon glyphicon-earphone"></span>拨打电话
+	   			</button>
+   			</div>
+	    </div> -->
+	    
+	    <div class="orderingBH">
+	    	
+	    	
+   			<div class="orderNum">
+				<p>取餐号： <font id="dayNo"></font></p>
+			</div> 
+   			<div class="orderNum">
+				<p>订单类型： <font id="orderType"></font></p>
+			</div> 
+   			<div class="orderNum">
+				<p>联系人方式： <font id="phoneNumber"></font></p>
+			</div> 
+	    	<div class="orderNum">
+				<p>订单编号： <font id="orderNumber"></font></p>
+			</div>
+<!-- 			<div class="orderNum">
+				<p>创建时间： <font id="creatTime"></font></p>
+			</div> -->
+ 			<div class="orderNum">
+				<p>付款时间：<font id="wetherPaymentTime"></font></p>
+			</div> 
+	    </div>
+	</div>  
+	<div id="navigate"></div>
+	
+	<div id="preloader">  
+	  <div id="status"></div>  
+	</div>
+		<!-- 单个商品信息的bean -->
+	<script id="productBean" type="text/x-handlebars-template">
+		{{#each bean.producntInof}}
+			<li class="productLi">
+				<div class="ordercheck shop-info">
+					<div class="shop-info-img foodshop"><a href="#"><img class="img-thumbnail" src="{{#productLogo productLogo}}{{/productLogo}}"/></a></div>
+					<div class="shop-info-text contentorder">
+						<div class="shop-brief" productID="{{productID}}"><span>{{productName}}</span></div>
+						<div class="food_price shop-pices">￥ <font class="price" id="price">{{productPrice}}元*{{productNum}}个</font></div>
+					</div>
+				</div>
+			</li>
+		{{/each}}
+	</script>
+	
+	
+	 
+	<script type="text/javascript" src="../../assest/js/jquery.js"></script>
+	<script type="text/javascript" src="../../assest/js/jquery.js"></script>
+	<script type="text/javascript" src="../../assest/phoneModelFirst/js/classDefine/swiper-3.2.5.min.js"></script>
+	<script type="text/javascript" src="../../assest/phoneModelFirst/js/classDefine/ectouch.js"></script>
+	<script type="text/javascript" src="../../assest/phoneModelFirst/js/classDefine/jquery.json.js"></script>
+	<script type="text/javascript" src="../../assest/phoneModelFirst/js/classDefine/common.js"></script>
+	<script type="text/javascript" src="../../assest/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../../assest/phoneModelFirst/js/aui-swipe.js"></script>
+	
+	<script type="text/javascript" src="../../assest/bootstrap/qiao.js"></script>
+	<script type="text/javascript" src="../../js/util/main.js"></script>
+	<script type="text/javascript" src="../../js/util/handlebars-v4.0.5.js"></script>
+	<script type="text/javascript" src="../../js/phoneModelOne/common/common.js"></script>
+	<script type="text/javascript" src="../../js/phoneModelOne/common/navigate.js"></script>
+	<script type="text/javascript" src="../../assest/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../../js/phoneModelOne/orderDetails.js"></script>
+	
+</body>
+</html>

@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.wechatpro.dao.WechatProductMapper">
+
+	<!-- 获取全部的产品列表 包括商品品牌 和商品类别 可以根据产品名称 模糊查询 -->
+	<select id="getProductList" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			product.id AS id,
+			product.productName AS productName,
+			product.productDesc AS productDesc,
+			product.productPrice AS productPrice,
+			product.productLogo AS productLogo,
+			product.productState AS productState,
+			product.productWetherBreakfast AS productWetherBreakfast,
+			product.productWetherLunch AS productWetherLunch,
+			product.productWetherDinner AS productWetherDinner,
+			product.productWetherDiscount AS productWetherDiscount,
+			product.productIntegral AS productIntegral,
+			product.productKeyStr AS productKeyStr,
+			product.createTime AS createTime,
+			product.createId AS createId,
+			brand_tag.brandTagName AS brandTagName,
+			type.typeName AS typeName,
+			admin_login.adminNo AS adminNo
+		FROM
+			wechat_product AS product ,
+			wechat_product_brand_tag AS brand_tag,
+			wechat_product_type AS type,
+			wechat_admin_login AS admin_login
+		<where>
+			product.productBrandTag = brand_tag.id
+		AND product.productType = type.id
+		AND admin_login.id = product.createId
+			<if test="productName != null and productName != '' ">
+		AND productName LIKE '%${productName}%'  
+			</if>
+			<if test="productState != null and productState != '' ">
+		AND productState = #{productState}	
+			</if>
+		AND productState != 4
+		</where>
+		ORDER BY
+			createTime DESC
+	</select>
+
+	<!--  根据产品id获取一个商品全部信息  包括商品品牌和商品类别-->
+	<select id="getProductById" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT
+			product.id AS id,
+			product.productType AS productType,
+			product.productBrandTag AS productBrandTag,
+			product.productName AS productName,
+			product.productPrice AS productPrice,
+			product.productDesc AS productDesc,
+			product.productPrice AS productPrice ,
+			product.productLogo AS productLogo,
+			product.productState AS productState,
+			product.productWetherBreakfast AS productWetherBreakfast ,
+			product.productWetherLunch AS productWetherLunch ,
+			product.productWetherDinner AS productWetherDinner ,
+			product.productWetherDiscount AS productWetherDiscount ,
+			product.productIntegral AS productIntegral ,
+			product.productKeyStr AS productKeyStr,
+			product.productOpinion AS productOpinion,
+			product.createTime AS createTime,
+			brand_tag.brandTagName AS brandTagName,
+			type.typeName AS typeName,
+			admin_login.adminNo AS adminNo
+		FROM
+			wechat_product AS product,
+			wechat_product_brand_tag AS brand_tag,
+			wechat_product_type AS type,
+			wechat_admin_login AS admin_login
+		WHERE
+			product.productBrandTag = brand_tag.id
+		AND product.productType = type.id
+		AND admin_login.id = product.createId
+		AND product.id= #{id}
+	</select>
+	
+	<!-- 根据产品productName获取一个商品 -->
+	<select id="getProductByName" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT
+			product.id AS id,
+			product.productName AS productName,
+			product.productPrice AS productPrice,
+			product.productDesc AS productDesc,
+			product.productPrice AS productPrice ,
+			product.productLogo AS productLogo,
+			product.productState AS productState,
+			product.productWetherBreakfast AS productWetherBreakfast ,
+			product.productWetherLunch AS productWetherLunch ,
+			product.productWetherDinner AS productWetherDinner ,
+			product.productWetherDiscount AS productWetherDiscount ,
+			product.productIntegral AS productIntegral ,
+			product.productKeyStr AS productKeyStr,
+			product.createTime AS createTime,
+			product.productOpinion AS productOpinion,
+			brand_tag.brandTagName AS brandTagName,
+			type.typeName AS typeName,
+			admin_login.adminNo AS adminNo
+		FROM
+			wechat_product AS product,
+			wechat_product_brand_tag AS brand_tag,
+			wechat_product_type AS type,
+			wechat_admin_login AS admin_login
+		WHERE
+			product.productBrandTag = brand_tag.id
+		AND product.productType = type.id
+		AND admin_login.id = product.createId
+		AND product.productName = #{productName}
+	</select>
+	
+	<select id="selectProductType" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT
+			productName, 
+			productPrice,
+			createTime,
+			productLogo
+		FROM
+			wechat_product
+		WHERE
+			productType = #{productType}
+	</select>
+
+	<!-- 增加一个商品信息 -->
+	<insert id="addProduct" parameterType="java.util.Map">
+		INSERT INTO wechat_product (
+			<if test="productDesc != null and productDesc != '' ">
+			productDesc,
+			</if>
+			productName,
+			productPrice,
+			productLogo,
+			productType,
+			productWetherBreakfast,
+			productWetherLunch,
+			productWetherDinner,
+			productWetherDiscount,
+			productIntegral,
+			productKeyStr,
+			productBrandTag,
+			createId,
+			createTime,
+			productOpinion
+		)
+		VALUES
+			(
+				<if test="productDesc != null and productDesc != '' ">
+				#{productDesc},
+				</if>
+				#{productName},#{productPrice},#{productLogo},#{productType},#{productWetherBreakfast},#{productWetherLunch},
+				#{productWetherDinner},#{productWetherDiscount},#{productIntegral},#{productKeyStr},#{productBrandTag},#{createId},#{createTime},
+				#{productOpinion}
+			)
+	</insert>
+
+	<!-- 修改一个商品信息 -->
+	<update id="updateProduct" parameterType="java.util.Map">
+		UPDATE  wechat_product 
+		<set>
+		<if test="productLogo != null and productLogo != '' ">
+				productDesc = #{productDesc},
+		</if>
+		<if test="productLogo != null and productLogo != '' ">
+				productLogo = #{productLogo},
+		</if>
+		<if test="productState != null and productState != '' ">
+				productState = #{productState},
+		</if>
+		<if test="productState == null or productState == '' ">
+				productState = 0,
+		</if>
+		<if test="productName != null and productName != '' ">
+				productName = #{productName},
+		</if>
+		<if test="productPrice != null and productPrice != '' ">
+				productPrice = #{productPrice},
+		</if>
+		<if test="productType != null and productType != '' ">
+				productType = #{productType},
+		</if>
+		<if test="productWetherBreakfast != null and productWetherBreakfast != '' ">
+				productWetherBreakfast = #{productWetherBreakfast},
+		</if>
+		<if test="productWetherLunch != null and productWetherLunch != '' ">
+				productWetherLunch = #{productWetherLunch},
+		</if>
+		<if test="productWetherDinner != null and productWetherDinner != '' ">
+				productWetherDinner = #{productWetherDinner},
+		</if>
+		<if test="productWetherDiscount != null and productWetherDiscount != '' ">
+				productWetherDiscount = #{productWetherDiscount},
+		</if>
+		<if test="productIntegral != null and productIntegral != '' ">
+				productIntegral = #{productIntegral},
+		</if>
+		<if test="productBrandTag != null and productBrandTag != '' ">
+				productBrandTag = #{productBrandTag},
+		</if>
+		<if test="productOpinion != null ">
+				productOpinion = #{productOpinion},
+		</if>									
+		</set>
+		WHERE
+			id = #{id}		
+	</update>
+	
+	<!-- 根据一件商品id 查询商品套餐的数量 -->
+	<select id="getPackageCountByProductId" parameterType="java.util.Map" resultType="java.util.Map">
+			SELECT
+			COUNT(*) AS count
+			FROM
+				wechat_product_package
+			WHERE
+				CONCAT(",",productId,"") LIKE '%,${id},%'
+			AND packageState = 2
+	</select>
+	
+	<!--根据商品id  查询该商品所在套餐的详情 -->
+	<select id="getPackageByProductId" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			packageName,
+			packagePrice,
+			packageDesc,
+			packageIntegral,
+			packageLogo
+		FROM
+			wechat_product_package
+		WHERE
+			CONCAT(",",productId,"") LIKE '%,${id},%'
+		AND packageState = 2
+	</select>
+</mapper>          

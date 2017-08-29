@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="description" content="Bootstrap Metro Dashboard">
+	<meta name="author" content="Dennis Ji">
+	<meta name="keyword" content="Metro, Metro UI, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link id="bootstrap-style" href="../../assest/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../../assest/bootstrap/bootstrap-validator/css/bootstrapValidator.css">
+	<link href="../../assest/css/bootstrap-responsive.min.css" rel="stylesheet">
+	<link id="base-style" href="../../assest/css/style.css" rel="stylesheet">
+	<link id="base-style-responsive" href="../../assest/css/style-responsive.css" rel="stylesheet">
+	<!--[if lt IE 9]>
+	  	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<link id="ie-style" href="../../assest/css/ie.css" rel="stylesheet">
+	<![endif]-->
+	<!--[if IE 9]>
+		<link id="ie9style" href="../../assest/css/ie9.css" rel="stylesheet">
+	<![endif]-->
+	<link rel="shortcut icon" href="../../assest/img/favicon.ico">
+</head>
+<body class="childBody">
+	<ul class="breadcrumb">
+		<li>
+			<i class="icon-home"></i>
+			<a href="javascript:;">Home</a>
+			<i class="icon-angle-right"></i> 
+		</li>
+		<li>
+			<i class="icon-edit"></i>
+			<a href="javascript:;">添加用户</a>
+		</li>
+	</ul>
+	
+	<div class="row-fluid sortable">
+		<div class="box span12">
+			<div class="box-header" data-original-title>
+				<h2><i class="halflings-icon edit"></i><span class="break"></span>用户新增</h2>
+				<div class="box-icon">
+					<a href="#" class="btn-minimize"><i class="halflings-icon chevron-up"></i></a>
+				</div>
+			</div>
+			<div class="box-content contentDiv" style="text-align: center;">
+				<form>
+					<div class="controls form-group">
+						<span class="add-on">用户账号：</span>
+						<input type="text" class="span6 typeahead form-control authenTiCation-input" id="uNumber" />
+					</div>
+					<div class="controls form-group">
+						<span class="add-on">用户密码：</span>
+						<input type="password" class="span6 typeahead form-control authenTiCation-input" id="uPassword" />
+					</div>
+					<div class="controls form-group">
+						<span class="add-on">用户身份：</span>
+						<select id="adminIdentity" class="span6 typeahead form-control authenTiCation-input">
+							<option value="5">餐厅人员</option>
+							<option value="6">管理员</option>
+						</select>
+					</div>
+					<div class="controls form-group secondMenu">
+						<span class="add-on">商店名称：</span>
+						<input type="text" class="span6 typeahead form-control authenTiCation-input" id="adminShopName" />
+					</div>
+					<div class="controls form-group shopCard">
+						<span class="add-on">商户号：</span>
+						<input type="text" class="span6 typeahead form-control authenTiCation-input" id="adminShopCard" />
+					</div>
+					<div class="controls form-group shopKey">
+						<span class="add-on">商户号对应的key：</span>
+						<input type="text" class="span6 typeahead form-control authenTiCation-input" id="adminShopKey" />
+					</div>
+					<div class="controls form-group thirtMenu">
+						<span class="add-on">客服电话：</span>
+						<input type="text" class="span6 typeahead form-control authenTiCation-input" id="adminKfPhone" />
+						<div class="someDesc">
+							<p class="rolePrompt">填写的格式，比如15836843822,0371-56710965,400-011-8068</p>
+						</div>
+					</div>
+					<div class="controls form-group fourMenu">
+						<span class="add-on">营业时间：</span>
+						<input type="text" class="span6 typeahead form-control authenTiCation-input" id="adminKfBusinessHours" />
+						<div class="someDesc">
+							<p class="rolePrompt">填写时间的格式，比如上午8:00-12:00,下午13:00-18:00</p>
+						</div>
+					</div>
+					<div class="controls form-group fiveMenu">
+						<span class="add-on">门店推荐：</span>
+						<textarea class="span6 typeahead form-control authenTiCation-input" maxlength="200" rows="3" id="adminRecommend" ></textarea>
+					</div>
+					<div class="controls form-group sixMenu">
+						<span class="add-on">门店特色：</span>
+						<textarea class="span6 typeahead form-control authenTiCation-input" maxlength="200" rows="3" id="adminCharacteristic" ></textarea>
+					</div>
+					<div class="controls form-group">
+						<span class="add-on">地址信息：</span>
+						<input type="text" class="span6 typeahead form-control authenTiCation-input" id="adminWorkPlace" readonly/>
+						<div class="someDesc">
+							<p class="rolePrompt">餐厅人员请填写餐厅地址，管理员请填写工作地址。(具体到号)</p>
+						</div>
+					</div>
+					<div class="controls form-group sevenMenu">
+						<span class="add-on">经度：</span>
+						<input type="text" class="span6 typeahead form-control authenTiCation-input" readonly id="adminWorkXCoordinate" />
+					</div>
+					<div class="controls form-group eightMenu">
+						<span class="add-on">纬度：</span>
+						<input type="text" class="span6 typeahead form-control authenTiCation-input" readonly id="adminWorkYCoordinate" />
+					</div>
+					<div class="controls form-group nineMenu" id="ditu" style="height: 200px; text-align:center;">
+			    		<span  class="dialog-label-10" style="margin-left:22%">地图：</span>
+			    		<div class="dialog-50" id="container" style="height: 100%; width="360px";">
+			    			
+			    		</div>
+			    	</div>
+					<div class="form-actions form-group">
+					  <button type="button" id="saveUser" class="btn btn-primary">保存</button>
+					  <button type="button" id="qvxiao" class="btn">取消</button>
+					</div>
+				</form>   
+			</div>
+		</div>
+	</div>
+
+	<script src="../../assest/js/jquery.js"></script>
+	<script src="../../assest/js/jquery-migrate-1.0.0.min.js"></script>
+	<script src="../../assest/js/jquery-ui-1.10.0.custom.min.js"></script>
+	<script src="../../assest/js/jquery.ui.touch-punch.js"></script>
+	<script src="../../assest/js/modernizr.js"></script>
+	<script src="../../assest/js/bootstrap.min.js"></script>
+	<script src="../../assest/bootstrap/bootstrap-validator/js/bootstrapValidator.min.js"></script>
+	<script src="../../assest/js/jquery.cookie.js"></script>
+	<script src='../../assest/js/fullcalendar.min.js'></script>
+	<script src='../../assest/js/jquery.dataTables.min.js'></script>
+	<script src="../../assest/js/excanvas.js"></script>
+	<script src="../../assest/js/jquery.flot.js"></script>
+	<script src="../../assest/js/jquery.flot.pie.js"></script>
+	<script src="../../assest/js/jquery.flot.stack.js"></script>
+	<script src="../../assest/js/jquery.flot.resize.min.js"></script>
+	<script src="../../assest/js/jquery.chosen.min.js"></script>
+	<script src="../../assest/js/jquery.uniform.min.js"></script>
+	<script src="../../assest/js/jquery.cleditor.min.js"></script>
+	<script src="../../assest/js/jquery.noty.js"></script>
+	<script src="../../assest/js/jquery.elfinder.min.js"></script>
+	<script src="../../assest/js/jquery.raty.min.js"></script>
+	<script src="../../assest/js/jquery.iphone.toggle.js"></script>
+	<script src="../../assest/js/jquery.uploadify-3.1.min.js"></script>
+	<script src="../../assest/js/jquery.gritter.min.js"></script>
+	<script src="../../assest/js/jquery.imagesloaded.js"></script>
+	<script src="../../assest/js/jquery.masonry.min.js"></script>
+	<script src="../../assest/js/jquery.knob.modified.js"></script>
+	<script src="../../assest/js/jquery.sparkline.min.js"></script>
+	<script src="../../assest/js/counter.js"></script>
+	<script src="../../assest/js/retina.js"></script>
+	<script src="../../assest/js/custom.js"></script>
+	
+	<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=5274f1262f62ca7b4094b5e7b29cfbcd"></script> 
+	<script type="text/javascript" src="https://webapi.amap.com/demos/js/liteToolbar.js"></script>
+	<script type="text/javascript" src="../../assest/bootstrap/qiao.js"></script>
+	<script type="text/javascript" src="../../js/util/main.js"></script>
+	<script type="text/javascript" src="../../js/user/addUser.js"></script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.wechatpro.dao.WechatProductTypeMapper">
+
+	<!-- 获取所有的商品类型 -->
+	<select id="getProductTypeList" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			a.id AS id,
+			typeName,
+			typeDesc,
+			typeState,
+			typeOpinion,
+			a.createId AS createId,
+			a.createTime AS createTime,
+			b.adminNo AS adminNo
+		FROM
+			wechat_product_type AS a,
+			wechat_admin_login as b
+		<where>
+			typeState != 4
+			<if test="typeName != null and typeName != '' ">
+		AND
+			typeName LIKE '%${typeName}%'
+			</if>
+			<if test="typeState != null and typeState != '' ">
+		AND	typeState = #{typeState}
+			</if>
+		AND b.id = a.createId
+		</where>
+		ORDER BY
+			createTime DESC
+	</select>
+
+	<!-- 根据id获取一个商品类型 -->
+	<select id="getProductTypeById" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			a.id AS id,
+			typeName,
+			typeDesc,
+			typeState,
+			typeOpinion,
+			a.createId AS createId,
+			a.createTime AS createTime,
+			b.adminNo AS adminNo
+		FROM
+			wechat_product_type AS a,
+			wechat_admin_login as b
+		WHERE
+			a.id = #{id}
+		AND b.id = a.createId
+	</select>
+	
+	<!-- 根据typeName 获取一个商品类型 -->
+	<select id="getProductTypeByName" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			id,			
+			typeName,
+			typeDesc,
+			typeState
+		FROM
+			wechat_product_type
+		WHERE
+			typeName = #{typeName}	
+	</select>
+
+	<!-- 添加一个商品类型 -->
+	<insert id="addProductType" parameterType="java.util.Map">
+		INSERT INTO wechat_product_type 
+			(
+				typeName,
+		<if test="typeDesc != null and typeDesc !='' ">
+				typeDesc,
+		</if>
+				createId,createTime
+			)
+		VALUES
+			(
+				#{typeName},
+		<if test="typeDesc != null and typeDesc !='' ">
+				#{typeDesc},
+		</if>
+				#{createId},#{createTime}
+		)
+	</insert>
+
+	<!-- 修改一个商品类型 -->
+	<update id="upateProductType" parameterType="java.util.Map">
+		UPDATE wechat_product_type
+			<set>
+				<if test="typeName != null and typeName != '' ">
+					typeName = #{typeName},
+				</if>
+				<if test="typeDesc != null and typeDesc != '' ">
+					typeDesc = #{typeDesc} ,
+				</if>
+				<if test="typeState == null or typeState =='' ">
+					typeState = 0,
+				</if>
+				<if test="typeState != null and typeState !='' ">
+					typeState = #{typeState} ,
+				</if>
+				<if test="typeOpinion != null ">
+					typeOpinion = #{typeOpinion},
+				</if>
+			</set>
+		WHERE
+			id = #{id}
+	</update>
+	
+	
+	<!-- 查询所有商品的种类，并按照id递增顺序排列 -->
+	<select id="selectProductType" resultType="java.util.Map">
+		SELECT
+			type.id AS typeId,
+			type.typeName
+		FROM
+			wechat_product_type AS type
+		WHERE
+			type.typeState = 2
+		GROUP BY
+			type.typeName
+		ORDER BY
+			type.id ASC
+	</select>
+</mapper>          

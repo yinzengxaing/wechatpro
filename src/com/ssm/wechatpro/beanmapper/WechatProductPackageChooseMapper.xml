@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.wechatpro.dao.WechatProductPackageChooseMapper">
+
+	<insert id="AddWechatProductChooseGroup"  useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO wechat_product_choose_group (
+			packageGroupProductId,
+			packageGroupProductType,
+			packageGroupProductTypeId,
+			<if test = "packageGroupProductNum != null and packageGroupProductNum != ''">
+				packageGroupProductNum,
+			</if>
+			packageGroupProductMinPrice
+		) 
+		VALUE(
+			#{packageGroupProductId},
+			#{packageGroupProductType},
+			#{packageGroupProductTypeId},
+			<if test = "packageGroupProductNum != null and packageGroupProductNum != ''">
+				#{packageGroupProductNum},
+			</if>
+			#{packageGroupProductMinPrice}
+		)
+	</insert>
+	<insert id="AddWechatProductChoosePackage"  parameterType="java.util.Map" >
+		INSERT INTO wechat_product_choose_package (
+			packageName,
+			packageLogo,
+			packagePrice,
+			productId,
+			packageIntegral,
+			packageType,
+			<if test = "packageStartTime !=null and packageStartTime != ''">
+				packageStartTime,
+			</if>
+			<if test = "packageEndTime !=null and packageEndTime != ''">
+				packageEndTime,
+			</if>
+			packageState,
+			packageWetherDiscount,
+			<if test = "packageDesc !=null  and packageDesc != ''">
+				packageDesc,
+			</if>
+			createId,
+			createTime
+		)
+		VALUE(
+			#{packageName},
+			#{packageLogo},
+			#{packagePrice},
+			#{productId},
+			#{packageIntegral},
+			#{packageType},
+			<if test = "packageStartTime !=null and packageStartTime != ''">
+				#{packageStartTime},
+			</if>
+			<if test = "packageEndTime !=null and packageEndTime != ''">
+				#{packageEndTime},
+			</if>
+			#{packageState},
+			#{packageWetherDiscount},
+			<if test = "packageDesc !=null and packageDesc != ''">
+				#{packageDesc},
+			</if>
+			#{createId},
+			#{createTime}
+		)
+	</insert>
+	
+	<select id="selectAllPackage" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			pac.id,
+			pac.packageName,
+			opt.optionPath packageLogo,
+			pac.packageState,
+			pac.createTime,
+			pac.packageType,
+			pac.packageStartTime,
+			pac.packageEndTime,
+			pac.packageIntegral,
+			pac.packageDesc,
+			(
+				SELECT
+					SUM(
+						gro.packageGroupProductMinPrice
+					) packageGroupProductMinPrice
+				FROM
+					wechat_product_choose_group gro
+				WHERE
+					pac.productId LIKE CONCAT('%', gro.id, '%')
+			) packageGroupProductMinPrice
+		FROM
+			wechat_product_choose_package pac, 
+			wechat_option opt
+		where pac.packageLogo = opt.id AND
+			packageName LIKE CONCAT('%', #{key}, '%')
+			AND packageState != 4
+		<if test="packageState != '' and packageState != null">
+			AND packageState = #{packageState}
+		</if>
+		order by createTime desc
+	</select>
+	<select id="selectOneWechatProductChoosePackage" parameterType="java.util.Map" resultType="java.util.Map">
+	SELECT
+		pac.id,
+		pac.packageName,
+		pac.packageLogo,
+		pac.packagePrice,
+		pac.productId,
+		pac.packageIntegral,
+		pac.packageType,
+		pac.packageStartTime,
+		pac.packageEndTime,
+		pac.packageState,
+		pac.packageOpinion,
+		pac.packageWetherDiscount,
+		pac.packageDesc,
+		pac.createId,
+		pac.createTime,
+		opt.optionPath packageLogoPath,
+		adm.adminNo,
+		(
+			SELECT
+				SUM(
+					gro.packageGroupProductMinPrice
+				) packageGroupProductMinPrice
+			FROM
+				wechat_product_choose_group gro
+			WHERE
+				pac.productId LIKE CONCAT('%', gro.id, '%')
+		) packageGroupProductMinPrice
+	FROM
+	wechat_product_choose_package pac
+	LEFT JOIN wechat_option opt ON  pac.packageLogo = opt.id
+	LEFT JOIN wechat_admin_login adm ON adm.id = pac.createId
+	where  pac.id = #{id}
+		
+	</select>
+	
+	<select id="selectWechatProductChooseGroupByIds" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			a.id,
+			a.packageGroupProductTypeId,
+			a.packageGroupProductId,
+			a.packageGroupProductType,
+			a.packageGroupProductNum as packageGroupProductNums,
+			a.packageGroupProductNum,
+			a.packageGroupProductMinPrice,
+			b.typeName
+		FROM
+			wechat_product_choose_group a
+			LEFT JOIN wechat_product_type b ON a.packageGroupProductTypeId = b.id
+		WHERE
+			INSTR(
+				CONCAT(',', #{ids}, ','),
+				CONCAT(',', a.id, ',')
+				)
+	</select>
+	<select id="selectwechatProductByIds" parameterType="java.util.Map" resultType="java.util.Map">
+	SELECT
+		pro.id as productId,
+		pro.productName,
+		opt.optionPath,
+		pro.createTime,
+		pro.productPrice,
+		pro.productType,
+		pro.productState
+	FROM
+		wechat_product pro,
+		wechat_option opt
+	WHERE
+		INSTR(
+			CONCAT(',', #{ids}, ','),
+			CONCAT(',', pro.id, ',')
+		) AND pro.productLogo = opt.id
+	</select>
+	<update id="updatePackageState"  parameterType="java.util.Map">
+		UPDATE wechat_product_choose_package
+		SET packageState = #{packageState}
+		WHERE
+			id = #{id}	
+	</update>
+	<delete id="delectWechatProductChooseGroup" parameterType="java.util.Map">
+
+		DELETE
+		FROM
+			wechat_product_choose_group 
+		WHERE
+			INSTR(
+				CONCAT(',', #{ids}, ','),
+				CONCAT(',', id, ',')
+			)
+			
+	</delete>
+	<delete id="delectWechatProductChoosePackage" parameterType="java.util.Map">
+
+		DELETE
+		FROM
+			wechat_product_choose_package 
+		WHERE
+			id = #{id}
+			
+	</delete>
+	<update id="updateWechatProductChooseGroup"  parameterType="java.util.Map">
+		UPDATE wechat_product_choose_group
+		SET packageGroupProductTypeId = #{packageGroupProductTypeId},
+		 packageGroupProductId = #{packageGroupProductId},
+		 packageGroupProductType = #{packageGroupProductType},
+		 <if test = "packageGroupProductNum != null and packageGroupProductNum != ''">
+		 packageGroupProductNum = #{packageGroupProductNum},
+		 </if>
+		 packageGroupProductMinPrice = #{packageGroupProductMinPrice}
+		WHERE
+			id = #{id}	
+	</update>
+	<update id="updateWechatProductChoosePackage"  parameterType="java.util.Map">
+		UPDATE wechat_product_choose_package
+		SET packageName = #{packageName},
+		 packageLogo = #{packageLogo},
+		 packagePrice = #{packagePrice},
+		 productId = #{productId},
+		 packageIntegral = #{packageIntegral},
+		 packageType = #{packageType}
+		 <if test="packageStartTime != null and packageStartTime != ''">
+			 ,packageStartTime = #{packageStartTime}
+		 </if>
+		 <if test="packageEndTime != null and packageEndTime != ''">
+		 	,packageEndTime = #{packageEndTime}
+		 </if>
+		 ,packageState = #{packageState}
+		 <if test="packageOpinion != null and packageOpinion != ''">
+		 	,packageOpinion = #{packageOpinion}
+		 </if>
+		  <if test="packageWetherDiscount != null and packageWetherDiscount != ''">
+		 ,packageWetherDiscount = #{packageWetherDiscount}
+		 </if>
+		 <if test="packageDesc != null and packageDesc != ''">
+			 ,packageDesc = #{packageDesc}
+		 </if>
+		WHERE
+			id = #{id}
+	</update>
+	<select id="selectwechatProductWithProductPrice" parameterType="java.util.Map" resultType="java.util.Map">
+	SELECT
+		productPrice
+	FROM
+		wechat_product
+	WHERE
+		INSTR(
+			CONCAT(',', #{ids}, ','),
+			CONCAT(',', id, ',')
+		) GROUP BY productPrice LIMIT 0,#{num} 
+	</select>
+	
+	<!-- 查看所有的待审核状态的套餐信息 -->
+	<select id="getCheckPendingList" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			pac.id,
+			pac.packageName,
+			opt.optionPath packageLogo,
+			pac.packageState,
+			pac.createTime,
+			pac.packageType,
+			pac.packageStartTime,
+			pac.packageEndTime,
+			pac.packageIntegral,
+			pac.packageDesc,
+			(
+				SELECT
+					SUM(
+						gro.packageGroupProductMinPrice
+					) packageGroupProductMinPrice
+				FROM
+					wechat_product_choose_group gro
+				WHERE
+					pac.productId LIKE CONCAT('%', gro.id, '%')
+			) packageGroupProductMinPrice
+		FROM
+			wechat_product_choose_package pac,wechat_option opt
+		where pac.packageLogo = opt.id 
+			<if test="key != null and key != ''">
+				AND packageName LIKE CONCAT('%', #{key}, '%')
+			</if>
+			AND packageState = 1
+		order by createTime desc
+	</select>
+	
+
+	<update id="updatePackageStatePass" parameterType="java.util.Map">
+		update
+			wechat_product_choose_package
+		set
+			packageState = 2,
+			packageOpinion = #{packageOpinion}
+		where
+			id=#{id}
+	</update>
+	
+	<update id="updatePackageStateNotPass" parameterType="java.util.Map">
+		update
+			wechat_product_choose_package
+		set
+			packageState = 3,
+			packageOpinion = #{packageOpinion}
+		where
+			id=#{id}
+	</update>
+	
+	<update id="updateChoosePackageState" parameterType="java.util.Map">
+		update
+			wechat_product_choose_package
+		set
+			packageState = 1,
+			packageOpinion = ""
+		where
+			id=#{id}
+	</update>
+</mapper>

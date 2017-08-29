@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.wechatpro.dao.MWechatProductsMapper">
+	<!-- 根据商店地址获取该地区的所有的商店id 和商店名称 -->
+	<select id="getRestaurantInfo" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT
+			adminId,
+			adminWorkPlace
+		FROM
+			wechat_admin_login_mation
+		WHERE
+			adminWorkPlace LIKE  '%${adminWorkPlace}%'
+	</select>
+	
+	<!-- 获取该商店下的所有的商品 -->
+	<select id="getProductByResId" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT
+			a.id AS productId,
+			a.productName,
+			a.productPrice,
+			a.productType,
+			a.createTime AS proCreatTime,
+			b.optionPath AS proLogo,
+			c.productState AS proState,
+			c.productNum AS proNum,
+			c.productNowNum AS proNowNum,
+			d.typeName,
+			e.adminShopName,
+			e.adminId
+		FROM
+			wechat_product AS a,
+			wechat_option AS b,
+			wechat_product_restaurant AS c,
+			wechat_product_type AS d,
+			wechat_admin_login_mation AS e
+		WHERE
+			a.id IN (
+				SELECT
+					productId
+				FROM
+					wechat_product_restaurant
+				WHERE
+					productType = 1
+				AND c. adminRestaurantId IN
+				<foreach collection="adminRestaurantId" index="index" item="item" open="("  separator="," close=")">    
+            		#{item}    
+        		</foreach>  
+			)
+		AND a.productState = 2
+		AND a.productLogo = b.id
+		AND a.id = c.productId
+		AND a.productType = d.id
+		AND a.productType = #{productType}
+		AND e.adminId = c.adminRestaurantId
+		GROUP BY
+			a.id
+		ORDER BY
+			a.createTime DESC
+	</select>
+	<!-- 获取该门店的所有套餐 -->
+		<select id="getPackByResId" parameterType="java.util.List" resultType="java.util.Map">
+		SELECT
+			a.id AS packageId,
+			a.packageName,
+			a.packagePrice,
+			a.packageDesc,
+			a.packageIntegral,
+			a.createTime AS pacCreatTime,
+			b.optionPath AS pacLogo,
+			c.productState AS pacState,
+			c.productNum AS pacNum,
+			c.productNowNum AS pacNowNum,
+			e.adminShopName,
+			e.adminId
+		FROM
+			wechat_product_package AS a,
+			wechat_option AS b,
+			wechat_product_restaurant AS c,
+			wechat_admin_login_mation AS e
+			<where>
+				a.id IN (
+				SELECT
+					productId
+				FROM
+					wechat_product_restaurant
+				WHERE
+					productType = 2
+				AND adminRestaurantId In
+		  		<foreach collection="list" index="index" item="item" open="("  separator="," close=")">    
+            		#{item.adminId}    
+        		</foreach>  
+					)
+				AND a.packageState = 2
+				AND a.packageLogo = b.id
+				AND a.id = c.productId
+				AND e.adminId = c.adminRestaurantId
+			</where>
+		GROUP BY
+			a.id
+		ORDER BY
+			a.createTime DESC
+	</select>
+
+	<!-- 查询商店拥有的产品的产品类型 -->
+	<select id="getTypeList" resultType="java.util.Map" parameterType="java.util.List">
+		SELECT
+			a.productType,
+			d.typeName
+		FROM
+			wechat_product AS a,
+			wechat_option AS b,
+			wechat_product_restaurant AS c,
+			wechat_product_type AS d
+		WHERE
+			a.id IN (
+				SELECT
+					productId
+				FROM
+					wechat_product_restaurant
+				WHERE
+					productType = 1
+				AND adminRestaurantId IN
+				<foreach collection="list" index="index" item="item" open="("  separator="," close=")">    
+            		#{item.adminId}    
+        		</foreach>  
+			)
+		AND a.productState = 2
+		AND a.productLogo = b.id
+		AND a.id = c.productId
+		AND a.productType = d.id
+		GROUP BY
+			a.productType
+		ORDER BY
+			a.createTime DESC
+	</select>
+	
+		<!-- 按照时间顺序显示该商店的可选套餐-->
+	<select id="getChooByResId" parameterType="java.util.List" resultType="java.util.Map">
+			SELECT
+			a.id AS packageId,
+			a.packageName AS chooName,
+			a.packagePrice AS chooPrice,
+ 			a.packageDesc AS chooDesc,
+			a.packageIntegral AS choOIntegral,
+			a.createTime AS chooCreatTime,
+			b.optionPath AS chooLogo,
+			c.productState AS chooState,
+			c.productNum AS chooNum,
+			c.productNowNum AS chooNowNum,
+			e.adminShopName,
+			e.adminId
+		FROM
+			wechat_product_choose_package AS a,
+			wechat_option AS b,
+			wechat_product_restaurant AS c,
+			wechat_admin_login_mation AS e
+			where
+				a.id IN (
+				SELECT
+					productId
+				FROM
+					wechat_product_restaurant
+				WHERE
+					productType = 2
+				AND adminRestaurantId In
+		  		<foreach collection="list" index="index" item="item" open="("  separator="," close=")">    
+            		#{item.adminId}    
+        		</foreach>  
+					)
+				AND a.packageState = 2
+				AND a.packageLogo = b.id
+				AND a.id = c.productId
+				AND e.adminId = c.adminRestaurantId
+		GROUP BY
+			a.id
+		ORDER BY
+			a.createTime	
+	</select>
+	
+		<!-- 获取4个价格最低的可选套餐作为新品必选 -->
+	<select id="getChooListByPrice" parameterType="java.util.List" resultType="java.util.Map">
+			SELECT
+			a.id AS packageId,
+			a.packageName AS chooName,
+			a.packagePrice AS chooPrice,
+ 			a.packageDesc AS chooDesc,
+			a.packageIntegral AS choOIntegral,
+			a.createTime AS chooCreatTime,
+			b.optionPath AS chooLogo,
+			c.productState AS chooState,
+			c.productNum AS chooNum,
+			c.productNowNum AS chooNowNum,
+			e.adminShopName
+		FROM
+			wechat_product_choose_package AS a,
+			wechat_option AS b,
+			wechat_product_restaurant AS c,
+			wechat_admin_login_mation AS e
+			where
+				a.id IN (
+				SELECT
+					productId
+				FROM
+					wechat_product_restaurant
+				WHERE
+					productType = 2
+				AND adminRestaurantId In
+		  		<foreach collection="list" index="index" item="item" open="("  separator="," close=")">    
+            		#{item.adminId}    
+        		</foreach>  
+					)
+				AND a.packageState = 2
+				AND a.packageLogo = b.id
+				AND a.id = c.productId
+				AND e.adminId = c.adminRestaurantId
+		GROUP BY
+			a.id
+		ORDER BY
+			a.packagePrice ASC
+		LIMIT 4
+	</select>
+	
+	<!--获取所有的商品类型  -->	
+	<select id="getAllType" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			id AS productType,
+			typeName
+		FROM
+			wechat_product_type
+		WHERE
+			typeState = 2
+	</select>
+	
+	<!--根据商品类型获取该商品类型下的所有商品  -->
+	<select id="getAllProductByType" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			a.id AS productId,
+			a.productName,
+			a.productDesc,
+			a.productPrice,
+			b.optionPath AS proLogo
+		FROM
+			wechat_product AS a,
+			wechat_option AS b
+		WHERE
+			productState = 2
+		AND 
+		productType = #{productType}
+		AND 
+			a.productLogo = b.id
+		ORDER BY
+			a.createTime
+	</select>
+	<!-- 获取所有的套餐 -->	
+	<select id="getAllPackage" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			a.id AS packageId,
+			a.packageName,
+			a.packagePrice,
+			a.packageDesc,
+			a.packageIntegral,
+			b.optionPath AS pacLogo
+		FROM
+			wechat_product_package AS a,
+			wechat_option AS b
+		WHERE
+			a.packageLogo = b.id
+		AND packageType = 2
+		ORDER BY
+			a.createTime
+	</select>
+
+	<!-- 获取所有的可选套餐 -->	
+	<select id="getAllChooPackage" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			a.id AS chooId,
+			a.packageName AS chooName,
+			a.packageDesc AS chooDesc,
+			a.packagePrice AS chooPrice,
+			a.packageIntegral AS chooIntegral,
+			b.optionPath
+		FROM
+			wechat_product_choose_package AS a,
+			wechat_option AS b
+		WHERE
+			 a.packageState = 2
+		AND a.packageLogo = b.id 
+		ORDER BY
+			a.createTime
+	</select>
+	<!-- 获取价格最低的四个可选套餐 -->
+	<select id="getAllChooByPrice" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			a.id AS packageId,
+			a.packageName AS chooName,
+			a.packagePrice AS chooPrice,
+			a.packageDesc AS chooDesc,
+			a.packageIntegral AS choOIntegral,
+			a.createTime AS chooCreatTime,
+			b.optionPath AS chooLogo
+		FROM
+			wechat_product_choose_package AS a,
+			wechat_option AS b
+		WHERE
+		
+				a.packageState = 2
+		AND a.packageLogo = b.id
+		ORDER BY
+			a.packagePrice ASC
+		LIMIT 4
+	</select>
+</mapper>          

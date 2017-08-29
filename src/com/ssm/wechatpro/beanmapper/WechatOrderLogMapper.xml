@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.ssm.wechatpro.dao.WechatOrderLogMapper">
+
+	<!-- 当前用户创建订单 -->
+	<insert id="insertOrderLog" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.Map">
+		insert
+			${tableName}
+		(
+			orderNumber,
+			createId,
+			createTime,
+			orderEatTime,
+			orderAdminId,
+			orderType,
+			orderPrice
+		)
+		values
+		(
+			#{orderNumber},
+			#{createId},
+			#{createTime},
+			#{orderEatTime},
+			#{orderAdminId},
+			#{orderType},
+			#{orderPrice}
+		)
+	</insert>
+	<!-- 显示当前用户的全部订单（按照未付款、订单类型，已付款，订单编号递降） -->
+	<select id="selectByUserId" parameterType="java.util.Map" resultType="java.util.Map">
+		select
+			*
+		from
+			${tableName}
+		where
+			createId = #{createId}
+		order by
+			wetherPayment asc,
+			orderType asc,
+			orderNumber desc
+	</select>
+
+	<!-- 按照订单号降序当前用户未付款的订单 -->
+	<select id="selectByWetherPayment" parameterType="java.util.Map" resultType="java.util.Map">
+		select
+			*
+		from
+			${tableName}
+		where
+			createId = #{createId} 
+		and 
+			wetherPayment = 0
+		order by
+			orderNumber desc
+	</select>
+
+	<!-- 根据商店id查找到最新的一条数据获取其订单编号 -->
+	<select id="selsctByShoppindId" parameterType="java.util.Map" resultType="java.util.Map">
+		select
+			orderNumber
+		from
+			${tableName}
+		where
+			orderAdminId = #{orderAdminId}
+		order by
+			id desc
+		LIMIT 1
+	</select>
+	
+	
+	<!-- 支付订单（支付状态更改为1，更新支付时间） （通过创建人id、餐厅id、订单号）-->
+	<update id="modifyOrderLog" parameterType="java.util.Map">
+		update 
+			${tableName} 
+		set 
+			wetherPayment = 1, 
+			wetherPaymentTime = #{wetherPaymentTime} 
+		where 
+			id=#{id}
+	</update>
+	
+	
+	<!-- 逻辑删除该订单(已经做完给顾客)（通过订单号） -->
+	<update id="deleteOrderLog" parameterType="java.util.Map">
+		update 
+			${tableName} 
+		set 
+			wetherMake = 1
+		where
+			orderNumber=#{orderNumber}
+	</update>
+	
+	<!-- 回显商品名称、商品价格 -->
+	<select id="selectProduct" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			productName,
+			productPrice
+		FROM
+			wechat_product
+		WHERE
+			id = #{producuId}
+	</select>
+	
+	<!-- 回显餐厅名称 -->
+	<select id="selectShopName" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			b.adminShopName
+		FROM
+			wechat_admin_login a,
+			wechat_admin_login_mation b
+		WHERE
+			a.id = b.adminId
+		AND a.id = #{shopId}
+	</select>
+</mapper>

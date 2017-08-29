@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.wechatpro.dao.WechatAdminLoginLogMapper">
+
+   <insert id="insertLoginLog" parameterType="java.util.Map">
+      insert into ${loginTable} (no,loginPlace,loginIp,loginData,loginNumSuccess)
+      values(#{no},#{loginPlace},#{loginIp},#{loginData},#{loginNumSuccess})
+   </insert>
+   
+   <select id="selectFailCount" parameterType="java.util.Map" resultType="int">
+      select count(*) from ${loginTable} where no=#{no} and loginNumSuccess= '0' and loginData like '%${loginData}%' 
+   </select>
+</mapper>

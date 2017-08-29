@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="description" content="Bootstrap Metro Dashboard">
+	<meta name="author" content="Dennis Ji">
+	<meta name="keyword" content="Metro, Metro UI, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link id="bootstrap-style" href="../../assest/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../../assest/bootstrap/bootstrap-validator/css/bootstrapValidator.css">
+	<link href="../../assest/css/bootstrap-responsive.min.css" rel="stylesheet">
+	<link id="base-style-responsive" href="../../assest/css/style-responsive.css" rel="stylesheet">
+	<link id="base-style" href="../../assest/css/style.css" rel="stylesheet">
+	<!--[if lt IE 9]>
+	  	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<link id="ie-style" href="../../assest/css/ie.css" rel="stylesheet">
+	<![endif]-->
+	<!--[if IE 9]>
+		<link id="ie9style" href="../../assest/css/ie9.css" rel="stylesheet">
+	<![endif]-->
+	<link rel="shortcut icon" href="../../assest/img/favicon.ico">
+</head>
+<body class="childBody">
+	<ul class="breadcrumb">
+		<li>
+			<i class="icon-home"></i>
+			<a href="javascript:;">Home</a>
+			<i class="icon-angle-right"></i> 
+		</li>
+		<li>
+			<i class="icon-edit"></i>
+			<a href="javascript:;">会员卡类型</a>
+		</li>
+	</ul>
+	<div class="row-fluid sortable">
+		<div class="box span12">
+			<div class="box-header" data-original-title>
+				<h2><i class="halflings-icon edit"></i><span class="break"></span>选择会员卡类型</h2>
+				<div class="box-icon">
+					<a href="#" class="btn-minimize"><i class="halflings-icon chevron-up"></i></a>
+				</div>
+			</div>
+			<div class="box-content contentDiv" style="text-align: center;">
+				<form>
+				   <div class="addmembercard-whole">
+				        <table class="table table-bordered">
+							<caption style="font-size:20px;text-align:center;font-weight:500;">会员卡类型</caption>
+							<thead>
+								<tr>
+									<th></th>
+									<th>权限类型</th>
+									<th>说明</th>
+									<th>权限状态</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+										<label class="radio-inline">
+											<span class="cardmessage_style27"></span><input type="radio" name="optionsRadiosinline" id="optionsRadios3" value="option1" checked>	  
+										</label>
+									</td>
+									<td>免费券</td>
+									<td>可发行免费领取的优惠券，代金券、折扣券、团购券、礼品券，开通卡券基础功能后，默认开通，支持通过公众平台或API接口发放免费券。</td>
+									<td>已获得</td>
+									<td>560001</td>
+								</tr>
+								<tr>
+								    <td>
+										<label class="radio-inline">
+											<span class="cardmessage_style27"></span>
+											<input type="radio" name="optionsRadiosinline" id="optionsRadios3" value="option1" checked>	  
+										</label>
+									</td>
+									<td>会员卡</td>
+									<td>可发行会员卡，运行灵活、方便的会员管理，高效的运营，开通卡券基础功能后，默认开通，支持通过公众平台或API接口发放会员卡。</td>
+									<td>未获得</td>
+									<td>400003</td>
+								</tr>
+								<tr>
+									<td>
+										<label class="radio-inline">
+											<span class="cardmessage_style27"></span>
+											<input type="radio" name="optionsRadiosinline" id="optionsRadios3" value="option1" checked>	  
+										</label>
+									</td>
+									<td>储值卡</td>
+									<td>可发行有储值功能的卡，如带储值功能的会员卡，需提交预订卡备案，审核通过后开通，预付卡备案方法请咨询地方商务主管部门，赞仅支持通过API接口发放储值卡。</td>
+									<td>未获得</td>
+									<td>411027</td>
+								</tr>
+								<tr>
+									<td>
+										<label class="radio-inline">
+										    <span class="cardmessage_style27"></span>
+											<input type="radio" name="optionsRadiosinline" id="optionsRadios3" value="option1" checked>	  
+										</label>
+									</td>
+									<td>销售买单</td>
+									<td>顾客到店消费完，结账时，通过卡券发起买单直接抵扣优惠折扣劵结账，目前支持买单的卡券类型包括折扣券、代金券及会员卡。客户需先开通微信支付，并为收款门店设置收款员，以便获取收款消息通知，支持通过公众平台或API接口实现微信买单功能。</td>
+									<td>未获得</td>
+									<td>411027</td>
+								</tr>
+								<tr>
+									<td>
+										<label class="radio-inline">
+											  <span class="cardmessage_style27"></span>
+											  <input type="radio" name="optionsRadiosinline" id="optionsRadios3" value="option1" checked>	  
+										</label>
+									</td>
+									<td>开发者协助制券(无公众号)</td>
+									<td>经授权后，可协助其他无公众号的子商户快速进入并使用卡券功能，支持通过公众平台或API接口实现该功能。<span style="color:blue;">开通前建议阅读《开发者协助制券（无公众号）协助文档》。</span></td>
+									<td>未获得</td>
+									<td>411027</td>
+								</tr>
+							</tbody>
+						</table>
+						<div  class="addstamp_04">
+							<button  id="yesBean" type="button" class="btn btn-success" style="width:20%;">确定</button> 
+							<button type="button" class="btn btn-success" style="width:20%;margin-left:14%;color:black;background:white;border:1px #E3E3E3 solid;">取消</button>        
+                		</div>
+				   </div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<script src="../../assest/js/jquery.js"></script>
+	<script src="../../assest/js/jquery-migrate-1.0.0.min.js"></script>
+	<script src="../../assest/js/jquery-ui-1.10.0.custom.min.js"></script>
+	<script src="../../assest/js/jquery.ui.touch-punch.js"></script>
+	<script src="../../assest/js/modernizr.js"></script>
+	<script src="../../assest/js/bootstrap.min.js"></script>
+	<script src="../../assest/bootstrap/bootstrap-validator/js/bootstrapValidator.min.js"></script>
+	<script src="../../assest/js/jquery.cookie.js"></script>
+	<script src='../../assest/js/fullcalendar.min.js'></script>
+	<script src='../../assest/js/jquery.dataTables.min.js'></script>
+	<script src="../../assest/js/excanvas.js"></script>
+	<script src="../../assest/js/jquery.flot.js"></script>
+	<script src="../../assest/js/jquery.flot.pie.js"></script>
+	<script src="../../assest/js/jquery.flot.stack.js"></script>
+	<script src="../../assest/js/jquery.flot.resize.min.js"></script>
+	<script src="../../assest/js/jquery.chosen.min.js"></script>
+	<script src="../../assest/js/jquery.uniform.min.js"></script>
+	<script src="../../assest/js/jquery.cleditor.min.js"></script>
+	<script src="../../assest/js/jquery.noty.js"></script>
+	<script src="../../assest/js/jquery.elfinder.min.js"></script>
+	<script src="../../assest/js/jquery.raty.min.js"></script>
+	<script src="../../assest/js/jquery.iphone.toggle.js"></script>
+	<script src="../../assest/js/jquery.uploadify-3.1.min.js"></script>
+	<script src="../../assest/js/jquery.gritter.min.js"></script>
+	<script src="../../assest/js/jquery.imagesloaded.js"></script>
+	<script src="../../assest/js/jquery.masonry.min.js"></script>
+	<script src="../../assest/js/jquery.knob.modified.js"></script>
+	<script src="../../assest/js/jquery.sparkline.min.js"></script>
+	<script src="../../assest/js/counter.js"></script>
+	<script src="../../assest/js/retina.js"></script>
+	<script src="../../assest/js/custom.js"></script>
+	
+	<script type="text/javascript" src="../../assest/bootstrap/qiao.js"></script>
+	<script type="text/javascript" src="../../js/util/main.js"></script>
+	<script type="text/javascript" src="../../js/util/handlebars-v4.0.5.js"></script>
+	<script type="text/javascript" src="../../js/wechatMembershipCard/addWechatMembershipCard.js"></script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.wechatpro.dao.WechatAdminLoginMationMapper">
+   <insert id="insertLoginMation" parameterType="java.util.Map">
+	      insert into wechat_admin_login_mation(
+		      realName,
+		      adminSex,
+		      adminAge,
+		      adminEducation,
+		      adminNation,
+		      adminWorkPlace,
+		      adminHomePlace,
+		      adminPoliticalLandscape,
+		      adminQq,
+		      adminId,
+		      adminShopName,
+		      adminShopCard,
+		      adminShopKey,
+		      adminKfPhone,
+		      adminKfBusinessHours,
+		      adminRecommend,
+		      adminCharacteristic,
+		      adminWorkXCoordinate,
+		      adminWorkYCoordinate
+	      )values(
+		      #{realName,jdbcType=VARCHAR},
+		      #{adminSex,jdbcType=INTEGER},
+		      #{adminAge,jdbcType=INTEGER},
+		      #{adminEducation,jdbcType=VARCHAR},
+		      #{adminNation,jdbcType=VARCHAR},
+		      #{adminWorkPlace,jdbcType=VARCHAR},
+		      #{adminHomePlace,jdbcType=VARCHAR},
+		      #{adminPoliticalLandscape,jdbcType=VARCHAR},
+		      #{adminQq,jdbcType=VARCHAR},
+		      #{adminId,jdbcType=INTEGER},
+		      #{adminShopName,jdbcType=VARCHAR},
+		      #{adminShopCard,jdbcType=VARCHAR},
+		      #{adminShopKey,jdbcType=VARCHAR},
+		      #{adminKfPhone,jdbcType=VARCHAR},
+		      #{adminKfBusinessHours,jdbcType=VARCHAR},
+		      #{adminRecommend,jdbcType=VARCHAR},
+		      #{adminCharacteristic,jdbcType=VARCHAR},
+		      #{adminWorkXCoordinate,jdbcType=VARCHAR},
+		      #{adminWorkYCoordinate,jdbcType=VARCHAR}
+	      )
+   </insert>
+   
+   <select id="selectById" parameterType="java.util.Map" resultType="java.util.Map">
+	   	select 
+	   		realName,
+	    	adminSex,
+	        adminAge,
+	        adminEducation,
+	        adminNation,
+	        adminWorkPlace,
+	        adminHomePlace,
+	        adminPoliticalLandscape,
+	        adminQq
+	     from wechat_admin_login_mation where adminId=#{id}
+   </select>
+   
+   <update id="updateByAdminId" parameterType="java.util.Map">
+	   	update wechat_admin_login_mation 
+	   	<set>
+	   		<if test="realName != '' and realName != null">
+	   			realName=#{realName},	
+	   		</if>
+	   		<if test="adminSex != '' and adminSex != null">
+	   			adminSex=#{adminSex},	
+	   		</if>
+	   		<if test="adminAge != '' and adminAge != null">
+	   			adminAge=#{adminAge},	
+	   		</if>
+	   		<if test="adminEducation != '' and adminEducation != null">
+	   			adminEducation=#{adminEducation},	
+	   		</if>
+	   		<if test="adminNation != '' and adminNation != null">
+	   			adminNation=#{adminNation},
+	   		</if>
+	   		<if test="adminWorkPlace != '' and adminWorkPlace != null">
+	   			adminWorkPlace=#{adminWorkPlace},	
+	   		</if>
+	   		<if test="adminHomePlace != '' and adminHomePlace != null">
+	   			adminHomePlace=#{adminHomePlace},	
+	   		</if>
+	   		<if test="adminPoliticalLandscape != '' and adminPoliticalLandscape != null">
+	   			adminPoliticalLandscape=#{adminPoliticalLandscape},	
+	   		</if>
+	   		<if test="adminQq != '' and adminQq != null">
+	   			adminQq=#{adminQq},
+	   		</if>
+	   		<if test="adminShopName != '' and adminShopName != null">
+	   			adminShopName=#{adminShopName},	
+	   		</if>
+	   		<if test="adminShopCard != '' and adminShopCard != null">
+	   			adminShopCard=#{adminShopCard},	
+	   		</if>
+	   		<if test="adminShopKey != '' and adminShopKey != null">
+	   			adminShopKey=#{adminShopKey},	
+	   		</if>
+	   		<if test="adminKfPhone != '' and adminKfPhone != null">
+	   			adminKfPhone=#{adminKfPhone},	
+	   		</if>
+	   		<if test="adminKfBusinessHours != '' and adminKfBusinessHours != null">
+	   			adminKfBusinessHours=#{adminKfBusinessHours},	
+	   		</if>
+	   		<if test="adminRecommend != '' and adminRecommend != null">
+	   			adminRecommend=#{adminRecommend},	
+	   		</if>
+	   		<if test="adminCharacteristic != '' and adminCharacteristic != null">
+	   			adminCharacteristic=#{adminCharacteristic},	
+	   		</if>
+	   		<if test="adminWorkXCoordinate != '' and adminWorkXCoordinate != null">
+	   			adminWorkXCoordinate=#{adminWorkXCoordinate},	
+	   		</if>
+	   		<if test="adminWorkYCoordinate != '' and adminWorkYCoordinate != null">
+	   			adminWorkYCoordinate=#{adminWorkYCoordinate}	
+	   		</if>
+	   		</set>
+	   	where adminId=#{id}
+   </update>
+   
+</mapper>

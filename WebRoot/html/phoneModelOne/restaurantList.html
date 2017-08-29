@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>麦克思菜单</title>
+	<link id="bootstrap-style" href="../../assest/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../../assest/phoneModelFirst/css/ui.css">
+	<link rel="shortcut icon" href="../../assest/icon/maxLogo.jpg">
+</head>
+<body style="font-size:12px">
+	<div class="header">
+		<div class="header-background"></div>
+		<div class="toolbar statusbar-padding">
+			<button class="bar-button back-button" onclick="history.go(-1);" dwz-event-on-click="click"><i class="icon icon-back"></i></button>
+			<div class="header-title">
+				<div class="title">门店列表</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="shopListselect">
+		<!-- <div class="textShopList"><h4></h4></div> -->
+		<div class="cityMenu" style="margin-left:5%;">
+			<font id="city" class="cityMenu_city"></font>
+			<span class="glyphicon glyphicon-chevron-down" id="moreCity" style=" cursor:pointer;"></span>
+		</div>
+	</div>
+	
+	<div class="shopListselect">
+		<div class="textShopList"><h5>门店列表</h5><span class="glyphicon glyphicon-home"></span> </div>
+		
+		<!-- <div class="textShopList_right" >麦克思郑大店(12.4092Km)</div> -->
+	</div>
+	
+	<div class="line" id="resDiv">
+		<ul id="restaurantSelect" class="table table-striped">
+			
+		</ul>
+	</div>
+		
+	<!-- <div class="qdbutton" style=" cursor:pointer;" id="quedinBtn"><font class="quedingBt">确定</font></div> -->
+<!-- 	<div class="tab-bar tab-bottom">
+		
+	</div> -->
+		<!-- 模态框（Modal） -->
+<!-- 	<div class="modal fade Mymmddal" style="width:90%;margin:35% auto;" id="Modal" tabindex="-1" aria-labelledby="myModalLabel">
+		<div class="modal-dialog dialog-width-600" role="document">
+			<div class="modal-content">
+			    <div class="modal-header">
+			    	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+			    	<h4 class="modal-title eat-time">选择取餐时间</h4>
+				</div>
+			    <div class="modal-body dialog-body1">
+			   		<div class="form-group dialog-100">
+			    		<label for="txt_departmentname" class="dialog-label-20" >取餐时间:</label>
+			    		<div class="dialog-div-75" id="eDiv">
+			    			<span class="glyphicon glyphicon-ok-sign font-action" id="eatNow"></span>
+			    			<font>现在，支付成功后直接取餐</font>
+			    		</div>
+			    		<div class="dialog-div-75" id="tDiv">
+			    			<span class="glyphicon glyphicon-ok-sign" id="eatTime"></span>
+			    			<font>稍晚，预约当天，稍晚时间，在预约时间取餐</font>
+			    		</div>
+			    		<div id="eatTimeDiv"  style="display:none;">
+			    			<label>就餐时间：当天   </label>
+			    			<select name="h" id="h" onchange="show()"></select>点
+			    			<select name="min" id="min" onchange="show();"></select>分
+			    		</div>
+			    	</div>
+			    </div>
+			    <div class="btn-group modal-footer-btn">
+			    	<button type="button" id="button_esc" class="btn btn-primary">取消</button>
+			    	<button type="button" id="button_sure" class="btn btn-success">确定</button>
+			    </div>
+			</div>
+	 	</div>
+	</div> -->
+	<div id="navigate"></div>
+	 
+	<div id="preloader">  
+	  <div id="status"></div>  
+	</div>
+	<script id="restaurantBean" type="text/x-handlebars-template"> 
+		{{#each bean.allRestaurant}}
+			<li class="rest_li chooseShop" shoppingName="Max">
+				<font class="glyphicon glyphicon-map-marker"></font>
+				<font class="rest_li_font" name="shopName" shop="{{adminId}}">{{#compare1 adminShopName adminWorkXCoordinate adminWorkYCoordinate}}{{/compare1}}</font>
+			</li>
+		{{/each}}
+	</script>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=6yAoynmTPNlTBa8z1X4LfwGE"></script>    
+	<script type
+	="text/javascript" src="http://developer.baidu.com/map/jsdemo/demo/convertor.js"></script>   
+	<script type="text/javascript" src="../../assest/js/jquery.js"></script>
+	<script type="text/javascript" src="../../assest/phoneModelFirst/js/classDefine/swiper-3.2.5.min.js"></script>
+	<script type="text/javascript" src="../../assest/phoneModelFirst/js/classDefine/ectouch.js"></script>
+	<script type="text/javascript" src="../../assest/phoneModelFirst/js/classDefine/jquery.json.js"></script>
+	<script type="text/javascript" src="../../assest/phoneModelFirst/js/classDefine/common.js"></script>
+	<script type="text/javascript" src="../../assest/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../../assest/phoneModelFirst/js/aui-swipe.js"></script>
+	
+	<script type="text/javascript" src="../../assest/bootstrap/qiao.js"></script>
+	<script type="text/javascript" src="../../js/util/main.js"></script>
+	<script type="text/javascript" src="../../js/util/handlebars-v4.0.5.js"></script>
+<!-- 	<script type="text/javascript" src="../../js/phoneModelOne/common/common.js"></script> -->
+	<script type="text/javascript" src="../../js/phoneModelOne/common/navigate.js"></script>
+	<script type="text/javascript" src="../../js/phoneModelOne/restaurantList.js"></script>
+</body>
+</html>
