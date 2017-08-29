@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.wechatpro.dao.WechatOrderPrintMaper">
+	
+	<select id="selectOrderInfo" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			orderInf.id,
+			orderInf.orderNumber,
+			orderInf.createTime,
+			orderInf.wetherPaymentTime,
+			orderInf.orderPrice,
+			orderInf.orderType,
+			orderInf.dayNo,
+			orderInf.phoneNumber,
+			orderInf.orderDesc
+		FROM
+			${tableName} AS orderInf
+		WHERE
+			orderInf.id = #{id}
+		AND orderInf.orderNumber = #{orderNumber}
+		AND orderInf.orderAdminId = #{orderAdminId}
+	</select>
+	
+	<select id="selectOrderPruduct" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			productName,
+			productPrice,
+			productNum
+		FROM
+			wechat_customer_order_shopping_log_201708
+		WHERE
+			orderId = #{id}
+	</select>
+</mapper>
