@@ -130,23 +130,8 @@
 			    			<font id="adminWorkYCoordinate"></font>
 			    		</div>
 			    	</div>
-			    	<div class="form-group dialog-100">
-			    		<label for="txt_departmentname" class="dialog-label-10" >商品：</label>
-			    		<!-- 已选择的商品 -->
-			    		<div class="dialog-div-80 product_kind clearDiv" id="selectProDiv">
-			    		</div>
-			    	</div>
-			    	<div class="form-group dialog-100">
-			    		<label for="txt_departmentname" class="dialog-label-10" >套餐：</label>
-			    		<!--已选择的套餐的列表  -->
-			    		<div class="dialog-div-80 product_kind clearDiv" id="selectPacDiv">
-			    		</div>
-			    	</div>
-			    	<div class="form-group dialog-100">
-			    		<label for="txt_departmentname" class="dialog-label-10" >自选：</label>
-			    		<!-- 已选择的可选套餐的列表 -->
-			    		<div class="dialog-div-80 product_kind clearDiv" id="selectChooDiv">
-			    		</div>
+			    	<div class="form-group dialog-100" id="selectProDiv">
+			    	
 			    	</div>
 			    	<div class="form-group dialog-100" id="ditu" style="height: 200px;">
 			    		<label for="txt_departmentname" class="dialog-label-10" >地图：</label>
@@ -163,51 +148,26 @@
 	</div>
 	<!-- 该分类下已经选择的商品 -->
 	<script id="selectProductListBean" type="text/x-handlebars-template"> 
-		{{#each bean.productList}}
-			 <div class="pro_left" productId="{{productId}}">
-			    <div class="product_left">
-				    <img alt="" src="{{#proLogo proLogo}}{{/proLogo}}" class="dialogUserImg img-thumbnail">
-			    </div>
-			    <div class="product_right">
-				    <p>名称：{{productName}}</p>
-				    <p>价格：{{productPrice}}元</p>
-				    <p>创建时间：{{#proCreatTime proCreatTime}}{{/proCreatTime}}</p>
-			    </div>
+		{{#each rows}}
+			 <label for="txt_departmentname" class="dialog-label-10" >{{typeName}}：</label>
+		 		<!--已选择的套餐的列表  -->
+		  		<div class="dialog-div-80 product_kind clearDiv">
+				{{#each list}}
+				<div class="pro_left" productId="{{productId}}">
+					<div class="product_left">
+						<img alt="" src="{{#proLogo proLogo}}{{/proLogo}}" class="dialogUserImg img-thumbnail">
+					</div>
+					<div class="product_right">
+						<p>名称：{{productName}}</p>
+						<p>价格：{{productPrice}}元</p>
+						<p>创建时间：{{#proCreatTime proCreatTime}}{{/proCreatTime}}</p>
+					</div>
+				</div>
+				{{/each}}
 			</div>
 		{{/each}}
 	</script>
 	
-	<!-- 该分类下已经选择的套餐 -->
-	<script id="selectPackageListBean" type="text/x-handlebars-template"> 
-		{{#each bean.packageList}}
-			 <div class="pro_left" packageId="{{packageId}}">
-			    <div class="product_left">
-				    <img alt="" src="{{#pacLogo pacLogo}}{{/pacLogo}}" class="dialogUserImg img-thumbnail">
-			    </div>
-			    <div class="product_right">
-				    <p>名称：{{packageName}}</p>
-				    <p>价格：{{packagePrice}}元</p>
-				    <p>创建时间：{{#pacCreatTime pacCreatTime}}{{/pacCreatTime}}</p>
-			    </div>
-			</div>
-		{{/each}}
-	</script>
-	
-	<!-- 该分类下已经选择的可选套餐 -->
-	<script id="selectChoosePackageListBean" type="text/x-handlebars-template"> 
-		{{#each bean.chooPackList}}
-			 <div class="pro_left" choosePackageId="choosePackageId" >
-			    <div class="product_left">
-				    <img alt="" src="{{#chooLogo chooLogo}}{{/chooLogo}}" class="dialogUserImg img-thumbnail">
-			    </div>
-			    <div class="product_right">
-				    <p>名称：{{choosePackageName}}</p>
-				    <p>价格：{{choosePackagePrice}}元</p>
-				    <p>创建时间：{{#chooCreatTime chooCreatTime}}{{/chooCreatTime}}</p>
-			    </div>
-			</div>
-		{{/each}}
-	</script>
 	<script src="../../assest/js/jquery.js"></script>
 	<script src="../../assest/js/jquery-migrate-1.0.0.min.js"></script>
 	<script src="../../assest/js/jquery-ui-1.10.0.custom.min.js"></script>

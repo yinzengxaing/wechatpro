@@ -30,15 +30,18 @@
 			a.id AS productId,
 			a.productName,
 			a.productPrice,
+			a.productType,
 			a.createTime AS proCreatTime,
 			b.optionPath AS proLogo,
 			c.productState AS proState,
 			c.productNum AS proNum,
-			c.productNowNum AS proNowNum
+			c.productNowNum AS proNowNum,
+			d.typeName
 		FROM
 			wechat_product AS a,
 			wechat_option AS b,
-			wechat_product_restaurant AS c
+			wechat_product_restaurant AS c,
+			wechat_product_type AS d
 		WHERE
 			a.id IN (
 				SELECT
@@ -52,6 +55,7 @@
 		AND a.productState = 2
 		AND a.productLogo = b.id
 		AND a.id = c.productId
+		AND d.id = a.productType
 		GROUP BY
 			a.id
 		ORDER BY
