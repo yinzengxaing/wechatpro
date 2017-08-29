@@ -180,7 +180,7 @@ window.EvenInit = {
 	    			adminRestaurantId:adminRestaurantId,
 	    	}
 	    	AjaxPostUtil.request({url:path+"/post/WechatProductRestaurantController/getProduct",params:myparams,type:'json',callback:function(json){
-	    		  $(".clearDiv").html("");
+	    		  $("#selectProDiv").html("");
 	    		if (json.returnCode==0){
 					//对商品logo路径进行修饰
 					Handlebars.registerHelper("proLogo", function(v1,options){
@@ -189,35 +189,11 @@ window.EvenInit = {
 					//对商品创建时间进行修饰
 					Handlebars.registerHelper("proCreatTime", function(v1,options){
 						return v1.substring(0,10);
-					});
-					//对套餐logo路径进行修饰
-					Handlebars.registerHelper("pacLogo", function(v1,options){
-						 return path + "/"+v1;
-					});
-					//对套餐创建时间进行修饰
-					Handlebars.registerHelper("pacCreatTime", function(v1,options){
-						return v1.substring(0,10);
-					});
-					//对可选套餐logo路径进行修饰
-					Handlebars.registerHelper("chooLogo", function(v1,options){
-						 return path + "/"+v1;
-					});
-					//对可选套餐创建时间进行修饰
-					Handlebars.registerHelper("chooCreatTime", function(v1,options){
-						return v1.substring(0,10);
-					});
+					});	
 					//商品的列表
 					var source = $("#selectProductListBean").html();  
 				    var template = Handlebars.compile(source);
-				    $("#selectProDiv").html(template(json));
-					//套餐的列表
-					var source = $("#selectPackageListBean").html();  
-				    var template = Handlebars.compile(source);
-				    $("#selectPacDiv").html(template(json));
-				    //可选套餐的列表
-					var source = $("#selectChoosePackageListBean").html();  
-				    var template = Handlebars.compile(source);
-				    $("#selectChooDiv").html(template(json));
+				    $("#selectProDiv").html($("#selectProDiv").html() + template(json));
 				    //若图片找不到  则显示max图标
 					$(".img-thumbnail").each(function(){
 				    	var myThis = $(this);
@@ -233,7 +209,7 @@ window.EvenInit = {
 				        });
 				    });
 	    		}else{
-	    			qiao.bs.msg({msg:json.returnMessage,type:'danger'});
+	    			  $("#selectProDiv").html("该门店还没有商品！");
 	    		}
 	    	}});
     		

@@ -3,6 +3,7 @@ package com.ssm.wechatpro.service.impl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
@@ -148,6 +149,26 @@ public class WechatProductRestaurantServiceImpl implements WechatProductRestaura
 		Map<String, Object> params = inputObject.getParams();
 		//获取产品,套餐,可选套餐
 		List<Map<String,Object>> productList = wechatProductRestaurantMapper.getProductListById(params);
+		HashSet<Object> set = new HashSet<>();
+		for (Map<String, Object> map : productList) {
+			set.add(map.put("typeName", map.get("typeName")));
+		}
+		List<Map<String, Object>> retrunList = new ArrayList<>();
+		for (Object object : set) {
+			Map<String, Object> retrunMap = new HashMap<>();
+			retrunMap.put("typeName", object);
+			List<Map<String, Object>> list =  new ArrayList<>();
+			
+			for  (Map<String, Object> map : productList) {
+				if (map.get("typeName").equals(object)){
+					list.add(map);
+				}
+			}
+			retrunMap.put("list", list);
+			retrunList.add(retrunMap);
+		}
+		
+		
 		List<Map<String,Object>> packageList = wechatProductRestaurantMapper.getPackageListById(params);
 		List<Map<String, Object>> chooPackList = wechatProductRestaurantMapper.getChooPackListById(params);
 		//判断该商店里是否拥有商品
@@ -161,6 +182,7 @@ public class WechatProductRestaurantServiceImpl implements WechatProductRestaura
 		map.put("packageList", packageList);
 		map.put("chooPackList", chooPackList);
 		outputObject.setBean(map);
+		outputObject.setBeans(retrunList);
 	}
 
 	/**
