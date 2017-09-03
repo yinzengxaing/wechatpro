@@ -44,7 +44,10 @@
 		orderType,
 		orderPrice,
 		lastUpdateTime,
-		phoneNumber      
+		phoneNumber
+		<if test="orderDesc != null and orderDesc != '' ">
+		,orderDesc
+		</if>      
 		)
 	VALUES
 		(
@@ -59,6 +62,9 @@
 		#{orderPrice},
 		#{lastUpdateTime},
 		#{phoneNumber}
+		<if test="orderDesc != null and orderDesc != '' ">
+		,#{orderDesc}
+		</if>
 		)
 	</insert>
 	
@@ -97,7 +103,8 @@
 			wetherMake,
 			orderPrice,
 			dayNo,
-			phoneNumber
+			phoneNumber,
+			orderDesc
 		FROM
 			${order_log_1}
 		<where>
@@ -122,7 +129,8 @@
 			wetherMake,
 			orderPrice,
 			dayNo,
-			phoneNumber
+			phoneNumber,
+			orderDesc
 		FROM
 			${order_log_2}
 		<where>
@@ -147,7 +155,8 @@
 			wetherMake,
 			orderPrice,
 			dayNo,
-			phoneNumber
+			phoneNumber,
+			orderDesc
 		FROM
 			${order_log_3}
 		<where>
@@ -176,7 +185,8 @@
 			wetherMake,
 			orderPrice,
 			dayNo,
-			phoneNumber
+			phoneNumber,
+			orderDesc
 		FROM
 			${order_log}
 		WHERE 

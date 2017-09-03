@@ -168,7 +168,8 @@ function eventInit(){
 				orderType:orderType,
 				phoneNumber:$("#phoneNumber").val(),
 				eatTime:eatTime,
-				adminId:adminId
+				adminId:adminId,
+				remark:$("#remark").val()
 		}
 		AjaxPostUtil.request({url:path+"/gateway/MWechatCustomerOrderController/addOrder",params:params,type:'json',callback:function(jsonPa){
 			if (jsonPa.returnCode == 0){
@@ -329,7 +330,7 @@ function getCartInfo(){
 				$('#wrap').hide();
 			}
 			//判断总金额，超过100给出温馨提示
-			if(totalPrice >= 0.03){
+			if(totalPrice >= 100){
 				$(".wrap_phone_tel_bt").show();
 			}else{
 				$(".wrap_phone_tel_bt").hide();
