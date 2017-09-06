@@ -41,6 +41,7 @@ function dataInit(){
 			$("#shopName").html(json.bean.adminShopName);
 			$("#phoneNumber").html(json.bean.phoneNumber);
 			$("#wetherPaymentTime").html(json.bean.wetherPaymentTime);
+			$("#orderDesc").html(json.bean.orderDesc);
 			
 			$("#price").html(json.bean.orderPrice+"元");
 			$("#reailPrice").html(json.bean.orderPrice+"元");

@@ -90,6 +90,9 @@ public class MWechatCustomerOrderServiceImpl implements MWechatCustomerOrderServ
 		orderParams.put("createTime", DateUtil.getTimeAndToString());
 		orderParams.put("orderEatTime", params.get("eatTime"));
 		orderParams.put("orderAdminId", params.get("adminId").toString());
+		if (params.get("remark") != null || params.get("remark") != ""){
+			orderParams.put("orderDesc", params.get("remark"));
+		}
 		//订单类型(js判断)
 		orderParams.put("orderType", params.get("orderType"));
 		//每次操作订单后显示的时间
@@ -432,6 +435,7 @@ public class MWechatCustomerOrderServiceImpl implements MWechatCustomerOrderServ
 		orderParams.put("id",params.get("orderId"));
 		orderParams.put("order_log", order_log);
 		Map<String, Object> orderDetailByOrderId = mWechatCustomerOrderMapper.getOrderDetailByOrderId(orderParams);
+		System.out.println(orderDetailByOrderId);
 		returnMap.put("orderId",orderDetailByOrderId.get("id") );
 		returnMap.put("orderNumber",orderDetailByOrderId.get("orderNumber") );
 		returnMap.put("orderType",orderDetailByOrderId.get("orderType") );
@@ -442,6 +446,12 @@ public class MWechatCustomerOrderServiceImpl implements MWechatCustomerOrderServ
 		returnMap.put("dayNo",orderDetailByOrderId.get("dayNo") );
 		returnMap.put("phoneNumber",orderDetailByOrderId.get("phoneNumber"));
 		returnMap.put("orderEatTime",orderDetailByOrderId.get("orderEatTime"));
+		if (!orderDetailByOrderId.get("orderDesc").equals("")){
+			returnMap.put("orderDesc",orderDetailByOrderId.get("orderDesc"));
+		}else{
+			returnMap.put("orderDesc","无");
+		}
+		
 		
 		//获取餐厅的信息
 		Map<String, Object> resParams = new HashMap<String,Object>();
@@ -450,7 +460,7 @@ public class MWechatCustomerOrderServiceImpl implements MWechatCustomerOrderServ
 		returnMap.put("adminId", restaurantInfo.get("adminId"));
 		returnMap.put("adminShopName", restaurantInfo.get("adminShopName"));
 		
-		//若订单的类型为1 获取地址的id 查询地址的信息
+		//若订单的类型为5 获取地址的id 查询地址的信息
 		if (orderDetailByOrderId.get("orderType").equals(5)){
 			Map<String, Object> addressParams = new HashMap<String,Object>();
 			addressParams.put("id", orderDetailByOrderId.get("orderEatTime"));
