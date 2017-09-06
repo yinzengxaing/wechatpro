@@ -2,10 +2,12 @@ var menuVersion="";
 var menuId="";
 var rebackInt=null;
 var rebackContext=null;
+var wetherPublish=null;
 
 $(function(e){
 	receiveData();
 	menuVersion = $.req("menuVersion");
+	wetherPublish = $.req("wetherPublish");
 	eventInit();
 });
 function dataInit(){
@@ -69,6 +71,7 @@ function loadMenuMation(){
 
 function eventInit(){
 	$('body').on('click','#deleteBean',function(e){
+		
 		qiao.bs.confirm("是否删除该项菜单？",function(){
 		var params = {
 				id:$("#menuName").attr("menuId")
@@ -76,6 +79,33 @@ function eventInit(){
 		AjaxPostUtil.request({url:path+"/post/WechatButtomMenuController/deleteMenus",params:params,type:'json',callback:function(json){
 			if(json.returnCode==0){
 				qiao.bs.msg({msg:json.returnMessage,type:'success'});
+				var params={
+						menuVersion:menuVersion
+				}
+		    	AjaxPostUtil.request({url:path+"/post/WechatButtomMenuController/updateMenuPublish",params:params,type:'json',callback:function(json){
+					if(json.returnCode == 0){
+						qiao.bs.msg({msg:json.returnMessage,type:'success'});
+						if(wetherPublish==1){
+							var params={
+									menuVersion:menuVersion
+							}
+					    	AjaxPostUtil.request({url:path+"/post/WechatButtomMenuController/updateMenuPublish",params:params,type:'json',callback:function(json){
+								if(json.returnCode == 0){
+									qiao.bs.msg({msg:json.returnMessage,type:'success'});
+								$('#massage').bootstrapTable('refresh',{url:path+'/post/WechatButtomMenuController/selectAllMenus'});
+								}else{
+									qiao.bs.msg({msg:json.returnMessage,type:'danger'});
+								}
+							}
+							});
+						}
+						
+					$('#massage').bootstrapTable('refresh',{url:path+'/post/WechatButtomMenuController/selectAllMenus'});
+					}else{
+						qiao.bs.msg({msg:json.returnMessage,type:'danger'});
+					}
+				}
+				});
 				dataInit();
 				$("#myTab").children("li:eq("+0+")").addClass("active");
 				$("#myTab").children("li:eq("+1+")").removeClass("active");
@@ -140,6 +170,20 @@ function eventInit(){
 			AjaxPostUtil.request({url:path+"/post/WechatButtomMenuController/updateMenuById",params:params,type:'json',callback:function(json){
 				if(json.returnCode==0){
 					qiao.bs.msg({msg:json.returnMessage,type:'success'});
+					if(wetherPublish==1){
+						var params={
+								menuVersion:menuVersion
+						}
+				    	AjaxPostUtil.request({url:path+"/post/WechatButtomMenuController/updateMenuPublish",params:params,type:'json',callback:function(json){
+							if(json.returnCode == 0){
+								qiao.bs.msg({msg:json.returnMessage,type:'success'});
+							$('#massage').bootstrapTable('refresh',{url:path+'/post/WechatButtomMenuController/selectAllMenus'});
+							}else{
+								qiao.bs.msg({msg:json.returnMessage,type:'danger'});
+							}
+						}
+						});
+					}
 					dataInit();
 				}
 			}},true);
@@ -169,6 +213,20 @@ function eventInit(){
 			}
 			AjaxPostUtil.request({url:path+"/post/WechatButtomMenuController/addMenu",params:params,type:'json',callback:function(json){
 				if(json.returnCode==0){
+					if(wetherPublish==1){
+						var params={
+								menuVersion:menuVersion
+						}
+				    	AjaxPostUtil.request({url:path+"/post/WechatButtomMenuController/updateMenuPublish",params:params,type:'json',callback:function(json){
+							if(json.returnCode == 0){
+								qiao.bs.msg({msg:json.returnMessage,type:'success'});
+							$('#massage').bootstrapTable('refresh',{url:path+'/post/WechatButtomMenuController/selectAllMenus'});
+							}else{
+								qiao.bs.msg({msg:json.returnMessage,type:'danger'});
+							}
+						}
+						});
+					}
 					dataInit();
 					}
 				}},true);
@@ -241,6 +299,20 @@ function eventInit(){
 			}
 			AjaxPostUtil.request({url:path+"/post/WechatButtomMenuController/addMenu",params:beanParams,type:'json',callback:function(json){
 				if(json.returnCode==0){
+					if(wetherPublish==1){
+						var params={
+								menuVersion:menuVersion
+						}
+				    	AjaxPostUtil.request({url:path+"/post/WechatButtomMenuController/updateMenuPublish",params:params,type:'json',callback:function(json){
+							if(json.returnCode == 0){
+								qiao.bs.msg({msg:json.returnMessage,type:'success'});
+							$('#massage').bootstrapTable('refresh',{url:path+'/post/WechatButtomMenuController/selectAllMenus'});
+							}else{
+								qiao.bs.msg({msg:json.returnMessage,type:'danger'});
+							}
+						}
+						});
+					}
 					dataInit();
 				}
 				}});

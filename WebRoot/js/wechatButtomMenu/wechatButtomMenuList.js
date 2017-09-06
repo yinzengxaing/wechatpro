@@ -152,7 +152,7 @@ var TableInit = function () {
 }
 window.EvenInit = {
 		'click .RoleOfA': function (e, value, row, index) {
-	    	location.href = "wechatButtomMenu.html?menuVersion="+row.menuVersion;
+	    	location.href = "wechatButtomMenu.html?menuVersion="+row.menuVersion+"&wetherPublish="+row.wetherPublish;
 	    	},
 	    	'click .RoleOfB': function (e, value, row, index) {
 	    	menuVersion = row.menuVersion;
@@ -191,6 +191,8 @@ function operateFormatter(value, row, index) {
 	if (row.wetherPublish == 1)
 		str = [
 				'<button type="button" class="RoleOfB btn btn-default  btn-sm" style="margin-right:15px;">详情</button>',
+				'<button type="button" class="RoleOfA btn btn-default  btn-sm" style="margin-right:15px;">编辑</button>',
+				'<button type="button" class="RoleOfC btn btn-default  btn-sm" style="margin-right:15px;">已发布</button>', 
 				]
 	else
 		str = [
