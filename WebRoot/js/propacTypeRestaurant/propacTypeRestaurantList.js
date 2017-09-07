@@ -244,7 +244,6 @@ function eventInit(){
 }
 //数据的初始化
 function setData(){
-	alert(selectName);
 	var  params = {
 		proPacTypeName:selectName
 	}
