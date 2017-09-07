@@ -78,11 +78,11 @@
 							</div>
 							<div class="product-count">
 								<font class="toCart glyphicon glyphicon-plus-sign" style="font-size:30px;padding:0; float:right;cursor:pointer;"
-								 buyProductId="{{productId}}" productType="{{productType}}" adminId="{{adminId}}">
+								 buyProductId="{{productId}}" productType="{{productType}}" adminId="{{adminId}}" productPrice="{{productPrice}}">
 								</font>
-								<font class="count" style="font-size:20px;float:right;margin:8px 4px;">{{productCount}}</font>
+								<font class="count proCount"  buyProductId="{{productId}}" productType="{{productType}}" style="font-size:20px;float:right;margin:8px 4px;">{{productCount}}</font>
 								<font class="redCart glyphicon glyphicon-minus-sign" style="font-size:30px;padding:0;float:right;cursor:pointer; cursor:pointer;"
- 								buyProductId="{{productId}}" productType="{{productType}}" adminId="{{adminId}}">
+ 								buyProductId="{{productId}}" productType="{{productType}}" adminId="{{adminId}}" productPrice="{{productPrice}}">
 								</font>
 							</div>
 						</div>
@@ -103,10 +103,12 @@
 				<div class="comm-bar-right">
 					<font class="glyphicon glyphicon-plus-sign addInCart" style="font-size:30px;float:right;cursor:pointer;"
 					buyProductId="{{wechatCommodity}}" productType="{{wechatCommodityType}}" adminId="{{wechatCommodityAdminId}}"
+					productPrice="{{productPrice}}"
 					></font>
-					<font style="font-size:20px;float:right;margin:8px 4px;">{{wechatCommodityCount}}</font>
+					<font  class="count" style="font-size:20px;float:right;margin:8px 4px;">{{wechatCommodityCount}}</font>
 					<font class="glyphicon glyphicon-minus-sign redInCart" style="font-size:30px;float:right;cursor:pointer;"
 					buyProductId="{{wechatCommodity}}" productType="{{wechatCommodityType}}" adminId="{{wechatCommodityAdminId}}"
+					productPrice="{{productPrice}}"
 					></font>
 				</div>
 			</div>
