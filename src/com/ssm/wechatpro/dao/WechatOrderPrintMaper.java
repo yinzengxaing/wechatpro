@@ -22,4 +22,11 @@ public interface WechatOrderPrintMaper {
 	 */
 	public List<Map<String,Object>> selectOrderPruduct(Map<String, Object> map) throws Exception;
 	
+	/**
+	 * 查询指定时间到当前时间之间的信息
+	 * @param map
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Map<String, Object>> selectTimeQuantumOrderInfo(Map<String, Object> map) throws Exception; 
 }

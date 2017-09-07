@@ -13,13 +13,35 @@
 			orderInf.orderType,
 			orderInf.dayNo,
 			orderInf.phoneNumber,
-			orderInf.orderDesc
+			orderInf.orderDesc,
+			CASE
+		WHEN orderInf.orderType = 5 THEN
+			(
+				SELECT
+					CONCAT(
+						address.deliveryAddressProvince,
+						address.deliveryAddressCity,
+						address.deliveryAddressCount,
+						address.deliveryAddressSpecific
+					)
+				FROM
+					m_wechat_delivery_address AS address
+				WHERE
+					orderInf.orderEatTime = address.id
+			)
+		ELSE
+			orderInf.orderEatTime
+		END AS orderEatTime,
+			mation.adminId AS shopId,
+			mation.adminShopName
 		FROM
-			${tableName} AS orderInf
+			${tableName} AS orderInf,
+			wechat_admin_login_mation AS mation
 		WHERE
 			orderInf.id = #{id}
 		AND orderInf.orderNumber = #{orderNumber}
 		AND orderInf.orderAdminId = #{orderAdminId}
+		AND mation.adminId = orderInf.orderAdminId
 	</select>
 	
 	<select id="selectOrderPruduct" parameterType="java.util.Map" resultType="java.util.Map">
@@ -28,8 +50,50 @@
 			productPrice,
 			productNum
 		FROM
-			wechat_customer_order_shopping_log_201708
+			${tableName}
 		WHERE
 			orderId = #{id}
+	</select>
+	
+	<select id="selectTimeQuantumOrderInfo" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			orderInf.id,
+			orderInf.orderNumber,
+			orderInf.createTime,
+			orderInf.wetherPaymentTime,
+			orderInf.orderPrice,
+			orderInf.orderType,
+			orderInf.dayNo,
+			orderInf.phoneNumber,
+			orderInf.orderDesc,
+			CASE
+		WHEN orderInf.orderType = 5 THEN
+			(
+				SELECT
+					CONCAT(
+						address.deliveryAddressProvince,
+						address.deliveryAddressCity,
+						address.deliveryAddressCount,
+						address.deliveryAddressSpecific
+					)
+				FROM
+					m_wechat_delivery_address AS address
+				WHERE
+					orderInf.orderEatTime = address.id
+			)
+		ELSE
+			orderInf.orderEatTime
+		END AS orderEatTime,
+			mation.adminId AS shopId,
+			mation.adminShopName
+		FROM
+			${tableName} AS orderInf,
+			wechat_admin_login_mation AS mation
+		WHERE
+			orderInf.orderAdminId = #{orderAdminId}
+		AND mation.adminId = orderInf.orderAdminId
+		AND orderInf.wetherPaymentTime >= #{preTime}
+		AND  #{nowTime} >= orderInf.wetherPaymentTime
+		AND orderInf.orderNumber LIKE "%${nowDay}%"
 	</select>
 </mapper>

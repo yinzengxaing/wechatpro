@@ -13,4 +13,11 @@ public interface WechatOrderPrintService {
 	 */
 	public void selectOrder(InputObject inputObject, OutputObject outputObject)throws Exception;
 	
+	/**
+	 * 查询指定时间到当前时间之间的信息
+	 * @param inputObject
+	 * @param outputObject
+	 * @throws Exception
+	 */
+	public void selectTimeQuantumOrderInfo(InputObject inputObject, OutputObject outputObject)throws Exception;
 }
