@@ -435,7 +435,6 @@ public class MWechatCustomerOrderServiceImpl implements MWechatCustomerOrderServ
 		orderParams.put("id",params.get("orderId"));
 		orderParams.put("order_log", order_log);
 		Map<String, Object> orderDetailByOrderId = mWechatCustomerOrderMapper.getOrderDetailByOrderId(orderParams);
-		System.out.println(orderDetailByOrderId);
 		returnMap.put("orderId",orderDetailByOrderId.get("id") );
 		returnMap.put("orderNumber",orderDetailByOrderId.get("orderNumber") );
 		returnMap.put("orderType",orderDetailByOrderId.get("orderType") );
