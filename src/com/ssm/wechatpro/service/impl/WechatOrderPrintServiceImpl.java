@@ -1,5 +1,6 @@
 package com.ssm.wechatpro.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,18 +37,15 @@ public class WechatOrderPrintServiceImpl implements WechatOrderPrintService{
 		// 商店id
 		mapParam.put("orderAdminId", map.get("id")+"");
 		// 商品的基本信息
-		Map<String, Object> mapInfo = wechatOrderPrintMaper.selectOrderInfo(mapParam);
-		
+		List<Map<String, Object>> mapInfo = wechatOrderPrintMaper.selectOrderInfo(mapParam);
 		// 拼接订单详情表中的表明
 		mapParam.put("tableName", Constants.SHOP_TABLE + DateUtil.getTimeSixAndToString());
 		// 订单中包含的商品
 		List<Map<String, Object>> productList = wechatOrderPrintMaper.selectOrderPruduct(mapParam);
-		mapInfo.put("printTime", DateUtil.getTimeAndToString()); // 小票打印时间
-		mapInfo.put("productSort", productList.size());
-		outputObject.setBean(mapInfo);
-		
-		outputObject.setBeans(productList);
-		outputObject.settotal(productList.size());
+		mapInfo.get(0).put("productSort", productList.size());
+		mapInfo.get(0).put("productDetail", productList);
+		outputObject.setBeans(mapInfo);
+		outputObject.settotal(mapInfo.size());
 	}
 
 	/**
@@ -70,7 +68,15 @@ public class WechatOrderPrintServiceImpl implements WechatOrderPrintService{
 		// 商店id
 		mapParam.put("orderAdminId", map.get("id")+"");
 		List<Map<String, Object>> listProductByTime = wechatOrderPrintMaper.selectTimeQuantumOrderInfo(mapParam);
-		
+		String tableName = Constants.SHOP_TABLE + DateUtil.getTimeSixAndToString();// 订单详情表的名称
+		for(Map<String, Object> mapp: listProductByTime){
+			Map<String, Object> mapDetailInfo = new HashMap<>(); // 
+			mapDetailInfo.put("id", mapp.get("id"));
+			mapDetailInfo.put("tableName", tableName);
+			List<Map<String,Object>> productDetailInfo = wechatOrderPrintMaper.selectOrderPruduct(mapDetailInfo);
+			mapp.put("productDetail", productDetailInfo);
+			mapp.put("productSort", productDetailInfo.size());// 商品的种类数
+		}
 		outputObject.setBeans(listProductByTime);
 		outputObject.settotal(listProductByTime.size());
 		

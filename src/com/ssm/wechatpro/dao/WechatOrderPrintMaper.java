@@ -12,7 +12,7 @@ public interface WechatOrderPrintMaper {
 	 * @return
 	 * @throws Exception
 	 */
-	public Map<String, Object> selectOrderInfo(Map<String, Object> map)throws Exception;
+	public List<Map<String, Object>> selectOrderInfo(Map<String, Object> map)throws Exception;
 	
 	/**
 	 * 订单中含有的商品的信息
