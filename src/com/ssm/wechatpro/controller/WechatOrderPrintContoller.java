@@ -15,10 +15,22 @@ public class WechatOrderPrintContoller {
 	
 	@Resource
 	WechatOrderPrintService wechatOrderPrintService;
+	
 	@RequestMapping("/post/wechatOrderPrintContoller/selectOrder")
 	@ResponseBody
 	public void selectOrder(InputObject inputObject, OutputObject outputObject)throws Exception{
 		wechatOrderPrintService.selectOrder(inputObject, outputObject);
 	}
 	
+	/**
+	 * 查询指定时间到当前时间的订单信息
+	 * @param inputObject
+	 * @param outputObject
+	 * @throws Exception
+	 */
+	@RequestMapping("/post/wechatOrderPrintContoller/selectTimeQuantumOrderInfo")
+	@ResponseBody
+	public void selectTimeQuantumOrderInfo(InputObject inputObject, OutputObject outputObject) throws Exception {
+		wechatOrderPrintService.selectTimeQuantumOrderInfo(inputObject, outputObject);
+	}
 }
