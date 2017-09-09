@@ -3,6 +3,7 @@ package com.ssm.wechatpro.service.impl;
 import java.util.List;
 import java.util.Map;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,7 @@ public class WechatOrderManagerServiceImpl implements WechatOrderManagerService 
 	
 	@Autowired
 	private WechatOrderManagerMapper  wechatOrderManagerMapper;
-	
+
 	// 需要查询订单的表名
 	private final static  String ORDERlOGTABLENAME = "wechat_customer_order_log_";
 	private final static  String ORDERSHOPPINGTABLENAMW = "wechat_customer_order_shopping_log_";
@@ -113,4 +114,5 @@ public class WechatOrderManagerServiceImpl implements WechatOrderManagerService 
 			wechatOrderManagerMapper.updateMakeAddNum(productInfo);
 		}
 	}
+	
 }

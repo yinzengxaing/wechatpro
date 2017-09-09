@@ -4,8 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssm.wechatpro.dao.WechatOrderPrintMaper;
@@ -18,7 +17,7 @@ import com.ssm.wechatpro.util.DateUtil;
 @Service
 public class WechatOrderPrintServiceImpl implements WechatOrderPrintService{
 
-	@Resource
+	@Autowired
 	WechatOrderPrintMaper wechatOrderPrintMaper;
 	
 	/**
@@ -29,15 +28,19 @@ public class WechatOrderPrintServiceImpl implements WechatOrderPrintService{
 	 */
 	public void selectOrder(InputObject inputObject, OutputObject outputObject) throws Exception {
 		// 获取该登陆人的信息
-		Map<String, Object> map = inputObject.getLogParams();
+		// Map<String, Object> map = inputObject.getLogParams();
 		// 获取订单的单号和id
 		Map<String, Object> mapParam = inputObject.getParams();
 		// 添加订单表名称
 		mapParam.put("tableName", Constants.ORDER_TABLE + DateUtil.getTimeSixAndToString());
 		// 商店id
-		mapParam.put("orderAdminId", map.get("id")+"");
+		//	mapParam.put("orderAdminId", map.get("id")+"");
 		// 商品的基本信息
 		List<Map<String, Object>> mapInfo = wechatOrderPrintMaper.selectOrderInfo(mapParam);
+		// 判断查询结果是否为空
+		if(mapInfo.size() == 0){
+			return ;
+		}
 		// 拼接订单详情表中的表明
 		mapParam.put("tableName", Constants.SHOP_TABLE + DateUtil.getTimeSixAndToString());
 		// 订单中包含的商品
@@ -56,7 +59,7 @@ public class WechatOrderPrintServiceImpl implements WechatOrderPrintService{
 	 */
 	public void selectTimeQuantumOrderInfo(InputObject inputObject, OutputObject outputObject) throws Exception {
 		// 获取当前登录人的信息
-		Map<String, Object> map = inputObject.getLogParams();
+		// Map<String, Object> map = inputObject.getLogParams();
 		// 获取传入参数信息
 		Map<String, Object> mapParam = inputObject.getParams();
 		// nowDay 20170827
@@ -66,7 +69,7 @@ public class WechatOrderPrintServiceImpl implements WechatOrderPrintService{
 		// 添加订单表名称
 		mapParam.put("tableName", Constants.ORDER_TABLE + DateUtil.getTimeSixAndToString());
 		// 商店id
-		mapParam.put("orderAdminId", map.get("id")+"");
+		// mapParam.put("orderAdminId", map.get("id")+"");
 		List<Map<String, Object>> listProductByTime = wechatOrderPrintMaper.selectTimeQuantumOrderInfo(mapParam);
 		String tableName = Constants.SHOP_TABLE + DateUtil.getTimeSixAndToString();// 订单详情表的名称
 		for(Map<String, Object> mapp: listProductByTime){
