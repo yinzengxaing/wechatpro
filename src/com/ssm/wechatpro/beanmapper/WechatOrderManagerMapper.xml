@@ -31,7 +31,8 @@
 			orderLog.orderType,
 		 	orderLog.dayNo,
 		 	orderLog.phoneNumber,
-		 	orderLog.orderEatTime
+		 	orderLog.orderEatTime,
+		 	orderLog.orderDesc
 		FROM
 			${tableName} AS orderLog
 		WHERE
@@ -66,7 +67,8 @@
 		 orderLog.orderPrice,
 		 orderLog.orderEatTime,
 		 orderLog.dayNo,
-		 orderLog.phoneNumber
+		 orderLog.phoneNumber,
+		 orderLog.orderDesc
 		FROM
 			${tableName} AS orderLog 
 		WHERE

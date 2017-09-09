@@ -110,7 +110,7 @@ function eventInit(){
 			}
 		}});
 	});
-	
+	// 上下线取消
 	$("body").on("click", "#upOrDownCancelbtn",function(e){
 		$('#myModal4').modal('hide');
 	});
@@ -211,7 +211,6 @@ function eventInit(){
 		}});
 	});
 	
-	
 	// 批量修改总数量
 	$("body").on("click", "#modifyNumbtnMany", function (e){
 		$('#myModal22').modal('show');
@@ -257,28 +256,6 @@ function eventInit(){
 				qiao.bs.msg({msg:json.returnMessage,type:'danger'});
 			}
 		}});
-	});
-	
-	// 取消现金支付
-	$("body").on("click", "#cancelCashBut", function(e){
-		$("#myModal5").modal("hide");
-	});
-	// 进行现金支付
-	$("body").on("click", "#enterCashBut",function (e){
-		var param = {
-				productType : 1,
-				productId : id1,
-			};
-			 id1 = "";
-			AjaxPostUtil.request({url: path + "/post/wechatCanteenProductManageController/updateCashProple", params:param, type:'json', callback:function(json){
-				if(json.returnCode == 0){
-					qiao.bs.msg({msg:"付款成功",type:'success'});
-		    		$('#myModal5').modal('hide');
-		    		$('#message').bootstrapTable('refresh', {url: path+'/post/wechatCanteenProductManageController/selectProductByChoose'});
-				}else{
-					qiao.bs.msg({msg:json.returnMessage,type:'danger'});
-				}
-			}});
 	});
 };
 
@@ -567,12 +544,6 @@ window.EvenInit = {
 		$("#myModal2").modal("show");
 		$("#productNumberId").attr("value", row.productNum);
 		id1 = row.id // 将获取到的数据存放在数组中
-	},
-	// 表示用现金进行支付
-	'click .RoleOfE' : function (e, value, row , index){
-		$("#myModal5").modal("show");
-		// 获得对应商品的id
-		id1 = row.id;
 	}
 }
 function operateFormatter(value, row, index) {
@@ -580,7 +551,6 @@ function operateFormatter(value, row, index) {
 			'<button type="button" class="RoleOfA btn btn-primary selectMaton">详情</button>',
 			'<button type="button" class="RoleOfB btn btn-info">上/下线</button>',
 			'<button type="button" class="RoleOfC btn btn-success">重置卖出数量</button>',
-			'<button type="button" class="RoleOfD btn btn-default">修改总数量</button>',
-			'<button type="button" class="RoleOfE btn btn-danger">现金支付</button>'
+			'<button type="button" class="RoleOfD btn btn-default">修改总数量</button>'
 	    ].join('');
 }

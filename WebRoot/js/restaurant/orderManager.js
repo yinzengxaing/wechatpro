@@ -16,6 +16,8 @@ function dataInit(){
 				onMessage: function (message) {
 					count = count * 1 + 1;
 					$("#countNumber").html("您有" +  count + "份新订单");
+					// 播放提示音
+					$("#embedId").append('<embed id="embedIId" src="../../assest/audio/orderTip/OrderTipMP3.mp3" hidden="true" autostart="true" loop="false" />');
 					$("#countNumber").attr("style", "display:block");
 					qiao.bs.msg({msg:message.content,type:'success'});
 				},
@@ -37,12 +39,12 @@ function dataInit(){
 }
 
 function eventInit(){
-	
 	// 点击提示后隐藏
 	$("body").on("click", "#countNumber",  function(e){
 		$("#countNumber").attr("style", "display:none");
 		$("#message").bootstrapTable("refresh", {url : path + "/post/wechatOrderManagerController/selectPaiedOrderForm"});
 		count = 0;
+		$("#embedIId").remove();
 		$("#selectOrderType").attr("value", "");
 	});
 	
@@ -145,7 +147,7 @@ var TableInit =  function (){
             },{
             	field:"orderEatTime",
             	title:"就餐时间",
-            	width:"200",
+            	width:"100",
             	align:"center",
             	formatter: function (value, row, index) {
             		if(value=="" || value == null){
@@ -154,6 +156,11 @@ var TableInit =  function (){
             			return value;
             		}	
             	}
+            },{
+            	field: 'orderDesc',
+	            title: '备注',
+	            width: '150',
+	            align: "center",
             },{
             	field: 'phoneNumber',
 	            title: '手机号',
@@ -211,7 +218,7 @@ window.EvenInit = {
 				$("#orderType").html(json.bean.orderType); // 表订单类型
 				$("#orderEatTime").html(json.bean.orderEatTime);
 				$("#orderPrice").html(json.bean.orderPrice + "元"); // 订单价格
-				
+				$("#orderDesc").html(json.bean.orderDesc);
 				// 遍历订单中的信息
 				// 判断logo
 				Handlebars.registerHelper("productlogo", function(v1, options){
