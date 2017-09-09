@@ -1,4 +1,5 @@
 var id = null ;
+var imgId = null;
 
 $(function(e){
 	receiveData();
@@ -17,6 +18,8 @@ function dataInit(){
 			if(json.returnCode==0){
 				$("#typeName").val(json.bean.typeName);
 				$("#typeDesc").val(json.bean.typeDesc);
+				$("#logo").attr('src',path+"/"+json.bean.optionPath);// 回显图片
+				imgId = json.bean.typeLogoId;
 			}else{
 				qiao.bs.msg({msg:json.returnMessage,type:'danger'});
 			}
@@ -58,6 +61,7 @@ function eventInit(){
 				id:id,
 				typeName:$("#typeName").val(),
 				typeDesc:$("#typeDesc").val(),
+				typeLogoId:imgId,
 		};
 		AjaxPostUtil.request({url:path+"/post/WechatProductTypeController/updateProductType",params:params,type:'json',callback:function(json){
 			if(json.returnCode==0){
@@ -71,6 +75,52 @@ function eventInit(){
 	//取消点击事件
 	$('body').on('click', '#cancleBean', function(e){
 		location.href = "productTypeList.html";
+	});
+	
+	$("#imgFiles").uploadPreview({ Img: "logo"});
+	$("#imgFiles").fileupload({
+		url : path + "/post/UploadController/insertImgFile?imgType=1",
+		disableImageResize: /Android(?!.*Chrome)|Opera/.test(window.navigator.userAgent),
+        autoUpload: true,//是否自动上传
+        maxFileSize: 999000,
+        imageMaxWidth: 1000,
+        imageMaxHeight: 800,
+        imageQuality:0.6,
+        dataType:'json',
+        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i
+	}).on('fileuploadadd', function (e, data) {
+		//进行文件添加的操作
+		var uploadFile = data.files[0];
+		fileName = uploadFile.name;
+		var reg = ".(jpg|png|jpeg|svg)$";
+		var re = new RegExp(reg);
+		if (fileName.length > 50) {
+			qiao.bs.msg({msg:"文件名长度不能大于50",type:'danger'});
+			$.staticPic('logo','logoDiv');
+			return false;
+		} else if (!re.test(fileName.toLowerCase())) {
+			qiao.bs.msg({msg:"文件必须为jpg/jpeg/png格式",type:'danger'});
+			$.staticPic('logo','logoDiv');
+			return false;
+		} else if (uploadFile.size > 2000000) { // 2mb
+			qiao.bs.msg({msg:"文件不能大于2M",type:'danger'})
+			$.staticPic('logo','logoDiv');
+			return false;
+			
+		}
+	}).on('fileuploaddone', function (e, data) {
+		//进行文件上传的操作
+		if(isNull(data.result.bean)){
+			$.staticPic('logo','logoDiv');
+			qiao.bs.msg({msg:data.result.returnMessage,type:'danger'});
+		}else{
+			qiao.bs.msg({msg:"上传成功",type:'success'});
+			imgId = data.result.bean.id;
+		}
+	}).on('fileuploadfail', function (e, data) {
+		//上传失败的
+		$.staticPic('logo','logoDiv');
+		qiao.bs.msg({msg:"上传失败，图片格式不正确",type:'danger'});
 	});
 	
 }

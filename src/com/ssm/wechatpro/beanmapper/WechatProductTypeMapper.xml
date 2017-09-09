@@ -42,13 +42,17 @@
 			typeOpinion,
 			a.createId AS createId,
 			a.createTime AS createTime,
-			b.adminNo AS adminNo
+			b.adminNo AS adminNo,
+			c.optionPath AS optionPath,
+			a.typeLogoId AS typeLogoId
 		FROM
 			wechat_product_type AS a,
-			wechat_admin_login as b
+			wechat_admin_login AS b,
+			wechat_option AS c
 		WHERE
 			a.id = #{id}
 		AND b.id = a.createId
+		AND a.typeLogoId = c.id
 	</select>
 	
 	<!-- 根据typeName 获取一个商品类型 -->
@@ -69,6 +73,7 @@
 		INSERT INTO wechat_product_type 
 			(
 				typeName,
+				typeLogoId,
 		<if test="typeDesc != null and typeDesc !='' ">
 				typeDesc,
 		</if>
@@ -77,6 +82,7 @@
 		VALUES
 			(
 				#{typeName},
+				#{typeLogoId},
 		<if test="typeDesc != null and typeDesc !='' ">
 				#{typeDesc},
 		</if>
@@ -102,6 +108,9 @@
 				</if>
 				<if test="typeOpinion != null ">
 					typeOpinion = #{typeOpinion},
+				</if>
+				<if test="typeLogoId != null and typeLogoId != ''">
+					typeLogoId = ${typeLogoId},
 				</if>
 			</set>
 		WHERE

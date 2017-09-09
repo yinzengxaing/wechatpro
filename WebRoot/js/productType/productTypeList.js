@@ -161,6 +161,7 @@ window.EvenInit = {
 						$('#typeDesc').html(json.bean.typeDesc);
 						$('#createId').html(json.bean.adminNo);
 						$('#createTime').html(json.bean.createTime);
+						$("#imgPath").attr("src",path+"/"+json.bean.optionPath);
 						var typeOpinion = json.bean.typeOpinion;
 						if (isNull(typeOpinion))
 							$('#typeOpinion').html("无");

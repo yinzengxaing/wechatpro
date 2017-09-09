@@ -8,6 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link id="bootstrap-style" href="../../assest/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="../../assest/bootstrap/bootstrap-validator/css/bootstrapValidator.css">
+	<link rel="stylesheet" type="text/css" href="../../assest/bootstrap/bootstrap-select/css/bootstrap-multiselect.css">
 	<link href="../../assest/css/bootstrap-responsive.min.css" rel="stylesheet">
 	<link id="base-style" href="../../assest/css/style.css" rel="stylesheet">
 	<link id="base-style-responsive" href="../../assest/css/style-responsive.css" rel="stylesheet">
@@ -52,6 +53,13 @@
 						<span style="color:#FF9966">*</span><span class="add-on">分类名称：</span>
 						<input type="text" class="span6 typeahead form-control authenTiCation-input" id="typeName" name="typeName" />
 					</div>
+					<div class="controls form-group margin-top-40">
+						<span style="color:#FF9966">*</span><span class="add-on">分类Logo：</span>
+						<div class="menuContent" style="border: 0px">
+							<img src="../../assest/img/pictop.png" class="roleLogoPic" id="logo">
+							<input type="file" class="showImgBtn" id="imgFiles" name="imgFiles">
+						</div>
+					</div>
 					<div class="controls form-group">
 						<span class="add-on">分类描述：</span>
 						<textarea class="span6 typeahead form-control addRoleDesc" rows="3" id="typeDesc" name="typeDesc"></textarea>
@@ -75,6 +83,7 @@
 	<script src="../../assest/js/modernizr.js"></script>
 	<script src="../../assest/js/bootstrap.min.js"></script>
 	<script src="../../assest/bootstrap/bootstrap-validator/js/bootstrapValidator.min.js"></script>
+	<script src="../../assest/bootstrap/bootstrap-select/js/bootstrap-multiselect.js"></script>
 	<script src="../../assest/js/jquery.cookie.js"></script>
 	<script src='../../assest/js/fullcalendar.min.js'></script>
 	<script src='../../assest/js/jquery.dataTables.min.js'></script>
@@ -90,7 +99,6 @@
 	<script src="../../assest/js/jquery.elfinder.min.js"></script>
 	<script src="../../assest/js/jquery.raty.min.js"></script>
 	<script src="../../assest/js/jquery.iphone.toggle.js"></script>
-	<script src="../../assest/js/jquery.uploadify-3.1.min.js"></script>
 	<script src="../../assest/js/jquery.gritter.min.js"></script>
 	<script src="../../assest/js/jquery.imagesloaded.js"></script>
 	<script src="../../assest/js/jquery.masonry.min.js"></script>
@@ -98,8 +106,9 @@
 	<script src="../../assest/js/jquery.sparkline.min.js"></script>
 	<script src="../../assest/js/counter.js"></script>
 	<script src="../../assest/js/retina.js"></script>
-	<script src="../../assest/js/custom.js"></script>
 	
+	<script type="text/javascript" src="../../assest/jquery-fileupload/preView.js"></script>
+	<script type="text/javascript" src="../../assest/jquery-fileupload/js/jquery.fileupload.js"></script>
 	<script type="text/javascript" src="../../assest/bootstrap/qiao.js"></script>
 	<script type="text/javascript" src="../../js/util/main.js"></script>
 	<script type="text/javascript" src="../../js/util/handlebars-v4.0.5.js"></script>
