@@ -38,10 +38,10 @@
 			${tableName} AS orderInf,
 			wechat_admin_login_mation AS mation
 		WHERE
-			orderInf.id = #{id}
-		AND orderInf.orderNumber = #{orderNumber}
+			orderInf.orderNumber = #{orderNumber}
 		AND orderInf.orderAdminId = #{orderAdminId}
 		AND mation.adminId = orderInf.orderAdminId
+		AND wetherPayment=1
 	</select>
 	
 	<select id="selectOrderPruduct" parameterType="java.util.Map" resultType="java.util.Map">
@@ -95,5 +95,6 @@
 		AND orderInf.wetherPaymentTime >= #{preTime}
 		AND  #{nowTime} >= orderInf.wetherPaymentTime
 		AND orderInf.orderNumber LIKE "%${nowDay}%"
+		AND wetherPayment=1
 	</select>
 </mapper>

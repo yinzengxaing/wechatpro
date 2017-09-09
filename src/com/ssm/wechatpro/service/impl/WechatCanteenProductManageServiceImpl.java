@@ -245,6 +245,81 @@ public class WechatCanteenProductManageServiceImpl implements WechatCanteenProdu
 		}
 	}
 	
+	
+	/**
+	 * 查看商店的详细信息
+	 * @param inputObject
+	 * @param outputObject
+	 * @throws Exception
+	 */
+	@Override
+	public void selectForShopInfo(InputObject inputObject, OutputObject outputObject) throws Exception {
+		// 获得登录人员的信息
+		Map<String, Object> map = inputObject.getLogParams();
+		Map<String, Object> returnInfo = wechatCanteenProductManageMapper.selectForShopInfo(map);
+		if(returnInfo==null){
+			outputObject.setreturnMessage("非餐厅管理人员！");
+			return ;
+		}
+		outputObject.setBean(returnInfo);
+	}
+	
+	/**
+	 * 表示用现金支付的用户
+	 * @param inputObject
+	 * @param outputObject
+	 * @throws Exception
+	 */
+	@Override
+	public void updateCashProple(InputObject inputObject,OutputObject outputObject) throws Exception {
+		// 获得登录人的id
+		Map<String, Object> map = inputObject.getLogParams();
+		// 获得相对应的参数
+		Map<String, Object> mapParam = inputObject.getParams();
+		if(JudgeUtil.isNull(map.get("id") + "")){
+			return ;
+		}else{
+			mapParam.put("id", map.get("id") + "");
+			// 更新状态
+			wechatCanteenProductManageMapper.updateCashProple(mapParam);
+		}
+	}
+	
+	/**
+	 * 删除一周前未付款的订单
+	 * @param map
+	 * @throws Exception
+	 *//*
+	public void deletePreWeekNoPayInfo()throws Exception {
+		
+		// 获取一周前的时间
+		String preWeekDate = DateUtil.getTimePreWeekToString();
+		// 拼接的订单表的表名
+		String tableName = ORDERlOGTABLENAME + preWeekDate.substring(0, 6);
+		// 拼接订单详情表的表名
+		String tableDetailName = ORDERSHOPPINGTABLENAMW + preWeekDate.substring(0, 6);
+		// 查询所有未付款订单
+		Map<String ,Object> map = new HashMap<>();
+		map.put("tableName", tableName);
+		map.put("preWeekDate", preWeekDate);
+		
+		// 获得未付款的订单的id
+		List<Map<String, Object>> noPayOrderId = wechatCanteenProductManageMapper.selectPreWeekInfo(map);
+		
+		// 未付款订单的id
+		Map<String , Object> deleteMap = new HashMap<>();
+		
+		deleteMap.put("tableName", tableName);
+		deleteMap.put("noPayOrderId", noPayOrderId); // 需要删除的订单的id
+		
+		// 删除未付款的订单
+		wechatCanteenProductManageMapper.deletePreWeekInfo(deleteMap);
+		
+		deleteMap.put("tableDetaileName", tableDetailName); // 详情表表名
+		
+		// 删除未付款的订单详
+		wechatCanteenProductManageMapper.deletePreWeekDetailInfo(deleteMap);
+	}*/
 	/**
 	 * 查看已经付款但是没有送给用户的订单列表（近七天的）
 	 * @param map
@@ -362,80 +437,6 @@ public class WechatCanteenProductManageServiceImpl implements WechatCanteenProdu
 				wechatCanteenProductManageMapper.updateMakeAddNum(updateNumMap);
 			}
 		}
-	}*/
-	/**
-	 * 查看商店的详细信息
-	 * @param inputObject
-	 * @param outputObject
-	 * @throws Exception
-	 */
-	@Override
-	public void selectForShopInfo(InputObject inputObject, OutputObject outputObject) throws Exception {
-		// 获得登录人员的信息
-		Map<String, Object> map = inputObject.getLogParams();
-		Map<String, Object> returnInfo = wechatCanteenProductManageMapper.selectForShopInfo(map);
-		if(returnInfo==null){
-			outputObject.setreturnMessage("非餐厅管理人员！");
-			return ;
-		}
-		outputObject.setBean(returnInfo);
-	}
-	
-	/**
-	 * 表示用现金支付的用户
-	 * @param inputObject
-	 * @param outputObject
-	 * @throws Exception
-	 */
-	@Override
-	public void updateCashProple(InputObject inputObject,OutputObject outputObject) throws Exception {
-		// 获得登录人的id
-		Map<String, Object> map = inputObject.getLogParams();
-		// 获得相对应的参数
-		Map<String, Object> mapParam = inputObject.getParams();
-		if(JudgeUtil.isNull(map.get("id") + "")){
-			return ;
-		}else{
-			mapParam.put("id", map.get("id") + "");
-			// 更新状态
-			wechatCanteenProductManageMapper.updateCashProple(mapParam);
-		}
-	}
-	
-	/**
-	 * 删除一周前未付款的订单
-	 * @param map
-	 * @throws Exception
-	 *//*
-	public void deletePreWeekNoPayInfo()throws Exception {
-		
-		// 获取一周前的时间
-		String preWeekDate = DateUtil.getTimePreWeekToString();
-		// 拼接的订单表的表名
-		String tableName = ORDERlOGTABLENAME + preWeekDate.substring(0, 6);
-		// 拼接订单详情表的表名
-		String tableDetailName = ORDERSHOPPINGTABLENAMW + preWeekDate.substring(0, 6);
-		// 查询所有未付款订单
-		Map<String ,Object> map = new HashMap<>();
-		map.put("tableName", tableName);
-		map.put("preWeekDate", preWeekDate);
-		
-		// 获得未付款的订单的id
-		List<Map<String, Object>> noPayOrderId = wechatCanteenProductManageMapper.selectPreWeekInfo(map);
-		
-		// 未付款订单的id
-		Map<String , Object> deleteMap = new HashMap<>();
-		
-		deleteMap.put("tableName", tableName);
-		deleteMap.put("noPayOrderId", noPayOrderId); // 需要删除的订单的id
-		
-		// 删除未付款的订单
-		wechatCanteenProductManageMapper.deletePreWeekInfo(deleteMap);
-		
-		deleteMap.put("tableDetaileName", tableDetailName); // 详情表表名
-		
-		// 删除未付款的订单详
-		wechatCanteenProductManageMapper.deletePreWeekDetailInfo(deleteMap);
 	}*/
 
 }

@@ -20,7 +20,7 @@ public class HandlerInterceptorMain implements HandlerInterceptor{
 	
 	private static final String[] URL = {"/wechatpro/post/wechatAdminLoginController/insertLogin","/wechatpro/post/WechatPhoneMessageLogController/insertPhoneMessage",
 		"/wechatpro/post/wechatAdminLoginController/insertAdminLogin","/wechatpro/post/wechatAdminLoginController/selectSession","/wechatpro/post/wechatAdminLoginController/selectAdminNo",
-		"/wechatpro/post/wechatAdminLoginController/updatePassword"};
+		"/wechatpro/post/wechatAdminLoginController/updatePassword","/wechatpro/post/wechatOrderPrintContoller/selectOrder","/wechatpro/post/wechatOrderPrintContoller/selectTimeQuantumOrderInfo"};
 	
 	private static final String[] OTHER_MAIN_URL = {"/wechatpro/post/wechatAdminLoginController/selectSession","/wechatpro/post/wechatAdminLoginController/selectByUser",
 		"/wechatpro/post/wechatAdminLoginController/clearSession"};
