@@ -6,6 +6,7 @@ var city = "";
 $(function(e){
     	receiveData();
     	dataInit();
+    	eventInit();
 });
 
 
@@ -22,10 +23,10 @@ function dataInit(){
 					if(jsonall.returnCode==0){
 						if(isNull(jsonall.bean.Location)){
 							$("#city").html("郑州市");
-							eventInit();
+							getLocation();
 						}else{
 							$("#city").html(jsonall.bean.Location);
-							eventInit();
+							getLocation();
 						}
 					}else{
 						location.href = 'sessionNull.html';
@@ -34,10 +35,10 @@ function dataInit(){
 			}else{
 				if(isNull(json.bean.Location)){
 					$("#city").html("郑州市");
-					eventInit();
+					getLocation();
 				}else{
 					$("#city").html(json.bean.Location);
-					eventInit();
+					getLocation();
 				}
 			}
 		}else{
@@ -47,7 +48,6 @@ function dataInit(){
 }
 
 function eventInit(){
-	getLocation();
 	//获取城市列表
 	$('body').on('click',"#moreCity",function(e){
 		location.href="allCityList.html";
@@ -60,6 +60,7 @@ function eventInit(){
 }
 
 function getLocation(){
+	showMask();
 	var geolocation = new BMap.Geolocation();
     geolocation.getCurrentPosition(function (r) {  
         if (this.getStatus() == BMAP_STATUS_SUCCESS) {  
@@ -69,6 +70,7 @@ function getLocation(){
         	var params = {
         			city : city
         	}
+        	showMask();
         	AjaxPostUtil.request({url:path+"/gateway/MWechatProductController/getAllRestaurant",params:params,type:'json',callback:function(json){
         		if(json.returnCode==0){
         			$("#city").html(json.bean.city);
@@ -85,9 +87,22 @@ function getLocation(){
           			$("#resDiv").empty();
         			$("#resDiv").html("当前地区没有商店，请更换地区后再试~");
         		}
+        		hideMask();
         	}});
         }else{
         	alert("位置获取失败")
         }
     });
 }
+
+function showMask(){     
+    $("#mask").css("height",$(document).height());     
+    $("#mask").css("width",$(document).width());     
+    $("#mask").show();     
+}  
+/**
+ * 隐藏遮罩层
+ */
+function hideMask(){     
+    $("#mask").hide();     
+}  

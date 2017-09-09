@@ -35,6 +35,8 @@ public class WechatProductServiceImpl implements WechatProductService {
 		Map<String, Object> params = inputObject.getParams();
 		//添加产品类型的数量
 		List<Map<String,Object>> productList = wechatProductMapper.getProductList(params);
+		List<Map<String,Object>> productTypeList = wechatProductMapper.getProductTypeList();
+		
 		for (Map<String, Object> map : productList) {
 			//获取图片的路径的id
 			Map<String, Object> selectLogo = new HashMap<String, Object>();
@@ -47,6 +49,9 @@ public class WechatProductServiceImpl implements WechatProductService {
 			Map<String, Object> packageCount  = wechatProductMapper.getPackageCountByProductId(map);
 			map.put("count",packageCount.get("count") );
 		}
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("productTypeList",productTypeList);
+		outputObject.setBean(map);
 		outputObject.setBeans(productList);
 		outputObject.settotal(productList.size());			
 	}
@@ -292,4 +297,16 @@ public class WechatProductServiceImpl implements WechatProductService {
 		params.put("productState", 3);
 		wechatProductMapper.updateProduct(params);
 	}
+	
+	/**
+	 * 获取所有的商品种类列表
+	 */
+	@Override
+	public void getProductTypeList(InputObject inputObject, OutputObject outputObject) throws Exception {
+		List<Map<String,Object>> productTypeList = wechatProductMapper.getProductTypeList();
+		outputObject.setBeans(productTypeList);
+	}
+	
+
+	
 }

@@ -95,7 +95,7 @@
 					typeDesc = #{typeDesc} ,
 				</if>
 				<if test="typeState == null or typeState =='' ">
-					typeState = 0,
+					typeState = 2,
 				</if>
 				<if test="typeState != null and typeState !='' ">
 					typeState = #{typeState} ,
