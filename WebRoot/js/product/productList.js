@@ -1,4 +1,4 @@
-var productState="";
+var productTypeId="";
 var productName ="";
 
 $(function(e){
@@ -6,15 +6,24 @@ $(function(e){
 });
 
 function dataInit(){
-	productDivInit();
+	AjaxPostUtil.request({url:path+"/post/WechatProductController/getProductTypeList",params:{},type:'json',callback:function(json){
+		if (json.returnCode == 0){
+			//填充类别数据
+			var source = $("#productTypeBean").html();
+			var template = Handlebars.compile(source);
+			$("#productTypeId").html(template(json));
+			productDivInit();
+		}else{
+			qiao.bs.msg({msg:json.returnMessage,type:"danger"});
+		}
+	}});
 	eventInit();
 }
-
 //商品列表的初始化
 function productDivInit(){
 	var params ={
 			productName:productName,
-			productState:productState
+			productTypeId:productTypeId
 	}	
 	AjaxPostUtil.request({url:path+"/post/WechatProductController/getProductList",params:params,type:'json',callback:function(json){
 		if (json.returnCode == 0){
@@ -51,41 +60,15 @@ function productDivInit(){
 				});
 				//对productBtn进行修饰
 				Handlebars.registerHelper("productBtn",function(v1,options){
-					if(v1 == 0){
-						return '<button type="button" class="btn btn-primary selectPackage" id="selectBtn">详情</button>'
-								+'<button type="button" class="btn btn-default editPackage" id="editBtn" >编辑</button>'
-								+'<button type="button" class="btn btn-info arraignment" id="submitBtn">提审</button>'
-								+'<button type="button" class="btn btn-danger deleteMation" id="delBtn">删除</button>';
-					}else if(v1 == 1){
-						return '<button type="button" class="btn btn-primary selectPackage" id="selectBtn">详情</button>';
-					}else if(v1 == 2){
-						return '<button type="button" class="btn btn-primary selectPackage" id="selectBtn">详情</button>'
-								+'<button type="button" class="btn btn-default editPackage" id="editBtn">编辑</button>'
-								+'<button type="button" class="btn btn-danger deleteMation" id="delBtn">删除</button>';
-					}else if(v1 == 3){
-						return '<button type="button" class="btn btn-primary selectPackage" id="selectBtn">详情</button>'
-								+'<button type="button" class="btn btn-default editPackage" id="editBtn">编辑</button>'
-								+'<button type="button" class="btn btn-danger deleteMation" id="delBtn">删除</button>';
-					}else{
-					}
+					return '<button type="button" class="btn btn-primary selectPackage" id="selectBtn">详情</button>'
+					+'<button type="button" class="btn btn-default editPackage" id="editBtn">编辑</button>'
+					+'<button type="button" class="btn btn-danger deleteMation" id="delBtn">删除</button>';
 				});
 				//填充数据
 				var source = $("#productListBean").html();
 				var template = Handlebars.compile(source);
 				$("#productListDiv").html(template(json));
-/*				$(".img-thumbnail").each(function(){
-			    	var myThis = $(this);
-			    	var thisUrl = myThis.attr("src");
-			    	$.ajax(thisUrl, {
-			            type: 'get',
-			            timeout: 1000,
-			            success: function() {
-			            },
-			            error: function() {
-			            	myThis.attr("src",path + "/assest/icon/maxLogo.jpg");
-			            }
-			        });
-			    });*/
+				
 			}else{
 				// 查询结果为空的时候，将div设置为空，并显示不存在内容的图片
 				$("#productListDiv").empty();
@@ -106,7 +89,7 @@ function eventInit(){
 	
 	//查询按钮点击事件
 	$('body').on('click','#searchBtn',function(e){
-		 productState=$('#seachState').val();
+		productTypeId=$('#productTypeId').val();
 		 productName = $('#searchProductName').val();
 		 productDivInit();
 		 
@@ -263,25 +246,6 @@ function eventInit(){
 				}});
 			}
 		}});
-	});
-	
-	//提审按钮处理事件
-	$('body').on('click', '#submitBtn', function(e){
-		var rowId = $(this).parent().parent().find('div[class="ProductMation"]').attr("rowId");
-		qiao.bs.confirm("是否提审该商品？",function(){
-			var params = {
-				id :rowId
-			};
-			AjaxPostUtil.request({url:path+"/post/WechatProductController/updateStateSubmit",params:params,type:'json',callback:function(json){
-				if (json.returnCode == 0){
-					qiao.bs.msg({msg:"提审中,请稍后...！",type:'success'});
-					setTimeout(productDivInit,1000);//一秒后刷新页面
-				}else{
-					qiao.bs.msg({msg:json.returnMessage,type:'danger'});
-				}
-			}
-			});	
-		},function(){});
 	});
 }
 	

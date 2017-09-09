@@ -61,6 +61,7 @@ function dataInit(){
 function eventInit(){
 	//点击美食类别事件
 	$('body').on('click', '#sidebar ul li', function(e){
+		showMask();
 		$(this).addClass('active').siblings('li').removeClass('active');
 		var index = $(this).index();
 		$('.j-content').eq(index).show().siblings('.j-content').hide();
@@ -85,11 +86,13 @@ function eventInit(){
 				 		$('#getCartProduct').show();
 					}
 					 getCartInfo();
+					 hideMask();
 					//getImg();
 				}});
 		});
 	//页面中+号事件
 	$('body').on('click', '.toCart', function(e){
+		showMask();
 		var s = $(this).parent();
 		var wechatCommodity = $(this).attr("buyProductId");//获取商品id
 		var wechatCommodityType = $(this).attr("productType");//获取商品的类型
@@ -114,11 +117,13 @@ function eventInit(){
 			 }else{
 				 qiao.bs.msg({msg:"添加失败",type:'danger'});
 			 }
+			 hideMask();
 		 }});
 	});
 	
 	// 页面中-号事件
 	$('body').on('click', '.redCart', function(e){
+		showMask();
 		var s = $(this).parent();
 		var wechatCommodity = $(this).attr("buyProductId");//获取商品id
 		var wechatCommodityType = $(this).attr("productType");//获取商品的类型
@@ -156,16 +161,20 @@ function eventInit(){
 			 }else{
 				 qiao.bs.msg({msg:"删除失败",type:'danger'});
 			 }
+			 hideMask();
 		 }});
 	});
 	
 	//购物车详情事件
 	$('body').on('click', '#getCartProduct', function(e){
+		
 		if(catState == 0){
+			showMask();
 			catState = 1 ;
 			getProductInfo();
 			$('#catProductDiv').show();
 			$('#wrap').show();
+			hideMask();
 		}else if (catState == 1 ){
 			catState = 0;
 			$('#catProductDiv').hide();
@@ -175,7 +184,7 @@ function eventInit(){
 	
 	//购物车内＋号 事件
 	$('body').on('click', '.addInCart', function(e){
-		
+		showMask();
 		var s = $(this).parent();
 		var wechatCommodity = $(this).attr("buyProductId");//获取商品id
 		var wechatCommodityType = $(this).attr("productType");//获取商品的类型
@@ -210,10 +219,12 @@ function eventInit(){
 				 }else{
 					 qiao.bs.msg({msg:"添加失败",type:'danger'});
 				 }
+			 hideMask();
 		 }});
 	});
 	//购物车内 －号 事件
 	$('body').on('click', '.redInCart', function(e){
+		showMask();
 		var s = $(this).parent();
 		var wechatCommodity = $(this).attr("buyProductId");//获取商品id
 		var wechatCommodityType = $(this).attr("productType");//获取商品的类型
@@ -271,6 +282,7 @@ function eventInit(){
 			 }else{
 				 qiao.bs.msg({msg:"删除失败",type:'danger'});
 			 }
+			 hideMask();
 		 }});
 		
 	});
@@ -279,6 +291,7 @@ function eventInit(){
 	$('body').on('click', '#selectOver', function(e){
 		location.href ="orderList.html?adminId="+adminId;
 	});
+	
 }
 
 /**
@@ -320,6 +333,7 @@ function setCountState(){
  * 获取购物车信息
  */
 function getCartInfo(){
+	showMask();
 	var params = {
 			adminId : adminId
 	}
@@ -338,8 +352,9 @@ function getCartInfo(){
 		 		$('#getCartProduct').show();
 			}
 		}else{
-			
+			alert("未查询到数据");
 		}
+		hideMask();
 	}});
 }
 
@@ -347,6 +362,7 @@ function getCartInfo(){
  * 获取商品信息
  */
 function getProductInfo(){
+	showMask();
 	var params = {
 			adminId : adminId
 	}
@@ -372,6 +388,7 @@ function getProductInfo(){
 		}else{
 			qiao.bs.msg({msg:"查询失败哦~",type:'danger'});
 		}
+		hideMask();
 	}});
 }
 
@@ -380,6 +397,7 @@ function getProductInfo(){
  * 刷新商品信息
  */
 function refishProduct(){
+	showMask();
 	var params = {
 			typeId : typeId,
 			adminId:adminId
@@ -397,8 +415,21 @@ function refishProduct(){
 		 }else{
 			 qiao.bs.msg({msg:"刷新失败哦~",type:'danger'}); 
 		 }
+		 hideMask();
 	}});
 }
-	
-	
+/**
+ * 显示遮罩层
+ */
+function showMask(){     
+    $("#mask").css("height",$(document).height());     
+    $("#mask").css("width",$(document).width());     
+    $("#mask").show();     
+}  
+/**
+ * 隐藏遮罩层
+ */
+function hideMask(){     
+    $("#mask").hide();     
+}  	
 	

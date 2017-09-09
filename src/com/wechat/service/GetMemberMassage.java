@@ -43,7 +43,6 @@ public class GetMemberMassage {
     		}
     	}
 		GetActivationCard.getCrad(object.getString("membership_number"), code);
-		System.out.println(object);
 		if(object.get("has_active").toString().equals("true")){//卡如果被激活获取用户信息
 			if(object.containsKey("user_info")){
 				JSONObject user_info = JSONObject.fromObject(object.getString("user_info"));

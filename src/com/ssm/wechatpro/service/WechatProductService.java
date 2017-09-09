@@ -31,4 +31,7 @@ public interface WechatProductService {
 	public void updateStatePass(InputObject inputObject ,OutputObject outputObject) throws Exception;
 	//审核不通过一个商品
 	public void updateStateNoPass(InputObject inputObject, OutputObject outputObject) throws Exception;
+	//获取商品的分类
+	public void getProductTypeList(InputObject inputObject, OutputObject outputObject) throws Exception;
+	
 }

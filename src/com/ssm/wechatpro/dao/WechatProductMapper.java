@@ -25,4 +25,7 @@ public interface WechatProductMapper {
 	
 	public List<Map<String, Object>> getPackageByProductId(Map<String, Object> map) throws Exception;
 	
+	//查询所有的商品类别
+	public List<Map<String, Object>> getProductTypeList() throws Exception;
+	
 }

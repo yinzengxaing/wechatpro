@@ -88,7 +88,7 @@ public class WeChatApiUtil {
             SSLContext sslContext = SSLContext.getInstance("SSL", "SunJSSE");
             sslContext.init(null, tm, new java.security.SecureRandom());
             SSLSocketFactory ssf = sslContext.getSocketFactory();
-            System.out.println(path);
+            //System.out.println(path);
             URL url = new URL(path);
             conn = (HttpsURLConnection) url.openConnection();
             conn.setSSLSocketFactory(ssf);
@@ -256,7 +256,7 @@ public class WeChatApiUtil {
         String appSecret = "946bd10ae09c79733e7def85ff0a3f62";
         String token = WeChatApiUtil.getToken(appId, appSecret);
         JSONObject o = WeChatApiUtil.uploadMedia(f, token, "image");
-        System.out.println(o.toString());
+        //System.out.println(o.toString());
 
         //下载刚刚上传的图片以id命名
 //        String media_id = o.getString("media_id");

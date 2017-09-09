@@ -35,12 +35,8 @@
 	</ul>
 	<div class="box-content" style="text-align: left;">
 		产品名称：<input type="text" class="typeahead form-control selectInput-100" id="searchProductName"/>
-		产品状态：<select class="selectInput-100" id="seachState">
+		产品类别：<select class="selectInput-100" id="productTypeId">
 					<option value="">全部</option>
-					<option value="0">创建状态</option>
-					<option value="1">审核中</option>
-					<option value="2">上线状态</option>
-					<option value="3">审核不通过</option>
 				</select>
 			<button type="button" class="btn btn-primary"  id="searchBtn">查询</button>
 	</div>	
@@ -180,6 +176,15 @@
 			</div>
 		</div>
 	</div>
+		<!-- 遍历套餐信息 -->
+	<script id="productTypeBean" type="text/x-handlebars-template">
+	<option value="">全部</option>
+	{{#each rows}}
+	<option value="{{id}}">{{typeName}}</option>
+	{{/each}}						
+	</script>
+	
+	
 	<!-- 遍历套餐信息 -->
 		<script id="packageListBean" type="text/x-handlebars-template">
 	{{#each rows}}

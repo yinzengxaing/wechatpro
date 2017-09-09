@@ -12060,4 +12060,19 @@ body {
     top:50%;  
     margin: -100px 0 0 -100px;  
     position: absolute;  
-}  
+}
+
+/*
+加载等待的遮罩层
+*/
+.mask {
+	background: url(../img/timg.gif)center center no-repeat;  
+	position: absolute;
+	top: 0px;
+	filter: alpha(opacity = 60);
+	background-color: #777;
+	z-index: 1002;
+	left: 0px;
+	opacity: 0.5;
+	-moz-opacity: 0.5;
+}

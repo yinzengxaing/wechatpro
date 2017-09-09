@@ -145,5 +145,17 @@ public class WechatProductController {
 	public void updateStateNoPass(InputObject inputObject ,OutputObject outputObject)throws Exception{
 		wechatProductService.updateStateNoPass(inputObject, outputObject);
 	}
+	/**
+	 * 获取类别list
+	 * @param inputObject
+	 * @param outputObject
+	 * @throws Exception
+	 */
+	@RequestMapping("/post/WechatProductController/getProductTypeList")
+	@ResponseBody
+	public void getProductTypeList(InputObject inputObject,OutputObject outputObject)throws Exception{
+		wechatProductService.getProductTypeList(inputObject, outputObject);
+	}
+	
 	
 }

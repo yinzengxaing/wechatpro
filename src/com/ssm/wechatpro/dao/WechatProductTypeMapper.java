@@ -31,4 +31,6 @@ public interface WechatProductTypeMapper {
 	
 	//查询所有商品的种类，并按照id递增顺序排列 
 	public List<Map<String, Object>> selectProductType() throws Exception;
+	
+	
  }

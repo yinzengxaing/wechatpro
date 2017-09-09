@@ -203,7 +203,6 @@ function eventInit(){
 		if(catState == 0){
 			catState = 1 ;
 			getCartInfo();
-			// $('#catProductDiv').fadeIn(100); 
 			$('#catProductDiv').show();
 			$('#wrap').show();
 		}else if (catState == 1 ){
@@ -215,6 +214,7 @@ function eventInit(){
 	
 	//购物车内＋号 事件
 	$('body').on('click', '.addInCart', function(e){
+		showMask();
 		var s = $(this).parent();
 		var wechatCommodity = $(this).attr("buyProductId");//获取商品id
 		var wechatCommodityType = $(this).attr("productType");//获取商品的类型
@@ -228,10 +228,12 @@ function eventInit(){
 			 if(json.returnCode==0){
 				 getCartInfo();
 			 }
+			 hideMask();
 		 }});
 	});
 	//购物车内 －号 事件
 	$('body').on('click', '.redInCart', function(e){
+		showMask();
 		var s = $(this).parent();
 		var wechatCommodity = $(this).attr("buyProductId");//获取商品id
 		var wechatCommodityType = $(this).attr("productType");//获取商品的类型
@@ -245,6 +247,7 @@ function eventInit(){
 			 if(json.returnCode==0){
 				 getCartInfo();
 			 }
+			hideMask();
 		 }});
 	});
 	
@@ -308,6 +311,7 @@ function setMin(){
 
 //获取当前登录人购物车中的信息
 function getCartInfo(){
+	showMask();
 	var params = {
 			adminId : adminId
 	}
@@ -338,6 +342,7 @@ function getCartInfo(){
 		}else{
 			qiao.bs.msg({msg:"查询失败哦~",type:'danger'});
 		}
+		hideMask();
 	}});
 }
 
@@ -380,5 +385,16 @@ function payEvent(){
 	        },
 		});  
 	 });
-
 }
+
+function showMask(){     
+    $("#mask").css("height",$(document).height());     
+    $("#mask").css("width",$(document).width());     
+    $("#mask").show();     
+}  
+/**
+ * 隐藏遮罩层
+ */
+function hideMask(){     
+    $("#mask").hide();     
+}  

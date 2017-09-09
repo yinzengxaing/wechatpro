@@ -31,7 +31,6 @@
 	<div class="shopListselect">
 		<div class="textShopList"><h5>门店列表</h5><span class="glyphicon glyphicon-home"></span> </div>
 		
-		<!-- <div class="textShopList_right" >麦克思郑大店(12.4092Km)</div> -->
 	</div>
 	
 	<div class="line" id="resDiv">
@@ -39,49 +38,16 @@
 			
 		</ul>
 	</div>
-		
-	<!-- <div class="qdbutton" style=" cursor:pointer;" id="quedinBtn"><font class="quedingBt">确定</font></div> -->
-<!-- 	<div class="tab-bar tab-bottom">
-		
-	</div> -->
-		<!-- 模态框（Modal） -->
-<!-- 	<div class="modal fade Mymmddal" style="width:90%;margin:35% auto;" id="Modal" tabindex="-1" aria-labelledby="myModalLabel">
-		<div class="modal-dialog dialog-width-600" role="document">
-			<div class="modal-content">
-			    <div class="modal-header">
-			    	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-			    	<h4 class="modal-title eat-time">选择取餐时间</h4>
-				</div>
-			    <div class="modal-body dialog-body1">
-			   		<div class="form-group dialog-100">
-			    		<label for="txt_departmentname" class="dialog-label-20" >取餐时间:</label>
-			    		<div class="dialog-div-75" id="eDiv">
-			    			<span class="glyphicon glyphicon-ok-sign font-action" id="eatNow"></span>
-			    			<font>现在，支付成功后直接取餐</font>
-			    		</div>
-			    		<div class="dialog-div-75" id="tDiv">
-			    			<span class="glyphicon glyphicon-ok-sign" id="eatTime"></span>
-			    			<font>稍晚，预约当天，稍晚时间，在预约时间取餐</font>
-			    		</div>
-			    		<div id="eatTimeDiv"  style="display:none;">
-			    			<label>就餐时间：当天   </label>
-			    			<select name="h" id="h" onchange="show()"></select>点
-			    			<select name="min" id="min" onchange="show();"></select>分
-			    		</div>
-			    	</div>
-			    </div>
-			    <div class="btn-group modal-footer-btn">
-			    	<button type="button" id="button_esc" class="btn btn-primary">取消</button>
-			    	<button type="button" id="button_sure" class="btn btn-success">确定</button>
-			    </div>
-			</div>
-	 	</div>
-	</div> -->
+	
+	<!--加载遮罩层 -->
+	<div id="mask" class="mask">
+	</div> 
+	
 	<div id="navigate"></div>
 	 
-	<div id="preloader">  
+ 	<div id="preloader">  
 	  <div id="status"></div>  
-	</div>
+	</div> 
 	<script id="restaurantBean" type="text/x-handlebars-template"> 
 		{{#each bean.allRestaurant}}
 			<li class="rest_li chooseShop" shoppingName="Max">

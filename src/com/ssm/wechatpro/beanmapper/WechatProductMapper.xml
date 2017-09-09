@@ -35,8 +35,8 @@
 			<if test="productName != null and productName != '' ">
 		AND productName LIKE '%${productName}%'  
 			</if>
-			<if test="productState != null and productState != '' ">
-		AND productState = #{productState}	
+			<if test="productTypeId != null and productTypeId != '' ">
+		AND productType = #{productTypeId}	
 			</if>
 		AND productState != 4
 		</where>
@@ -170,7 +170,7 @@
 				productState = #{productState},
 		</if>
 		<if test="productState == null or productState == '' ">
-				productState = 0,
+				productState = 2,
 		</if>
 		<if test="productName != null and productName != '' ">
 				productName = #{productName},
@@ -232,4 +232,14 @@
 			CONCAT(",",productId,"") LIKE '%,${id},%'
 		AND packageState = 2
 	</select>
+	
+	<!-- 获得所有的商品类别 -->
+	<select id="getProductTypeList" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			id,
+			typeName
+		FROM
+			wechat_product_type		
+	</select>
+	
 </mapper>          

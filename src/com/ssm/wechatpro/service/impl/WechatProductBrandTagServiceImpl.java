@@ -90,7 +90,7 @@ public class WechatProductBrandTagServiceImpl implements WechatProductBrandTagSe
 		
 		params.put("createId", user.get("id"));
 		//将新添加的商品品牌状态改变为提交审核
-		params.put("brandTagState", 1);
+		params.put("brandTagState", 2);
 		params.put("createTime", DateUtil.getTimeAndToString());
 		wechatProductBrandTagMapper.addProductBrandTag(params);
 	}
@@ -132,7 +132,7 @@ public class WechatProductBrandTagServiceImpl implements WechatProductBrandTagSe
 		if (brandTagDesc.length() > 200){
 			outputObject.setreturnMessage("商品品牌描述不能大于200个字符");
 		}
-		params.put("brandTagState", "1");
+		params.put("brandTagState", "2");
 		params.put("brandTagOpinion", "");
 		wechatProductBrandTagMapper.updateProductBrandTag(params);
 	}
