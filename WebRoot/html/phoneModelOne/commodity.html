@@ -38,10 +38,8 @@
 	
 	<div class="comm-bar-container" id="" >
 		<font class="glyphicon glyphicon-chevron-up" style="position:absolute;top:-25px; cursor:pointer; display:none;"  id="getCartProduct"></font>
-		
 		<!-- 加入购物车中的商品列表 -->
 		<div id="catProductDiv"  style="display:none ;z-index:99;">
-		
 		</div>
 	</div>
 	
@@ -82,12 +80,14 @@
 								<font class="proPrice"><span style="font-size:14px;float:left;">￥</span>{{productPrice}}</font>
 							</div>
 							<div class="product-count">
-								<font class="toCart glyphicon glyphicon-plus-sign" style="font-size:30px;padding:0; float:right;cursor:pointer;"
+								<font class="toCart glyphicon" style="font-size:30px;padding:0; float:right;cursor:pointer;"
 								 buyProductId="{{productId}}" productType="{{productType}}" adminId="{{adminId}}" productPrice="{{productPrice}}">
+								<img src="../../assest/img/jia.png">
 								</font>
-								<font class="count proCount"  buyProductId="{{productId}}" productType="{{productType}}" style="font-size:20px;float:right;margin:8px 4px;">{{productCount}}</font>
-								<font class="redCart glyphicon glyphicon-minus-sign" style="font-size:30px;padding:0;float:right;cursor:pointer; cursor:pointer;"
+								<font class="count proCount"  buyProductId="{{productId}}" productType="{{productType}}" style="font-size:20px;float:right;margin:8px 4px;margin:15px 10px 0 10px;">{{productCount}}</font>
+								<font class="redCart glyphicon" style="font-size:30px;padding:0;float:right;cursor:pointer; cursor:pointer;"
  								buyProductId="{{productId}}" productType="{{productType}}" adminId="{{adminId}}" productPrice="{{productPrice}}">
+								<img src="../../assest/img/jian.png">
 								</font>
 							</div>
 						</div>
@@ -106,15 +106,15 @@
 					<h6 style=" margin:0;">￥{{productPrice}}</h6>
 				</div>
 				<div class="comm-bar-right">
-					<font class="glyphicon glyphicon-plus-sign addInCart" style="font-size:30px;float:right;cursor:pointer;"
+					<font class="glyphicon addInCart" style="font-size:30px;float:right;cursor:pointer;"
 					buyProductId="{{wechatCommodity}}" productType="{{wechatCommodityType}}" adminId="{{wechatCommodityAdminId}}"
 					productPrice="{{productPrice}}"
-					></font>
+					><img src="../../assest/img/jia.png" ></font>
 					<font  class="count" style="font-size:20px;float:right;margin:8px 4px;">{{wechatCommodityCount}}</font>
-					<font class="glyphicon glyphicon-minus-sign redInCart" style="font-size:30px;float:right;cursor:pointer;"
+					<font class="glyphicon redInCart" style="font-size:30px;float:right;cursor:pointer;"
 					buyProductId="{{wechatCommodity}}" productType="{{wechatCommodityType}}" adminId="{{wechatCommodityAdminId}}"
 					productPrice="{{productPrice}}"
-					></font>
+					><img src="../../assest/img/jian.png"></font>
 				</div>
 			</div>
  		{{/each}}
@@ -124,7 +124,7 @@
 	<!-- 获得该城市所有的分类列表 -->
 	<script id="typeListBean" type="text/x-handlebars-template">
 		{{#each rows}}
-			<li id="{{typeId}}" style="cursor:pointer;">{{typeName}}</li>
+			<li id="{{typeId}}" style="cursor:pointer;"><img class="img-thumbnail" src="{{#typeLogo optionPath}}{{/typeLogo}}" />{{typeName}}</li>
 		{{/each}}
 	</script>
 	

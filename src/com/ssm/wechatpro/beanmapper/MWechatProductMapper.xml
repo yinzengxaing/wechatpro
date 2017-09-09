@@ -29,12 +29,14 @@
 	<select id="getAllType" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT
 			a.productType AS typeId,
-			d.typeName
+			d.typeName,
+			e.optionPath
 		FROM
 			wechat_product AS a,
 			wechat_option AS b,
 			wechat_product_restaurant AS c,
-			wechat_product_type AS d
+			wechat_product_type AS d,
+			wechat_option AS e
 		WHERE
 			a.id IN (
 				SELECT
@@ -50,6 +52,7 @@
 		AND a.id = c.productId
 		AND a.productType = d.id
 		AND c.productState = 1
+		AND e.id = d.typeLogoId
 		GROUP BY
 			a.productType
 		ORDER BY

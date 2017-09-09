@@ -23,6 +23,9 @@ function dataInit(){
 	//获取美食类别列表
 	AjaxPostUtil.request({url:path+"/gateway/MWechatProductController/getAllType",params:params,type:'json',callback:function(json){
 		if (json.returnCode == 0){
+			Handlebars.registerHelper("typeLogo",function(v1,options){
+				 return path+"/"+v1;
+			});
 			//填充数据
 			var source = $("#typeListBean").html();
 			var template = Handlebars.compile(source);
