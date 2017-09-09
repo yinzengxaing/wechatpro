@@ -20,8 +20,8 @@ function dataInit(){
 				AjaxPostUtil.request({url:path+"/gateway/EmpowerWebpageController/getOpenidBycode",params:{code:code},type:'json',callback:function(jsonall){
 					if(jsonall.returnCode==0){
 						if(isNull(jsonall.bean.Location)){
-							$("#city").html("郑州市");
-							$("#username").html("欢迎登陆");
+							$("#city").html("未获取到位置信息");
+							$("#username").html("欢迎您:"+base.decode(jsonall.bean.nickname));
 						}else{
 							$("#city").html(jsonall.bean.Location);
 							$("#username").html("欢迎您:"+base.decode(jsonall.bean.nickname));
@@ -32,8 +32,19 @@ function dataInit(){
 				}});
 			}else{
 				if(isNull(json.bean.Location)){
-					$("#city").html("郑州市");
-					$("#username").html("欢迎登陆");
+					AjaxPostUtil.request({url:path+"/gateway/EmpowerWebpageController/getOpenidBycode",params:{code:code},type:'json',callback:function(jsonall){
+						if(jsonall.returnCode==0){
+							if(isNull(jsonall.bean.Location)){
+								$("#city").html("未获取到位置信息");
+								$("#username").html("欢迎您:"+base.decode(jsonall.bean.nickname));
+							}else{
+								$("#city").html(jsonall.bean.Location);
+								$("#username").html("欢迎您:"+base.decode(jsonall.bean.nickname));
+							}
+						}else{
+							location.href = 'sessionNull.html';
+						}
+					}});
 				}else{
 					$("#city").html(json.bean.Location);
 					$("#username").html("欢迎您:"+base.decode(json.bean.nickname));
