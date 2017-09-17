@@ -43,10 +43,12 @@ public class WechatOrderPrintServiceImpl implements WechatOrderPrintService{
 		}
 		// 拼接订单详情表中的表明
 		mapParam.put("tableName", Constants.SHOP_TABLE + DateUtil.getTimeSixAndToString());
+		mapParam.put("id", mapInfo.get(0).get("id")+"");
 		// 订单中包含的商品
 		List<Map<String, Object>> productList = wechatOrderPrintMaper.selectOrderPruduct(mapParam);
-		mapInfo.get(0).put("productSort", productList.size());
-		mapInfo.get(0).put("productDetail", productList);
+		mapInfo.get(0).put("productSort", productList.size()); // 显示该订单中的商品种类
+		mapInfo.get(0).put("productDetail", productList);  // 显示订单详情
+		mapInfo.get(0).put("executionTime",DateUtil.getTimeAndToString()); // 显示打印时间
 		outputObject.setBeans(mapInfo);
 		outputObject.settotal(mapInfo.size());
 	}
@@ -79,6 +81,7 @@ public class WechatOrderPrintServiceImpl implements WechatOrderPrintService{
 			List<Map<String,Object>> productDetailInfo = wechatOrderPrintMaper.selectOrderPruduct(mapDetailInfo);
 			mapp.put("productDetail", productDetailInfo);
 			mapp.put("productSort", productDetailInfo.size());// 商品的种类数
+			mapp.put("executionTime", DateUtil.getTimeAndToString());
 		}
 		outputObject.setBeans(listProductByTime);
 		outputObject.settotal(listProductByTime.size());

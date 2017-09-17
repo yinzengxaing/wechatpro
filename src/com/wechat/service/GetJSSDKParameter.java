@@ -1,5 +1,7 @@
 package com.wechat.service;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,7 +27,7 @@ public class GetJSSDKParameter {
 	 */
 	public static String getJsapiTicket() throws Exception{
 		String result = null;
-		String ticket = null;
+		//String ticket = null;
 		String url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket";
 		Map<String,Object> params = new HashMap<String, Object>();
 		params.put("access_token",TokenThread.accessToken.getToken());
@@ -44,7 +46,7 @@ public class GetJSSDKParameter {
     			outputObject.setreturnMessage(returnMessage, returnCode);
 			}
 		}
-		return ticket;
+		return object.getString("ticket");
 	}
 	
 	public static Map<String,Object> getWechatJsParameter(Map<String,Object> param) throws Exception{
@@ -53,9 +55,10 @@ public class GetJSSDKParameter {
 		map.put("jsapi_ticket", jsapi_ticket);
 		map.put("timestamp", param.get("timestamp"));
 		map.put("url", Constants.WECHAT_FOR_SIGNATURE);
-		map.put("noncestr", param.get("nonceStr"));
+		map.put("noncestr", param.get("noncestr"));
+		
 		//排序  
-        String string1 = OrderUtil.sortParameters(map);  
+        String string1 = OrderUtil.sortParameters(map);    
         //拼接API秘钥  
 		String signature = OrderUtil.sha1(string1); 
 		map.put("signature", signature);
@@ -68,3 +71,5 @@ public class GetJSSDKParameter {
 	}
 
 }
+
+

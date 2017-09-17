@@ -12,6 +12,7 @@ $(function(e){
 });
 
 function dataInit(){
+	showMask();
 	code = $.req("code");
 	base = new Base64();
 	AjaxPostUtil.request({url:path+"/gateway/WechatUserController/selectLatitudeAndLongtitude",params:{},type:'json',callback:function(json){
@@ -53,10 +54,10 @@ function dataInit(){
 		}else{
 			location.href = 'sessionNull.html';
 		}
+		hideMask();
 	}});
 	eventInit();
 }
-
 
 //事件
 function eventInit(){
@@ -82,3 +83,17 @@ function eventInit(){
 	
 }
 
+/**
+ * 显示遮罩层
+ */
+function showMask(){     
+    $("#mask").css("height",$(document).height());     
+    $("#mask").css("width",$(document).width());     
+    $("#mask").show();     
+}  
+/**
+ * 隐藏遮罩层
+ */
+function hideMask(){     
+    $("#mask").hide();     
+}  

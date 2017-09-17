@@ -106,12 +106,6 @@
 		</div>
 	</div>
 	
-	<!--遮罩层 -->
-	<div id="wrap" class="mask-layer"></div>
-	
-	<!-- 加载遮罩层 -->
-   	<div id="mask" class="mask">
-	</div> 
 	
 	<!-- 结算界面 -->
 	<div  id="clearDiv" class="payment-bar">
@@ -121,100 +115,12 @@
 		<a  style="cursor:pointer;" class="settlement" id="clearing">结算</a>
 	</div>
 	
-	<!-- <div class="aui-t-content">
-		<div class="aui-tab ">
-			<div class="aui-panes">
-				<div class="aui-pane" style="display:block;">
-					<div class="main_con">
-						<div class="address" id="addressDiv" style="display:none;">
-							<div id="addressInof">
-								<div class="add_map"><span class="glyphicon glyphicon-map-marker"></span></div>
-								<p class="otherMationOrderP">
-									<span class="add_name" id="username" ></span>
-									<span class="add_phone" id="phone"></span>
-								</p> 
-								<p class="addressOrderP">
-									<span class="add_address" id="addressInfo" style="font-size: 13px;"></span>
-								</p>
-							</div>
-							更多地址
-							<div class="add_more"><span style="cursor:pointer;" class="aui-list-cell-fr" id="moreAddr"></span></div>
-						</div>
-					</div>
-					<div class="main_con bgfg">
-						
-					</div>
-					<div class="main_con" id="orderDiv">
-
-					</div>
-					<div class="main_con3">
-						<div class="content">
-							<div class="box-content" style="text-align: left;">
-								<p>取餐类型:</p>
-								<select  id="selectItems" class="selectInput-100">
-									<option value="2">现在，支付成功后直接取餐</option>
-									<option value="3">稍晚，预约当天,在预约时间取餐</option>
-									<option value="1">外卖</option>
-								</select>
-							</div>
-							<div class="add_position" id="eatTimeDiv" hidden>
-								<p>取餐时间:</p>
-								<select id="timeDay">
-									<option>上午</option>
-									<option>下午</option>
-								</select>
-							<select id="h"></select>点
-							<select id="min"></select>分
-							&nbsp&nbsp<input type="text" class="typeahead form-control selectInput-100" id="eatTime"  disabled="disabled" ></input>
-							</div>
-						</div>
-					</div>
-					<div class="main_con">
-						<div class="last_money">
-							<strong>总价：<i class="total" id="AllTotal">0.00</i></strong>
-							<div id="buyNowDiv"><button id="buyNow">立即下单</button></div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div> -->
+		<!--遮罩层 -->
+	<div id="wrap" class="mask-layer"></div>
 	
+	<!-- 加载遮罩层 -->
+   	<div id="mask" class="mask"> </div> 
 	
-		<!-- 模态框（Modal） -->
-<!-- 	<div class="modal fade Mymmddal" style="width:90%;margin:35% auto;" id="Modal" tabindex="-1" aria-labelledby="myModalLabel">
-		<div class="modal-dialog dialog-width-600" role="document">
-			<div class="modal-content">
-			    <div class="modal-header">
-			    	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-			    	<h4 class="modal-title eat-time">选择取餐时间</h4>
-				</div>
-			    <div class="modal-body dialog-body1">
-			   		<div class="form-group dialog-100">
-			    		<label for="txt_departmentname" class="dialog-label-20" >取餐时间:</label>
-			    		<div class="dialog-div-75" id="eDiv">
-			    			<span class="glyphicon glyphicon-ok-sign font-action" id="eatNow"></span>
-			    			<font>现在，支付成功后直接取餐</font>
-			    		</div>
-			    		<div class="dialog-div-75" id="tDiv">
-			    			<span class="glyphicon glyphicon-ok-sign" id="eatTime"></span>
-			    			<font>稍晚，预约当天，稍晚时间，在预约时间取餐</font>
-			    		</div>
-			    		<div id="eatTimeDiv"  style="display:none;">
-			    			<label>就餐时间：当天   </label>
-			    			<select name="h" id="h" onchange="show()"></select>点
-			    			<select name="min" id="min" onchange="show();"></select>分
-			    		</div>
-			    	</div>
-			    </div>
-			    <div class="btn-group modal-footer-btn">
-			    	<button type="button" id="button_esc" class="btn btn-primary">取消</button>
-			    	<button type="button" id="button_sure" class="btn btn-success">确定</button>
-			    </div>
-			</div>
-	 	</div>
-	</div> -->
-
 	<div id="navigate"></div>
 	
 	<div id="preloader">  
@@ -229,19 +135,17 @@
 					<h6 style=" margin:0;">￥{{productPrice}}</h6>
 				</div>
 				<div class="comm-bar-right">
-					<font class="glyphicon glyphicon-plus-sign addInCart" style="font-size:30px;float:right;cursor:pointer;"
+					<font class="glyphicon addInCart" style="font-size:30px;float:right;cursor:pointer;"
 					buyProductId="{{wechatCommodity}}" productType="{{wechatCommodityType}}" adminId="{{wechatCommodityAdminId}}"
-					></font>
-					<font style="font-size:20px;float:right;margin:8px 4px;">{{wechatCommodityCount}}</font>
-					<font class="glyphicon glyphicon-minus-sign redInCart" style="font-size:30px;float:right;cursor:pointer;"
+					><img src="../../assest/img/jia.png"></font>
+					<font class="proCount" style="font-size:20px;float:right;margin:8px 4px;margin:15px 10px 0 10px;">{{wechatCommodityCount}}</font>
+					<font class="glyphicon redInCart" style="font-size:30px;float:right;cursor:pointer;"
 					buyProductId="{{wechatCommodity}}" productType="{{wechatCommodityType}}" adminId="{{wechatCommodityAdminId}}"
-					></font>
+					><img src="../../assest/img/jian.png"></font>
 				</div>
 			</div>
  		{{/each}}
 	</script>
-	
-	<!-- ------------------------------------------------------------------------------------------------------------ -->
 	
 	<script id="orderBean" type="text/x-handlebars-template">
 	{{#each rows}}

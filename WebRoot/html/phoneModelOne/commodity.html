@@ -47,9 +47,7 @@
 	<div id="wrap" class="mask-layer"></div>
 	
 	<!-- 加载遮罩层 -->
-	<div id="mask" class="mask">
-	</div>   
-	
+	<div id="mask" class="mask"></div>   
 	
 	<!-- 结算界面 -->
 	<div  id="clearDiv" class="payment-bar"  style="display:none">
@@ -70,7 +68,7 @@
 				<li class="w-3">
 					<div class="minBox">
 						<div class="minBoxImg">
-							<img class="img-thumbnail" src="{{#productLogo productLogo}}{{/productLogo}}" />
+							<img class="img-thumbnail img-noborder" src="{{#productLogo productLogo}}{{/productLogo}}" />
 						</div>
 						<div class="minBoxFont">
 							<div>
@@ -110,7 +108,7 @@
 					buyProductId="{{wechatCommodity}}" productType="{{wechatCommodityType}}" adminId="{{wechatCommodityAdminId}}"
 					productPrice="{{productPrice}}"
 					><img src="../../assest/img/jia.png" ></font>
-					<font  class="count" style="font-size:20px;float:right;margin:8px 4px;">{{wechatCommodityCount}}</font>
+					<font  class="count" style="font-size:20px;float:right;margin:8px 4px;margin:15px 10px 0 10px;">{{wechatCommodityCount}}</font>
 					<font class="glyphicon redInCart" style="font-size:30px;float:right;cursor:pointer;"
 					buyProductId="{{wechatCommodity}}" productType="{{wechatCommodityType}}" adminId="{{wechatCommodityAdminId}}"
 					productPrice="{{productPrice}}"
@@ -124,7 +122,7 @@
 	<!-- 获得该城市所有的分类列表 -->
 	<script id="typeListBean" type="text/x-handlebars-template">
 		{{#each rows}}
-			<li id="{{typeId}}" style="cursor:pointer;"><img class="img-thumbnail" src="{{#typeLogo optionPath}}{{/typeLogo}}" />{{typeName}}</li>
+			<li id="{{typeId}}" typeName ="{{typeName}}" style="cursor:pointer;"><img class="img-thumbnail img-noborder" src="{{#typeLogo optionPath}}{{/typeLogo}}"/></li>
 		{{/each}}
 	</script>
 	

@@ -170,9 +170,7 @@ function eventInit(){
 	
 	//购物车详情事件
 	$('body').on('click', '#getCartProduct', function(e){
-		
 		if(catState == 0){
-			showMask();
 			catState = 1 ;
 			getProductInfo();
 			$('#catProductDiv').show();
@@ -365,10 +363,10 @@ function getCartInfo(){
  * 获取商品信息
  */
 function getProductInfo(){
-	showMask();
 	var params = {
 			adminId : adminId
 	}
+	showMask();
 	AjaxPostUtil.request({url:path+"/gateway/MWechatProductController/getCartDetail",params:params,type:'json',callback:function(json){
 		if(json.returnCode==0){
 			if (json.bean.totalCount != 0){ 
@@ -386,7 +384,6 @@ function getProductInfo(){
 				$('#clearDiv').hide();
 		 		$('#getCartProduct').hide();
 				$('#wrap').hide();
-				refishProduct();
 			}
 		}else{
 			qiao.bs.msg({msg:"查询失败哦~",type:'danger'});

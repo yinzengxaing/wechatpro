@@ -144,7 +144,7 @@
 						</div>
 					</div>
 					<div class="form-group dialog-50">
-						<label for="txt_departmentname" class="dialog-label-20">分类图标：</label>
+						<label for="txt_departmentname" class="dialog-label-20">商品图片：</label>
 						<div class="dialog-div-75">
 							<img alt="" src="" class="dialogUserImg img-thumbnail"
 								id="imgPath" />
@@ -154,17 +154,6 @@
 						<label for="txt_departmentname" class="dialog-label-10">商品描述：</label>
 						<div class="dialog-div-80">
 							<font id="productDesc"></font>
-						</div>
-					</div>
-					<div class="form-group dialog-100">
-						<label for="txt_departmentname" class="dialog-label-10">所属套餐：</label>
-						<font id="packageFont"></font>
-						<div id="packageListDiv" class="dialog-div-80"></div>
-					</div>
-					<div class="form-group dialog-100">
-						<label for="txt_departmentname" class="dialog-label-10">审核意见：</label>
-						<div class="dialog-div-80">
-							<font id="productOpinion"></font>
 						</div>
 					</div>
 				</div>
@@ -184,25 +173,6 @@
 	{{/each}}						
 	</script>
 	
-	
-	<!-- 遍历套餐信息 -->
-		<script id="packageListBean" type="text/x-handlebars-template">
-	{{#each rows}}
-	<div class="panel panel-default"
-    	<div style="height:90px; width:100%">
-			<div style="float:left">
-				<img alt="" src={{#packageLogo packageLogo}}{{/packageLogo}} class="dialogUserImg img-thumbnail"/>
-			</div>
-			<div style="float:left; vertical-align:middle; margin-left:10px">
-			套餐名称：<font>{{packageName}}</font><br/>
-			套餐价格：<font>{{packagePrice}}元</font><br/>
-			套餐积分：<font>{{packageIntegral}}</font><br/>
-			套餐描述：<font>{{#packageDesc packageDesc}}{{/packageDesc}}</font><br/>
-			</div>
-		</div>
-	</div>
-	{{/each}}						
-		</script>
 		<!-- 遍历的产品 -->
 		<script id="productListBean" type="text/x-handlebars-template">
 			{{#each rows}}
@@ -231,7 +201,7 @@
 						</font>
 					</div>
 					<div class="ProductPacNum">
-						<font>所属套餐：{{count}}种</font>
+						<font>所属分类：{{typeName}}</font>
 					</div>
 					<div class="ProductPrice">
 						<font>价格：{{productPrice}}元</font>

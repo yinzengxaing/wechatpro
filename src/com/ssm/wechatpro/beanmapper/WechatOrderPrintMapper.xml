@@ -90,9 +90,13 @@
 			${tableName} AS orderInf,
 			wechat_admin_login_mation AS mation
 		WHERE
-			orderInf.orderAdminId = #{orderAdminId}
-		AND mation.adminId = orderInf.orderAdminId
-		AND orderInf.wetherPaymentTime >= #{preTime}
+			mation.adminId = orderInf.orderAdminId
+		<if test="orderAdminId != null and orderAdminId !=''">
+			AND orderInf.orderAdminId = #{orderAdminId}
+		</if>
+		<if test="preTime != null and preTime !=''">
+			AND orderInf.wetherPaymentTime >= #{preTime}
+		</if>
 		AND  #{nowTime} >= orderInf.wetherPaymentTime
 		AND orderInf.orderNumber LIKE "%${nowDay}%"
 		AND wetherPayment=1

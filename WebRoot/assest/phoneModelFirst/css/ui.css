@@ -11501,7 +11501,7 @@ body {
     margin-left: 5px;
 }
 .minBoxFont{
-	/* width: 65%; */
+	width: 40%;
     margin-left: 2%;
     float: right;
     height: 55%;
@@ -11540,6 +11540,7 @@ body {
 	font-size: 14px;
 	float:right;
 	font-weight:bold;
+	line-height:20px;
 }
 .proPrice{
 	font-size: 24px;
@@ -12075,4 +12076,10 @@ body {
 	left: 0px;
 	opacity: 0.5;
 	-moz-opacity: 0.5;
+}
+
+.img-noborder{
+    border: 0px;
+    max-width: 100%;
+    
 }

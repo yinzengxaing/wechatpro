@@ -162,11 +162,6 @@ window.EvenInit = {
 						$('#createId').html(json.bean.adminNo);
 						$('#createTime').html(json.bean.createTime);
 						$("#imgPath").attr("src",path+"/"+json.bean.optionPath);
-						var typeOpinion = json.bean.typeOpinion;
-						if (isNull(typeOpinion))
-							$('#typeOpinion').html("无");
-						else
-							$('#typeOpinion').html(json.bean.typeOpinion);
 						var typeState = json.bean.typeState;
 						if (typeState == 0)
 							$('#typeState').html("创建");

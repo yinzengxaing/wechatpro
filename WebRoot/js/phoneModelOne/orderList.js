@@ -122,7 +122,6 @@ function eventInit(){
 	
 	//结算按钮点击事件
 	$('body').on('click', '#clearing', function(e){
-		
 		//判断订单类型
 		if(liji == 1 && tangshi == 1){
 			orderType = 1;//立即堂食
@@ -177,7 +176,7 @@ function eventInit(){
 					paySign = jsonPa.bean.paySign;
 					appId = jsonPa.bean.appid;
 					timeStamp = jsonPa.bean.timestamp;
-					nonceStr = jsonPa.bean.nonceStr;
+					nonceStr = jsonPa.bean.noncestr;
 					paypackage = jsonPa.bean.paypackage;
 					signature = jsonPa.bean.signature;
 					

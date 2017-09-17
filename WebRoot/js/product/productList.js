@@ -168,82 +168,12 @@ function eventInit(){
 				else
 					$('#productWetherDiscount').html("是");	
 				$('#productIntegral').html(json.bean.productIntegral);
-				var productOpinion = json.bean.productOpinion;
-				if (isNull(productOpinion))
-					$('#productOpinion').html("无");
-				else
-					$('#productOpinion').html(productOpinion);
 				var createTime = json.bean.createTime;
 				$('#createTime').html(createTime.substring(0,10));
 				$('#brandTagName').html(json.bean.brandTagName);
 				$('#typeName').html(json.bean.typeName);
 				$('#adminNo').html(json.bean.adminNo);
 				$('#productKeyStr').html(json.bean.productKeyStr);	
-				//查询商品所在的套餐详情
-				AjaxPostUtil.request({url:path+"/post/WechatProductController/getPackageByProductId",params:params,type:'json',callback:function(json){
-						if(json.total == 0){
-							$('#packageFont').html("无");
-							//对套餐图片进行修饰
-							Handlebars.registerHelper("packageLogo",function(v1,options){
-									return path+"/"+v1;
-							});
-							//对商品所在套餐信息进行修饰
-							Handlebars.registerHelper("packageDesc",function(v1,options){
-								if (isNull(v1)){
-									return "无";
-								}else{
-									return v1;
-								}
-							});
-							var source = $("#packageListBean").html();
-							var template = Handlebars.compile(source);
-							$("#packageListDiv").html(template(json));	
-							//若是套餐图片不存在显示max图标
-/*							$(".img-thumbnail").each(function(){
-						    	var myThis = $(this);
-						    	var thisUrl = myThis.attr("src");
-						    	$.ajax(thisUrl, {
-						            type: 'get',
-						            timeout: 1000,
-						            success: function() {
-						            },
-						            error: function() {
-						            	myThis.attr("src",path + "/assest/icon/maxLogo.jpg");
-						            }
-						        });
-						    });*/
-						}else{
-							$('#packageFont').html("");
-							//对商品所在套餐信息进行修饰
-							Handlebars.registerHelper("packageDesc",function(v1,options){
-								if (isNull(v1)){
-									return "无";
-								}else{
-									return v1 ;
-								}
-							});
-							//对套餐图片进行修饰
-							Handlebars.registerHelper("packageLogo",function(v1,options){
-								return path+"/"+v1;
-							});
-							var source = $("#packageListBean").html();
-							var template = Handlebars.compile(source);
-							$("#packageListDiv").html(template(json));		
-/*							$(".img-thumbnail").each(function(){
-						    	var myThis = $(this);
-						    	var thisUrl = myThis.attr("src");
-						    	$.ajax(thisUrl, {
-						            type: 'get',
-						            timeout: 1000,
-						            success: function() {
-						            },
-						            error: function() {
-						            	myThis.attr("src",path + "/assest/icon/maxLogo.jpg");
-						            }
-						        });
-						    });*/
-						}
-				}});
 			}
 		}});
 	});

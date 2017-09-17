@@ -40,7 +40,7 @@ public class UnifiedorderService {
 	 * @throws Exception 
      */  
     @SuppressWarnings("static-access")
-	public static Map<String,Object> getPrepayid(String mch_id,String key,String out_trade_no,String total_fee,String openid, InputObject inputObject,OutputObject outputObject) throws Exception{  
+	public static Map<String,Object> getPrepayid(String sub_mch_id,String key,String out_trade_no,String total_fee,String openid, InputObject inputObject,OutputObject outputObject) throws Exception{  
     	String result = null;
         //封装h5页面调用参数
         Map<String ,Object> signMap = new HashMap<>();
@@ -49,7 +49,8 @@ public class UnifiedorderService {
         String nonce_str = UUID.randomUUID().toString().substring(0, 32);//生成随机数，可直接用系统提供的方法  
         String body = "maxBurger";  
         params.put("appid", Constants.APPID);  
-        params.put("mch_id", mch_id);  
+        params.put("mch_id", Constants.MCH_ID); //商户号
+        params.put("sub_mch_id",sub_mch_id );  //子商户号
         params.put("nonce_str", nonce_str);  
         params.put("body", body);  
         params.put("out_trade_no", DateUtil.getToString());  

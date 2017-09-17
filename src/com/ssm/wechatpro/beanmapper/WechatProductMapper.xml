@@ -239,7 +239,10 @@
 			id,
 			typeName
 		FROM
-			wechat_product_type		
+			wechat_product_type
+		WHERE
+			typeState = 2	
+				
 	</select>
 	
 </mapper>          

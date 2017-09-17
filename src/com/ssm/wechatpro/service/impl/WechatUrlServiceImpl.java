@@ -34,7 +34,7 @@ public class WechatUrlServiceImpl implements WechatUrlService {
 				+ URLEncoder.encode(Constants.PATH+"/html/phoneModelOne/index.html?typeId=1","UTF-8")
 				+"&response_type=code&scope=snsapi_userinfo&state="+uuid+"#wechat_redirect";
 		Map<String,Object> bean = new HashMap<String, Object>();
-		bean.put("web", "主页");
+		bean.put("web", "主页");	
 		bean.put("url", url);
 		return bean;
 	}
