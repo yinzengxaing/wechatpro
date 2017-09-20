@@ -68,6 +68,9 @@ function loadMenuMation(){
 }
 
 function eventInit(){
+	$('body').on("click","#backMenuList",function(e){
+		location.href="wechatButtomMenuList.html";
+	});
 	$('body').on('click','#deleteBean',function(e){
 		qiao.bs.confirm("是否删除该项菜单？",function(){
 		var params = {
@@ -76,7 +79,21 @@ function eventInit(){
 		AjaxPostUtil.request({url:path+"/post/WechatButtomMenuController/deleteMenus",params:params,type:'json',callback:function(json){
 			if(json.returnCode==0){
 				qiao.bs.msg({msg:json.returnMessage,type:'success'});
-				dataInit();
+				var publishparam={
+						menuVersion:menuVersion,
+						wetherUser:0,
+						wetherPublish:0
+			         }
+		    AjaxPostUtil.request({url:path+"/post/WechatButtomMenuController/updateMenuPublish",params:publishparam,type:'json',callback:function(json){
+				if(json.returnCode == 0){
+					qiao.bs.msg({msg:json.returnMessage,type:'success'});
+					dataInit();
+				}else{
+					qiao.bs.msg({msg:json.returnMessage,type:'danger'});
+				}
+			}
+			});
+				//dataInit();
 				$("#myTab").children("li:eq("+0+")").addClass("active");
 				$("#myTab").children("li:eq("+1+")").removeClass("active");
 				$("#ios").attr("class","tab-pane fade margin-Top-Left-30");
@@ -140,7 +157,21 @@ function eventInit(){
 			AjaxPostUtil.request({url:path+"/post/WechatButtomMenuController/updateMenuById",params:params,type:'json',callback:function(json){
 				if(json.returnCode==0){
 					qiao.bs.msg({msg:json.returnMessage,type:'success'});
-					dataInit();
+					var publishparam={
+							menuVersion:menuVersion,
+							wetherUser:0,
+							wetherPublish:0
+				}
+			    AjaxPostUtil.request({url:path+"/post/WechatButtomMenuController/updateMenuPublish",params:publishparam,type:'json',callback:function(json){
+					if(json.returnCode == 0){
+						qiao.bs.msg({msg:json.returnMessage,type:'success'});
+						dataInit();
+					}else{
+						qiao.bs.msg({msg:json.returnMessage,type:'danger'});
+					}
+				}
+				});
+					//dataInit();
 				}
 			}},true);
 			}
