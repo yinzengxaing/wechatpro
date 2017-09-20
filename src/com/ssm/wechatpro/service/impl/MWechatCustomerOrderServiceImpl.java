@@ -88,7 +88,14 @@ public class MWechatCustomerOrderServiceImpl implements MWechatCustomerOrderServ
 		orderParams.put("orderNumber", orderNumber);
 		orderParams.put("createId", wechatLogParams.get("id"));
 		orderParams.put("createTime", DateUtil.getTimeAndToString());
-		orderParams.put("orderEatTime", params.get("eatTime"));
+		/**
+		 * 处理就餐时间
+		 */
+		String orderEatTime = params.get("eatTime") + "";// 获取就餐时间
+		// 如果就餐时间不为空的话，将就餐时间重新组合成新的字符串拼接
+		if(!JudgeUtil.isNull(orderEatTime)){
+			orderParams.put("orderEatTime", DateUtil.getTime() + " " + orderEatTime.replace("点 ", ":").replace("分", ":00"));
+		}
 		orderParams.put("orderAdminId", params.get("adminId").toString());
 		if (params.get("remark") != null || params.get("remark") != ""){
 			orderParams.put("orderDesc", params.get("remark"));
