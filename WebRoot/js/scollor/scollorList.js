@@ -49,7 +49,7 @@ var TableInit = function(){
             detailView: false,                  //是否显示父子表
             columns: [{
             	field: 'scollor_pic_name',
-            	title: '公告名称',
+            	title: '广告名称',
             	width: '50',
             	align: 'center',
             	formatter: function (value, row, index) {
@@ -62,7 +62,7 @@ var TableInit = function(){
             	}
             }, {
                 field: 'optionPath',
-                title: '图片',
+                title: '广告图片',
                 align: 'center',
                 width: '100',
                 formatter: function (value, row, index) {
@@ -76,7 +76,9 @@ var TableInit = function(){
                 formatter: function (value, row, index) {
                 	return '<a style="word-wrap:break-word;">'+value+'</a>';
                 }
-            },{
+            },
+            /*
+            {
                 field: 'url',
                 title: 'url链接',
                 align: 'center',
@@ -135,7 +137,8 @@ var TableInit = function(){
                 formatter: function (value, row, index) {
                 	return '<a style="word-wrap:break-word;">'+value+'</a>';
                 }
-            },{
+            },*/
+            {
 	            field: 'operate',
 	            title: '操作',
 	            width: '300',
@@ -174,7 +177,7 @@ window.EvenInit = {
 	//删除按钮
 	'click .RoleOfB': function (e, value, row, index){
 		var id = row.id;
-		qiao.bs.confirm("确定删除该通知吗？",function(){
+		qiao.bs.confirm("确定删除该广告吗？",function(){
 			var params = {
 				id:id,
 			};			
@@ -188,6 +191,7 @@ window.EvenInit = {
 			}});
 		},function(){});
 	},
+	/*
 	//上线
 	'click .RoleOfC': function (e, value, row, index){
 		var id = row.id;
@@ -276,7 +280,7 @@ window.EvenInit = {
 					}
 				}});
 		});
-	},
+	},*/
 	//查看详情
 	'click .RoleOfG': function (e, value, row, index){
 		var id = row.id;
@@ -288,7 +292,8 @@ window.EvenInit = {
 			if(json.returnCode==0){
 				$("#scollorName").html(json.bean.scollor_pic_name);
 				$("#createTime").html(json.bean.scollor_pic_data);
-				$("#scollorId").html(row.adminNo);
+				//$("#scollorId").html(row.adminNo);
+				/*
 				if(json.bean.scollor_pic_display == 1){
 					$("#scollorLine").html("上线");
 				}else if(json.bean.scollor_pic_display == 0){
@@ -302,9 +307,10 @@ window.EvenInit = {
 					$("#scollorFabu").html("未发布");
 				}
 				$("#scollorIndrouce").html(isUndefineReturnNull(json.bean.scollor_pic_introduce));
-				$("#scollorPicture").attr("src",path + "/" + isUndefineReturnNull(json.bean.optionPath));
 				$("#scollor_pic_content").html(json.bean.scollor_pic_content);
 				$("#url").html(row.url);
+				*/
+				$("#scollorPicture").attr("src",path + "/" + isUndefineReturnNull(json.bean.optionPath));
 				eventInit();
 			}else{
 				qiao.bs.msg({msg:json.returnMessage,type:'danger'});
@@ -315,6 +321,7 @@ window.EvenInit = {
 };
 
 function operateFormatter(value, row, index) {
+	/*
 	if((row.scollor_pic_display==0 || row.scollor_pic_display==2) && row.scollor_pic_fb==1 ){
 		return [
 		        '<button type="button" class="RoleOfA btn btn-default  btn-sm" style="margin-right:15px;">编辑</button>',
@@ -349,6 +356,10 @@ function operateFormatter(value, row, index) {
 		         '<button type="button" class="RoleOfE btn btn-default  btn-sm" style="margin-right:15px;">下线</button>',
 		         '<button type="button" class="RoleOfD btn btn-default  btn-sm" style="margin-right:15px;">发布</button>',
 		     ].join('');
-	}
+	}*/
+	return [
+	        '<button type="button" class="RoleOfG btn btn-default  btn-sm" style="margin-right:15px;">阅览图片</button>',
+	        '<button type="button" class="RoleOfB btn btn-default  btn-sm" style="margin-right:15px;">删除</button>',
+	     ].join('');
    
 }

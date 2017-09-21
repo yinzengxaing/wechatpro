@@ -31,12 +31,12 @@
 		</li>
 		<li>
 			<i class="icon-edit"></i>
-			<a href="javascript:;">通知列表</a>
+			<a href="javascript:;">广告列表</a>
 		</li>
-		<button type="button" id="addScollor" class="btn btn-default titleBtn">添加通知</button>
+		<button type="button" id="addScollor" class="btn btn-default titleBtn">添加首页广告</button>
 	</ul>
 	<div class="box-content" style="text-align: left;">
-		通知名称：<input type="text" class="typeahead form-control selectInput-100" id="scollor_pic_name" />
+		广告名称：<input type="text" class="typeahead form-control selectInput-100" id="scollor_pic_name" />
 			<button type="button" id ="selectLogin" class="btn btn-primary">查询</button>
 	</div>
 	<div class="row-fluid sortable">
@@ -105,11 +105,11 @@
 			<div class="modal-content">
 			    <div class="modal-header">
 			    	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-			    	<h4 class="modal-title" id="myModalLabel1">通知详情</h4>
+			    	<h4 class="modal-title" id="myModalLabel1">广告详情</h4>
 				</div>
 			    <div class="modal-body dialog-body">
 			    	<div class="form-group dialog-50">
-			    		<label for="txt_departmentname" class="dialog-label-20" >通知名称：</label>
+			    		<label for="txt_departmentname" class="dialog-label-20" >广告名称：</label>
 			    		<div class="dialog-div-75">
 			    			<font id="scollorName"></font>
 			    		</div>
@@ -120,6 +120,7 @@
 			    			<font id="createTime"></font>
 			    		</div>
 			    	</div>
+			    	<!-- 
 			    	<div class="form-group dialog-50">
 			    		<label for="txt_departmentname" class="dialog-label-20" >用户id：</label>
 			    		<div class="dialog-div-75">
@@ -151,15 +152,16 @@
 			    		</div>
 			    	</div>
 			    	<div class="form-group dialog-100">
-			    		<label for="txt_departmentname" class="dialog-label-10" >图片：</label>
-			    		<div class="dialog-div-80">
-			    			<img id="scollorPicture" alt="" src="">
-			    		</div>
-			    	</div>
-			    	<div class="form-group dialog-100">
 			    		<label for="txt_departmentname" class="dialog-label-10" >url链接：</label>
 			    		<div class="dialog-div-80">
 			    			<font id="url"></font>
+			    		</div>
+			    	</div>
+			    	 -->
+			    	<div class="form-group dialog-100">
+			    		<label for="txt_departmentname" class="dialog-label-10" >广告图片：</label>
+			    		<div class="dialog-div-80">
+			    			<img height="300" width="550" id="scollorPicture" alt="" src="">
 			    		</div>
 			    	</div>
 			    </div>

@@ -3,51 +3,37 @@
           "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ssm.wechatpro.dao.WechatScollorPicMapper">
 
-	<!-- 添加通知 -->
+	<!-- 添加广告 -->
 	<insert id="insertScoller" parameterType="java.util.Map">
 		INSERT INTO wechat_scollor_pic (
 			scollor_pic_name,
 			scollor_pic_path,
-			scollor_pic_content,
-			scollor_pic_data,
-			scollor_pic_userid,
-			scollor_pic_introduce
+			scollor_pic_data
 		)
 		VALUES
 			(
 				#{scollor_pic_name},
 				#{scollor_pic_path},
-				#{scollor_pic_content},
-				#{scollor_pic_data},
-				#{scollor_pic_userid},
-				#{scollor_pic_introduce}
+				#{scollor_pic_data}
 			)
 	</insert>
 	
-	<!-- 查询所有通知 -->
+	<!-- 查询所有广告 -->
 	<select id="selectAllScollor" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT
 			id,
 			scollor_pic_name,
 			scollor_pic_path,
-			scollor_pic_content,
-			scollor_pic_data,
-			scollor_pic_userid,
-			scollor_pic_display,
-			scollor_pic_introduce,
-			scollor_pic_fb,
-			scollor_pic_ydl,
-			scollor_num
+			scollor_pic_data
 		FROM
 			wechat_scollor_pic
 		WHERE 1=1
 		<if test="scollor_pic_name != '' and scollor_pic_name != null">
 			and scollor_pic_name like '%${scollor_pic_name}%'
 		</if>
-		ORDER BY scollor_num
 	</select>
 	
-	<!-- 删除一条通知 -->
+	<!-- 删除一条广告 -->
 	<delete id="deleteScollor" parameterType="java.util.Map" >
 		DELETE
 		FROM
@@ -56,27 +42,20 @@
 			id = #{id}
 	</delete>
 	
-	<!-- 回显 -->
+	<!-- 回显 (阅览图片)-->
 	<select id="selectById" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT
 			id,
 			scollor_pic_name,
 			scollor_pic_path,
-			scollor_pic_content,
-			scollor_pic_data,
-			scollor_pic_userid,
-			scollor_pic_display,
-			scollor_pic_introduce,
-			scollor_pic_fb,
-			scollor_pic_ydl,
-			scollor_num
+			scollor_pic_data
 		FROM
 			wechat_scollor_pic
 		WHERE
 			id = #{id}
 	</select>
 	
-	<!-- 编辑通知 -->
+	<!-- 编辑广告 
 	<update id="updateScoller" parameterType="java.util.Map">
 		UPDATE wechat_scollor_pic
 		<set>
@@ -94,9 +73,9 @@
 			</if>
 		</set>
 		WHERE id = #{id}
-	</update>
+	</update>-->
 	
-	<!-- 发布通知 -->
+	<!-- 发布通知 
 	<update id="updateFbScollor" parameterType="java.util.Map">
 		UPDATE wechat_scollor_pic
 		<set>
@@ -107,29 +86,29 @@
 		</set> 
 		WHERE id = #{id}
 	</update>
-	
-	<!-- 取消发布 -->
+	-->
+	<!-- 取消发布 
 	<update id="updateQxFbScollor" parameterType="java.util.Map">
 		UPDATE wechat_scollor_pic
 		SET scollor_pic_fb = 0
 		WHERE id = #{id}
-	</update>
+	</update>-->
 	
-	<!-- 上线 -->
+	<!-- 上线
 	<update id="updateSxScollor" parameterType="java.util.Map">
 		UPDATE wechat_scollor_pic
 		SET scollor_pic_display = 1
 		WHERE id = #{id}
-	</update>
+	</update> -->
 	
-	<!-- 下线 -->
+	<!-- 下线 
 	<update id="updateXxScollor" parameterType="java.util.Map">
 		UPDATE wechat_scollor_pic
 		SET scollor_pic_display = 0
 		WHERE id = #{id}
-	</update>
+	</update>-->
 	
-	<!-- 查询前五条已发布并且上线的通知 -->
+	<!-- 查询前五条已发布并且上线的通知 
 	<select id="selectFiveScollor" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT
 			id,
@@ -148,9 +127,9 @@
 		AND scollor_pic_display = 1
 		ORDER BY scollor_num
 		LIMIT 5
-	</select>
+	</select>-->
 	
-	<!-- 在已发布的通知中，查询展示顺序是否存在 -->
+	<!-- 在已发布的通知中，查询展示顺序是否存在 
 	<select id="selectScollorNum" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT
 			*
@@ -159,12 +138,12 @@
 		WHERE
 			scollor_pic_fb = 1
 		AND scollor_num = #{scollor_num}
-	</select>
+	</select>-->
 	
-	<!-- 修改展示顺序 -->
+	<!-- 修改展示顺序 
 	<update id="updateScollorNum" parameterType="java.util.Map">
 		UPDATE wechat_scollor_pic
 		set	scollor_num = #{scollor_num}
 		WHERE id = #{id}
-	</update>
+	</update>-->
 </mapper>          

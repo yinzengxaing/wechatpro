@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import com.ssm.wechatpro.dao.UploadMapper;
-import com.ssm.wechatpro.dao.WechatAdminLoginMapper;
 import com.ssm.wechatpro.dao.WechatScollorPicMapper;
 import com.ssm.wechatpro.object.InputObject;
 import com.ssm.wechatpro.object.OutputObject;
@@ -28,11 +27,9 @@ public class WechatScollorPicServiceImpl implements WechatScollorPicService{
 	private WechatScollorPicMapper wechatScollorPicMapper;
 	@Resource
 	private UploadMapper uploadMapper;
-	@Resource
-	private WechatAdminLoginMapper wechatAdminLoginMapper;
 	
 	/**
-	 * 添加通知
+	 * 添加广告
 	 * @param inputObject
 	 * @param outputObject
 	 * @throws Exception
@@ -44,7 +41,6 @@ public class WechatScollorPicServiceImpl implements WechatScollorPicService{
 			return;
 		}
 		map.put("scollor_pic_data", DateUtil.getTime());//添加日期
-		map.put("scollor_pic_userid",inputObject.getLogParams().get("id") );//用户id
 		wechatScollorPicMapper.insertScoller(map);
 	}
 
@@ -73,12 +69,12 @@ public class WechatScollorPicServiceImpl implements WechatScollorPicService{
 					}
 				}
 			}
-			Map<String,Object> param = new HashMap<>();
-			param.put("id", bean.get("scollor_pic_userid").toString());
-			Map<String,Object> map2 = wechatAdminLoginMapper.selectById(param);
-			bean.put("adminNo", map2.get("adminNo").toString());//创建人手机号
+			//Map<String,Object> param = new HashMap<>();
+			//param.put("id", bean.get("scollor_pic_userid").toString());
+			//Map<String,Object> map2 = wechatAdminLoginMapper.selectById(param);
+			//bean.put("adminNo", map2.get("adminNo").toString());//创建人手机号
 			//拼接url
-			bean.put("url", "http://"+Constants.YUMING+"/wechatpro/html/phoneModelOne/slideShow.html?id="+bean.get("id").toString());
+			//bean.put("url", "http://"+Constants.YUMING+"/wechatpro/html/phoneModelOne/slideShow.html?id="+bean.get("id").toString());
 		}
 		int total = abilityInfoPageList.getPaginator().getTotalCount();
 		outputObject.setBeans(beans);
@@ -132,7 +128,7 @@ public class WechatScollorPicServiceImpl implements WechatScollorPicService{
 	 * @param inputObject
 	 * @param outputObject
 	 * @throws Exception
-	 */
+	 
 	@Override
 	public void updateScoller(InputObject inputObject, OutputObject outputObject) throws Exception {
 		Map<String,Object> map = inputObject.getParams();
@@ -140,14 +136,14 @@ public class WechatScollorPicServiceImpl implements WechatScollorPicService{
 			return;
 		}
 		wechatScollorPicMapper.updateScoller(map);
-	}
+	}*/
 
 	/**
 	 * 发布通知
 	 * @param inputObject
 	 * @param outputObject
 	 * @throws Exception
-	 */
+	 
 	@Override
 	public void updateFbScollor(InputObject inputObject,OutputObject outputObject) throws Exception {
 		Map<String,Object> map = inputObject.getParams();
@@ -161,14 +157,14 @@ public class WechatScollorPicServiceImpl implements WechatScollorPicService{
 			return;
 		}
 		wechatScollorPicMapper.updateFbScollor(map);
-	}
+	}*/
 
 	/**
 	 * 上线
 	 * @param inputObject
 	 * @param outputObject
 	 * @throws Exception
-	 */
+	 
 	@Override
 	public void updateSxScollor(InputObject inputObject,OutputObject outputObject) throws Exception {
 		Map<String,Object> map = inputObject.getParams();
@@ -176,14 +172,14 @@ public class WechatScollorPicServiceImpl implements WechatScollorPicService{
 			return;
 		}
 		wechatScollorPicMapper.updateSxScollor(map);
-	}
+	}*/
 
 	/**
 	 * 下线
 	 * @param inputObject
 	 * @param outputObject
 	 * @throws Exception
-	 */
+	 
 	@Override
 	public void updateXxScollor(InputObject inputObject,OutputObject outputObject) throws Exception {
 		Map<String,Object> map = inputObject.getParams();
@@ -191,14 +187,14 @@ public class WechatScollorPicServiceImpl implements WechatScollorPicService{
 			return;
 		}
 		wechatScollorPicMapper.updateXxScollor(map);
-	}
+	}*/
 
 	/**
 	 * 取消发布
 	 * @param inputObject
 	 * @param outputObject
 	 * @throws Exception
-	 */
+	 
 	@Override
 	public void updateQxFbScollor(InputObject inputObject,OutputObject outputObject) throws Exception {
 		Map<String,Object> map = inputObject.getParams();
@@ -206,14 +202,14 @@ public class WechatScollorPicServiceImpl implements WechatScollorPicService{
 			return;
 		}
 		wechatScollorPicMapper.updateQxFbScollor(map);
-	}
+	}*/
 
 	/**
 	 * 查询前五条已发布并已上线的通知
 	 * @param inputObject
 	 * @param outputObject
 	 * @throws Exception
-	 */
+	 
 	@Override
 	public void selectFiveScollor(InputObject inputObject,OutputObject outputObject) throws Exception {
 		Map<String,Object> map = inputObject.getParams();
@@ -231,14 +227,14 @@ public class WechatScollorPicServiceImpl implements WechatScollorPicService{
 			}
 		}
 		outputObject.setBeans(beans);
-	}
+	}*/
 
 	/**
 	 * 修改展示顺序
 	 * @param inputObject
 	 * @param outputObject
 	 * @throws Exception
-	 */
+	
 	@Override
 	public void updateScollorNum(InputObject inputObject,OutputObject outputObject) throws Exception {
 		Map<String,Object> map = inputObject.getParams();
@@ -253,5 +249,5 @@ public class WechatScollorPicServiceImpl implements WechatScollorPicService{
 			num.put("scollor_num", Constants.SCOLLOR_NUM);//将其排列顺序变为0
 			wechatScollorPicMapper.updateScollorNum(num);
 		}
-	}
+	} */
 }

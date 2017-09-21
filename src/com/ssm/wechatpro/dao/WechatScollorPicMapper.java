@@ -17,6 +17,7 @@ public interface WechatScollorPicMapper {
 	
 	public int updateScoller(Map<String,Object> map) throws Exception;
 	
+	/*
 	public int updateFbScollor(Map<String,Object> map) throws Exception;
 	
 	public int updateQxFbScollor(Map<String,Object> map) throws Exception;
@@ -30,4 +31,5 @@ public interface WechatScollorPicMapper {
 	public Map<String,Object> selectScollorNum(Map<String,Object> map) throws Exception;
 	
 	public int updateScollorNum(Map<String,Object> map) throws Exception;
+	*/
 }

@@ -17,7 +17,7 @@ public class WechatScollorPicController {
 	private WechatScollorPicService wechatScollorPicService;
 	
 	/**
-	 * 添加通知
+	 * 添加广告
 	 * @param inputObject
 	 * @param outputObject
 	 * @throws Exception
@@ -30,7 +30,7 @@ public class WechatScollorPicController {
 	
 	
 	/**
-	 * 查询所有通知
+	 * 查询所有广告
 	 * @param inputObject
 	 * @param outputObject
 	 * @throws Exception
@@ -42,7 +42,7 @@ public class WechatScollorPicController {
 	}
 	
 	/**
-	 * 删除一条通知
+	 * 删除一条广告
 	 * @param inputObject
 	 * @param outputObject
 	 * @throws Exception
@@ -66,16 +66,16 @@ public class WechatScollorPicController {
 	}
 	
 	/**
-	 * 编辑一条通知
+	 * 编辑一条广告
 	 * @param inputObject
 	 * @param outputObject
 	 * @throws Exception
-	 */
+	
 	@RequestMapping("post/WechatScollorPicController/updateScoller")
 	@ResponseBody
 	public void updateScoller(InputObject inputObject, OutputObject outputObject) throws Exception {
 		wechatScollorPicService.updateScoller(inputObject, outputObject);
-	}
+	} */
 	
 	
 	/**
@@ -83,72 +83,73 @@ public class WechatScollorPicController {
 	 * @param inputObject
 	 * @param outputObject
 	 * @throws Exception
-	 */
+	 
 	@RequestMapping("post/WechatScollorPicController/updateFbScollor")
 	@ResponseBody
 	public void updateFbScollor(InputObject inputObject, OutputObject outputObject) throws Exception {
 		wechatScollorPicService.updateFbScollor(inputObject, outputObject);
-	}
+	}*/
 	
 	/**
 	 * 取消发布通知
 	 * @param inputObject
 	 * @param outputObject
 	 * @throws Exception
-	 */
+	 
 	@RequestMapping("post/WechatScollorPicController/updateQxFbScollor")
 	@ResponseBody
 	public void updateQxFbScollor(InputObject inputObject, OutputObject outputObject) throws Exception {
 		wechatScollorPicService.updateQxFbScollor(inputObject, outputObject);
-	}
+	}*/
 	
 	/**
 	 * 上线
 	 * @param inputObject
 	 * @param outputObject
 	 * @throws Exception
-	 */
+	
 	@RequestMapping("post/WechatScollorPicController/updateSxScollor")
 	@ResponseBody
 	public void updateSxScollor(InputObject inputObject, OutputObject outputObject) throws Exception {
 		wechatScollorPicService.updateSxScollor(inputObject, outputObject);
-	}
+	} */
 	
 	/**
 	 * 下线
 	 * @param inputObject
 	 * @param outputObject
 	 * @throws Exception
-	 */
+	 
 	@RequestMapping("post/WechatScollorPicController/updateXxScollor")
 	@ResponseBody
 	public void updateXxScollor(InputObject inputObject, OutputObject outputObject) throws Exception {
 		wechatScollorPicService.updateXxScollor(inputObject, outputObject);
-	}
+	}*/
 	
 	/**
 	 * 编辑展示顺序
 	 * @param inputObject
 	 * @param outputObject
 	 * @throws Exception
-	 */
+	 
 	@RequestMapping("post/WechatScollorPicController/updateScollorNum")
 	@ResponseBody
 	public void updateScollorNum(InputObject inputObject, OutputObject outputObject) throws Exception {
 		wechatScollorPicService.updateScollorNum(inputObject, outputObject);
-	}
+	}*/
 	
 	/**
 	 * 查询前五条已发布并且上线的通知
 	 * @param inputObject
 	 * @param outputObject
 	 * @throws Exception
-	 */
+	 
 	@RequestMapping("gateway/WechatScollorPicController/selectFiveScollor")
 	@ResponseBody
 	public void selectFiveScollor(InputObject inputObject, OutputObject outputObject) throws Exception {
 		wechatScollorPicService.selectFiveScollor(inputObject, outputObject);
 	}
+	*/
 	
 	/**
 	 * 手机端查看通知详情

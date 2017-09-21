@@ -278,7 +278,7 @@
 			  AND a.id=b.adminId
 			AND(a.adminIdentity='1' OR a.adminIdentity='5')
 	   </select>
-	   
+	 
 	   <!-- 编辑餐厅信息 -->
 	   <update id="updateShopXQ" parameterType="java.util.Map">
 	   		UPDATE wechat_admin_login_mation a,

@@ -222,6 +222,22 @@ window.EvenInit = {
 	},
     'click .RoleOfC': function (e, value, row, index){
 		location.href="addProduct.html?id="+row.id;
+	},
+    'click .RoleOfD': function (e, value, row, index){
+    	var id = row.id;
+		qiao.bs.confirm("确定删除该商店吗？",function(){
+			var params = {
+				id:id,
+			};			
+			AjaxPostUtil.request({url:path+"/post/wechatAdminLoginController/deleteById",params:params,type:'json',callback:function(json){
+				if(json.returnCode==0){
+					qiao.bs.msg({msg:"删除成功",type:'success'});
+					$('#massage').bootstrapTable('refresh', {url: path+'/post/wechatAdminLoginController/selectShop'});
+				}else{
+					qiao.bs.msg({msg:json.returnMessage,type:'danger'});
+				}
+			}});
+		},function(){});
 	}
 };
 function operateFormatter(value, row, index) {
@@ -230,11 +246,13 @@ function operateFormatter(value, row, index) {
 		         '<button type="button" class="RoleOfA btn btn-default  btn-sm" style="margin-right:15px;">详情</button>',
 		         '<button type="button" class="RoleOfB btn btn-default  btn-sm" style="margin-right:15px;">编辑</button>',
 		         '<button type="button" class="RoleOfC btn btn-default  btn-sm" style="margin-right:15px;">分发产品</button>',
+		         '<button type="button" class="RoleOfD btn btn-default  btn-sm" style="margin-right:15px;">删除</button>',
 		     ].join('');
 	}else if(row.adminIdentity==5){
 		return [
 		         '<button type="button" class="RoleOfA btn btn-default  btn-sm" style="margin-right:15px;">详情</button>',
 		         '<button type="button" class="RoleOfB btn btn-default  btn-sm" style="margin-right:15px;">编辑</button>',
+		         '<button type="button" class="RoleOfD btn btn-default  btn-sm" style="margin-right:15px;">删除</button>',
 		     ].join('');
 	}
    
