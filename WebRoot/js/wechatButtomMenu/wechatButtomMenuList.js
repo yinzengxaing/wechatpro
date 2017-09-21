@@ -173,7 +173,9 @@ window.EvenInit = {
 			'click .RoleOfC': function (e, value, row, index) {
 	    	var params={
 					id:row.id,
-					menuVersion:row.menuVersion
+					menuVersion:row.menuVersion,
+					wetherUser:1,
+					wetherPublish:1
 			}
 	    	AjaxPostUtil.request({url:path+"/post/WechatButtomMenuController/updateMenuPublish",params:params,type:'json',callback:function(json){
 				if(json.returnCode == 0){
@@ -191,6 +193,8 @@ function operateFormatter(value, row, index) {
 	if (row.wetherPublish == 1)
 		str = [
 				'<button type="button" class="RoleOfB btn btn-default  btn-sm" style="margin-right:15px;">详情</button>',
+				'<button type="button" class="RoleOfA btn btn-default  btn-sm" style="margin-right:15px;">编辑</button>',
+				'<button type="button" class="RoleOfC btn btn-default  btn-sm" style="margin-right:15px;">已发布</button>', 
 				]
 	else
 		str = [
