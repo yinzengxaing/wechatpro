@@ -31,7 +31,7 @@ public class GetSourceMaterialListService {
 	 */
 	public static void getSourceMaterial(String type, int offset, int count) throws Exception {
 		String result = null;
-		TokenThread.accessToken = WeixinUtil.getAccessToken(TokenThread.appid,TokenThread.appsecret);
+		//TokenThread.accessToken = WeixinUtil.getAccessToken(TokenThread.appid,TokenThread.appsecret);
 		String url = "https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token="+TokenThread.accessToken.getToken();// 请求接口地址
 		Map<String, Object> params = new HashMap<String, Object>();// 请求参数
 		params.put("type", type);
