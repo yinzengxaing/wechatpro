@@ -72,7 +72,7 @@ function eventInit(){
 			$(".eightMenu").hide();
 			$(".shopCard").hide();
 			$(".shopKey").hide();
-			$("#adminWorkPlace").removeAttr("readonly");
+			//$("#adminWorkPlace").removeAttr("readonly");
 		}else if(adminIdentity==5){
 			$(".secondMenu").show();
 			$(".thirtMenu").show();
@@ -83,7 +83,8 @@ function eventInit(){
 			$(".eightMenu").show();
 			$(".shopCard").show();
 			$(".shopKey").show();
-			$("#adminWorkPlace").prop('readonly','readonly');
+			//$("#adminWorkPlace").removeAttr("readonly");
+			//$("#adminWorkPlace").prop('readonly','readonly');
 		}
 	});
 	
