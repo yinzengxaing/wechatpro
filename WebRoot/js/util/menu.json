@@ -147,11 +147,16 @@
             "title": "可选套餐信息",
             "url": "../../html/packageAll/addChoosePackage.html"
           },
+          {
+            "class": "icon-file-alt",
+            "title": "菜单管理",
+            "url": "../../html/productMenu/productTypeMenu.html"
+          }
         ],
         "class": "icon-tasks",
         "title": "商品信息管理",
         "url": "#",
-        "size": 2
+        "size": 5
       },
       {
         "menuList": [

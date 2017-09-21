@@ -6,42 +6,27 @@
 	<!-- 获取全部的产品列表 包括商品品牌 和商品类别 可以根据产品名称 模糊查询 -->
 	<select id="getProductList" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT
-			product.id AS id,
-			product.productName AS productName,
-			product.productDesc AS productDesc,
-			product.productPrice AS productPrice,
-			product.productLogo AS productLogo,
-			product.productState AS productState,
-			product.productWetherBreakfast AS productWetherBreakfast,
-			product.productWetherLunch AS productWetherLunch,
-			product.productWetherDinner AS productWetherDinner,
-			product.productWetherDiscount AS productWetherDiscount,
-			product.productIntegral AS productIntegral,
-			product.productKeyStr AS productKeyStr,
-			product.createTime AS createTime,
-			product.createId AS createId,
-			brand_tag.brandTagName AS brandTagName,
-			type.typeName AS typeName,
-			admin_login.adminNo AS adminNo
+			a.id ,
+			a.productName,
+			a.productDesc,
+			a.productPrice,
+			a.productIntegral,
+			c.optionPath as logoPath,
+			a.productPriority
 		FROM
-			wechat_product AS product ,
-			wechat_product_brand_tag AS brand_tag,
-			wechat_product_type AS type,
-			wechat_admin_login AS admin_login
-		<where>
-			product.productBrandTag = brand_tag.id
-		AND product.productType = type.id
-		AND admin_login.id = product.createId
-			<if test="productName != null and productName != '' ">
-		AND productName LIKE '%${productName}%'  
-			</if>
-			<if test="productTypeId != null and productTypeId != '' ">
-		AND productType = #{productTypeId}	
-			</if>
-		AND productState != 4
-		</where>
-		ORDER BY
-			createTime DESC
+			wechat_product AS a,
+			wechat_product_type AS b,
+			wechat_option AS c
+		WHERE 
+			a .productState = 2
+		AND  a.productType = #{productType}
+		<if test="productName != null and productName != '' ">
+		AND productName like '%${productName}%'
+		</if>
+		AND a.productType = b.id
+		AND c.id = a.productLogo
+		ORDER BY 
+		a.productPriority ASC 
 	</select>
 
 	<!--  根据产品id获取一个商品全部信息  包括商品品牌和商品类别-->

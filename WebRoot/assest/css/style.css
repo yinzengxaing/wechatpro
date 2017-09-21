@@ -3512,7 +3512,6 @@ ul.messagesList li span.date {
 	margin-top: 6%;
 }
 .contentDiv{
-	text-align: center;
 	overflow-y: scroll;
 	height: 800px;
 }
@@ -4248,6 +4247,15 @@ ul.messagesList li span.date {
 
 .addProductForm{
     width: 101%;
+}
+#myTabList .active{
+	border-left:2px solid red;
+}
+.btn_add_kind{
+	padding:4px 6px;
+	border-radius:6px;
+	border:1px solid #666;
+	
 }
 
 /* .pagination>.active>a{

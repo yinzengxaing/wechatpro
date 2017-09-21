@@ -1,12 +1,17 @@
 var imgId = null;
+var productTypeId = null;
 
 $(function(e){
+	receiveData();
 	dataInit();
 });
 
 function dataInit(){
+	if (isNull(productTypeId)){
+		productTypeId = $.req("productTypeId");
+	}
 	eventInit();
-	getAllType();
+	getAllBandTag();
 }
 
 function eventInit(){
@@ -68,7 +73,7 @@ function eventInit(){
 				productIntegral :  $('#productIntegral').val(),
 				productDesc : $('#productDesc').val(),
 				productPrice:$('#productPrice').val(),
-				productType : $("#typeMenu").val(),
+				productType : productTypeId,
 				productBrandTag : $('#bandTagMenu').val(),
 				productWetherBreakfast :$('#selectBreakfast input[name="optionsRadios"]:checked ').val(),
 				productWetherLunch : $('#selectLunch input[name="optionsRadios1"]:checked ').val(),
@@ -89,7 +94,7 @@ function eventInit(){
 	});
 	//取消按钮相应事件
 	$('body').on('click', '#cancleBean', function(e){
-		location.href = "productList.html";
+		location.href = "productTypeMenu.html?productTypeId="+productTypeId;
 	});
 	//添加积分按钮点击事件
 	$('#jupdate').on('click', function() {
@@ -150,7 +155,7 @@ function eventInit(){
 		qiao.bs.msg({msg:"上传失败，图片格式不正确",type:'danger'});
 	});
 }
-//获取所有的商品类别
+/*//获取所有的商品类别
 function getAllType(){
 	//获取所有已经上线的商品的类别
 	AjaxPostUtil.request({url:path+"/post/WechatProductTypeController/getTypeOnline",params:{},type:'json',callback:function(json){
@@ -165,7 +170,7 @@ function getAllType(){
 		//获取商品品牌
 		getAllBandTag();
 	}});
-}
+}*/
 
 //获取所有的品牌
 function getAllBandTag(){
