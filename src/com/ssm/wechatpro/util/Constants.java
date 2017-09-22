@@ -101,8 +101,8 @@ public class Constants {
 	public static final String[] ALL_ADDRESS_RETURNMESSAGE={"id不能为空"};
 	
 	//添加通知不为空
-	public static final String[] SCOLLOR_PIC_TEST={"scollor_pic_name","scollor_pic_path","scollor_pic_content","scollor_pic_introduce"};
-	public static final String[] SCOLLOR_PIC_TEST_RETURNMESSAGE={"通告名称不能为空","图片ID不能为空","通告内容正文不能为空","介绍不能为空"};
+	public static final String[] SCOLLOR_PIC_TEST={"scollor_pic_name","scollor_pic_path"};
+	public static final String[] SCOLLOR_PIC_TEST_RETURNMESSAGE={"通告名称不能为空","图片ID不能为空"};
 	//删除通知、编辑通知、通知详情、上线、下线、发布、取消发布、编辑展示顺序
 	public static final String[] SCOLLOR_PIC={"id"};
 	public static final String[] SCOLLOR_PIC_RETURNMESSAGE={"id不能为空"};

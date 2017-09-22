@@ -13,13 +13,7 @@ function dataInit(){
 function eventInit(){
 	$('body').on('click','#saveScollor',function(e){
 		if(isNull($('#scollorName').val())){
-			qiao.bs.msg({msg:'通知名称不能为空',type:'danger'});
-			return false;
-		}else if(isNull(UM.getEditor('editor').getContent())){
-			qiao.bs.msg({msg:'通知内容不能为空',type:'danger'});
-			return false;
-		}else if(isNull($('#scollorIntroduce').val())){
-			qiao.bs.msg({msg:'介绍不能为空',type:'danger'});
+			qiao.bs.msg({msg:'广告名称不能为空',type:'danger'});
 			return false;
 		}else if(isNull(imgId)){
 			qiao.bs.msg({msg:'请选择图片',type:'danger'});
@@ -27,8 +21,8 @@ function eventInit(){
 		}
 		var params = {
 				scollor_pic_name:$('#scollorName').val(),
-				scollor_pic_content:encodeURIComponent(UM.getEditor('editor').getContent()),
-				scollor_pic_introduce:$('#scollorIntroduce').val(),
+				//scollor_pic_content:encodeURIComponent(UM.getEditor('editor').getContent()),
+				//scollor_pic_introduce:$('#scollorIntroduce').val(),
 				scollor_pic_path:imgId,
 		};
 		AjaxPostUtil.request({url:path+"/post/WechatScollorPicController/insertScoller",params:params,type:'json',callback:function(json){
