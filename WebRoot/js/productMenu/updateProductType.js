@@ -1,16 +1,33 @@
+var id = null ;
 var imgId = null;
 
 $(function(e){
+	receiveData();
 	dataInit();
 });
 
 function dataInit(){
-	
+	if (isNull(id)){
+		id = $.req("id");
+	}
+		var params = {
+				id: id,
+		};
+		//从后台查询到该id的数据进行回显
+		AjaxPostUtil.request({url:path+"/post/WechatProductTypeController/getProductTypeById",params:params,type:'json',callback:function(json){
+			if(json.returnCode==0){
+				$("#typeName").val(json.bean.typeName);
+				$("#typeDesc").val(json.bean.typeDesc);
+				$("#logo").attr('src',path+"/"+json.bean.optionPath);// 回显图片
+				imgId = json.bean.typeLogoId;
+			}else{
+				qiao.bs.msg({msg:json.returnMessage,type:'danger'});
+			}
+		}});
 	eventInit();
 }
-
 function eventInit(){
-//	对表单进行验证
+	//对表单进行验证
 	$('#addProductTypeForm').bootstrapValidator({
 		feedbackIcons: {
 			valid: 'glyphicon glyphicon-ok',
@@ -25,7 +42,7 @@ function eventInit(){
 					},
 					stringLength: {
 						 max: 20,
-						message: '商品类型名称必须小于20字符！'
+						message: '商品类型信息长度必须小于20字符。'
 					}
 				}
 			},
@@ -33,24 +50,20 @@ function eventInit(){
 				validators: {
 					stringLength: {
 						 max: 200,
-						message: '商品类型描述名称必须小于200字符！'
+						message: '商品类型信息长度必须小于200字符。'
 					}
-				}
+				}				
 			}
 		}
 	}).on('success.form.bv', function(e) {
-		// 进行验证是否上传图片
-		if(imgId == null){
-			$("#saveBean").removeAttr("disabled");
-			qiao.bs.msg({msg:"请选择商品LOGO",type:'danger'});
-		}
-		//		验证成功提交新添加的产品类别
+		//验证成功提交新添加的产品类别
 		var params = {
+				id:id,
 				typeName:$("#typeName").val(),
 				typeDesc:$("#typeDesc").val(),
 				typeLogoId:imgId,
 		};
-		AjaxPostUtil.request({url:path+"/post/WechatProductTypeController/addProductType",params:params,type:'json',callback:function(json){
+		AjaxPostUtil.request({url:path+"/post/WechatProductTypeController/updateProductType",params:params,type:'json',callback:function(json){
 			if(json.returnCode==0){
 				location.href = 'productTypeList.html';
 			}else{
@@ -59,12 +72,11 @@ function eventInit(){
 		}});
 		return false;
 	});
-//	取消点击事件
+	//取消点击事件
 	$('body').on('click', '#cancleBean', function(e){
-		location.href = "productTypeList.html";
+		location.href = "productTypeMenu.html?productTypeId="+productTypeId;
 	});
 	
-	//上传图片
 	$("#imgFiles").uploadPreview({ Img: "logo"});
 	$("#imgFiles").fileupload({
 		url : path + "/post/UploadController/insertImgFile?imgType=1",
@@ -94,6 +106,7 @@ function eventInit(){
 			qiao.bs.msg({msg:"文件不能大于2M",type:'danger'})
 			$.staticPic('logo','logoDiv');
 			return false;
+			
 		}
 	}).on('fileuploaddone', function (e, data) {
 		//进行文件上传的操作

@@ -35,14 +35,14 @@
 		</li>
 		<li>
 			<i class="icon-edit"></i>
-			<a href="javascript:;">编辑产品</a>
+			<a href="javascript:;">新增产品</a>
 		</li>
 	</ul>
 	
 	<div class="row-fluid sortable">
 		<div class="box span12">
 			<div class="box-header" data-original-title>
-				<h2><i class="halflings-icon edit"></i><span class="break"></span>编辑产品</h2>
+				<h2><i class="halflings-icon edit"></i><span class="break"></span>新增产品</h2>
 				<div class="box-icon">
 					<a href="#" class="btn-minimize"><i class="halflings-icon chevron-up"></i></a>
 				</div>
@@ -51,7 +51,7 @@
 				<form id="addProductForm">
 					<div class="controls form-group margin-top-40">
 						<span style="color:#FF9966">*</span><span class="add-on">产品名称：</span>
-						<input type="text" class="span6 typeahead form-control authenTiCation-input" id="productName" name="menuName" />
+						<input type="text" class="span6 typeahead form-control" id="productName" name="menuName" />
 					</div>
 					<div class="controls form-group margin-top-40">
 						<span style="color:#FF9966">*</span><span class="add-on">产品Logo：</span>
@@ -62,13 +62,9 @@
 					</div>
 					<div class="controls form-group margin-top-40">
 						<span style="color:#FF9966">*</span><span class="add-on">产品积分：</span>
-						<input type="text" class="span6 typeahead form-control authenTiCation-input" id="productIntegral" name="productInteger" disabled value="0">
+						<input type="number" class="span6 typeahead form-control" id="productIntegral" name="productInteger" value="0">
 						<div class="someDesc">
 							<p class="rolePrompt">用户购买此产品所能获得的积分。</p>
-						</div>
-						<div class="input-group-btn-vertical">
-						     <button id="jupdate" class="btn btn-default" type="button"><img src="../../assest/img/shang.png"/></button>
-						     <button id="jiupdate" class="btn btn-default" type="button"><img src="../../assest/img/xia.png"/></button>
 						</div>
 					</div>
 					<div class="controls form-group margin-top-40">
@@ -80,48 +76,48 @@
 					</div>
 					<div class="controls form-group secondMenu margin-top-40">
 						<span style="color:#FF9966">*</span><span class="add-on">产品价格：</span>
-						<input type="text" class="span6 typeahead form-control authenTiCation-input" id="productPrice" name="menuPrice"/>
+						<input type="text" class="span6 typeahead form-control" id="productPrice" name="menuPrice"/>
 					</div>
-					<div class="controls form-group secondMenu margin-top-40">
+<!-- 					<div class="controls form-group secondMenu margin-top-40">
 						<span style="color:#FF9966">*</span><span class="add-on">产品类别：</span>
 						<select id="typeMenu" class="span6 typeahead form-control">
 							
 						</select>
-					</div>
+					</div> -->
 					<div class="controls form-group secondMenu margin-top-40">
 						<span style="color:#FF9966">*</span><span class="add-on">产品品牌：</span>
 						<select id="bandTagMenu" class="span6 typeahead form-control">
 						</select>
 					</div>
-					<div class="controls form-group secondMenu margin-top-40" id="selectBreakfast">
+					<div class="controls form-group secondMenu margin-top-40" id="selectBreakfast" >
 						<span class="add-on">早餐推送：</span>
 						<label class="radio">
-							<input type="radio" name="optionsRadios" id="selectBreakfastY" value="Y" checked="">是
+							<input type="radio" name="optionsRadios" id="optionsRadios1" value="Y" checked="">是
 						</label>
 						<label class="radio">
-							<input type="radio" name="optionsRadios" id="selectBreakfastN" value="N">否
+							<input type="radio" name="optionsRadios" id="optionsRadios2" value="N">否
 						</label>
 					</div>
 					<div class="controls form-group secondMenu margin-top-40" id="selectLunch">
 						<span class="add-on">午餐推送：</span>
 						<label class="radio">
-							<input type="radio" name="optionsRadios1" id="selectLunchY" value="Y" checked="">是
+							<input type="radio" name="optionsRadios1" id="optionsRadios1" value="Y" checked="">是
 						</label>
 						<label class="radio">
-							<input type="radio" name="optionsRadios1" id="selectLunchN" value="N">否
+							<input type="radio" name="optionsRadios1" id="optionsRadios2" value="N">否
 						</label>
 					</div>
 					<div class="controls form-group secondMenu margin-top-40" id="selectDinner">
 						<span class="add-on">晚餐推送：</span>
 						<label class="radio">
-							<input type="radio" name="optionsRadios2" id="selectDinnerY" value="Y" checked="">是
+							<input type="radio" name="optionsRadios2" id="optionsRadios1" value="Y" checked="">是
 						</label>
 						<label class="radio">
-							<input type="radio" name="optionsRadios2" id="selectDinnerN" value="N">否
+							<input type="radio" name="optionsRadios2" id="optionsRadios2" value="N">否
 						</label>
 					</div>
 					<div class="form-actions form-group">
-					  <button type="submit" id="saveMenu" class="btn btn-primary">保存</button>
+					  <button type="submit" id="saveMenu" class="btn btn-primary" disabled="">保存</button>
 					  <button type="button" class="btn" id="cancleBean">取消</button>
 					</div>
 				</form>   
@@ -182,6 +178,6 @@
 	<script type="text/javascript" src="../../assest/bootstrap/qiao.js"></script>
 	<script type="text/javascript" src="../../js/util/main.js"></script>
 	<script type="text/javascript" src="../../js/util/handlebars-v4.0.5.js"></script>
-	<script type="text/javascript" src="../../js/product/updateProduct.js"></script>
+	<script type="text/javascript" src="../../js/productMenu/addProduct.js"></script>
 </body>
 </html>

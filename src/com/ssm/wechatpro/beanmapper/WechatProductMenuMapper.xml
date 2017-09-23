@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.wechatpro.dao.WechatProductMenuMapper">
+	
+	<!-- 修改菜单类别的顺序 -->
+	<update id="updateTypeMenu" parameterType="java.util.Map">
+		UPDATE wechat_product_type
+		SET typePriority = #{typePriority}
+		WHERE
+			id = #{typeId}
+	</update>
+	
+	<!-- 修改商品的顺序 -->
+	<update id="updateProductMenu" parameterType="java.util.Map">
+		UPDATE wechat_product
+		SET productPriority = #{productPriority}
+		WHERE
+			id = #{productId}
+	</update>
+</mapper>   

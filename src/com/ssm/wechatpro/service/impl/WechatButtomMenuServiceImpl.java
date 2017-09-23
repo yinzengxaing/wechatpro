@@ -95,8 +95,6 @@ public class WechatButtomMenuServiceImpl implements WechatButtomMenuService {
 				if (!result.isEmpty()) {
 					if(result.get("returnCode").toString().equals(Constants.WECHAT_BUTTOM_MENU_SUCCESS)){
 						wechatButtomMenuMapper.updatewetherPublish();
-						params.put("wetherPublish", 1);
-						params.put("wetherUser", 1);
 						params.put("publishUser",inputObject.getLogParams().get("id"));
 						params.put("publishTime", DateUtil.getTimeAndToString());
 						wechatButtomMenuMapper.updatePublish(params);

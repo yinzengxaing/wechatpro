@@ -88,7 +88,7 @@ function eventInit(){
 		}
 	});
 	$('body').on('click', '#shaowan', function(e){
-		setNowTime();
+		/*setNowTime();*/
 		$('#eatTimeDiv').show();
 		if(shaowan == 1){
 			return;
