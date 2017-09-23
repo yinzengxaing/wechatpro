@@ -60,8 +60,8 @@ public class WechatProductMenuServiceImpl implements WechatProductMenuService {
 		for (String type : typeSplit) {
 			String[] split = type.split("-");
 			Map<String, Object>  map = new HashMap<String, Object>();
-			map.put("typeId", split[0]);
-			map.put("typePriority", split[1]);
+			map.put("typePriority", split[0]);
+			map.put("typeId", split[1]);
 			wechatProductMenuMapper.updateTypeMenu(map);
 		}
 	}
@@ -75,8 +75,8 @@ public class WechatProductMenuServiceImpl implements WechatProductMenuService {
 		for (String product : productSplit) {
 			String[] split = product.split("-");
 			Map<String, Object>  map = new HashMap<String, Object>();
-			map.put("productId", split[0]);
-			map.put("productPriority", split[1]);
+			map.put("productPriority", split[0]);
+			map.put("productId", split[1]);
 			wechatProductMenuMapper.updateProductMenu(map);
 		}
 	}

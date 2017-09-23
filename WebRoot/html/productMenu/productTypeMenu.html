@@ -50,6 +50,7 @@
 			</div>
 			<div class="box-content contentDiv" id="whenUnInvable">
 				<div id="myTabContent" class="tab-content">
+				
 					<div id= "hideDiv" style="width: 10%;float:left;">
 						<ul id="myTabList" class="nav   nav-stacked ">
 						</ul>
@@ -60,41 +61,18 @@
 					<div class="" id="" style="width: 88%; float:right;">
 						<div class="productTypeMenu_batr">
 							<span>新的</span>
-							<a type="button" class="btn_add_kind">新建商品</a>
+							<a type="button" id="addProduct" class="btn_add_kind">新建商品</a>
 						</div>
-						<div class="panel-table-div" >
-							<ul class="panel-table-th">
+						
+						<div class="panel-table-div" id="productListDiv">
+							<ul class="panel-table-th" style="height:70px;">
 						  		<li style="width:30%;">商品</li>
 						  		<li style="width:20%;">价格</li>
 						  		<li style="width:20%;">积分</li>
 						  		<li style="width:30%;">操作</li>
 						  	</ul>
-						  	<ul class="panel-table-tr">
-						  		<li>
-						  			<ul>
-						  				<li style="width:30%;"><img src="../../assest/img/index_02.png"/><span>图片</span></li>
-						  				<li style="width:20%;">￥30.00</li>
-						  				<li style="width:20%;">30</li>
-						  				<li style="width:30%;">
-						  					<a href="#"><span class="glyphicon glyphicon-edit"></span>编辑</a>
-						  					<a href="#"><span class="glyphicon glyphicon-trash"></span>删除</a>
-						  					<a href="#"><span class="glyphicon glyphicon-zoom-in"></span>详情</a>
-						  				</li>
-						  			</ul>
-						  		</li>
-						  		<li>
-						  			<ul>
-						  				<li style="width:30%;"><img src="../../assest/img/index_02.png"/><span>图片</span></li>
-						  				<li style="width:20%;">￥30.00</li>
-						  				<li style="width:20%;">30</li>
-						  				<li style="width:30%;" class="panel-body-ul-li">
-						  					<a href="#"><span class="glyphicon glyphicon-edit"></span>编辑</a>
-						  					<a href="#"><span class="glyphicon glyphicon-trash"></span>删除</a>
-						  					<a href="#"><span class="glyphicon glyphicon-zoom-in"></span>详情</a>
-						  				</li>
-						  			</ul>
-						  		</li>
-						  		
+						  	<ul class="panel-table-tr" id="myProductList" >
+
 						  	</ul>
 						</div>
 					</div>
@@ -133,6 +111,25 @@
 			</li>
 		{{/each}}
 	</script>
+	
+	<!-- 遍历的商品 -->
+		<script id="myProductBean" type="text/x-handlebars-template">
+		{{#each rows}}
+			<li class="panel-table-tr-li" style="height:70px;">
+				<ul>
+					<li style="width:30%;"><img src="{{#productLogo logoPath}}{{/productLogo}}"/><span>{{productName}}</span></li>
+					<li style="width:20%;">￥{{productPrice}}</li>
+					<li style="width:20%;">{{productIntegral}}</li>
+					<li style="width:30%;">
+						<a class="product-edit" productId= {{id}}><span class="glyphicon glyphicon-edit"></span>编辑</a>
+						<a class="product-delete"productId= {{id}}><span class="glyphicon glyphicon-trash"></span>删除</a>
+						<a class="product-details"productId= {{id}}><span class="glyphicon glyphicon-zoom-in"></span>详情</a>
+					</li>
+				</ul> 
+			</li>
+		{{/each}}
+	</script>
+	
 	<script src="../../assest/js/jquery.js"></script>
 	<script src="../../assest/js/jquery-migrate-1.0.0.min.js"></script>
 	<script src="../../assest/js/jquery-ui-1.10.0.custom.min.js"></script>
