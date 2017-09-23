@@ -46,6 +46,29 @@ public class WechatProductMenuController {
 		wechatProductMenuService.getProductListByTypeId(inputObject, outputObject);
 	}
 	
+	/**
+	 * 修改类别菜单顺序的接口
+	 * @param inputObject
+	 * @param outputObject
+	 * @throws Exception
+	 */
+	@RequestMapping("/post/WechatProductMenuController/updateTypeMenu")
+	@ResponseBody
+	public void updateTypeMenu(InputObject inputObject,OutputObject outputObject) throws Exception{
+		wechatProductMenuService.updateTypeMenu(inputObject, outputObject);
+	}
+	
+	/**
+	 * 修改商品顺序的接口
+	 * @param inputObject
+	 * @param outputObject
+	 * @throws Exception
+	 */
+	@RequestMapping("/post/WechatProductMenuController/updateProductMenu")
+	@ResponseBody
+	public void updateProductMenu(InputObject inputObject,OutputObject outputObject) throws Exception{
+		wechatProductMenuService.updateProductMenu(inputObject, outputObject);
+	}
 	
 	
 	

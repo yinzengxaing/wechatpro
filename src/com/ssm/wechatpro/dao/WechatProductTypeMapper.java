@@ -32,5 +32,6 @@ public interface WechatProductTypeMapper {
 	//查询所有商品的种类，并按照id递增顺序排列 
 	public List<Map<String, Object>> selectProductType() throws Exception;
 	
-	
+	//获取当前商品种类优先级别最高的
+	public Map<String, Object> getMaxTypePriority() throws Exception;
  }

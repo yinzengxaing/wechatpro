@@ -1,10 +1,15 @@
 var productTypeId = "";
+var id1 = ""; // 表示商品的id
 
 $(function(e){
+	receiveData();
 	reviewSort();
 });
 
 function dataInit(){
+	if (isNull(productTypeId)){
+		productTypeId = $.req("productTypeId");
+	}
 	var oTable = new TableInit();
 	oTable.Init();
 	eventInit();
@@ -26,7 +31,6 @@ function reviewSort(){
 				
 				// 将第一个li标签上加上Class属性
 				$('ul li:first-child').attr("class", "active");
-				
 				if (productTypeId == ""){
 					productTypeId = json.rows[0].id;
 				}
@@ -64,6 +68,31 @@ function eventInit(){
 		location.href="addProduct.html?productTypeId="+productTypeId;
 	});
 	
+	// 确认删除
+	$("body").on("click", "#debeteOkBtn", function(e){
+		var param = {
+			id : id1,	
+		};
+		// 删除选中
+		AjaxPostUtil.request({url:path+"/post/WechatProductController/deleteProduct",params:param,type:'json',callback:function(json){
+			if(json.returnCode == 0){
+				$('#myModalDelete').modal('hide');
+				$('#message').bootstrapTable('refresh', {url: path+'/post/WechatProductMenuController/getProductListByTypeId'});
+			}else{
+				qiao.bs.msg({msg:json.returnMessage,type:'danger'});
+			}
+		}});
+	});
+	// 取消删除
+	$("body").on("click", "#deleteCancelBtn", function(e){
+		$('#myModalDelete').modal('hide');
+	});
+	
+	//菜单排序事件
+	menuSort();
+	
+	//商品排序事件
+	productSort();
 	
 }
 
@@ -78,7 +107,7 @@ var TableInit =  function (){
 			toolbar: '#toolbar',                //工具按钮用哪个容器
 			striped: true,                      //是否显示行间隔色
 			cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
-			pagination: false,                   //是否显示分页（*）
+			pagination: false,                  //是否显示分页（*）
 			sortable: false,                    //是否启用排序
 			sortOrder: "asc",                   //排序方式
             queryParams: oTableInit.queryParams,//传递参数（*）
@@ -181,7 +210,39 @@ var TableInit =  function (){
 
 //单击相应事件
 window.EvenInit = {
-
+		// 上移操作
+		'click .RoleOfA':function(e, value, row, index) {
+			// 获取选中行的id
+			id1 = row.id;
+			alert(value);
+			var aa = "";
+			for(var i in row ){
+				aa += i + " ：" + row[i] + ",";
+			}
+			alert(aa);
+		},
+		// 下移操作
+		'click .RoleOfB':function(e, value, row, index) {
+			// 获取选中行的id
+			id1 = row.id;
+			
+		},
+		// 删除选中上的记录
+		'click .RoleOfC':function(e, value, row, index) {
+			// 获取选中行的id
+			id1 = row.id;
+			$('#myModalDelete').modal('show');
+		},
+		// 编辑操作
+		'click .RoleOfD':function(e, value, row, index) {
+			// 获取选中行的id
+			id1 = row.id;
+		},
+		// 查看详情
+		'click .RoleOfE':function(e, value, row, index) {
+			// 获取选中行的id
+			id1 = row.id;
+		},
 }
 function operateFormatter(value, row, index) {
 	return [
@@ -191,4 +252,39 @@ function operateFormatter(value, row, index) {
 			'<button type="button" class="RoleOfD btn btn-default">编辑</button>',
 			'<button type="button" class="RoleOfE btn btn-success">详情</button>'
 	    ].join('');
+}
+
+
+//菜单排序事件
+function menuSort(){
+    $( "#myTabList" ).sortable();
+    $( "#myTabList" ).disableSelection();
+    //排序完成事件
+    $("#myTabList").bind("sortupdate", function(event, ui) { 
+    	//顺序获取每个类别的li标签 并获取其id
+    	var typeStr = "";
+    	  $(".typeLi").each(function(index){
+    		  var typeId = $(this).attr("productTypeId");
+    		  index = index * 1 + 1
+    		  typeStr = typeStr + index + "-" +typeId +","
+    	  });
+    	 
+    	  var param = {
+    			  typeStr :typeStr  
+    	  }
+    	  
+  		AjaxPostUtil.request({url:path+"/post/WechatProductMenuController/updateTypeMenu",params:param,type:'json',callback:function(json){
+			if(json.returnCode == 0){
+				alert("排序成功");
+			}else{
+				qiao.bs.msg({msg:json.returnMessage,type:'danger'});
+			}
+		}});
+    	 
+    });   
+}
+
+//产品排序事件排序事件
+function productSort(){
+	
 }

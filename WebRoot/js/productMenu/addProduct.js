@@ -15,7 +15,7 @@ function dataInit(){
 }
 
 function eventInit(){
-	//表单的验证
+	
 	$('#addProductForm').bootstrapValidator({
 		feedbackIcons: {
 			valid: 'glyphicon glyphicon-ok',

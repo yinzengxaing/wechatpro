@@ -16,6 +16,10 @@ public interface WechatProductMenuService {
 	
 	public void getProductListByTypeId(InputObject inputObject,OutputObject outputObject) throws Exception;
 	
+	public void updateTypeMenu(InputObject inputObject,OutputObject outputObject) throws Exception;
+	
+	public void updateProductMenu(InputObject inputObject, OutputObject outputObject) throws Exception;
+	
 	
 
 }

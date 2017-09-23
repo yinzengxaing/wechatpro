@@ -4252,12 +4252,56 @@ ul.messagesList li span.date {
 	border-left:2px solid red;
 }
 .btn_add_kind{
-	padding:4px 6px;
-	border-radius:6px;
+	padding:8px 16px;
+	border-radius:26px;
 	border:1px solid #666;
+	margin-left:15px;
 	
 }
+.btn_add_kind:hover{
+	color:#46A3FF;
+	border:1px solid #46A3FF;
+	background:#d0d0d0;
+}
+#myTabList a:hover{
+	color:#46A3FF;
+}
+.panel-table-div ul,.panel-table-div li{
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+.panel-table-th li,.panel-table-tr li ul li{
+	float:left;
+	line-height:70px;
+}
+.panel-table-tr li ul li,.panel-table-th li{
+	border-bottom:1px solid #666;
+}
+.panel-table-tr li ul li a{
+	padding-right: 37px;
+}
+.panel-table-tr li ul li a .glyphicon{
+	padding:0 4px;
+}
+.panel-table-tr li ul li img{
+	height:60px; 
+	overflow:hidden;
+}
+.panel-table-tr li ul li span{
+	margin-left:6px;
+}
+.productTypeMenu_batr{
+	height:40px;
+}
+.productTypeMenu_batr span{
+	font-size:20px;
+	line-height:40px;
+}
 
+.productTypeMenu_batr a{
+	float:right;
+}
 /* .pagination>.active>a{
 	color: #428bca !important;
 	background-color: white !important;

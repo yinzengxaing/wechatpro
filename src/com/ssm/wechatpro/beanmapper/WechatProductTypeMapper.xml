@@ -77,6 +77,7 @@
 		INSERT INTO wechat_product_type 
 			(
 				typeName,
+				typePriority,
 				typeLogoId,
 		<if test="typeDesc != null and typeDesc !='' ">
 				typeDesc,
@@ -86,6 +87,7 @@
 		VALUES
 			(
 				#{typeName},
+				#{typePriority},
 				#{typeLogoId},
 		<if test="typeDesc != null and typeDesc !='' ">
 				#{typeDesc},
@@ -135,5 +137,14 @@
 			type.typeName
 		ORDER BY
 			type.id ASC
+	</select>
+	
+	<select id="getMaxTypePriority" resultType="java.util.Map">
+		SELECT
+			Max(typePriority) AS priority
+		FROM
+			wechat_product_type
+		WHERE
+			typeState = 2
 	</select>
 </mapper>          

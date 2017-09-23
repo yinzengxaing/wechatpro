@@ -70,6 +70,7 @@ public class WechatProductTypeServiceImpl implements WechatProductTypeService {
 	public void addProductType(InputObject inputObject,OutputObject outputObject) throws Exception {
 		Map<String, Object> params = inputObject.getParams();
 		Map<String, Object> user = inputObject.getLogParams();
+		
 		//判断商品类型名是否存在
 		String typeName = params.get("typeName").toString();
 		if (JudgeUtil.isNull(typeName)){
@@ -93,6 +94,17 @@ public class WechatProductTypeServiceImpl implements WechatProductTypeService {
 			outputObject.setreturnMessage("该商品类型名称已经存在");
 			return;
 		}
+		
+		// 获取上线商品分类中优先级值最大的
+		Map<String, Object> priorityMap = wechatProductTypeMapper.getMaxTypePriority();
+		int priority = 0;
+		
+		if(!JudgeUtil.isNull(priorityMap.get("priority") + "")){
+			priority = Integer.parseInt(priorityMap.get("priority") + "");
+		}
+		priority += 1;
+		
+		params.put("typePriority", priority);// 优先级值增加1
 		params.put("createId",user.get("id"));
 		params.put("createTime",DateUtil.getTimeAndToString());
 		wechatProductTypeMapper.addProductType(params);
