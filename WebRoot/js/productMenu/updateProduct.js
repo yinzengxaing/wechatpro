@@ -96,18 +96,6 @@ function eventInit(){
 	$('body').on('click', '#cancleBean', function(e){
 		location.href = "productTypeMenu.html?productTypeId=" + productTypeId;
 	});
-	//添加积分按钮点击事件
-	$('#jupdate').on('click', function() {
-		$(this).parent().parent().find("input").val( parseInt($(this).parent().parent().find("input").val(), 10) + 1);
-	});
-	//减少积分按钮点击事件
-	$('#jiupdate').on('click', function() {
-		if($(this).parent().parent().find("input").val()<=0){
-			$(this).parent().parent().find("input").val("0");
-		}else{
-			$(this).parent().parent().find("input").val( parseInt($(this).parent().parent().find("input").val(), 10) - 1);
-		}
-	});
 	//上传图片
 	$("#imgFiles").uploadPreview({ Img: "logo"});
 	$("#imgFiles").fileupload({

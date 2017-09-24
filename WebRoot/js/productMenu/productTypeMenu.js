@@ -280,7 +280,6 @@ function productSort(){
 	 $( "#myProductList" ).sortable();
 	 $( "#myProductList" ).disableSelection();
 	  $("#myProductList").bind("sortupdate", function(event, ui){ 
-		 alert("排序成功") ;
 	    	//顺序获取每个类别的li标签 并获取其id
 	    	var productStr = "";
 	    	  $(".productLi").each(function(index){
