@@ -145,7 +145,7 @@
 	<update id="updateProduct" parameterType="java.util.Map">
 		UPDATE  wechat_product 
 		<set>
-		<if test="productLogo != null and productLogo != '' ">
+		<if test="productDesc != null and productDesc != '' ">
 				productDesc = #{productDesc},
 		</if>
 		<if test="productLogo != null and productLogo != '' ">

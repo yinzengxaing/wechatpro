@@ -60,7 +60,7 @@
 					</div>
 					<div class="" id="" style="width: 88%; float:right;">
 						<div class="productTypeMenu_batr">
-							<span>新的</span>
+							<span id="typeTitle"></span>
 							<a type="button" id="addProduct" class="btn_add_kind">新建商品</a>
 						</div>
 						
@@ -216,9 +216,9 @@
 	<script id="myTabBean" type="text/x-handlebars-template">
 		{{#each rows}}
 			<li>
-				 <a data-toggle="tab" class="typeLi" productTypeId={{id}}>{{typeName}}
-				 	<span class="glyphicon glyphicon-trash" style="float: right; margin-left:10px"></span> 
-				 	<span class="glyphicon glyphicon-edit" style="float: right;"></span>
+				 <a data-toggle="tab" class="typeLi" productTypeId={{id}} typeName="{{typeName}}">{{typeName}}
+				 	<span class="glyphicon glyphicon-trash type-delete" style="float: right; margin-left:10px ;display:none;" productTypeId={{id}}></span> 
+				 	<span class="glyphicon glyphicon-edit type-edit" style="float: right;display:none" productTypeId={{id}}></span>
 				</a>
 			</li>
 		{{/each}}
@@ -227,15 +227,15 @@
 	<!-- 遍历的商品 -->
 		<script id="myProductBean" type="text/x-handlebars-template">
 		{{#each rows}}
-			<li class="panel-table-tr-li" style="height:70px;">
+			<li class="panel-table-tr-li productLi" productId= "{{id}}" style="height:70px;">
 				<ul>
 					<li style="width:30%;"><img src="{{#productLogo logoPath}}{{/productLogo}}"/><span>{{productName}}</span></li>
 					<li style="width:20%;">￥{{productPrice}}</li>
 					<li style="width:20%;">{{productIntegral}}</li>
 					<li style="width:30%;">
-						<a class="product-edit" productId= {{id}}><span class="glyphicon glyphicon-edit"></span>编辑</a>
-						<a class="product-delete"productId= {{id}}><span class="glyphicon glyphicon-trash"></span>删除</a>
-						<a class="product-details"productId= {{id}}><span class="glyphicon glyphicon-zoom-in"></span>详情</a>
+						<a class="product-edit" productId= "{{id}}"><span class="glyphicon glyphicon-edit"></span>编辑</a>
+						<a class="product-delete"productId= "{{id}}"><span class="glyphicon glyphicon-trash"></span>删除</a>
+						<a class="product-details"productId= "{{id}}"><span class="glyphicon glyphicon-zoom-in"></span>详情</a>
 					</li>
 				</ul> 
 			</li>

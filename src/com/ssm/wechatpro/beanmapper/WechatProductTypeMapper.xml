@@ -34,7 +34,7 @@
 		AND c.id = a.typeLogoId
 		</where>
 		ORDER BY
-			typePriority ASC
+			a.typePriority ASC
 	</select>
 	<!-- 根据id获取一个商品类型 -->
 	<select id="getProductTypeById" parameterType="java.util.Map" resultType="java.util.Map">
