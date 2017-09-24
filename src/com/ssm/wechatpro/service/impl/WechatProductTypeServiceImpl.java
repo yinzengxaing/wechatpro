@@ -1,5 +1,6 @@
 package com.ssm.wechatpro.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
+import com.ssm.wechatpro.dao.WechatProductMapper;
+import com.ssm.wechatpro.dao.WechatProductMenuMapper;
 import com.ssm.wechatpro.dao.WechatProductTypeMapper;
 import com.ssm.wechatpro.object.InputObject;
 import com.ssm.wechatpro.object.OutputObject;
@@ -20,7 +23,11 @@ import com.ssm.wechatpro.util.JudgeUtil;
 public class WechatProductTypeServiceImpl implements WechatProductTypeService {
 
 	@Resource
-	WechatProductTypeMapper wechatProductTypeMapper;
+	private WechatProductTypeMapper wechatProductTypeMapper;
+	@Resource
+	private WechatProductMapper wechatProductMapper;
+	@Resource
+	private WechatProductMenuMapper wechatProductMenuMapper;
 	
 	/**
 	 * 查询所有的商品类型列表
@@ -179,6 +186,20 @@ public class WechatProductTypeServiceImpl implements WechatProductTypeService {
 	@Override
 	public void deleteProductType(InputObject inputObject, OutputObject outputObject) throws Exception {
 		Map<String, Object> params = inputObject.getParams();
+		
+		//获取该类别下的所有商品
+		Map<String, Object> productParams = new HashMap<String, Object>();
+		productParams.put("productType", params.get("id"));
+		List<Map<String,Object>> productList = wechatProductMapper.getProductList(productParams);
+		
+		for (Map<String, Object> map : productList) {
+			Map<String, Object>  thisMap = new HashMap<String, Object>();
+			thisMap.put("id", map.get("id"));
+			thisMap.put("productState", 4);
+			wechatProductMapper.updateProduct(thisMap);
+		}
+		
+		//wechatProductMapper.updateProduct(map);
 		params.put("typeState", 4);
 		wechatProductTypeMapper.upateProductType(params);
 	}

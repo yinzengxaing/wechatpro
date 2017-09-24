@@ -65,7 +65,7 @@ function eventInit(){
 		};
 		AjaxPostUtil.request({url:path+"/post/WechatProductTypeController/updateProductType",params:params,type:'json',callback:function(json){
 			if(json.returnCode==0){
-				location.href = 'productTypeList.html';
+				location.href = 'productTypeMenu.html';
 			}else{
 				qiao.bs.msg({msg:json.returnMessage,type:'danger'});
 			}
@@ -74,7 +74,7 @@ function eventInit(){
 	});
 	//取消点击事件
 	$('body').on('click', '#cancleBean', function(e){
-		location.href = "productTypeMenu.html?productTypeId="+productTypeId;
+		location.href = "productTypeMenu.html";
 	});
 	
 	$("#imgFiles").uploadPreview({ Img: "logo"});
