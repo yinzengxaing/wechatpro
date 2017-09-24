@@ -53,17 +53,20 @@
 	<!-- 根据商店的id 获取该用户购物车中的商品信息（商品id  商品类型， 商品id， 商品数量）-->
 	<select id="getCartProductInfo" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT
-			id ,
+			a.id ,
 			wechatCustomerLoginId,
 			wechatCommodity,
 			wechatCommodityAdminId,
 			wechatCommodityType,
 			wechatCommodityCount,
-			createTime
+			a.createTime
 		FROM
-			wechat_shopping_cart
+			wechat_shopping_cart AS a,
+			wechat_product as b
 		WHERE
-			wechatCommodityAdminId = #{wechatCommodityAdminId}
+			a.wechatCommodity = b.id
+			AND b.productState = 2
+			AND wechatCommodityAdminId = #{wechatCommodityAdminId}
 			<if test="wechatCommodity != null and wechatCommodity != '' ">
 			AND wechatCommodity = #{wechatCommodity}
 			</if>

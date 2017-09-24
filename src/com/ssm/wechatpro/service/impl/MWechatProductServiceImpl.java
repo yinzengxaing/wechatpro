@@ -239,7 +239,6 @@ public class MWechatProductServiceImpl implements MWechatProductService {
 				thisMap.put("productType", 1);
 				thisMap.put("productId", map.get("wechatCommodity"));
 				Map<String, Object> productDetail = mWechatProductMapper.getProductDetail(thisMap);
-				
 				  BigDecimal price = new BigDecimal(productDetail.get("productPrice").toString());
 				  BigDecimal thiscount = new BigDecimal(map.get("wechatCommodityCount").toString());
 				  double doubleValue = price.multiply(thiscount).doubleValue();

@@ -158,6 +158,19 @@
         "url": "#",
         "size": 5
       },
+       {
+        "menuList": [
+          {
+            "class": "icon-file-alt",
+            "title": "自建活动",
+            "url": "../../html/activity/activityMain.html"
+          },
+        ],
+        "class": "icon-tasks",
+        "title": "营销",
+        "url": "#",
+        "size": 1
+      },
       {
         "menuList": [
           {
@@ -212,7 +225,7 @@
         "class": "icon-dashboard",
         "title": "Widgets",
         "url": "charts.html"
-      },
+      } ,
       {
         "menuList": [
           {
