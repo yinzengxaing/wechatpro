@@ -28,13 +28,13 @@ function reviewSort(){
 				// 将标签显示
 				$("#myTabContent").attr("style", "display:block");
 				$("#myTabList").attr("style", "display:block");
-				$('#typeTitle').html(json.rows[0].typeName);
 				var source = $("#myTabBean").html();
 				var template = Handlebars.compile(source);
 				$("#myTabList").html(template(json));
 				
 				// 如果是首先进来
 				if (productTypeId == ""){
+					$('#typeTitle').html(json.rows[0].typeName);
 					$('#hideDiv ul li:first-child').attr("class", "active");
 					productTypeId = json.rows[0].id;
 				}else{
@@ -43,6 +43,7 @@ function reviewSort(){
 					for(var i = 0 ; i < $typeList.length; i ++){
 						if($($typeList[i]).attr("productTypeId") == productTypeId){
 							$($typeList[i]).parent().attr("class", "active");
+							$('#typeTitle').html(json.rows[i].typeName);
 							break;
 						}
 					}
