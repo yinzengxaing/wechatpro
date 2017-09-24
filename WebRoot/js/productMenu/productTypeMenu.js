@@ -2,10 +2,18 @@ var productTypeId = "";
 var id1 = ""; // 表示商品的id
 
 $(function(e){
+	receiveData();
 	dataInit();
 });
 
 function dataInit(){
+	// 接收添加商品后订单类型的参数
+	var returnParam= $.req("productTypeId");
+	if (!isNull(returnParam)){
+		if(returnParam != undefined){
+			productTypeId = returnParam;
+		}
+	}
 	reviewSort();
 	eventInit();
 }
@@ -24,10 +32,19 @@ function reviewSort(){
 				var template = Handlebars.compile(source);
 				$("#myTabList").html(template(json));
 				
-				// 将第一个li标签上加上Class属性
-				$('#hideDiv ul li:first-child').attr("class", "active");
+				// 如果是首先进来
 				if (productTypeId == ""){
+					$('#hideDiv ul li:first-child').attr("class", "active");
 					productTypeId = json.rows[0].id;
+				}else{
+					// 判断如果是修改过之后返回该页面
+					var $typeList = $("a[class='typeLi']");
+					for(var i = 0 ; i < $typeList.length; i ++){
+						if($($typeList[i]).attr("productTypeId") == productTypeId){
+							$($typeList[i]).parent().attr("class", "active");
+							break;
+						}
+					}
 				}
 			}else{
 				$("#whenUnInvable").append("<img src='../../assest/img/not-available.png'>");
@@ -61,7 +78,11 @@ function eventInit(){
 	$('body').on('click','#addProduct',function(e){
 		location.href="addProduct.html?productTypeId="+productTypeId;
 	});
-	
+	// 显示删除模态框
+	$("body").on("click", ".product-delete", function(e){
+		id1 = $(this).attr("productId");
+		$('#myModalDelete').modal('show');
+	});
 	// 确认删除
 	$("body").on("click", "#debeteOkBtn", function(e){
 		var param = {
@@ -71,7 +92,7 @@ function eventInit(){
 		AjaxPostUtil.request({url:path+"/post/WechatProductController/deleteProduct",params:param,type:'json',callback:function(json){
 			if(json.returnCode == 0){
 				$('#myModalDelete').modal('hide');
-				$('#message').bootstrapTable('refresh', {url: path+'/post/WechatProductMenuController/getProductListByTypeId'});
+				reviewSort();
 			}else{
 				qiao.bs.msg({msg:json.returnMessage,type:'danger'});
 			}
@@ -81,7 +102,72 @@ function eventInit(){
 	$("body").on("click", "#deleteCancelBtn", function(e){
 		$('#myModalDelete').modal('hide');
 	});
+	// 查看商品详情
+	$("body").on("click", ".product-details",function(e){
+		var productId = $(this).attr("productid");
+		var params = {
+				id :productId
+		};
+		AjaxPostUtil.request({url:path+"/post/WechatProductController/getPrductById",params:params,type:'json',callback:function(json){
+			if (json.returnCode == 0){
+				//将查询的数据进行显示
+				$('#productName').html(json.bean.productName);
+				$('#productPrice').html(json.bean.productPrice);
+				var productDesc = json.bean.productDesc;
+				if (productDesc == null || productDesc == "")
+					$('#productDesc').html("无");
+				else 
+					$('#productDesc').html(productDesc);
+				$('#productPrice').html(json.bean.productPrice);
+				$("#imgPath").attr('src',path+"/"+json.bean.productLogo); 	
+				var productState = json.bean.productState;
+				if (productState == 0)
+					$('#productState').html("创建"); 
+				else if (productState == 1)
+					$('#productState').html("审核中"); 
+				else if (productState == 2)
+					$('#productState').html("上线"); 
+				else if (productState == 3)
+					$('#productState').html("审核不通过"); 
+				var productWetherBreakfast = json.bean.productWetherBreakfast;
+				if (productWetherBreakfast == "N")
+					$('#productWetherBreakfast').html("否");
+				else
+					$('#productWetherBreakfast').html("是");
+				var productWetherLunch = json.bean.productWetherLunch;
+				if (productWetherLunch == "N")
+					$('#productWetherLunch').html("否");
+				else
+					$('#productWetherLunch').html("是");
+				var productWetherDinner = json.bean.productWetherDinner;
+				if (productWetherDinner == "N")
+					$('#productWetherDinner').html("否");
+				else
+					$('#productWetherDinner').html("是");		
+				var productWetherDiscount = json.bean.productWetherDiscount;
+				if (productWetherDiscount == "N")
+					$('#productWetherDiscount').html("否");
+				else
+					$('#productWetherDiscount').html("是");	
+				$('#productIntegral').html(json.bean.productIntegral);
+				var createTime = json.bean.createTime;
+				$('#createTime').html(createTime.substring(0,10));
+				$('#brandTagName').html(json.bean.brandTagName);
+				$('#typeName').html(json.bean.typeName);
+				$('#adminNo').html(json.bean.adminNo);
+				$('#productKeyStr').html(json.bean.productKeyStr);	
+				// 显示查看商品的模态框
+				$("#myModalShowProduct").modal("show");
+			}
+		}});
+	});
 	
+	// 编辑商品
+	$("body").on("click",".product-edit", function(e){
+//		alert($(this).attr("productid"));
+		// 跳转到编辑页面
+		location.href="updateProduct.html?productTypeId="+productTypeId+"&id=" + $(this).attr("productid");
+	});
 	//菜单排序事件
 	menuSort();
 	
@@ -154,6 +240,6 @@ function productSort(){
 	 $( "#myProductList" ).sortable();
 	 $( "#myProductList" ).disableSelection();
 	  $("#myProductList").bind("sortupdate", function(event, ui){ 
-		 alert("排序成功") 
+		 alert("排序成功") ;
 	  });
 }

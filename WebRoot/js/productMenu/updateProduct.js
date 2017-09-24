@@ -1,12 +1,14 @@
 var imgId = null;
 var id = null;
-
+var productTypeId = "";
 $(function(e){
 	receiveData();
 	dataInit();
 });
 
 function dataInit(){
+	// 接收productTypeId 的值
+	productTypeId= $.req("productTypeId");
 	eventInit();
 	getAllType();
 }
@@ -80,7 +82,7 @@ function eventInit(){
 			//进行商品的修改
 			AjaxPostUtil.request({url:path+"/post/WechatProductController/updateProduct",params:params,type:'json',callback:function(json){
 				if(json.returnCode == 0){
-					location.href="productList.html";
+					location.href = "productTypeMenu.html?productTypeId=" + productTypeId;
 				}else{
 					 $("#saveMenu").removeAttr("disabled");
 					qiao.bs.msg({msg:json.returnMessage,type:'danger'});
@@ -92,7 +94,7 @@ function eventInit(){
 	});
 	//取消按钮相应事件
 	$('body').on('click', '#cancleBean', function(e){
-		location.href = "productList.html";
+		location.href = "productTypeMenu.html?productTypeId=" + productTypeId;
 	});
 	//添加积分按钮点击事件
 	$('#jupdate').on('click', function() {

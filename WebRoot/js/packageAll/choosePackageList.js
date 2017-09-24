@@ -267,7 +267,6 @@ function eventInit() {
 	
 	$("body").on("click", ".deleteMation", function(e){
 		var rowId = $(this).parent().parent().find('div[class="packageMation"]').attr("rowId");
-		alert(rowId);
 		qiao.bs.confirm("确定删除该套餐吗？", function(){
 			var params={
 				id:rowId,	

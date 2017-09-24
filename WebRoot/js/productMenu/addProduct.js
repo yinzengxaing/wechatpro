@@ -15,7 +15,6 @@ function dataInit(){
 }
 
 function eventInit(){
-	
 	$('#addProductForm').bootstrapValidator({
 		feedbackIcons: {
 			valid: 'glyphicon glyphicon-ok',
@@ -82,7 +81,7 @@ function eventInit(){
 			//进行商品的添加
 			AjaxPostUtil.request({url:path+"/post/WechatProductController/addProduct",params:params,type:'json',callback:function(json){
 				if(json.returnCode == 0){
-					location.href = "productList.html";
+					location.href = "productTypeMenu.html?productTypeId="+productTypeId;
 				}else{
 					$("#saveMenu").removeAttr("disabled");
 					qiao.bs.msg({msg:json.returnMessage,type:'danger'});

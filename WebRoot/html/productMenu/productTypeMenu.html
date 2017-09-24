@@ -99,7 +99,119 @@
 			</div>
 	 	</div>
 	</div>
-	
+	<!-- 查看 商品详情 -->
+	<div class="modal fade" id="myModalShowProduct" tabindex="-1"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog dialog-width-800" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel1">产品详情</h4>
+				</div>
+				<div class="modal-body dialog-body">
+					<div class="form-group dialog-50">
+						<label for="txt_departmentname" class="dialog-label-20">名称：</label>
+						<div class="dialog-div-75">
+							<font id="productName"></font>
+						</div>
+					</div>
+					<div class="form-group dialog-50">
+						<label for="txt_departmentname" class="dialog-label-20">价格：</label>
+						<div class="dialog-div-75">
+							<font id="productPrice"></font>元
+						</div>
+					</div>
+					<div class="form-group dialog-50">
+						<label for="txt_departmentname" class="dialog-label-20">品牌：</label>
+						<div class="dialog-div-75">
+							<font id="brandTagName"></font>
+						</div>
+					</div>
+					<div class="form-group dialog-50">
+						<label for="txt_departmentname" class="dialog-label-20">类别：</label>
+						<div class="dialog-div-75">
+							<font id="typeName"></font>
+						</div>
+					</div>
+					<div class="form-group dialog-50">
+						<label for="txt_departmentname" class="dialog-label-20">当前状态：</label>
+						<div class="dialog-div-75">
+							<font id="productState"></font>
+						</div>
+					</div>
+					<div class="form-group dialog-50">
+						<label for="txt_departmentname" class="dialog-label-20">创建人：</label>
+						<div class="dialog-div-75">
+							<font id="adminNo"></font>
+						</div>
+					</div>
+					<div class="form-group dialog-50">
+						<label for="txt_departmentname" class="dialog-label-20">创建时间：</label>
+						<div class="dialog-div-75">
+							<font id="createTime"></font>
+						</div>
+					</div>
+					<div class="form-group dialog-50">
+						<label for="txt_departmentname" class="dialog-label-20">早餐推荐:</label>
+						<div class="dialog-div-75">
+							<font id="productWetherBreakfast"></font>
+						</div>
+					</div>
+					<div class="form-group dialog-50">
+						<label for="txt_departmentname" class="dialog-label-20">午餐推荐:</label>
+						<div class="dialog-div-75">
+							<font id="productWetherLunch"></font>
+						</div>
+					</div>
+					<div class="form-group dialog-50">
+						<label for="txt_departmentname" class="dialog-label-20">晚餐推荐:</label>
+						<div class="dialog-div-75">
+							<font id="productWetherDinner"></font>
+						</div>
+					</div>
+					<div class="form-group dialog-50">
+						<label for="txt_departmentname" class="dialog-label-20">是否优惠:</label>
+						<div class="dialog-div-75">
+							<font id="productWetherDiscount"></font>
+						</div>
+					</div>
+					<div class="form-group dialog-50">
+						<label for="txt_departmentname" class="dialog-label-20">积分:</label>
+						<div class="dialog-div-75">
+							<font id="productIntegral"></font>
+						</div>
+					</div>
+					<div class="form-group dialog-50">
+						<label for="txt_departmentname" class="dialog-label-20">商品条码:</label>
+						<div class="dialog-div-75">
+							<font id="productKeyStr"></font>
+						</div>
+					</div>
+					<div class="form-group dialog-50">
+						<label for="txt_departmentname" class="dialog-label-20">商品图片：</label>
+						<div class="dialog-div-75">
+							<img alt="" src="" class="dialogUserImg img-thumbnail"
+								id="imgPath" />
+						</div>
+					</div>
+					<div class="form-group dialog-100">
+						<label for="txt_departmentname" class="dialog-label-10">商品描述：</label>
+						<div class="dialog-div-80">
+							<font id="productDesc"></font>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">
+						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<!-- 显示tab页 -->
 	<script id="myTabBean" type="text/x-handlebars-template">
 		{{#each rows}}
@@ -173,10 +285,5 @@
 	<script type="text/javascript" src="../../js/util/handlebars-v4.0.5.js"></script>
 	<script type="text/javascript" src="../../js/productMenu/productTypeMenu.js"></script>
 	
-	<!-- <table id="message" class="table table-bordered commonProduct_table">
-							 	<div class="table_button" >
-									<a type="button" class="btn_add_kind" id="addProduct">添加商品</a>
-								</div>
-						  	</table> -->
 </body>
 </html>
