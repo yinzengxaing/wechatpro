@@ -102,7 +102,7 @@
 	</insert>
 	
 	<!-- 绑定活动与商店之间的关系-->
-	<insert id="addActivityRestaurant" parameterMap="java.util.Map">
+	<insert id="addActivityRestaurant" parameterType="java.util.Map">
 	INSERT INTO wechat_activity_restaurant (
 	activityId, 
 	restaurantId

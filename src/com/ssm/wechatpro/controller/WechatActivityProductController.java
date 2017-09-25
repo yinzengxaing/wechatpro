@@ -6,15 +6,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ssm.wechatpro.beanmapper.WechatActivityProductService;
 import com.ssm.wechatpro.object.InputObject;
 import com.ssm.wechatpro.object.OutputObject;
-import com.ssm.wechatpro.service.impl.WechatActivityProductServiceImpl;
 
 @Controller
 public class WechatActivityProductController {
 
 	@Resource
-	private WechatActivityProductServiceImpl wechatActivityProductServiceImpl;
+	private WechatActivityProductService wechatActivityProductService;
 	
 	
 	/**
@@ -26,7 +26,7 @@ public class WechatActivityProductController {
 	@RequestMapping("post/WechatActivityProductController/addProductActivity")
 	@ResponseBody
 	public void addProductActivity(InputObject inputObject, OutputObject outputObject) throws Exception {
-		wechatActivityProductServiceImpl.addProductActivity(inputObject, outputObject);
+		wechatActivityProductService.addProductActivity(inputObject, outputObject);
 	}
 	
 	/**
@@ -38,7 +38,7 @@ public class WechatActivityProductController {
 	@RequestMapping("post/WechatActivityProductController/getProductList")
 	@ResponseBody
 	public void getProductList(InputObject inputObject, OutputObject outputObject) throws Exception {
-		wechatActivityProductServiceImpl.getProductList(inputObject, outputObject);
+		wechatActivityProductService.getProductList(inputObject, outputObject);
 	}
 	
 }
