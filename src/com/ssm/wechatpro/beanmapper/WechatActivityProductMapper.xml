@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.wechatpro.dao.WechatActivityProductMapper">
+	<!-- 创建一个活动 -->
+	<insert id="addProductActivity" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.Map">
+    INSERT INTO wechat_activity (
+		activityName,
+		activityType,
+		activityTimeType,
+		<if test="activityStart != null and activityStart != '' ">
+		activityStart,
+		</if>
+		
+		<if test="activityEnd != null and activityEnd != '' ">
+		activityEnd,
+		</if>
+		activityDetail
+		)
+		VALUES
+		(
+		#{activityName},
+		#{activityType},	
+		#{activityTimeType},
+		<if test="activityStart != null and activityStart != '' ">
+		#{activityStart},
+		</if>
+		<if test="activityEnd != null and activityEnd != '' ">
+		#{activityEnd},
+		</if>
+		#{activityDetail}
+ 	)	
+	</insert>
+	
+	<!-- 创建一个商品特价详情“ -->
+	<insert id="addProductActivityDetail" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.Map">
+	INSERT INTO wechat_activity_product_detail (
+		cycleType,
+		<if test="cycleWeek != null and cycleWeek != '' ">
+		cycleWeek,
+		</if>
+		dayTimeType,
+		<if test="dayTimeStart ! null and dayTimeStart != '' ">
+		dayTimeStart,
+		</if>
+		<if test="dayTimeEnd != null and dayTimeEnd != '' ">
+		dayTimeEnd,
+		</if>
+		isCardDay,
+		cardDay,
+		isLimit,
+		limitCount,
+		discountsType,
+		<if test="specialOffer != null and specialOffer != ''">
+		specialOffer,
+		</if>
+		<if test="discount != null and discount !='' ">
+		discount,
+		</if>
+		activityId
+		)
+		VALUES (
+		#{cycleType},
+		<if test="cycleWeek != null and cycleWeek != '' ">
+		#{cycleWeek},
+		</if>
+		#{dayTimeType},
+		<if test="dayTimeStart ! null and dayTimeStart != '' ">
+		#{dayTimeStart},
+		</if>
+		<if test="dayTimeEnd != null and dayTimeEnd != '' ">
+		#{dayTimeEnd},
+		</if>
+		#{isCardDay},
+		#{cardDay},
+		#{isLimit},
+		#{limitCount},
+		#{discountsType},
+		<if test="specialOffer != null and specialOffer != '' ">
+		#{specialOffer},
+		</if>
+		<if test="discount != null and discount != '' ">
+		#{discount},
+		</if>
+		#{activityId}
+		)
+	</insert>
+	
+	<!-- 添加商品特价活动中所属的商品 -->
+	<insert id="addProductInActivity" parameterType="java.util.Map">
+	INSERT INTO wechat_activity_product (
+	productId,
+	productPrice,
+	productDetailId
+	)
+	VALUES
+	(
+		#{productId},
+		#{productPrice},
+		#{productDetailId}
+	)
+	</insert>
+	
+	<!-- 绑定活动与商店之间的关系-->
+	<insert id="addActivityRestaurant" parameterMap="java.util.Map">
+	INSERT INTO wechat_activity_restaurant (
+	activityId, 
+	restaurantId
+	)
+	VALUES
+	(
+	#{activityId},
+	#{restaurantId}
+	)
+	</insert>
+	
+	<!-- 获取需要特价的商品列表 -->
+	<select id="getProductList" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			a.id AS productId,
+			a.productName,
+			a.productType,
+			a.productPrice,
+			b.typeName,
+			c.optionPath AS productLogo
+		FROM
+			wechat_product AS a,
+			wechat_product_type AS b,
+			wechat_option AS c
+		WHERE
+			a.productState = 2
+		AND a.productType = b.id
+		AND a.productLogo =  c.id
+		<if test="specialOffer != null and specialOffer != null">
+		AND a.productPrice > #{specialOffer}
+		</if>
+	</select>
+
+</mapper>
