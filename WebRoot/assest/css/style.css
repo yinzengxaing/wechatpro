@@ -4430,26 +4430,6 @@ ul.messagesList li span.date {
 	list-style:none;
 	margin-left: 64px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .myModal4_span p{
 	color:#54a7f4;
 	margin:0;
@@ -4494,10 +4474,6 @@ ul.messagesList li span.date {
 .panel-body1 input{
 	float:right;
 }
-/* .modal-body-mymodal5{
-	width:120%;
-} */
-
 /***********************************************自建活动结束********************************************************/
 /* .pagination>.active>a{
 	color: #428bca !important;
