@@ -1,5 +1,4 @@
 /*! CSSDevices v2.2.0 | MIT license | Maintained by Stuart Yamartino | http://cssdevices.io */
-
 .cd-iphone-6,.cd-iphone-6>.cd-body {
 	width: 23em;
 	height: 48em
@@ -304,25 +303,25 @@
 	-ms-transform: rotate(90deg) translate(0, -100%)
 }
 
-.cd-landscape-left:not (.cd-landscape-fixed-screen ).cd-iphone-5s>.cd-body>.cd-screen,.cd-landscape-left:not
-	(.cd-landscape-fixed-screen ).cd-iphone-5c>.cd-body>.cd-screen {
+.cd-landscape-left:not  (.cd-landscape-fixed-screen  ).cd-iphone-5s>.cd-body>.cd-screen,.cd-landscape-left:not
+	 (.cd-landscape-fixed-screen  ).cd-iphone-5c>.cd-body>.cd-screen {
 	height: 17.8em;
 	width: 31em
 }
 
-.cd-landscape-left:not (.cd-landscape-fixed-screen ).cd-iphone-6>.cd-body>.cd-screen
+.cd-landscape-left:not  (.cd-landscape-fixed-screen  ).cd-iphone-6>.cd-body>.cd-screen
 	{
 	height: 21em;
 	width: 37em
 }
 
-.cd-landscape-left:not (.cd-landscape-fixed-screen ).cd-iphone-6-plus>.cd-body>.cd-screen
+.cd-landscape-left:not  (.cd-landscape-fixed-screen  ).cd-iphone-6-plus>.cd-body>.cd-screen
 	{
 	height: 23.6em;
 	width: 42em
 }
 
-.cd-landscape-left:not (.cd-landscape-fixed-screen ).cd-ipad>.cd-body>.cd-screen
+.cd-landscape-left:not  (.cd-landscape-fixed-screen  ).cd-ipad>.cd-body>.cd-screen
 	{
 	height: 30em;
 	width: 40em
@@ -346,25 +345,25 @@
 	-ms-transform: rotate(-90deg) translate(-100%, 0)
 }
 
-.cd-landscape-right:not (.cd-landscape-fixed-screen ).cd-iphone-5s>.cd-body>.cd-screen,.cd-landscape-right:not
-	(.cd-landscape-fixed-screen ).cd-iphone-5c>.cd-body>.cd-screen {
+.cd-landscape-right:not  (.cd-landscape-fixed-screen  ).cd-iphone-5s>.cd-body>.cd-screen,.cd-landscape-right:not
+	 (.cd-landscape-fixed-screen  ).cd-iphone-5c>.cd-body>.cd-screen {
 	height: 17.8em;
 	width: 31em
 }
 
-.cd-landscape-right:not (.cd-landscape-fixed-screen ).cd-iphone-6>.cd-body>.cd-screen
+.cd-landscape-right:not  (.cd-landscape-fixed-screen  ).cd-iphone-6>.cd-body>.cd-screen
 	{
 	height: 21em;
 	width: 37em
 }
 
-.cd-landscape-right:not (.cd-landscape-fixed-screen ).cd-iphone-6-plus>.cd-body>.cd-screen
+.cd-landscape-right:not  (.cd-landscape-fixed-screen  ).cd-iphone-6-plus>.cd-body>.cd-screen
 	{
 	height: 23.6em;
 	width: 42em
 }
 
-.cd-landscape-right:not (.cd-landscape-fixed-screen ).cd-ipad>.cd-body>.cd-screen
+.cd-landscape-right:not  (.cd-landscape-fixed-screen  ).cd-ipad>.cd-body>.cd-screen
 	{
 	height: 30em;
 	width: 40em

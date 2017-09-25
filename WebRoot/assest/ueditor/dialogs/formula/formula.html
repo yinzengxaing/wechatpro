@@ -1,41 +1,42 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-    <link rel="stylesheet" href="../../third-party/mathquill/mathquill.css"/>
-    <style>
-        html, body, .main{
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
-        .main{
-            width:1024px;
-            height:1024px;
-        }
-        .mathquill-editable,
-        .mathquill-rendered-math{
-            border: 0px;
-            padding: 0px;
-            margin:4px;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Document</title>
+<link rel="stylesheet" href="../../third-party/mathquill/mathquill.css" />
+<style>
+html,body,.main {
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+.main {
+	width: 1024px;
+	height: 1024px;
+}
+
+.mathquill-editable,.mathquill-rendered-math {
+	border: 0px;
+	padding: 0px;
+	margin: 4px;
+}
+</style>
 </head>
 <body>
 
-<div class="main">
-    <div class="mathquill-editable"></div>
-</div>
+	<div class="main">
+		<div class="mathquill-editable"></div>
+	</div>
 
-<div>
-    <input id="blurHelper" />
-</div>
+	<div>
+		<input id="blurHelper" />
+	</div>
 
-<script src="../../third-party/jquery.min.js"></script>
-<script type="text/javascript" src="../third-party/template.min.js"></script>
-<script src="../../third-party/mathquill/mathquill.js"></script>
-<script>
+	<script src="../../third-party/jquery.min.js"></script>
+	<script type="text/javascript" src="../third-party/template.min.js"></script>
+	<script src="../../third-party/mathquill/mathquill.js"></script>
+	<script>
     $(function(){
 
         var UM = parent.UM,

@@ -20,23 +20,334 @@
 	<![endif]-->
 	<link rel="shortcut icon" href="../../assest/img/favicon.ico">
 </head>
-<body class="">
-	<ul id="myTab" class="nav nav-tabs">
-		<li class="active"><a href="#home" data-toggle="tab">新建</a></li>
-		<li><a href="#ios" data-toggle="tab">已创建</a></li>
-	</ul>
-<div id="myTabContent" class="tab-content">
-	<div class="tab-pane fade in active" id="home">
-		<p>菜鸟教程是一个提供最新的web技术站点，本站免费提供了建站相关的技术文档，帮助广大web技术爱好者快速入门并建立自己的网站。菜鸟先飞早入行——学的不仅是技术，更是梦想。</p>
+<body>
+	<div class="wrap">
+		<ul id="myTab" class="nav nav-tabs wrap_top_bar">
+			<li class="active"><a href="#home" data-toggle="tab">新建</a></li>
+			<li><a href="#ios" data-toggle="tab">已创建</a></li>
+		</ul>
+		
+		<div id="myTabContent" class="tab-content wrap_bottom_bar">
+			<div class="tab-pane fade in active" id="home">
+				<h2 class="wrap_bottom_bar_h2">请选择活动类型</h2>
+				<div class="wrap_bottom_bar_div">
+					<div class="wrap_bottom_bar_diva">
+						<img src="../../assest/icon/untitled.png"/>
+						<h4>门店新客活动</h4>
+						<span>用户在本店初次下单和享受减免折扣</span>
+						<a type="button" class="wrap_bottom_bar_a" data-toggle="modal" data-target="#myModal1">立即新建</a>
+					</div>
+					
+					<div class="wrap_bottom_bar_diva">
+						<img src="../../assest/icon/untitled.png"/>
+						<h4>满减活动</h4>
+						<span>下单满足条件后可享受减免活动</span>
+						<a type="button" class="wrap_bottom_bar_a" data-toggle="modal" data-target="#myModal2">立即新建</a>
+					</div>
+					
+					<div class="wrap_bottom_bar_diva">
+						<img src="../../assest/icon/untitled1.png"/>
+						<h4>满赠活动</h4>
+						<span>下单满足条件后可获得赠品</span>
+						<a type="button" class="wrap_bottom_bar_a" data-toggle="modal" data-target="#myModal3">立即新建</a>
+					</div>
+					
+					<div class="wrap_bottom_bar_diva">
+						<img src="../../assest/icon/untitled11.png"/>
+						<h4>特价商品</h4>
+						<span>指定商品特价或折扣优惠</span>
+						<a type="button" class="wrap_bottom_bar_a" data-toggle="modal" data-target="#myModal4">立即新建</a>
+					</div>
+					
+				</div>
+			</div>
+			<div class="tab-pane fade" id="ios">
+			
+				<div class="activityMain_right_div">
+					<div class="activityMain_right_div_top">
+						<img src="../../assest/img/a.png""/>
+						<dl>
+						   <dd>用来计算的仪器 ... ...</dd>
+						   <dd>以视觉方式显示信息的装置 ... ...</dd>
+						</dl>
+						
+						<a type="button" class="">查看详情</a>
+						<a type="button" class="">作废活动</a>
+					</div>
+					<div class="activityMain_right_div_bottom">
+						<ul>
+							<li>1</li>
+							<li>2</li>
+							<li>3</li>
+							<li>4</li>
+							<li>5</li>
+						</ul>
+					</div>
+				</div>
+				
+				
+			</div>
+		</div>
+		
+		<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							&times;
+						</button>
+						<h4 class="modal-title" id="">
+							门店新客立减活动
+						</h4>
+					</div>
+					
+					<div class="modal-body myModal4_span">
+						<table>
+							<tr><span>活动名称</span>门店新客立减活动</tr><br/>
+							<tr><span>活动日期</span><input type="date"/><b>至</b><input type="date"/></tr><br/>
+						 	<tr><span>优惠形式</span><b style="margin:0;padding-right:14px;">门店新客立减</b><input type="text" value="请输入整元数" style="width:150px;"/><b>元</b></tr><br/>
+						 	<ul>
+						 		<li>注意:</li>
+						 		<li>1、严禁恶意涨价，一经发现从严处理。</li>
+						 		<li>2、满赠金额不包括配送费，餐盒费将计入满减活动的触发条件；</li>
+						 		<li>3、仅支付在线支付，且每人每天做多享受2单。</li>
+						 	</ul>
+						 	<button type="button" class="btn btn-success">创建活动</button>
+						 </table>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		
+		<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							&times;
+						</button>
+						<h4 class="modal-title" id="">
+							满减活动
+						</h4>
+					</div>
+					
+					<div class="modal-body myModal4_span">
+						<table>
+							<tr><span>活动名称</span><input type="text" class="myModal4_text" value="例：店铺3周年庆典感恩大回馈"/></tr><br/>
+							<tr><span>活动日期</span><input type="date"/><b>至</b><input type="date"/></tr><br/>
+						 	<tr><span>活动内容</span><b style="margin:0;padding-right:14px;">满</b><input type="text" value="请输入整元数" style="width:150px;"/><b>元赠</b><input type="text" style="width:150px;"/><input type="text" style="width:50px; margin-left:10px;" value="1"/>份</tr><br/>
+						 	<p style="font-size:12px; color:#9497a3; line-height:40px;margin-left:102px;">小提示：33-38元</p>
+						 	<ul>
+						 		<li>注意:</li>
+						 		<li>1、严禁恶意涨价，一经发现从严处理。</li>
+						 		<li>2、满赠金额不包括配送费，餐盒费将计入满减活动的触发条件；</li>
+						 		<li>3、仅支付在线支付，且每人每天做多享受2单。</li>
+						 	</ul>
+						 	<button type="button" class="btn btn-success">创建活动</button>
+						 </table>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		
+			<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							&times;
+						</button>
+						<h4 class="modal-title" id="">
+							满减活动
+						</h4>
+					</div>
+					
+					<div class="modal-body myModal4_span">
+						<table>
+							<tr><span>活动名称</span><input type="text" class="myModal4_text" value="例：店铺3周年庆典感恩大回馈"/></tr><br/>
+							<tr><span>活动日期</span><input type="date"/><b>至</b><input type="date"/></tr><br/>
+						 	<tr><span>活动内容</span><b style="margin:0;padding-right:14px;">满</b><input type="text" value="请输入整元数" style="width:150px;"/><b>元赠</b><input type="text" style="width:150px;"/><input type="text" style="width:50px; margin-left:10px;" value="1"/>份</tr><br/>
+						 	<p style="font-size:12px; color:#9497a3; line-height:40px;margin-left:102px;">小提示：33-38元</p>
+						 	<ul>
+						 		<li>注意:</li>
+						 		<li>1、严禁恶意涨价，一经发现从严处理。</li>
+						 		<li>2、满赠金额不包括配送费，餐盒费将计入满减活动的触发条件；</li>
+						 		<li>3、仅支付在线支付，且每人每天做多享受2单。</li>
+						 	</ul>
+						 	<button type="button" class="btn btn-success">创建活动</button>
+						 </table>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		
+		<div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							&times;
+						</button>
+						<h4 class="modal-title" id="">
+							创建特价商品
+						</h4>
+					</div>
+					
+					<div class="modal-body myModal4_span">
+						<table>
+							<tr><span>活动名称</span><input type="text" class="myModal4_text"/></tr><br/>
+							<tr><span>活动日期</span><input type="date"/><b>至</b><input type="date"/></tr><br/>
+						 	<tr><span>循环周期</span><div><a href="#">整周</a><a href="#" class="myModal4_definy" >自定</a></div></tr><br/>
+						 	
+						 	<span style="width:55px;display:inline-block;"></span>
+						 	<input type="checkbox" value="周一">周一<input type="checkbox" value="">周二<input type="checkbox" value="周三">周三<input type="checkbox" value="周四">周四
+						 	<input type="checkbox" value="周五">周五<input type="checkbox" value="周六">周六<input type="checkbox" value="周日">周日<br/>
+						 	
+						 	<tr><span>每日时段</span><div><a href="#">全天</a><a href="#" class="myModal4_definy">自定</a></div></tr><br/>
+						 	
+						 	<tr><span style="width:55px;display:inline-block;"></span><input type="text" value="00:00"/><b>至</b><input type="text" value="12:00"/></tr><br/>
+						 	
+						 	<tr><span>每单限售</span><input type="radio" name="limit"/><b>不限制</b><input type="radio" name="limit"/><b>有限制</b></tr><br/>
+						 	
+						 	<tr><span style="width:55px;display:inline-block;"></span><input type="text"/>份<b>请填写每单限售</b></tr><br/>
+						 	
+						 	<tr><span>活动类型</span><input type="radio" name="price"/><b>特价</b><input type="radio" name="price"/><b>折扣</b></tr><br/>
+						 	<tr><span style="width:55px;display:inline-block;"></span><input type="text"/>折</tr><br/>
+						 	
+						 	<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal5">下一步</button>
+						 </table>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		
+		<div class="modal fade" id="myModal5" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							&times;
+						</button>
+						<h4 class="modal-title" id="">
+						选择活动商品（可选1-12个）（只显示可参与活动的菜品）
+						</h4>
+					</div>
+					
+					<div class="modal-body modal-body-mymodal5">
+						<div class="modal-body-all">
+							<div class="modal-body-left">
+							
+					            <div class="input-group" style="padding:8px;">
+								  <input type="text" class="form-control" placeholder="搜索" aria-describedby="basic-addon2">
+								  <span class="input-group-addon" id="basic-addon2">搜索</span>
+								</div>
+																	
+							  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+								  <div class="panel panel-default">
+								    <div class="panel-heading" role="tab" id="headingOne">
+								      <h4 class="panel-title">
+								        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+								         	热销推荐
+								        </a>
+								      </h4>
+								    </div>
+								    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+								      <div class="panel-body">
+								        <div class="panel-body1">
+								        	<img src="../../assest/img/a.png"/>
+								        	<span>阳光蛋糕<span style="color:red;margin-left:6px;margin-right:86px;">￥6</span><input type="checkbox" style="margin-left:20px;"/></span>
+								        </div>
+								        
+								        <div class="panel-body1">
+								        	<img src="../../assest/img/a.png"/>
+								        	<span>阳光蛋糕<span style="color:red;margin-left:6px;margin-right:86px;">￥6</span><input type="checkbox" style="margin-left:20px;"/></span>
+								        </div>
+								        
+								        <div class="panel-body1">
+								        	<img src="../../assest/img/a.png"/>
+								        	<span>阳光蛋糕<span style="color:red;margin-left:6px;margin-right:86px;">￥6</span><input type="checkbox" style="margin-left:20px;"/></span>
+								        </div>
+								        
+								      </div>
+								    </div>
+								  </div>
+								  <div class="panel panel-default">
+								    <div class="panel-heading" role="tab" id="headingTwo">
+								      <h4 class="panel-title">
+								        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+								          	新菜推荐
+								        </a>
+								      </h4>
+								    </div>
+								    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+								      <div class="panel-body">
+								      
+								      	<div class="panel-body1">
+								        	<img src="../../assest/img/a.png"/>
+								        	<span>阳光蛋糕<span style="color:red;margin-left:6px;margin-right:86px;">￥6</span><input type="checkbox" style="margin-left:20px;"/></span>
+								        </div>
+								        
+								        <div class="panel-body1">
+								        	<img src="../../assest/img/a.png"/>
+								        	<span>阳光蛋糕<span style="color:red;margin-left:6px;margin-right:86px;">￥6</span><input type="checkbox" style="margin-left:20px;"/></span>
+								        </div>
+								        
+								        <div class="panel-body1">
+								        	<img src="../../assest/img/a.png"/>
+								        	<span>阳光蛋糕<span style="color:red;margin-left:6px;margin-right:86px;">￥6</span><input type="checkbox" style="margin-left:20px;"/></span>
+								        </div>
+								        
+								      </div>
+								    </div>
+								  </div>
+								  <div class="panel panel-default">
+								    <div class="panel-heading" role="tab" id="headingThree">
+								      <h4 class="panel-title">
+								        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+								         	米/饭汤
+								        </a>
+								      </h4>
+								    </div>
+								    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+								      <div class="panel-body">
+										<div class="panel-body1">
+								        	<img src="../../assest/img/a.png"/>
+								        	<span>阳光蛋糕<span style="color:red;margin-left:6px;margin-right:86px;">￥6</span><input type="checkbox" style="margin-left:20px;"/></span>
+								        </div>
+								        <div class="panel-body1">
+								        	<img src="../../assest/img/a.png"/>
+								        	<span>阳光蛋糕<span style="color:red;margin-left:6px;margin-right:86px;">￥6</span><input type="checkbox" style="margin-left:20px;"/></span>
+								        </div>
+								        <div class="panel-body1">
+								        	<img src="../../assest/img/a.png"/>
+								        	<span>阳光蛋糕<span style="color:red;margin-left:6px;margin-right:86px;">￥6</span><input type="checkbox" style="margin-left:20px;"/></span>
+								        </div>
+								      </div>
+								    </div>
+								  </div>
+								</div>
+								
+							</div>
+							<div class="modal-body-right">
+								<h2>已促销菜品</h2>
+							</div>
+						</div>
+					</div>
+					<button type="button" class="btn btn-info" style="margin-left:300px;margin-bottom:10px;">上一步</button>
+					<button type="button" class="btn btn-success" style="margin-bottom:10px;">确认创建</button>
+				</div>
+			</div>
+		</div>
 	</div>
-	<div class="tab-pane fade" id="ios">
-		<p>iOS 是一个由苹果公司开发和发布的手机操作系统。最初是于 2007 年首次发布 iPhone、iPod Touch 和 Apple 
-			TV。iOS 派生自 OS X，它们共享 Darwin 基础。OS X 操作系统是用在苹果电脑上，iOS 是苹果的移动版本。</p>
-	</div>
-	
-</div>
-	
-
 	<script src="../../assest/js/jquery.js"></script>
 	<script src="../../assest/js/jquery-migrate-1.0.0.min.js"></script>
 	<script src="../../assest/js/jquery-ui-1.10.0.custom.min.js"></script>

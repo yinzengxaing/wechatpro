@@ -1,7 +1,7 @@
 body {
 	margin: 0px;
 	background: #efefef;
-	font-family: '微软雅黑';
+	font-family: '寰蒋闆呴粦';
 	-moz-appearance: none;
 }
 
@@ -189,13 +189,13 @@ input {
 	width: 100%;
 	height: 100%;
 	opacity: 0.6;
-	filter: alpha(opacity = 60);
+	filter: alpha(opacity =   60);
 }
 
 .DialogDiv {
 	position: absolute;
 	z-index: 99999;
-} /*配送公告*/
+} /*閰嶉�鍏憡*/
 .U-user-login-btn {
 	display: block;
 	border: none;
@@ -250,7 +250,7 @@ input {
 .U-guodu-box {
 	padding: 5px 15px;
 	background: #3c3c3f;
-	filter: alpha(opacity = 90);
+	filter: alpha(opacity =   90);
 	-moz-opacity: 0.9;
 	-khtml-opacity: 0.9;
 	opacity: 0.9;
