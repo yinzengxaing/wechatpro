@@ -99,6 +99,8 @@
 		AND a.productType = #{typeId}
 		AND e.adminId = #{adminId}
 		AND c.productState = 1
+		AND STRCMP(#{NowTime}, a.startTime) > 0
+		AND 0 > STRCMP(#{NowTime}, a.endTime)
 		GROUP BY
 			a.id
 		ORDER BY

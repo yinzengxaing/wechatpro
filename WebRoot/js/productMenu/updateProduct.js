@@ -1,6 +1,8 @@
 var imgId = null;
 var id = null;
 var productTypeId = "";
+var startTime = "";
+var endTime = "";
 $(function(e){
 	receiveData();
 	dataInit();
@@ -21,6 +23,8 @@ function eventInit(){
 			$("#selectTime").show();
 		}else{
 			$("#selectTime").hide();
+			startTime ="";
+			endTime = "";
 		}
 	});
 	
@@ -71,8 +75,6 @@ function eventInit(){
 			}
 		}
 	}).on('success.form.bv', function(e) {
-		var startTime = "";
-		var endTime = "";
 		var flag = $("input[name=optionsRadios]:checked").val();
 		if(flag == "Y"){
 			startTime = $("#startTime").val();

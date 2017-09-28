@@ -119,6 +119,16 @@ public class DateUtil {
 	}
 	
 	/**
+	 * 获取当前的时间
+	 * 19:58
+	 * @return
+	 */
+	public static String getNowTime(){
+		Date data = new Date();
+		DateFormat df = new SimpleDateFormat("HH:mm");
+		return df.format(data);
+	}
+	/**
 	 * 获取当前日期(2016-12-29)
 	 * @return
 	 */
@@ -173,7 +183,6 @@ public class DateUtil {
 		 return str.substring(0, 6);
 	}
 	public static void main(String[] args) throws Exception {
-		
+
 	}
-	
 }

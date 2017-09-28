@@ -68,6 +68,7 @@ public class MWechatProductServiceImpl implements MWechatProductService {
 			Map<String, Object> map = new HashMap<>();
 			map.put("adminId", params.get("adminId"));
 			map.put("typeId", map2.get("typeId"));
+			map.put("NowTime", DateUtil.getNowTime());
 			List<Map<String,Object>> productListByType = mWechatProductMapper.getProductListByType(map);
 			if (!productListByType.isEmpty()){
 				returnList.add(map2);
@@ -81,14 +82,17 @@ public class MWechatProductServiceImpl implements MWechatProductService {
 	public void getProductListByType(InputObject inputObject, OutputObject outputObject) throws Exception {
 		Map<String, Object> wechatLogParams = inputObject.getWechatLogParams();
 		Map<String, Object> params = inputObject.getParams();
+		params.put("NowTime", DateUtil.getNowTime());
+		//查询该类的所有商品
 		List<Map<String,Object>> productListByType = mWechatProductMapper.getProductListByType(params);
-			for (Map<String, Object> map : productListByType) {
+		for (Map<String, Object> map : productListByType) {
 				Map<String, Object> cartParam = new HashMap<>();
 				cartParam.put("wechatCustomerLoginId",wechatLogParams.get("id"));
 				cartParam.put("wechatCommodity", map.get("productId"));
 				cartParam.put("wechatCommodityAdminId", map.get("adminId"));
 				cartParam.put("wechatCommodityType", "1");
-				 List<Map<String,Object>> cartProductInfo = mWechatShoppingCartMapper.getCartProductInfo(cartParam);
+				//查询当前商品是否在购物车中
+				List<Map<String,Object>> cartProductInfo = mWechatShoppingCartMapper.getCartProductInfo(cartParam);
 				if (!cartProductInfo.isEmpty()){
 					map.put("productCount", cartProductInfo.get(0).get("wechatCommodityCount"));
 				}else{
@@ -96,6 +100,7 @@ public class MWechatProductServiceImpl implements MWechatProductService {
 				}
 				map.put("productType", 1);
 			}
+	
 			outputObject.setBeans(productListByType);
 	}
 

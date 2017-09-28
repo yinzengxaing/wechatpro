@@ -178,6 +178,18 @@ public class WechatProductServiceImpl implements WechatProductService {
 			outputObject.setreturnMessage("请输入合法数字！");
 			return;
 		}
+		if((map.get("flag")+"").compareTo("N") == 0){
+			map.put("startTime", "00:00");
+			map.put("endTime", "23:59");
+		}
+		// 判断开始时间是否大于结束时间
+		String startTime = map.get("startTime") + "";
+		String endTime = map.get("endTime") + "";
+		String flag = map.get("flag") + "";
+		if(flag.endsWith("Y") && startTime.compareTo(endTime) > 0){
+			outputObject.setreturnMessage("开始时间不能大于结束时间");
+			return ;
+		}
 		String id = map.get("id").toString();
 		//根据参数中的产品名获取产品
 		Map<String, Object> productByName = wechatProductMapper.getProductByName(map);
