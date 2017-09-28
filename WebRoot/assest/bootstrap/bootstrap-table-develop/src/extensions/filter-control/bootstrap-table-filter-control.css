@@ -1,12 +1,13 @@
 /**
- * @author: Dennis Hern谩ndez
+ * @author: Dennis Hernández
  * @webSite: http://djhvscf.github.io/Blog
  * @version: v2.1.1
  */
+
 .no-filter-control {
-	height: 34px;
+    height: 34px;
 }
 
 .filter-control {
-	margin: 0 2px 2px 2px;
+    margin: 0 2px 2px 2px;
 }

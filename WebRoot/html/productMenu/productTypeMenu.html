@@ -155,23 +155,12 @@
 						</div>
 					</div>
 					<div class="form-group dialog-50">
-						<label for="txt_departmentname" class="dialog-label-20">早餐推荐:</label>
+						<label for="txt_departmentname" class="dialog-label-20">售卖时间段：</label>
 						<div class="dialog-div-75">
-							<font id="productWetherBreakfast"></font>
+							<font id="sellTime"></font>
 						</div>
 					</div>
-					<div class="form-group dialog-50">
-						<label for="txt_departmentname" class="dialog-label-20">午餐推荐:</label>
-						<div class="dialog-div-75">
-							<font id="productWetherLunch"></font>
-						</div>
-					</div>
-					<div class="form-group dialog-50">
-						<label for="txt_departmentname" class="dialog-label-20">晚餐推荐:</label>
-						<div class="dialog-div-75">
-							<font id="productWetherDinner"></font>
-						</div>
-					</div>
+
 					<div class="form-group dialog-50">
 						<label for="txt_departmentname" class="dialog-label-20">是否优惠:</label>
 						<div class="dialog-div-75">
@@ -227,7 +216,7 @@
 	<!-- 遍历的商品 -->
 		<script id="myProductBean" type="text/x-handlebars-template">
 		{{#each rows}}
-			<li class="panel-table-tr-li productLi" productId= "{{id}}" style="height:70px;">
+			<li class="panel-table-tr-li productLi" productId= "{{id}}" style="height:72px;">
 				<ul>
 					<li style="width:30%;"><img src="{{#productLogo logoPath}}{{/productLogo}}"/><span>{{productName}}</span></li>
 					<li style="width:20%;">￥{{productPrice}}</li>

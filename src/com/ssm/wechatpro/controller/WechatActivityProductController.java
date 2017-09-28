@@ -6,9 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ssm.wechatpro.beanmapper.WechatActivityProductService;
 import com.ssm.wechatpro.object.InputObject;
 import com.ssm.wechatpro.object.OutputObject;
+import com.ssm.wechatpro.service.WechatActivityProductService;
 
 @Controller
 public class WechatActivityProductController {

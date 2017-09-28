@@ -10,10 +10,10 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.ssm.wechatpro.beanmapper.WechatActivityProductService;
 import com.ssm.wechatpro.dao.WechatActivityProductMapper;
 import com.ssm.wechatpro.object.InputObject;
 import com.ssm.wechatpro.object.OutputObject;
+import com.ssm.wechatpro.service.WechatActivityProductService;
 
 @Service
 public class WechatActivityProductServiceImpl implements WechatActivityProductService {

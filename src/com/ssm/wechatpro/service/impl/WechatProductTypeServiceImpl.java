@@ -77,7 +77,6 @@ public class WechatProductTypeServiceImpl implements WechatProductTypeService {
 	public void addProductType(InputObject inputObject,OutputObject outputObject) throws Exception {
 		Map<String, Object> params = inputObject.getParams();
 		Map<String, Object> user = inputObject.getLogParams();
-		
 		//判断商品类型名是否存在
 		String typeName = params.get("typeName").toString();
 		if (JudgeUtil.isNull(typeName)){

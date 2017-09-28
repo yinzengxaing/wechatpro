@@ -1,4 +1,4 @@
-package com.ssm.wechatpro.beanmapper;
+package com.ssm.wechatpro.service;
 
 import com.ssm.wechatpro.object.InputObject;
 import com.ssm.wechatpro.object.OutputObject;

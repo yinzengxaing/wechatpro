@@ -15,6 +15,16 @@ function dataInit(){
 }
 
 function eventInit(){
+	
+	// 点击开始结束时间按钮
+	$("input[name=optionsRadios]").on("click", function(){
+		if($(this).val() == "Y"){
+			$("#selectTime").show();
+		}else{
+			$("#selectTime").hide();
+		}
+	});
+	
 	$('#addProductForm').bootstrapValidator({
 		feedbackIcons: {
 			valid: 'glyphicon glyphicon-ok',
@@ -58,11 +68,32 @@ function eventInit(){
 						message: '产品价格长度必须小于6位！'
 					}
 				}
+			},productInteger : {
+				validators: {
+					notEmpty: {
+						message: '产品积分不能为空！'
+					},
+					regexp: {
+						regexp:/^[0-9]+$/,
+			             message: '产品只能是数字！'
+			        }
+				}
 			}
 		}
 	}).on('success.form.bv', function(e) {
+		var startTime = "";
+		var endTime = "";
+		var flag = $("input[name=optionsRadios]:checked").val();
+		if(flag == "Y"){
+			startTime = $("#startTime").val();
+			endTime = $("#endTime").val();
+			if(isNull(startTime) || isNull(endTime)){
+				qiao.bs.msg({msg:"开始结束时间不能为空",type:'danger'});
+				return false;
+			}
+		} 
 		if(imgId==null){
-			 $("#saveMenu").removeAttr("disabled");
+			$("#saveMenu").removeAttr("disabled");
 			qiao.bs.msg({msg:"请选择商品LOGO",type:'danger'});
 		}else{
 			//设置参数
@@ -74,10 +105,10 @@ function eventInit(){
 				productPrice:$('#productPrice').val(),
 				productType : productTypeId,
 				productBrandTag : $('#bandTagMenu').val(),
-				productWetherBreakfast :$('#selectBreakfast input[name="optionsRadios"]:checked ').val(),
-				productWetherLunch : $('#selectLunch input[name="optionsRadios1"]:checked ').val(),
-				productWetherDinner : $('#selectDinner input[name="optionsRadios2"]:checked').val()
-				};
+				startTime : startTime,
+				endTime : endTime,
+				flag : flag,
+			};
 			//进行商品的添加
 			AjaxPostUtil.request({url:path+"/post/WechatProductController/addProduct",params:params,type:'json',callback:function(json){
 				if(json.returnCode == 0){

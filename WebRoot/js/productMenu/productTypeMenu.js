@@ -134,21 +134,7 @@ function eventInit(){
 					$('#productState').html("上线"); 
 				else if (productState == 3)
 					$('#productState').html("审核不通过"); 
-				var productWetherBreakfast = json.bean.productWetherBreakfast;
-				if (productWetherBreakfast == "N")
-					$('#productWetherBreakfast').html("否");
-				else
-					$('#productWetherBreakfast').html("是");
-				var productWetherLunch = json.bean.productWetherLunch;
-				if (productWetherLunch == "N")
-					$('#productWetherLunch').html("否");
-				else
-					$('#productWetherLunch').html("是");
-				var productWetherDinner = json.bean.productWetherDinner;
-				if (productWetherDinner == "N")
-					$('#productWetherDinner').html("否");
-				else
-					$('#productWetherDinner').html("是");		
+				
 				var productWetherDiscount = json.bean.productWetherDiscount;
 				if (productWetherDiscount == "N")
 					$('#productWetherDiscount').html("否");
@@ -161,6 +147,8 @@ function eventInit(){
 				$('#typeName').html(json.bean.typeName);
 				$('#adminNo').html(json.bean.adminNo);
 				$('#productKeyStr').html(json.bean.productKeyStr);	
+				var sellTime = json.bean.startTime + "~" + json.bean.endTime;
+				$("#sellTime").html(sellTime);
 				// 显示查看商品的模态框
 				$("#myModalShowProduct").modal("show");
 			}

@@ -28,4 +28,6 @@ public interface WechatProductMapper {
 	//查询所有的商品类别
 	public List<Map<String, Object>> getProductTypeList() throws Exception;
 	
+	// 查询商品中最大的优先级
+	public Map<String, Object> selectMaxPriority()throws Exception;
 }

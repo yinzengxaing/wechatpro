@@ -181,7 +181,6 @@ public class WechatUserServiceImpl implements WechatUserService {
 	public void selectLatitudeAndLongtitude(InputObject inputObject,OutputObject outputObject) throws Exception {
 		
 		Map<String,Object> map = inputObject.getWechatLogParams();//获取openid
-		System.out.println(map);
 		outputObject.setBean(map);
 	}
 	

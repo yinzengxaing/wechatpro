@@ -14,6 +14,16 @@ function dataInit(){
 }
 
 function eventInit(){
+	
+	// 点击开始结束时间按钮
+	$("input[name=optionsRadios]").on("click", function(){
+		if($(this).val() == "Y"){
+			$("#selectTime").show();
+		}else{
+			$("#selectTime").hide();
+		}
+	});
+	
 	//表单的验证
 	$('#addProductForm').bootstrapValidator({
 		feedbackIcons: {
@@ -61,6 +71,17 @@ function eventInit(){
 			}
 		}
 	}).on('success.form.bv', function(e) {
+		var startTime = "";
+		var endTime = "";
+		var flag = $("input[name=optionsRadios]:checked").val();
+		if(flag == "Y"){
+			startTime = $("#startTime").val();
+			endTime = $("#endTime").val();
+			if(isNull(startTime) || isNull(endTime)){
+				qiao.bs.msg({msg:"开始结束时间不能为空",type:'danger'});
+				return false;
+			}
+		} 
 		if(imgId==null){
 			 $("#saveMenu").removeAttr("disabled");
 			qiao.bs.msg({msg:"请选择商品LOGO",type:'danger'});
@@ -75,9 +96,9 @@ function eventInit(){
 				productPrice:$('#productPrice').val(),
 				productType : $("#typeMenu").val(),
 				productBrandTag : $('#bandTagMenu').val(),
-				productWetherBreakfast :$('#selectBreakfast input[name="optionsRadios"]:checked ').val(),
-				productWetherLunch : $('#selectLunch input[name="optionsRadios1"]:checked ').val(),
-				productWetherDinner : $('#selectDinner input[name="optionsRadios2"]:checked').val()
+				startTime : startTime,
+				endTime : endTime,
+				flag : flag,
 				}
 			//进行商品的修改
 			AjaxPostUtil.request({url:path+"/post/WechatProductController/updateProduct",params:params,type:'json',callback:function(json){
@@ -187,36 +208,23 @@ function setData(){
 			id: id
 	};
 	AjaxPostUtil.request({url:path+"/post/WechatProductController/getPrductById",params:params,type:'json',callback:function(json){
-		$('#productName').val(json.bean.productName);
-		$("#logo").attr('src',path+"/"+json.bean.productLogo);
-		imgId = json.bean.imgId;
-		$('#productIntegral').val(json.bean.productIntegral);
-		$('#productDesc').val(json.bean.productDesc);
-		$('#productPrice').val(json.bean.productPrice);
-		$("#typeMenu").val(json.bean.productType);
-		$("#bandTagMenu").val(json.bean.productBrandTag);
-		var productWetherBreakfast =  json.bean.productWetherBreakfast
-		var productWetherLunch =  json.bean.productWetherLunch
-		var productWetherDinner =  json.bean.productWetherDinner
-		if (productWetherBreakfast == "Y")
-			$("#selectBreakfastY").attr("checked","checked");
-		else
-			$("#selectBreakfastN").attr("checked","checked");
-
-		if (productWetherLunch == "Y")
-			$("#selectLunchY").attr("checked","checked");
-		else
-			$("#selectLunchN").attr("checked","checked");
-		
-		if (productWetherDinner == "Y")
-			$("#selectDinnerY").attr("checked","checked");
-		else
-			$("#selectDinnerN").attr("checked","checked");
-	}
+			$('#productName').val(json.bean.productName);
+			$("#logo").attr('src',path+"/"+json.bean.productLogo);
+			imgId = json.bean.imgId;
+			$('#productIntegral').val(json.bean.productIntegral);
+			$('#productDesc').val(json.bean.productDesc);
+			$('#productPrice').val(json.bean.productPrice);
+			$("#typeMenu").val(json.bean.productType);
+			$("#bandTagMenu").val(json.bean.productBrandTag);
+			$("#startTime").val(json.bean.startTime);
+			$("#endTime").val(json.bean.endTime);
+			if(json.bean.startTime != "00:00"){
+				$("#selectTime").show();
+				$("#optionsRadios1").attr("checked", "true");
+			}else{
+				$("#selectTime").hide();
+				$("#optionsRadios2").attr("checked", "true");
+			}
+		}
 	});
-	
 }
-
-
-
-

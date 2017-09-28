@@ -41,10 +41,8 @@
 			product.productPrice AS productPrice ,
 			product.productLogo AS productLogo,
 			product.productState AS productState,
-			product.productWetherBreakfast AS productWetherBreakfast ,
-			product.productWetherLunch AS productWetherLunch ,
-			product.productWetherDinner AS productWetherDinner ,
-			product.productWetherDiscount AS productWetherDiscount ,
+			product.startTime AS startTime,
+			product.endTime AS endTime,
 			product.productIntegral AS productIntegral ,
 			product.productKeyStr AS productKeyStr,
 			product.productOpinion AS productOpinion,
@@ -74,10 +72,8 @@
 			product.productPrice AS productPrice ,
 			product.productLogo AS productLogo,
 			product.productState AS productState,
-			product.productWetherBreakfast AS productWetherBreakfast ,
-			product.productWetherLunch AS productWetherLunch ,
-			product.productWetherDinner AS productWetherDinner ,
-			product.productWetherDiscount AS productWetherDiscount ,
+			product.startTime AS startTime,
+			product.endTime AS endTime,
 			product.productIntegral AS productIntegral ,
 			product.productKeyStr AS productKeyStr,
 			product.createTime AS createTime,
@@ -95,6 +91,7 @@
 		AND product.productType = type.id
 		AND admin_login.id = product.createId
 		AND product.productName = #{productName}
+		AND product.productState = 2
 	</select>
 	
 	<select id="selectProductType" resultType="java.util.Map" parameterType="java.util.Map">
@@ -119,25 +116,34 @@
 			productPrice,
 			productLogo,
 			productType,
-			productWetherBreakfast,
-			productWetherLunch,
-			productWetherDinner,
-			productWetherDiscount,
+			<if test="startTime != null and startTime != '' ">
+			startTime,
+			</if>
+			<if test="endTime != null and endTime != '' ">
+			endTime,
+			</if>
 			productIntegral,
 			productKeyStr,
 			productBrandTag,
 			createId,
 			createTime,
-			productOpinion
+			productOpinion,
+			productPriority
 		)
 		VALUES
 			(
 				<if test="productDesc != null and productDesc != '' ">
 				#{productDesc},
 				</if>
-				#{productName},#{productPrice},#{productLogo},#{productType},#{productWetherBreakfast},#{productWetherLunch},
-				#{productWetherDinner},#{productWetherDiscount},#{productIntegral},#{productKeyStr},#{productBrandTag},#{createId},#{createTime},
-				#{productOpinion}
+				#{productName},#{productPrice},#{productLogo},#{productType},
+				<if test="startTime != null and startTime != '' ">
+				#{startTime},
+				</if>
+				<if test="endTime != null and endTime != '' ">
+				#{endTime},
+				</if>
+				#{productIntegral},#{productKeyStr},#{productBrandTag},#{createId},#{createTime},
+				#{productOpinion}, #{productPriority}
 			)
 	</insert>
 
@@ -166,17 +172,11 @@
 		<if test="productType != null and productType != '' ">
 				productType = #{productType},
 		</if>
-		<if test="productWetherBreakfast != null and productWetherBreakfast != '' ">
-				productWetherBreakfast = #{productWetherBreakfast},
+		<if test="startTime != null and startTime != '' ">
+				startTime = #{startTime},
 		</if>
-		<if test="productWetherLunch != null and productWetherLunch != '' ">
-				productWetherLunch = #{productWetherLunch},
-		</if>
-		<if test="productWetherDinner != null and productWetherDinner != '' ">
-				productWetherDinner = #{productWetherDinner},
-		</if>
-		<if test="productWetherDiscount != null and productWetherDiscount != '' ">
-				productWetherDiscount = #{productWetherDiscount},
+		<if test="endTime != null and endTime != '' ">
+				endTime = #{endTime},
 		</if>
 		<if test="productIntegral != null and productIntegral != '' ">
 				productIntegral = #{productIntegral},
@@ -230,4 +230,13 @@
 				
 	</select>
 	
+	<!-- 获得商品中优先级最大的 -->
+	<select id="selectMaxPriority" resultType="java.util.Map">
+		SELECT
+			MAX(productPriority) AS productPriority
+		FROM
+			wechat_product
+		WHERE
+			productState = 2
+	</select>
 </mapper>          

@@ -105,11 +105,13 @@ public class WechatProductServiceImpl implements WechatProductService {
 			outputObject.setreturnMessage("商品价格不能为空！");
 			return;
 		}
-		//判断商品积分不能为0
-		String productIntegral = map.get("productIntegral").toString();
-		if(productIntegral.equals("0")){
-			outputObject.setreturnMessage("商品积分不能为0!");
-			return;
+		// 判断开始时间是否大于结束时间
+		String startTime = map.get("startTime") + "";
+		String endTime = map.get("endTime") + "";
+		String flag = map.get("flag") + "";
+		if(flag.endsWith("Y") && startTime.compareTo(endTime) > 0){
+			outputObject.setreturnMessage("开始时间不能大于结束时间");
+			return ;
 		}
 		//价格进行转型
 		try {
@@ -124,8 +126,13 @@ public class WechatProductServiceImpl implements WechatProductService {
 			outputObject.setreturnMessage("该产品名称已经存在，请重新输入！");
 			return;
 		}
-		//加入创建时优惠状态 默认不优惠
-		map.put("productWetherDiscount", "N");
+		int maxCount = 0; // 表示商品的优先级
+		// 查询优先级
+		Map<String, Object> maxPriorityCount = wechatProductMapper.selectMaxPriority();
+		if(Integer.parseInt((maxPriorityCount.get("productPriority")+"")) >= 0){
+			maxCount = Integer.parseInt((maxPriorityCount.get("productPriority")+""));
+		}
+		maxCount += 1;
 		//加入创建人id即为当前用户
 		map.put("createId", user.get("id"));
 		//加入创建时间
@@ -134,6 +141,8 @@ public class WechatProductServiceImpl implements WechatProductService {
 		map.put("productKeyStr", DateUtil.getToString());
 		//添加时产品的审核意见为空
 		map.put("productOpinion", "");
+		// 商品优先级
+		map.put("productPriority", maxCount);
 		wechatProductMapper.addProduct(map);
 	}
 	/**
@@ -160,12 +169,6 @@ public class WechatProductServiceImpl implements WechatProductService {
 		String productPriceStr = map.get("productPrice").toString();
 		if (JudgeUtil.isNull(productPriceStr)){
 			outputObject.setreturnMessage("商品价格不能为空！");
-			return;
-		}
-		//判断商品积分不能为0
-		String productIntegral = map.get("productIntegral").toString();
-		if(productIntegral.equals("0")){
-			outputObject.setreturnMessage("商品积分不能为0!");
 			return;
 		}
 		//价格进行转型

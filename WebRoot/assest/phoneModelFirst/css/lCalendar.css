@@ -1,4 +1,6 @@
-.gearDate,.gearDatetime,.gearTime {
+.gearDate,
+.gearDatetime,
+.gearTime {
 	font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
 	font-size: 10px;
 	background-color: rgba(0, 0, 0, 0.2);
@@ -35,32 +37,33 @@
 	-webkit-animation: slideInUp .3s ease-in
 }
 
-@
--webkit-keyframes slideInUp {from { -webkit-transform:translate3d(0,
-	100%, 0);
-	transform: translate3d(0, 100%, 0)
+@-webkit-keyframes slideInUp {
+	from {
+		-webkit-transform: translate3d(0, 100%, 0);
+		transform: translate3d(0, 100%, 0)
+	}
+	to {
+		-webkit-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0)
+	}
 }
 
-to {
-	-webkit-transform: translate3d(0, 0, 0);
-	transform: translate3d(0, 0, 0)
-}
-
-}
-.date_roll,.datetime_roll,.time_roll {
+.date_roll,
+.datetime_roll,
+.time_roll {
 	display: -webkit-box;
 	width: 100%;
 	height: auto;
 	overflow: hidden;
 	font-weight: bold;
 	background-color: transparent;
-	-webkit-mask: -webkit-gradient(linear, 0% 50%, 0% 100%, from(#debb47),
-		to(rgba(36, 142, 36, 0) ) );
-	-webkit-mask: -webkit-linear-gradient(top, #debb47 50%, rgba(36, 142, 36, 0)
-		)
+	-webkit-mask: -webkit-gradient(linear, 0% 50%, 0% 100%, from(#debb47), to(rgba(36, 142, 36, 0)));
+	-webkit-mask: -webkit-linear-gradient(top, #debb47 50%, rgba(36, 142, 36, 0))
 }
 
-.date_roll>div,.datetime_roll>div,.time_roll>div {
+.date_roll>div,
+.datetime_roll>div,
+.time_roll>div {
 	font-size: 2.3em;
 	height: 6em;
 	float: left;
@@ -71,10 +74,8 @@ to {
 }
 
 .date_roll_mask {
-	-webkit-mask: -webkit-gradient(linear, 0% 40%, 0% 0%, from(#debb47),
-		to(rgba(36, 142, 36, 0) ) );
-	-webkit-mask: -webkit-linear-gradient(bottom, #debb47 50%, rgba(36, 142, 36, 0)
-		);
+	-webkit-mask: -webkit-gradient(linear, 0% 40%, 0% 0%, from(#debb47), to(rgba(36, 142, 36, 0)));
+	-webkit-mask: -webkit-linear-gradient(bottom, #debb47 50%, rgba(36, 142, 36, 0));
 	padding: 0 0 3em 0
 }
 
@@ -82,7 +83,8 @@ to {
 	-webkit-box-flex: 2
 }
 
-.date_roll>div:nth-child(1),.datetime_roll>div:nth-child(1) {
+.date_roll>div:nth-child(1),
+.datetime_roll>div:nth-child(1) {
 	-webkit-box-flex: 4
 }
 
@@ -136,13 +138,11 @@ to {
 	right: 0.5em;
 	/*border: 1px solid red;*/
 }
-
-.time_roll>div .date_grid { /*border: 1px solid black;*/
-	
-}
-
+.time_roll>div .date_grid{
+	/*border: 1px solid black;*/
+} 
 .time_roll>div .date_grid>div {
-	right: 1em;
+	right:1em;
 	/*border: 1px solid blue;*/
 }
 
