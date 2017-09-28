@@ -4351,8 +4351,6 @@ ul.messagesList li span.date {
 	margin: 10px 14%;
 	height:700px;
 	border-radius:5px;
-	background:#fff;
-	padding: 0px 0px 0px 37px;
 }
 .wrap_bottom_bar_h2{
 	line-height: 50px;
@@ -4408,27 +4406,38 @@ ul.messagesList li span.date {
 	width:80%;
 }
 .myModal4_span b{
-	margin:0 14px;
+	margin:0 2px;
 }
 .myModal4_span a{
 	padding:8px 10px;
 	border:1px solid #dbdce0;
 	color:#4c5165;
 }
-.myModal4_span .myModal4_definy{
+
+  .myModal4_span .myModal4_definy{
 	background:#54a7f4;
 	color:#fff;
-}
-.myModal4_span div{
+} 
+ .myModal4_span div{
 	display:inline-block;
-	margin-bottom:16px;
-}
+	/* margin-bottom:16px; */
+} 
+
 .myModal4_span button{
 	margin-left:225px;
 }
 .myModal4_span ul li{
 	list-style:none;
 	margin-left: 64px;
+}
+.allweek{
+	margin-bottom:10px;
+	height:30px;
+}
+.allday{
+	height:50px;
+	padding:10px 0;
+	margin-top:10px;
 }
 .myModal4_span p{
 	color:#54a7f4;
@@ -4473,6 +4482,74 @@ ul.messagesList li span.date {
 }
 .panel-body1 input{
 	float:right;
+}
+/* .modal-body-mymodal5{
+	width:120%;
+} */
+.ios_firstdiv{
+	width:100%;
+	height:50px;
+	background:#fff;
+	border-radius: 4px;
+	font-size: 14px;
+    padding: 15px 10px;
+}
+.ios_firstdiv span{
+	margin-left: 30px;
+}
+.ios_seconddiv{
+	width:100%;
+	height:auto;
+	background:#fff;
+	border-radius: 4px;
+	font-size: 14px;
+	margin:25px 0px 15px 0px;
+}
+.ios_seconddivup{
+	width:100%;
+	height: auto;
+}
+.ios_seconddivdown{
+	width:100%;
+	clear:both;
+	padding:10px;
+}
+.ios_seconddivupleft{
+	float:left;
+	color:#fff;
+    font-size: 18px;
+    padding: 5px 9px;
+    background: blueviolet;
+    border-radius: 5px;
+    margin: 15px 0px 15px 15px;
+}
+.ios_seconddivupcenter{
+	float:left;
+	padding: 10px;
+}
+.ios_seconddivupcenter span{
+	margin-left:5px;
+}
+.ios_seconddivupright{
+	float:right;
+	margin-top: 14px;
+}
+.ios_seconddivupright button{
+	padding:8px 20px;
+	border:1px solid #cdcdcd;
+	margin-right:10px;
+}
+.ios_seconddivdownlist{
+	margin-bottom:5px;
+}
+.lookdetailsmodel_first{
+	width: 70px;
+    height: 40px;
+    line-height: 40px;
+    background: white;
+    text-align: center;
+    font-weight: 600;
+    border-top: 2px solid dodgerblue;
 }
 /***********************************************自建活动结束********************************************************/
 /* .pagination>.active>a{
