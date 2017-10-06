@@ -1,18 +1,44 @@
-
 var code = "";
 var base = null;
 
 $(function(e){
-	//轮播图自动播放
-	 $('#carousel-ad').carousel({
-         interval: 2500
-       });
-	receiveData();
-	dataInit();
+	showMask();
+	 //加载轮播图图片
+	 AjaxPostUtil.request({url:path+"/gateway/WechatScollorPicController/selectAllScollorList",params:{},type:'json',callback:function(json){
+		 if(json.returnCode==0){
+			 if (json.total > 0){
+				 //填充数据
+				 for (var i=0;i<json.total;i=i*1+1){
+					 if (i==0){
+						 $("#olList").append("<li data-target='#carousel-ad' data-slide-to="+i+" class='active'></li>");
+					 }else{
+						 $("#olList").append("<li data-target='#carousel-ad' data-slide-to="+i+"></li>");
+					 }
+				 }
+			 //对产品productLogo进行修饰
+				 Handlebars.registerHelper("optionPath",function(v1,options){
+					 return path+"/"+v1;
+			});
+			var source = $("#adBean").html();
+			var template = Handlebars.compile(source);
+			$("#adListDiv").html(template(json));
+			
+			$(".img").each(function(index){
+		    if (index == 0){
+		    	$(this).addClass("active");
+		    }
+		    });
+				//轮播图自动播放
+				 $('#carousel-ad').carousel({
+			         interval: 2500
+			       });
+				 dataInit();
+			}
+		 }
+		 }});
 });
 
 function dataInit(){
-	showMask();
 	code = $.req("code");
 	base = new Base64();
 	AjaxPostUtil.request({url:path+"/gateway/WechatUserController/selectLatitudeAndLongtitude",params:{},type:'json',callback:function(json){
@@ -54,13 +80,14 @@ function dataInit(){
 		}else{
 			location.href = 'sessionNull.html';
 		}
-		hideMask();
 	}});
 	eventInit();
 }
 
+
 //事件
 function eventInit(){
+	 hideMask();
 	//开始点餐按钮点击事件
 	$('body').on('click','#begin_eat_btn',function(e){
 		location.href="restaurantList.html";

@@ -29,17 +29,17 @@
 			
 			<!-- 轮播图广告位 -->
 		<div id="carousel-ad" class="carousel slide" data-ride="carousel">
-			<ol class="carousel-indicators">
-				<li data-target="#carousel-ad" data-slide-to="0" class="active"></li>
+			<ol class="carousel-indicators" id="olList">
+<!-- 				<li data-target="#carousel-ad" data-slide-to="0" class="active"></li>
 				<li data-target="#carousel-ad" data-slide-to="1"></li>
 				<li data-target="#carousel-ad" data-slide-to="2"></li>
-				<li data-target="#carousel-ad" data-slide-to="3"></li>
+				<li data-target="#carousel-ad" data-slide-to="3"></li> -->
 			</ol>
-			<div class="carousel-inner" role="listbox" style="width: 100%;height: 100%;">
-				<div class="item">
+			<div class="carousel-inner" role="listbox" style="width: 100%;height: 100%;" id="adListDiv">
+<!-- 			<div class="item active">
 					<img class="img-responsive" src="../../assest/img/index_04.png" style="width: 100%;height: 100%;">
 				</div>
-				<div class="item active">
+				<div class="item">
 					<img class="img-responsive" src="../../assest/img/index_02.png" style="width: 100%;height: 100%;">
 				</div>
 				<div class="item">
@@ -47,7 +47,7 @@
 				</div>
 				<div class="item">
 					<img class="img-responsive" src="../../assest/img/index_01.png" style="width: 100%;height: 100%;">
-				</div>
+				</div> -->
 			</div>
 		</div>
 
@@ -104,8 +104,16 @@
 	</div>
 		<!-- 加载遮罩层 -->
 	<div id="mask" class="mask"></div>  
-  </body>
   
+  	<!-- 获取广告列表 -->
+	<script id="adBean" type="text/x-handlebars-template">
+		{{#each rows}}
+			<div class="item  img">
+				<img class="img-responsive" src="{{#optionPath optionPath}}{{/optionPath}}" style="width: 100%;height: 100%;">
+			</div>
+		{{/each}}
+	</script>
+	
   	<script type="text/javascript" src="../../assest/js/jquery.js"></script>
 	<script type="text/javascript" src="../../assest/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="../../assest/phoneModelFirst/js/aui-swipe.js"></script>
@@ -114,6 +122,8 @@
 	<script type="text/javascript" src="../../js/util/main.js"></script>
 	<script type="text/javascript" src="../../js/util/handlebars-v4.0.5.js"></script>
 	<script type="text/javascript" src="../../js/phoneModelOne/common/common.js"></script>
-	<script type="text/javascript" src="../../js/phoneModelOne/common/navigate.js"></script>
+	<script type="text/javascript" src="../../js/phoneModelOne/common/navigate.js"></script> 
 	<script type="text/javascript" src="../../js/phoneModelOne/index.js"></script>
+	
+  </body>
 </html>

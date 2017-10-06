@@ -66,6 +66,18 @@ public class WechatScollorPicController {
 	}
 	
 	/**
+	 * 手机端查看广告
+	 * @param inputObject
+	 * @param outputObject
+	 * @throws Exception
+	 */
+	@RequestMapping("/gateway/WechatScollorPicController/selectAllScollorList")
+	@ResponseBody
+	public void selectAllScollorList(InputObject inputObject, OutputObject outputObject) throws Exception {
+		wechatScollorPicService.selectAllScollorList(inputObject, outputObject);
+	}
+	
+	/**
 	 * 编辑一条广告
 	 * @param inputObject
 	 * @param outputObject

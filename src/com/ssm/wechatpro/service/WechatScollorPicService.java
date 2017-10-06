@@ -13,19 +13,5 @@ public interface WechatScollorPicService {
 
 	public void selectById(InputObject inputObject, OutputObject outputObject) throws Exception;
 	
-	//public void updateScoller(InputObject inputObject, OutputObject outputObject) throws Exception;
-	
-	/*
-	public void updateFbScollor(InputObject inputObject, OutputObject outputObject) throws Exception;
-	
-	public void updateSxScollor(InputObject inputObject, OutputObject outputObject) throws Exception;
-	
-	public void updateXxScollor(InputObject inputObject, OutputObject outputObject) throws Exception;
-	
-	public void updateQxFbScollor(InputObject inputObject, OutputObject outputObject) throws Exception;
-	
-	public void selectFiveScollor(InputObject inputObject, OutputObject outputObject) throws Exception;
-	
-	public void updateScollorNum(InputObject inputObject, OutputObject outputObject) throws Exception;
-	*/
+	public void selectAllScollorList(InputObject inputObject, OutputObject outputObject) throws Exception;
 }

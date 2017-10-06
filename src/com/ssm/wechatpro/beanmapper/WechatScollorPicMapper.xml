@@ -31,6 +31,8 @@
 		<if test="scollor_pic_name != '' and scollor_pic_name != null">
 			and scollor_pic_name like '%${scollor_pic_name}%'
 		</if>
+	    ORDER BY
+				id DESC
 	</select>
 	
 	<!-- 删除一条广告 -->
@@ -54,6 +56,26 @@
 		WHERE
 			id = #{id}
 	</select>
+	
+	<!--  手机端显示广告 -->
+	<select id="selectAllScollorList" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			a.id,
+			a.scollor_pic_name,
+			a.scollor_pic_path,
+			a.scollor_pic_data,
+			b.optionPath
+		FROM
+			wechat_scollor_pic AS a,
+			wechat_option AS b
+		WHERE
+			 a.scollor_pic_path = b.id
+     	ORDER BY
+			a.id DESC
+			 
+	
+	</select>
+	
 	
 	<!-- 编辑广告 
 	<update id="updateScoller" parameterType="java.util.Map">

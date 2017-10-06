@@ -122,132 +122,19 @@ public class WechatScollorPicServiceImpl implements WechatScollorPicService{
 		}
 		outputObject.setBean(bean);
 	}
-
-	/**
-	 * 编辑通知
-	 * @param inputObject
-	 * @param outputObject
-	 * @throws Exception
-	 
-	@Override
-	public void updateScoller(InputObject inputObject, OutputObject outputObject) throws Exception {
-		Map<String,Object> map = inputObject.getParams();
-		if(!ToolUtil.contains(map, Constants.SCOLLOR_PIC, Constants.SCOLLOR_PIC_RETURNMESSAGE, inputObject, outputObject)){
-			return;
-		}
-		wechatScollorPicMapper.updateScoller(map);
-	}*/
-
-	/**
-	 * 发布通知
-	 * @param inputObject
-	 * @param outputObject
-	 * @throws Exception
-	 
-	@Override
-	public void updateFbScollor(InputObject inputObject,OutputObject outputObject) throws Exception {
-		Map<String,Object> map = inputObject.getParams();
-		if(!ToolUtil.contains(map, Constants.SCOLLOR_PIC, Constants.SCOLLOR_PIC_RETURNMESSAGE, inputObject, outputObject)){
-			return;
-		}
-		Map<String,Object> bean = new HashMap<>();
-		bean.put("scollor_num", map.get("scollor_num").toString());
-		if(wechatScollorPicMapper.selectScollorNum(bean) != null){
-			outputObject.setreturnMessage("已发布的通知中该展示顺序已存在");
-			return;
-		}
-		wechatScollorPicMapper.updateFbScollor(map);
-	}*/
-
-	/**
-	 * 上线
-	 * @param inputObject
-	 * @param outputObject
-	 * @throws Exception
-	 
-	@Override
-	public void updateSxScollor(InputObject inputObject,OutputObject outputObject) throws Exception {
-		Map<String,Object> map = inputObject.getParams();
-		if(!ToolUtil.contains(map, Constants.SCOLLOR_PIC, Constants.SCOLLOR_PIC_RETURNMESSAGE, inputObject, outputObject)){
-			return;
-		}
-		wechatScollorPicMapper.updateSxScollor(map);
-	}*/
-
-	/**
-	 * 下线
-	 * @param inputObject
-	 * @param outputObject
-	 * @throws Exception
-	 
-	@Override
-	public void updateXxScollor(InputObject inputObject,OutputObject outputObject) throws Exception {
-		Map<String,Object> map = inputObject.getParams();
-		if(!ToolUtil.contains(map, Constants.SCOLLOR_PIC, Constants.SCOLLOR_PIC_RETURNMESSAGE, inputObject, outputObject)){
-			return;
-		}
-		wechatScollorPicMapper.updateXxScollor(map);
-	}*/
-
-	/**
-	 * 取消发布
-	 * @param inputObject
-	 * @param outputObject
-	 * @throws Exception
-	 
-	@Override
-	public void updateQxFbScollor(InputObject inputObject,OutputObject outputObject) throws Exception {
-		Map<String,Object> map = inputObject.getParams();
-		if(!ToolUtil.contains(map, Constants.SCOLLOR_PIC, Constants.SCOLLOR_PIC_RETURNMESSAGE, inputObject, outputObject)){
-			return;
-		}
-		wechatScollorPicMapper.updateQxFbScollor(map);
-	}*/
-
-	/**
-	 * 查询前五条已发布并已上线的通知
-	 * @param inputObject
-	 * @param outputObject
-	 * @throws Exception
-	 
-	@Override
-	public void selectFiveScollor(InputObject inputObject,OutputObject outputObject) throws Exception {
-		Map<String,Object> map = inputObject.getParams();
-		List<Map<String,Object>> beans = wechatScollorPicMapper.selectFiveScollor(map);
-		for (Map<String, Object> bean : beans) {//遍历每一条通知，获取每一条图片的路径
-			if(bean.containsKey("scollor_pic_path")){
-				if(!JudgeUtil.isNull(bean.get("scollor_pic_path").toString())){
-					Map<String,Object> upload = new HashMap<>();
-					upload.put("id", bean.get("scollor_pic_path").toString());
-					Map<String,Object> tupian = uploadMapper.selectById(upload);
-					if(tupian!=null){
-						bean.put("optionPath", tupian.get("optionPath").toString());
-					}
-				}
-			}
-		}
-		outputObject.setBeans(beans);
-	}*/
-
-	/**
-	 * 修改展示顺序
-	 * @param inputObject
-	 * @param outputObject
-	 * @throws Exception
 	
+	
+	/**
+	 * 手机端显示广告图片
+	 * @param inputObject
+	 * @param outputObject
+	 * @throws Exception
+	 */
 	@Override
-	public void updateScollorNum(InputObject inputObject,OutputObject outputObject) throws Exception {
-		Map<String,Object> map = inputObject.getParams();
-		if(!ToolUtil.contains(map, Constants.SCOLLOR_PIC, Constants.SCOLLOR_PIC_RETURNMESSAGE, inputObject, outputObject)){
-			return;
-		}
-		Map<String,Object> num = wechatScollorPicMapper.selectScollorNum(map);
-		if(num == null){
-			wechatScollorPicMapper.updateScollorNum(map);
-		}else{
-			wechatScollorPicMapper.updateScollorNum(map);
-			num.put("scollor_num", Constants.SCOLLOR_NUM);//将其排列顺序变为0
-			wechatScollorPicMapper.updateScollorNum(num);
-		}
-	} */
+	public void selectAllScollorList(InputObject inputObject,OutputObject outputObject) throws Exception {
+		List<Map<String,Object>> selectAllScollorList = wechatScollorPicMapper.selectAllScollorList();
+		outputObject.setBeans(selectAllScollorList);
+		outputObject.settotal(selectAllScollorList.size());
+	}
+	
 }

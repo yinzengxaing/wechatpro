@@ -17,6 +17,9 @@ public interface WechatScollorPicMapper {
 	
 	public int updateScoller(Map<String,Object> map) throws Exception;
 	
+	//手机端获取所有的广告
+	public List<Map<String, Object>> selectAllScollorList() throws Exception;
+	
 	/*
 	public int updateFbScollor(Map<String,Object> map) throws Exception;
 	

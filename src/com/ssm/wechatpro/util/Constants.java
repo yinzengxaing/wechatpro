@@ -8,12 +8,12 @@ public class Constants {
 	
 	public static final String WECHAT_PAY_FOR_PREPAY_ID_URL = "ihttps://api.mch.wexin.qq.com/pay/unifiedorder";//微信统一支付获取prepay_id接口
 	
-	public static final String WECHAT_FOR_SIGNATURE = "http://c17142736j.iok.la/wechatpro/html/phoneModelOne/orderList.html";//测试使用
+	public static final String WECHAT_FOR_SIGNATURE = "http://1z714d2727.51mypc.cn/wechatpro/html/phoneModelOne/orderList.html";//测试使用
 	public static final String KEY  = "276ef476761549c3bd9853a2ceba5eb7";//商户平台的key值//测试使用
 	public static final String APPSECRET = "946bd10ae09c79733e7def85ff0a3f62";//测试使用
 	public static final String APPID = "wxf5179dd713bc6e36";//测试使用
 	public static final String MCH_ID ="1364180602";//商户号ID 测试使用
-	public static final String PATH = "http://c17142736j.iok.la/wechatpro";//测试使用
+	public static final String PATH = "http://1z714d2727.51mypc.cn/wechatpro";//测试使用
 	
 //	public static final String WECHAT_FOR_SIGNATURE = "http://z1714z2699.imwork.net/wechatpro/html/phoneModelOne/orderList.html?adminId=";//主账号
 //	public static final String KEY  = "5EC4C1E34DF34589826C49375EF14FB3";//商户平台的key值//主账号
