@@ -85,7 +85,8 @@
 			orderInf.orderEatTime
 		END AS orderEatTime,
 			mation.adminId AS shopId,
-			mation.adminShopName
+			mation.adminShopName,
+			orderInf.wetherPayment
 		FROM
 			${tableName} AS orderInf,
 			wechat_admin_login_mation AS mation
@@ -95,10 +96,10 @@
 			AND orderInf.orderAdminId = #{orderAdminId}
 		</if>
 		<if test="preTime != null and preTime !=''">
-			AND orderInf.wetherPaymentTime >= #{preTime}
+			AND orderInf.lastUpdateTime >= #{preTime}
 		</if>
-		AND  #{nowTime} >= orderInf.wetherPaymentTime
+		AND  #{nowTime} >= orderInf.lastUpdateTime
 		AND orderInf.orderNumber LIKE "%${nowDay}%"
-		AND wetherPayment=1
+		AND wetherPayment != 0
 	</select>
 </mapper>

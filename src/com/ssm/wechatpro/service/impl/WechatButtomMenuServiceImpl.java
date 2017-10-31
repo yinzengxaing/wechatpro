@@ -357,9 +357,11 @@ public class WechatButtomMenuServiceImpl implements WechatButtomMenuService {
 		if(map.get("menuLevel").toString().equals("2")){//如果是二级菜单
 			//直接根据id删除该项
 			wechatButtomMenuMapper.deleteButtomById(params);
+			//获取该二级菜单所属的一级菜单
 			map.put("id", map.get("menuBelong"));
 			List<Map<String,Object>> buttoms = wechatButtomMenuMapper.selectMenuByBelong(map);
-			if(buttoms.isEmpty()){
+			////判断该二级菜单所属的一级菜单是还有子节点
+			if(buttoms.isEmpty()){//若为空的此一级菜单的是否有子孩子的属性设置为0
 				Map<String,Object> updatebuttom = new HashMap<>();
 				updatebuttom.put("id", map.get("menuBelong"));
 				updatebuttom.put("hasChild",'0');

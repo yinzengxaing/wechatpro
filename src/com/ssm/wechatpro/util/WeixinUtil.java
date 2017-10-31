@@ -1,24 +1,28 @@
 package com.ssm.wechatpro.util;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.KeyStore;
+import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 
+import net.sf.json.JSONObject;
+
 import com.ssm.wechatpro.bean.wechat.AccessToken;
 import com.ssm.wechatpro.bean.wechat.Menu;
 import com.ssm.wechatpro.manager.MyX509TrustManager;
-
-import net.sf.json.JSONObject;
 
 /**
  * 公众平台通用接口工具类
@@ -170,4 +174,99 @@ public class WeixinUtil {
        }
        return 0;
     }
+    
+    /**
+     * 获取微信支付退款的认证证书凭证
+     */
+	public static void getApiKey() throws Exception{
+		
+/*		  	KeyStore keyStore  = KeyStore.getInstance("PKCS12");
+	        FileInputStream instream = new FileInputStream(new File(Constants.SSL_PATH));
+	        try {
+	            keyStore.load(instream, Constants.MCH_ID.toCharArray());
+	        } finally {
+	            instream.close();
+	        }
+
+	        // Trust own CA and all self-signed certs
+	        @SuppressWarnings("deprecation")
+			SSLContext sslcontext = SSLContexts.custom()
+	                .loadKeyMaterial(keyStore, Constants.MCH_ID.toCharArray())
+	                .build();
+	        // Allow TLSv1 protocol only
+	        @SuppressWarnings({ "deprecation"})
+			SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
+	                sslcontext,
+	                new String[] { "TLSv1" },
+	                null,
+	                SSLConnectionSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER);
+	        CloseableHttpClient httpclient = HttpClients.custom()
+	                .setSSLSocketFactory(sslsf)
+	                .build();
+	        try {
+
+	            HttpGet httpget = new HttpGet("https://api.mch.weixin.qq.com/secapi/pay/refund");
+
+	            System.out.println("executing request" + httpget.getRequestLine());
+
+	            CloseableHttpResponse response = httpclient.execute(httpget);
+	            try {
+	                HttpEntity entity = response.getEntity();
+
+	                System.out.println("----------------------------------------");
+	                System.out.println(response.getStatusLine());
+	                if (entity != null) {
+	                    System.out.println("Response content length: " + entity.getContentLength());
+	                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(entity.getContent()));
+	                    String text;
+	                    while ((text = bufferedReader.readLine()) != null) {
+	                        System.out.println(text);
+	                    }
+	                   
+	                }
+	                EntityUtils.consume(entity);
+	            } finally {
+	                response.close();
+	            }
+	        } finally {
+	            httpclient.close();
+	        }
+    }*/
+		
+		// 证书文件(微信商户平台-账户设置-API安全-API证书-下载证书)
+		String keyStorePath = Constants.SSL_PATH;
+		// 证书密码（默认为商户ID）
+		String password = Constants.MCH_ID;
+		// 实例化密钥库
+		KeyStore ks = KeyStore.getInstance("PKCS12");  
+		// 获得密钥库文件流
+		FileInputStream fis = new FileInputStream(keyStorePath);  
+		// 加载密钥库
+		ks.load(fis, password.toCharArray());
+		// 关闭密钥库文件流
+		fis.close();
+		 
+		// 实例化密钥库
+		KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());  
+		// 初始化密钥工厂
+		kmf.init(ks, password.toCharArray());
+		 
+		// 创建SSLContext
+		SSLContext sslContext = SSLContext.getInstance("SSL", "SunJSSE");
+		sslContext.init(kmf.getKeyManagers(), null, new SecureRandom());
+		// 获取SSLSocketFactory对象
+		SSLSocketFactory ssf = sslContext.getSocketFactory();
+		 
+		URL url = new URL("https://api.mch.weixin.qq.com/secapi/pay/refund");
+		HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+		conn.setRequestMethod("POST");
+		// 设置当前实例使用的SSLSocketFactory
+		conn.setSSLSocketFactory(ssf);
+		conn.setDoOutput(true);
+		conn.setDoInput(true);
+		conn.connect();
+    
+	}
+    
+    
 }

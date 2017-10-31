@@ -12,9 +12,10 @@ public class GetCity {
 
 	public static Map<String,Object> getUserCity(String latitude, String longtitude) {
 		String result = null;
-		String url = "http://api.map.baidu.com/geocoder";
+		String url = "http://api.map.baidu.com/geocoder/v2/";
 		Map<String, Object> params = new HashMap<String, Object>();// 请求参数
 		params.put("location", latitude+","+longtitude);// 
+		params.put("ak", "6H1CjDGPNTF74LAHuPyFI3T7kVIafBz2");
 		params.put("output", "json");
 		Map<String,Object> bean = new HashMap<String,Object>();
 		JsonParser parse = new JsonParser();//创建json解析器

@@ -64,6 +64,7 @@ public class WechatOrderPrintServiceImpl implements WechatOrderPrintService{
 		// Map<String, Object> map = inputObject.getLogParams();
 		// 获取传入参数信息
 		Map<String, Object> mapParam = inputObject.getParams();
+		System.out.println(mapParam);
 		// nowDay 20170827
 		mapParam.put("nowDay", DateUtil.getTimeToString());
 		// 获取当前日期(2016-12-29 11:23:09)
@@ -72,6 +73,7 @@ public class WechatOrderPrintServiceImpl implements WechatOrderPrintService{
 		mapParam.put("tableName", Constants.ORDER_TABLE + DateUtil.getTimeSixAndToString());
 		// 商店id
 		// mapParam.put("orderAdminId", map.get("id")+"");
+		System.out.println(mapParam);
 		List<Map<String, Object>> listProductByTime = wechatOrderPrintMaper.selectTimeQuantumOrderInfo(mapParam);
 		String tableName = Constants.SHOP_TABLE + DateUtil.getTimeSixAndToString();// 订单详情表的名称
 		for(Map<String, Object> mapp: listProductByTime){

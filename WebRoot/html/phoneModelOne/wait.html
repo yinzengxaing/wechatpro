@@ -34,7 +34,39 @@
 			</div>
 		</div>
 	</div>
-	
+		<!-- 退单model -->
+	<div class="modal fade" id="myModal4" tabindex="-1" aria-labelledby="myModalLabel">
+		<div class="modal-dialog dialog-width-600" role="document">
+			<div class="modal-content">
+			    <div class="modal-header">
+			    	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+			    	<h4 class="modal-title" align="center">申请退单</h4>
+				</div>
+			    <div class="modal-body dialog-body1">
+			    	<div class="form-group dialog-100">
+			    		<label for="txt_departmentname" class="dialog-label-20" style="margin-top: 10px" ><span style="color:#FF9966">*</span>退单原因：</label>
+			    		<div class="dialog-div-75">
+			    			<textarea class="span6 typeahead form-control" id=refundDesc rows="3" maxlength="200"></textarea>
+			    		</div>
+			    	</div>
+		    	</div>
+				<div class="modal-body dialog-body1">
+			    	<div class="form-group dialog-100">
+			    		<label for="txt_departmentname" class="dialog-label-20" style="margin-top: 10px" ><span style="color:#FF9966">*</span>退单须知：</label>
+			    		<div class="dialog-div-75">
+			    			1.您申请的退单需求会在一定时间内被店方处理，请您耐心等待处理结果。<br>
+			    			2.退单仅限当日购买的产品，若其他时间段内购买的商品，商家将不予退单。<br>
+			    			3.每单的退单请求只能发送一次，再次发送，视为无效。
+			    		</div>
+			    	</div>
+		    	</div>
+		    	
+			    <div class="modal-footer">
+			    	<button type="button" id="sure" class="btn btn-default">确认退单</button>
+			    </div>
+			</div>
+	 	</div>
+	</div>
 	<!-- 全部订单的bean -->
 	<script id="allOrderBean" type="text/x-handlebars-template">
 		{{#each rows}}

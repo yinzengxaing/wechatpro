@@ -6,7 +6,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.web.servlet.*;
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.ssm.util.CustomException;
 import com.ssm.wechatpro.object.InputObject;
@@ -17,6 +18,7 @@ import com.ssm.wechatpro.util.JudgeUtil;
 
 
 public class HandlerInterceptorMain implements HandlerInterceptor{
+	
 	
 	private static final String[] URL = {"/wechatpro/post/wechatAdminLoginController/insertLogin","/wechatpro/post/WechatPhoneMessageLogController/insertPhoneMessage",
 		"/wechatpro/post/wechatAdminLoginController/insertAdminLogin","/wechatpro/post/wechatAdminLoginController/selectSession","/wechatpro/post/wechatAdminLoginController/selectAdminNo",
@@ -113,8 +115,6 @@ public class HandlerInterceptorMain implements HandlerInterceptor{
     //执行Handler完成后执行此方法  
   	//应用场景：统一的异常处理，统一的日志处理  
     @Override
-    public void afterCompletion(HttpServletRequest request,
-            HttpServletResponse response, Object handler, Exception ex)
-            throws Exception {
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
     }
 }

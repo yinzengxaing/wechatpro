@@ -56,7 +56,9 @@
 	wechatIntegral,
 	wechatLoginId,
 	wechatNowUser,
-	Location
+	Location,
+	Latitude,
+	Longitude
 	FROM
 	wechat_user
 		WHERE

@@ -1,9 +1,13 @@
 package com.ssm.interceptor;
 
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.web.servlet.*;
+
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
+
 import com.ssm.util.CustomException;
 import com.ssm.wechatpro.object.InputObject;
 import com.ssm.wechatpro.object.OutputObject;
@@ -13,6 +17,7 @@ import com.ssm.wechatpro.util.JudgeUtil;
 
 
 public class HandlerInterceptorGateway implements HandlerInterceptor{
+	
 	
 	private static final String[] URL = {"/wechatpro/gateway/MWechatDeliveryAddressController/insertDeliveryAddress","/wechatpro/gateway/MWechatDeliveryAddressController/selectByDeliveryUserId","/wechatpro/gateway/MWechatDeliveryAddressController/deleteById",
 		"/wechatpro/gateway/MWechatDeliveryAddressController/updateAddress","/wechatpro/gateway/MWechatDeliveryAddressController/selectById",
@@ -25,8 +30,7 @@ public class HandlerInterceptorGateway implements HandlerInterceptor{
 	//用于身份认证、身份授权、  
 	//比如身份认证，如果认证不通过表示当前用户没有登录，需要此方法拦截不再向下执行
 	@Override
-    public boolean preHandle(HttpServletRequest request,
-            HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
     	new PutObject(request,response);
     	HttpServletRequest servletRequest = (HttpServletRequest) request;
 		request.setCharacterEncoding("UTF-8");
@@ -94,7 +98,6 @@ public class HandlerInterceptorGateway implements HandlerInterceptor{
     //执行Handler完成后执行此方法  
   	//应用场景：统一的异常处理，统一的日志处理  
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
-            throws Exception {
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
     }
 }

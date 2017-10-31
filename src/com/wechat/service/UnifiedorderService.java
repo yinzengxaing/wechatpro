@@ -1,36 +1,37 @@
 package com.wechat.service;
 
 import java.io.BufferedInputStream;
-import org.apache.commons.httpclient.HttpStatus;
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.httpclient.methods.PostMethod;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.methods.PostMethod;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.ssm.wechatpro.dao.WechatProductRestaurantMapper;
+import com.ssm.util.TokenThread;
 import com.ssm.wechatpro.object.InputObject;
 import com.ssm.wechatpro.object.OutputObject;
+import com.ssm.wechatpro.service.impl.WechatOrderServiceImpl;
 import com.ssm.wechatpro.util.Constants;
-import com.ssm.wechatpro.util.DateUtil;
 import com.ssm.wechatpro.util.OrderUtil;
-import com.sun.org.apache.bcel.internal.generic.NEW;
 
 
 
 public class UnifiedorderService {
+
+	 private static Logger log = LoggerFactory.getLogger(UnifiedorderService.class);  
 	
-	@Resource
-    private static WechatProductRestaurantMapper  wechatProductRestaurantMapper;
 	/** 
      * 微信统一下单接口,获取预支付标示prepay_id 和签名
      * @param out_trade_no1 商户订单号 
@@ -39,8 +40,7 @@ public class UnifiedorderService {
      * @return 
 	 * @throws Exception 
      */  
-    @SuppressWarnings("static-access")
-	public static Map<String,Object> getPrepayid(String sub_mch_id,String key,String out_trade_no,String total_fee,String openid, InputObject inputObject,OutputObject outputObject) throws Exception{  
+    public static Map<String,Object> getPrepayid(String sub_mch_id,String key,String out_trade_no,String total_fee,String openid, InputObject inputObject,OutputObject outputObject) throws Exception{  
     	String result = null;
         //封装h5页面调用参数
         Map<String ,Object> signMap = new HashMap<>();
@@ -50,20 +50,24 @@ public class UnifiedorderService {
         String body = "maxBurger";  
         params.put("appid", Constants.APPID);  
         params.put("mch_id", Constants.MCH_ID); //商户号
+        if (!Constants.MCH_ID.equals("1364180602")){ //若不是测试商户号填写子商户号
         params.put("sub_mch_id",sub_mch_id );  //子商户号
+        }
         params.put("nonce_str", nonce_str);  
         params.put("body", body);  
-        params.put("out_trade_no", DateUtil.getToString());  
+        params.put("out_trade_no", out_trade_no);  
         params.put("total_fee", total_fee);  
-        params.put("spbill_create_ip", inputObject.getRequest().getRemoteAddr());  
-        params.put("notify_url", "http://z1714z2699.imwork.net/wechatpro/html/phoneModelOne/index.html");  
+        params.put("spbill_create_ip", Constants.IP);  
+        params.put("notify_url", Constants.PATH+"/html/phoneModelOne/index.html");  
         params.put("trade_type", "JSAPI"); 
         params.put("openid", openid); 
         String sign = OrderUtil.sign(params, key);  
         params.put("sign", sign);  
         String xmlResult = OrderUtil.ArrayToXml(params);
+        log.info("weixin getPrepayidParams:{}", params);
         try{
 			result = post(url,xmlResult);
+			log.info("weixin getPrepayid:{}", result);  
 			Map<String,Object> bean = readStringXmlOut(result);
 			String prepayId = bean.get("prepay_id").toString();
 	        
@@ -79,6 +83,7 @@ public class UnifiedorderService {
 		}
         return signMap;
     }  
+    
     
     @SuppressWarnings("deprecation")
 	public static String post(String url,String xmlFileName){    

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.wechatpro.dao.WechatOutRefundMapper">
+	
+	<!-- 获取退单列表 分页查询 -->
+	<select id="getOutRefundList" parameterType="java.util.Map"  resultType="java.util.Map">
+		SELECT
+			id,
+			orderNumber,
+			refundTime,
+			refundDesc,
+			processState,
+			processorTime,
+			processor,
+			orderPrice,
+			phoneNumber,
+			wetherPaymentTime,
+			orderId
+		FROM
+			wechat_out_refund 
+		WHERE 
+		adminId=#{adminId}
+		<if test="processState != null and processState != '' ">
+		AND 
+		processState = #{processState}
+		</if>
+		ORDER BY 
+		refundTime ASC
+	</select>
+	
+	<!-- 根据订单获取所需要的参数 -->
+	<select id="getOrderParams" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT
+			id,
+			orderPrice,
+			wetherPaymentTime,
+			phoneNumber
+		FROM
+			${order_log} 
+		WHERE 
+			orderNumber = #{orderNumber}
+	</select>
+	
+	<!-- 修改退单的状态 -->
+	<update id="updateOutRefund" parameterType="java.util.Map">
+		UPDATE wechat_out_refund
+		SET
+				processState = #{processState},
+				processorTime = #{processorTime},
+				processor = #{processor}
+		WHERE
+				orderNumber = #{orderNumber}
+	</update>
+	
+	<!-- 插入一条退单信息 -->
+	<insert id="insertOutRefund" parameterType="java.util.Map">
+		INSERT 	ignore INTO wechat_out_refund (
+		orderNumber,
+		refundTime,
+		refundDesc,
+		adminId,
+		orderPrice,
+		phoneNumber,
+		wetherPaymentTime,
+		orderId
+			)
+		VALUES
+	(
+		#{orderNumber},
+		#{refundTime},
+		#{refundDesc},
+		#{adminId},
+		#{orderPrice},
+		#{phoneNumber},
+		#{wetherPaymentTime},
+		#{orderId}
+	)
+	</insert>
+	
+	<!--  更改订单状态的修改 -->
+	<update id="updateOrderState" parameterType="java.util.Map">
+		UPDATE ${order_log}
+		SET
+			 wetherPayment = #{wetherPayment},
+			 lastUpdateTime = #{lastUpdateTime}
+		WHERE
+		orderNumber = #{orderNumber}
+	</update>
+</mapper>

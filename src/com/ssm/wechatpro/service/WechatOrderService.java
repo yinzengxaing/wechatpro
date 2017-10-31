@@ -7,4 +7,8 @@ public interface WechatOrderService {
 	
 	public void getOrderParameter(InputObject inputObject, OutputObject outputObject) throws Exception;
 	
+	public void orderRefund(InputObject inputObject,OutputObject outputObject) throws Exception;
+	
+	
+	
 }

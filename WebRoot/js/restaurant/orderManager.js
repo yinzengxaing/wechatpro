@@ -14,10 +14,9 @@ function dataInit(){
 			goEasy.subscribe({
 				channel: jsonSession.bean.id+"",
 				onMessage: function (message) {
+					playAudio();
 					count = count * 1 + 1;
 					$("#countNumber").html("您有" +  count + "份新订单");
-					// 播放提示音
-					$("#embedId").append('<embed id="embedIId" src="../../assest/audio/orderTip/OrderTipMP3.mp3" hidden="true" autostart="true" loop="false" />');
 					$("#countNumber").attr("style", "display:block");
 					qiao.bs.msg({msg:message.content,type:'success'});
 				},
@@ -26,6 +25,25 @@ function dataInit(){
 					oTable.Init();
 				    eventInit();
 					qiao.bs.msg({msg:"消息接收机制已启动",type:'success'});
+				},
+				onFailed: function (error) {
+					alert("Channel订阅失败, 错误编码：" + error.code + " 错误信息：" + error.content)
+				}
+			});
+			
+			var goEasy2 = new GoEasy({
+			    appkey: 'BC-c5e986fba5d14d38b2b2c5b4b072fc8c'
+			});
+			goEasy2.subscribe({
+				channel: jsonSession.bean.id+"outRefond",
+				onMessage: function (message) {
+					$("#outRefund").html("您有新的退单申请,请及时处理！！");
+					$("#outRefund").attr("style", "display:block");
+				},
+				onSuccess: function () {
+					var oTable = new TableInit();
+					oTable.Init();
+				    eventInit();
 				},
 				onFailed: function (error) {
 					alert("Channel订阅失败, 错误编码：" + error.code + " 错误信息：" + error.content)
@@ -40,6 +58,12 @@ function dataInit(){
 
 function eventInit(){
 	// 点击提示后隐藏
+	$("body").on("click", "#outRefund",  function(e){
+		$("#outRefund").attr("style", "display:none");
+		location.href = "outRefundList.html"
+	});
+	
+	// 点击提示后隐藏
 	$("body").on("click", "#countNumber",  function(e){
 		$("#countNumber").attr("style", "display:none");
 		$("#message").bootstrapTable("refresh", {url : path + "/post/wechatOrderManagerController/selectPaiedOrderForm"});
@@ -47,7 +71,6 @@ function eventInit(){
 		$("#embedIId").remove();
 		$("#selectOrderType").attr("value", "");
 	});
-	
 	// 表示取消送给顾客
 	$("body").on("click", "#concellMaked", function(e){
 		$('#myModal1').modal('hide');
@@ -266,3 +289,19 @@ function operateFormatter(value, row, index) {
 			'<button type="button" class="RoleOfB btn btn-info">已做好</button>',
 	    ].join('');
 }
+
+function playAudio(){
+	 var audio = document.createElement('audio');
+	    var source = document.createElement('source');   
+	    source.type = "audio/mpeg";
+	    source.type = "audio/mpeg";
+	    source.src = "../../assest/audio/orderTip/OrderTipMP3.mp3";   
+	    source.autoplay = "autoplay";
+	    source.controls = "controls";
+	    audio.appendChild(source); 
+	    audio.play();
+}
+
+
+
+

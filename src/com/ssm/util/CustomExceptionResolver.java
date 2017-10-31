@@ -26,8 +26,7 @@ public class CustomExceptionResolver implements HandlerExceptionResolver{
 	
 	private  static  final Logger logger = LoggerFactory.getLogger(CustomExceptionResolver. class);
 
-	public ModelAndView resolveException(HttpServletRequest request,
-			HttpServletResponse response, Object object, Exception exception) {
+	public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object object, Exception exception) {
 		String excetionType = null;
 		if(exception != null) {
 			exception.printStackTrace();
@@ -45,9 +44,7 @@ public class CustomExceptionResolver implements HandlerExceptionResolver{
 		}
 		
 		// 判断是否ajax请求
-        if (!(request.getHeader("accept").indexOf("application/json") > -1 || (request
-                .getHeader("X-Requested-With") != null && request.getHeader(
-                "X-Requested-With").indexOf("XMLHttpRequest") > -1))) {
+        if (!(request.getHeader("accept").indexOf("application/json") > -1 || (request.getHeader("X-Requested-With") != null && request.getHeader("X-Requested-With").indexOf("XMLHttpRequest") > -1))) {
             // 如果不是ajax，JSP格式返回
         	//错误信息
     		String message = customException.getMessage();
@@ -69,6 +66,7 @@ public class CustomExceptionResolver implements HandlerExceptionResolver{
 				JsonUtil.ToJson(response, outputObject.getObject());
 			} catch (Exception e) {
 				e.printStackTrace();
+				logger.error("error={}",e);
 			}
         }
 		return null;

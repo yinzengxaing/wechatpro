@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>订单管理</title>
+	<title>orderManager.html</title>
 	<meta name="description" content="Bootstrap Metro Dashboard">
 	<meta name="author" content="Dennis Ji">
 	<meta name="keyword" content="Metro, Metro UI, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
@@ -32,7 +32,7 @@
 		</li>
 		<li>
 			<i class="icon-edit"></i>
-			<a href="javascript:;">订单管理</a>
+			<a href="javascript:;">退单管理</a>
 		</li>
 	</ul>
 	<div class="row-fluid sortable">
@@ -45,16 +45,14 @@
 			<div id="embedId" class="box-content contentDiv">
 				<div class="panel-body">
 					<p class="panel-body-p" id="countNumber" style="display:none"></p>
-					<p class="panel-body-p" id="outRefund" style="display:none"></p>
 					<table id="message" class="table table-bordered commonProduct_table">
 						<div class="select">
-							<label>订单类型：</label>
+							<label>退单类型：</label>
 							<select id="selectOrderType">
 								<option value="">查看全部</option>
-								<option value="1">立即堂食</option>
-								<option value="2">稍后堂食</option>  
-								<option value="3">立即外带</option>
-								<option value="4">稍后外带</option>
+								<option value="0">未处理</option>
+								<option value="1">同意退款</option>  
+								<option value="2">拒绝退款</option>
 							</select>
 							<button type="button" id="seachBtn" class="btn btn-primary">查询</button>
 						</div>
@@ -206,7 +204,7 @@
 	<script type="text/javascript" src="../../assest/ztree/js/jquery.ztree.all-3.5.js"></script>
 	<script type="text/javascript" src="../../js/util/main.js"></script>
 	<script type="text/javascript" src="../../js/util/handlebars-v4.0.5.js"></script>
-	<script type="text/javascript" src="../../js/restaurant/orderManager.js"></script>
+	<script type="text/javascript" src="../../js/restaurant/outRefundList.js"></script>
 	
 </body>
 </html>

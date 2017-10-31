@@ -75,7 +75,7 @@ public class WechatUserServiceImpl implements WechatUserService {
 		for(int i=0;i<beansed.size();i++)
 		{
 			if(beans.contains(beansed.get(i).get("openid").toString())){
-				beans.remove(beansed.get(i).get("openid").toString());
+ 				beans.remove(beansed.get(i).get("openid").toString());
 			}
 		}
 		List<Map<String, Object>> users = new ArrayList<>();
@@ -88,7 +88,7 @@ public class WechatUserServiceImpl implements WechatUserService {
 				params.add(param);
 				beans.remove(0);
 			}
-			users.addAll(GetUserMationService.getRequest(params));
+ 			users.addAll(GetUserMationService.getRequest(params));
 			goEasy.publish(map.get("adminNo").toString(),"检测成功100条用户信息，剩余"+beans.size()+"条用户信息未检测", new PublishListener(){
 				@Override
 				public void onSuccess() {
@@ -102,14 +102,14 @@ public class WechatUserServiceImpl implements WechatUserService {
 			if(beans.size()<(beansSize-numUpdate)){
 				break;
 			}else{
-				if(users.size()%1000==0&&!users.isEmpty()){
+				if(!users.isEmpty()){
 					wechatUserMapper.insertAllWechatUser(users);
 					users.clear();
 				}
 			}
 		}
 		
-		if(beansSize<1000&&!users.isEmpty()){
+		if(beansSize<100&&!users.isEmpty()){
 			wechatUserMapper.insertAllWechatUser(users);
 		}
 		
@@ -179,7 +179,6 @@ public class WechatUserServiceImpl implements WechatUserService {
 	 */
 	@Override
 	public void selectLatitudeAndLongtitude(InputObject inputObject,OutputObject outputObject) throws Exception {
-		
 		Map<String,Object> map = inputObject.getWechatLogParams();//获取openid
 		outputObject.setBean(map);
 	}

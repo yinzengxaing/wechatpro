@@ -295,25 +295,6 @@ function eventInit(){
 	
 }
 
-/**
- * 获取max图标
- */
-function getImg(){
-	//若是套餐图片不存在显示max图标
-	$(".img-thumbnail").each(function(){
-    	var myThis = $(this);
-    	var thisUrl = myThis.attr("src");
-    	$.ajax(thisUrl, {
-            type: 'get',
-            timeout: 1000,
-            success: function() {
-            },
-            error: function() {
-            	myThis.attr("src",path + "/assest/icon/maxLogo.jpg");
-            }
-        });
-    });
-}
 
 /**
  * 设置+ 和 - 的隐藏和消失

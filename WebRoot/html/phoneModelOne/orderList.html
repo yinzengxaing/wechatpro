@@ -68,9 +68,6 @@
 		<!-- 取餐时间 -->
 		<div  id="eatTimeDiv" class="wrap_phone" style="border-bottom:1px solid #DCDCDC;" hidden>
 			<div class="wrap_phone_d wrap_phone_tel_lf">
-<!-- 			<span class="wrap_phone_ralation">取餐时间</span><span class="wrap_phone_spark">*</span> -->
-		<!-- 		<select id="h"></select>点
-				<select id="min"></select>分-->
 			<input  id="geteateTime" type="text" readonly="" size="100%" name="input_date" placeholder="点击 选择您的取餐时间" />
 			</div> 
 		</div>
@@ -112,7 +109,7 @@
 		<div class="shop-total">
 			<strong>总价：<i class="total" id="AllTotal">0.00</i></strong>
 		</div>
-		<a  style="cursor:pointer;" class="settlement" id="clearing">结算</a>
+		<button  style="cursor:pointer;" class="settlement" id="clearing">结算</button>
 	</div>
 	
 		<!--遮罩层 -->
@@ -145,31 +142,6 @@
 				</div>
 			</div>
  		{{/each}}
-	</script>
-	
-	<script id="orderBean" type="text/x-handlebars-template">
-	{{#each rows}}
-		<div class="orders shop-group-item">
-			<div class="shop-name">
-				<input class="check goods-check shopCheck check goods-check goodsCheck">
-				<h4><a id="shopname" href="javascript:;" class="shopname" adminId="{{adminId}}">{{adminShopName}}</a></h4>
-			</div>
-				<ul>
-			{{#each productInfo}}
-					<li class="productLi">
-							<div class="food_name shop-info-text shopSPName" adminId="{{adminId}}" wechatCommodityType="{{wechatCommodityType}}" productID="{{productID}}" cardId="{{cardId}}"><p>{{productName}}</p></div>
-							<div class="food_price shop-pices">￥ <font class="price" id="price">{{productPrice}}</font></div>
-						<div class="food-arithmetic ">
-							<a href="javascript:;" class="minus">-</a>
-							<span class="num" id="count" >{{count}}</span>
-							<a href="javascript:;" class="plus">+</a>
-						</div>
-					</li>
-			{{/each}}
-					</ul>
-		本店总计：￥<span class="shop-total-amount ShopTotal">0.00</span>
-		</div>
-	{{/each}}
 	</script>
     <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 	<script type="text/javascript" src="../../assest/js/jquery.js"></script>

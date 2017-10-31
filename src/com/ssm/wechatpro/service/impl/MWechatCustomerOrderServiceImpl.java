@@ -88,6 +88,7 @@ public class MWechatCustomerOrderServiceImpl implements MWechatCustomerOrderServ
 		orderParams.put("orderNumber", orderNumber);
 		orderParams.put("createId", wechatLogParams.get("id"));
 		orderParams.put("createTime", DateUtil.getTimeAndToString());
+		
 		/**
 		 * 处理就餐时间
 		 */
@@ -109,6 +110,7 @@ public class MWechatCustomerOrderServiceImpl implements MWechatCustomerOrderServ
 		//联系方式（js判断联系方式是否合格）
 		orderParams.put("phoneNumber", params.get("phoneNumber"));
 		mWechatCustomerOrderMapper.addOrder(orderParams);
+		
 		//添加订单成功后，获取订单id
 		orderId = orderParams.get("id")+"";
 		adminId_ = params.get("adminId").toString();

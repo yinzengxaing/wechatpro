@@ -41,41 +41,14 @@ $(function(e){
 function dataInit(){
 	code = $.req("code");
 	base = new Base64();
-	AjaxPostUtil.request({url:path+"/gateway/WechatUserController/selectLatitudeAndLongtitude",params:{},type:'json',callback:function(json){
-		if(json.returnCode==0){
-			if(isNull(json.bean)){
-				AjaxPostUtil.request({url:path+"/gateway/EmpowerWebpageController/getOpenidBycode",params:{code:code},type:'json',callback:function(jsonall){
-					if(jsonall.returnCode==0){
-						if(isNull(jsonall.bean.Location)){
-							$("#city").html("未获取到位置信息");
-							$("#username").html("欢迎您:"+base.decode(jsonall.bean.nickname));
-						}else{
-							$("#city").html(jsonall.bean.Location);
-							$("#username").html("欢迎您:"+base.decode(jsonall.bean.nickname));
-						}
-					}else{
-						location.href = 'sessionNull.html';
-					}
-				}});
+	AjaxPostUtil.request({url:path+"/gateway/EmpowerWebpageController/getOpenidBycode",params:{code:code},type:'json',callback:function(jsonall){
+		if(jsonall.returnCode==0){
+			if(isNull(jsonall.bean)){
+				$("#city").html("未获取到位置信息");
+				$("#username").html("欢迎您:"+base.decode(jsonall.bean.nickname));
 			}else{
-				if(isNull(json.bean.Location)){
-					AjaxPostUtil.request({url:path+"/gateway/EmpowerWebpageController/getOpenidBycode",params:{code:code},type:'json',callback:function(jsonall){
-						if(jsonall.returnCode==0){
-							if(isNull(jsonall.bean.Location)){
-								$("#city").html("未获取到位置信息");
-								$("#username").html("欢迎您:"+base.decode(jsonall.bean.nickname));
-							}else{
-								$("#city").html(jsonall.bean.Location);
-								$("#username").html("欢迎您:"+base.decode(jsonall.bean.nickname));
-							}
-						}else{
-							location.href = 'sessionNull.html';
-						}
-					}});
-				}else{
-					$("#city").html(json.bean.Location);
-					$("#username").html("欢迎您:"+base.decode(json.bean.nickname));
-				}
+				$("#city").html(jsonall.bean.Location);
+				$("#username").html("欢迎您:"+base.decode(jsonall.bean.nickname));
 			}
 		}else{
 			location.href = 'sessionNull.html';

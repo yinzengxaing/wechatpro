@@ -13,33 +13,24 @@ function dataInit(){
 			$("#saveBean").hide();
 			$("#deleteBean").hide();
 	}
+	alert("menuVersion="+menuVersion);
     //版本号为空获取版本号，否则直接查询版本下所有菜单
 	if(menuVersion==null){
+		alert(1);
 		AjaxPostUtil.request({url:path+"/post/WechatButtomMenuController/getmenuVersion",params:{},type:'json',callback:function(json){
 			if(json.returnCode==0){
 				menuVersion=json.bean.menuVersion;
-				var params = { 
-						menuVersion:menuVersion,
-						menuLevel:1
-				};
-				AjaxPostUtil.request({url:path+"/post/WechatButtomMenuController/selectMenuByVersion",params:params,type:'json',callback:function(json){
-					if(json.returnCode==0){
-						var source = $("#menuListBean").html();  
-					    var template = Handlebars.compile(source);
-					    $("#menuNameDiv").html(template(json));
-					    loadMenuMation();
-					}
-				}});
 			}
 		}});
-		
-	}else{
+		loadMenuMation();
+	}else{//查找本版本号下所有一级菜单
 		var params = { 
 				menuVersion:menuVersion,
 				menuLevel:1
 			};
 		AjaxPostUtil.request({url:path+"/post/WechatButtomMenuController/selectMenuByVersion",params:params,type:'json',callback:function(json){
 			if(json.returnCode==0){
+				alert(2);
 				var source = $("#menuListBean").html();  
 			    var template = Handlebars.compile(source);
 			    $("#menuNameDiv").html(template(json));
@@ -50,10 +41,11 @@ function dataInit(){
 }
 //菜单添加增加菜单建
 function loadMenuMation(){
+	alert(3);
 	var strAdd = '<div class="menu"><div class="bt-name firstAddMenu"><img src="../../assest/img/tianjia.png" class="addMenuPng"/></div></div>';
 	var strBeanAdd = '<li class="rowMenu addSecondMenu"><a href="javascript:;"><img src="../../assest/img/tianjia.png" class="addMenuPng"/></a></li>';
 	var menuFirst = $(".menu");
-	//为以一级菜单添加
+	//为一级菜单添加
 	if(menuFirst.length<3){
 		$("#menuNameDiv").html($("#menuNameDiv").html() + strAdd);
 		countMenuWidth();
@@ -79,6 +71,7 @@ function eventInit(){
 		AjaxPostUtil.request({url:path+"/post/WechatButtomMenuController/deleteMenus",params:params,type:'json',callback:function(json){
 			if(json.returnCode==0){
 				qiao.bs.msg({msg:json.returnMessage,type:'success'});
+				//将改菜单更改为未发布状态
 				var publishparam={
 						menuVersion:menuVersion,
 						wetherUser:0,
@@ -87,13 +80,13 @@ function eventInit(){
 		    AjaxPostUtil.request({url:path+"/post/WechatButtomMenuController/updateMenuPublish",params:publishparam,type:'json',callback:function(json){
 				if(json.returnCode == 0){
 					qiao.bs.msg({msg:json.returnMessage,type:'success'});
-					dataInit();
 				}else{
 					qiao.bs.msg({msg:json.returnMessage,type:'danger'});
 				}
 			}
 			});
-				//dataInit();
+				dataInit();//重新加载本版本下的菜单
+				//将页面设置为发送消息图文消息显示的状态
 				$("#myTab").children("li:eq("+0+")").addClass("active");
 				$("#myTab").children("li:eq("+1+")").removeClass("active");
 				$("#ios").attr("class","tab-pane fade margin-Top-Left-30");
@@ -124,6 +117,7 @@ function eventInit(){
 		}else{
 			//对回复内容的选择进行判断并存储
 			for(var i = 0;i<5;i++){
+				//如果选择的是跳转网页，判断链接是否合法，合法存储，不合法给出提示
 				if($("#ios").hasClass("active")){
 					if(IsURL($("#linkNet").val())){
 						  rebackInt=6;
@@ -134,6 +128,7 @@ function eventInit(){
 					      return;
 					  }
 				  }
+				//如果选择的是发送消息，依次判断选择的是那个选卡，如果选择的是文字（4）需判断回复内容是否为空，其他选卡内容直接存储
 				if($("#Tw").children("li:eq("+i+")").hasClass("active")){
 					rebackInt=i+1;
 					if(i!=4){
@@ -148,6 +143,7 @@ function eventInit(){
 						}
 					}
 			}
+			//存储更改后的信息
 				var params={
 					id:$("#menuName").attr("menuId"),
 					menuName:$("#menuName").val(),
@@ -157,6 +153,7 @@ function eventInit(){
 			AjaxPostUtil.request({url:path+"/post/WechatButtomMenuController/updateMenuById",params:params,type:'json',callback:function(json){
 				if(json.returnCode==0){
 					qiao.bs.msg({msg:json.returnMessage,type:'success'});
+					//将该版本的菜单设置为未发布状态
 					var publishparam={
 							menuVersion:menuVersion,
 							wetherUser:0,
@@ -165,19 +162,19 @@ function eventInit(){
 			    AjaxPostUtil.request({url:path+"/post/WechatButtomMenuController/updateMenuPublish",params:publishparam,type:'json',callback:function(json){
 					if(json.returnCode == 0){
 						qiao.bs.msg({msg:json.returnMessage,type:'success'});
-						dataInit();
 					}else{
 						qiao.bs.msg({msg:json.returnMessage,type:'danger'});
 					}
 				}
 				});
-					//dataInit();
+					dataInit();
 				}
 			}},true);
 			}
 	}); 
 	//一级菜单触发事件
 	$('body').on('click', '.menu', function(e){
+		alert(4);
 		if ($(this).hasClass("cura")) {
 			$(this).children(".new-sub").hide(); //当前菜单下的二级菜单隐藏
 			$(".menu").removeClass("cura"); //同一级的菜单项
@@ -188,7 +185,8 @@ function eventInit(){
 				$(this).children(".new-sub").slideDown("fast"); //展示当前的二级菜单
 				}
 		//触发添加键
-		if($(this).children("div").hasClass("firstAddMenu")){
+		if($(this).children("div").hasClass("firstAddMenu")){//点击的是添加按钮
+			//将菜单名，回复内容，连接部分全部清空
 			$('#menuName').val("");
 			$('#rolePrompt').val("");
 			$("#linkNet").val("");
@@ -203,9 +201,10 @@ function eventInit(){
 					dataInit();
 					}
 				}},true);
-			}else{
+			}else{//点击的是其他菜单项
 				$("#saveBean").show();
 				$("#deleteBean").show();
+				//获取本菜单项id，将改菜单内容展示出来
 				var	params={
 					id:$(this).children(".bt-name").attr("rowId")
 					};

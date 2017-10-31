@@ -34,4 +34,5 @@ public interface MWechatCustomerOrderService {
 	//未付款订单支付
 	public void payOrder(InputObject inputObject, OutputObject outputObject) throws Exception;
 	
+	
 }

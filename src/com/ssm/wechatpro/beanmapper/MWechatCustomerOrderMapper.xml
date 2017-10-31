@@ -109,7 +109,7 @@
 			${order_log_1}
 		<where>
 			createId = #{createId}
-			AND wetherPayment = 1
+			AND wetherPayment != 0
 			<!-- 按照是否已经做完查找 -->
 			<if test="wetherMake != null and wetherMake !='' ">
 			AND wetherMake = #{wetherMake}
@@ -135,7 +135,7 @@
 			${order_log_2}
 		<where>
 			createId = #{createId}
-			AND wetherPayment = 1
+			AND wetherPayment != 0
 			<!-- 按照是否已经做完查找 -->
 			<if test="wetherMake != null and wetherMake !='' ">
 			AND wetherMake = #{wetherMake}
@@ -161,7 +161,7 @@
 			${order_log_3}
 		<where>
 			createId = #{createId}
-			AND wetherPayment = 1
+			AND wetherPayment != 0
 			<!-- 按照是否已经做完查找 -->
 			<if test="wetherMake != null and wetherMake !='' ">
 			AND wetherMake = #{wetherMake}

@@ -28,4 +28,18 @@ public class WechatOrderController {
 		wechatOrderService.getOrderParameter(inputObject, outputObject);
 	}
 	
+	/**
+	 * 接收退款的参数
+	 * @param inputObject
+	 * @param outputObject
+	 * @throws Exception
+	 */
+	@RequestMapping("/gateway/WechatOrderController/orderRefund")
+	@ResponseBody
+	public void orderRefund(InputObject inputObject,OutputObject outputObject) throws Exception{
+		wechatOrderService.orderRefund(inputObject, outputObject);
+	}
+	
+	
+	
 }

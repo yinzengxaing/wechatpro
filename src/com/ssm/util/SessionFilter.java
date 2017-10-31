@@ -36,10 +36,10 @@ public class SessionFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		// 获得在下面代码中要用的request,response,session对象
 		HttpServletRequest servletRequest = (HttpServletRequest) request;
+		HttpSession session = servletRequest.getSession();
 		HttpServletResponse servletResponse = (HttpServletResponse) response;
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
-		HttpSession session = servletRequest.getSession();
 		String url = servletRequest.getContextPath() + servletRequest.getServletPath();
 		Map<String,Object> user = (Map<String,Object>) session.getAttribute("user");
 		if (url.indexOf(HYT_HYT)!=-1) {//html通过
@@ -61,7 +61,9 @@ public class SessionFilter implements Filter {
 					|| url.contains(".ttf") || url.contains(".woff")
 					|| url.contains(".woff2") || url.contains(".exe")
 					|| url.contains(".mp4") || url.contains(".rmvb")
-					|| url.contains(".avi") || url.contains(".3gp")) {
+					|| url.contains(".avi") || url.contains(".3gp")
+					|| url.contains(".mp3")
+						) {
 					chain.doFilter(request, response);
 				} else {
 					servletResponse.sendRedirect(LOGIN_PAGE);
@@ -70,8 +72,8 @@ public class SessionFilter implements Filter {
 				try {
 					chain.doFilter(request, response);
 				} catch (Exception e) {
-					session.removeAttribute("user");
-					servletResponse.sendRedirect(LOGIN_PAGE);
+						session.removeAttribute("user");
+						servletResponse.sendRedirect(LOGIN_PAGE);
 				}
 			}
 		}

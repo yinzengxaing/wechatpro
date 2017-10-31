@@ -60,6 +60,11 @@
             "title": "订单管理",
             "url": "../../html/restaurant/orderManager.html"
           },
+        {
+            "class": "icon-file-alt",
+            "title": "退单管理",
+            "url": "../../html/restaurant/outRefundList.html"
+          },
           {
             "class": "icon-file-alt",
             "title": "门店详情",

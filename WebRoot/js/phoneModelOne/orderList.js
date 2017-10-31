@@ -1,13 +1,13 @@
 //支付使用的常量
-var code = "";
-var appId="";  
-var timeStamp="";  
-var nonceStr="";  
-var prepay_id="";//之前参数名叫package,对应api接口，因为package是关键字，被坑了一次  
-var paySign="";
-var ip = "";
-var signature = "";
-var paypackage = "";
+//var code = "";
+//var appId="";  
+//var timeStamp="";  
+//var nonceStr="";  
+//var prepay_id="";//之前参数名叫package,对应api接口，因为package是关键字，被坑了一次  
+//var paySign="";
+//var ip = "";
+//var signature = "";
+//var paypackage = "";
 
 //订单类型状态
 var liji = "1";
@@ -37,44 +37,24 @@ var ss = "";
 $(function(e){
 	receiveData();
 	dataInit();
-	eventInit();
-	//getTime();
 });
 
 //数据的初始化
 function dataInit(){
+	if (adminId == ""){
+		adminId = $.req("adminId");
+	}
+	getCartInfo();
+	eventInit();
 	var calendartime = new lCalendar();
 	calendartime.init({
 		'trigger': '#geteateTime',
 		'type': 'time'
 	});
-	if (adminId == ""){
-		adminId = $.req("adminId");
-	}
-	getCartInfo();
 }
 
 //事件的触发
 function eventInit(){
-	//时间选择下拉框选择变化事件
-	$('body').on('change', '#h', function(e){
-		var h = $('#h').val();
-		var d = new Date();
-		 hh = d.getHours();
-		 mm = d.getMinutes();
-		 if (h != hh){
-			 $('#min').empty();
-			for(var i=0;i<=59;i=i*1+5){
-				if (i>=0 && i<=9)
-					i="0"+i;
-				$('#min').append("<option value='"+i+"'>"+i+"</option>");
-			}
-		 }else{
-			 $('#min').empty();
-			 setMin();
-		 }
-	});
-	
 	//订单类型点击事件
 	$('body').on('click', '#liji', function(e){
 		$('#eatTimeDiv').hide();
@@ -88,7 +68,6 @@ function eventInit(){
 		}
 	});
 	$('body').on('click', '#shaowan', function(e){
-		/*setNowTime();*/
 		$('#eatTimeDiv').show();
 		if(shaowan == 1){
 			return;
@@ -131,7 +110,6 @@ function eventInit(){
 			orderType = 3;//立即外带
 		}else if(shaowan == 1 && tangshi == 1){
 			orderType = 2;//稍晚堂食
-			//eatTime = $('#h').val()+"点"+$('#min').val()+"分";
 			var t = $('#geteateTime').val();
 			if (t == ""){
 				qiao.bs.msg({msg:"取餐时间不能为空",type:'danger'});
@@ -148,7 +126,6 @@ function eventInit(){
 			}else {
 				eatTime = t.substring(7,14);
 			}
-			//eatTime = $('#h').val()+"点"+$('#min').val()+"分";
 		}
 		//验证手机号
 		if(isNull($("#phoneNumber").val())){
@@ -163,6 +140,9 @@ function eventInit(){
 			qiao.bs.msg({msg:"请选择取餐时间",type:'danger'});	
 			return;
 		}
+		$("#clearing").attr("disabled", true); 
+		$("#clearing").css("background", "#cdcdcd"); 
+		//生成订单那
 		var params = {
 				orderType:orderType,
 				phoneNumber:$("#phoneNumber").val(),
@@ -173,18 +153,18 @@ function eventInit(){
 		AjaxPostUtil.request({url:path+"/gateway/MWechatCustomerOrderController/addOrder",params:params,type:'json',callback:function(jsonPa){
 			if (jsonPa.returnCode == 0){
 				if(jsonPa.bean!=null){
-					paySign = jsonPa.bean.paySign;
-					appId = jsonPa.bean.appid;
-					timeStamp = jsonPa.bean.timestamp;
-					nonceStr = jsonPa.bean.noncestr;
-					paypackage = jsonPa.bean.paypackage;
-					signature = jsonPa.bean.signature;
+					var paySign = jsonPa.bean.paySign;
+					var appId = jsonPa.bean.appid;
+					var timeStamp = jsonPa.bean.timestamp;
+					var nonceStr = jsonPa.bean.noncestr;
+					var paypackage = jsonPa.bean.paypackage;
+					var signature = jsonPa.bean.signature;
 					
-					orderNumber = jsonPa.bean.orderNumber;
-					adminId = jsonPa.bean.adminId;
-					orderId = jsonPa.bean.orderId;
+					var orderNumber = jsonPa.bean.orderNumber;
+					var adminId = jsonPa.bean.adminId;
+					var orderId = jsonPa.bean.orderId;
 					
-					payEvent();
+					payEvent(paySign,appId,timeStamp,nonceStr,paypackage,signature,orderNumber,adminId,orderId);
 				} else{
 					qiao.bs.msg({msg:"支付过程出现错误！",type:'danger'});	
 				}
@@ -192,8 +172,8 @@ function eventInit(){
 			}else{
 				qiao.bs.msg({msg:jsonPa.returnMessage,type:'danger'});
 			}
-			
 		}});
+		
 		
 	});
 	
@@ -225,6 +205,8 @@ function eventInit(){
 		 }
 		 AjaxPostUtil.request({url:path+"/gateway/MWechatShoppingCartController/addProduct",params:params,type:'json',callback:function(json){
 			 if(json.returnCode==0){
+				 
+				 
 				 getCartInfo();
 			 }
 			 hideMask();
@@ -244,6 +226,8 @@ function eventInit(){
 		 }
 		 AjaxPostUtil.request({url:path+"/gateway/MWechatShoppingCartController/deleteProductCount",params:params,type:'json',callback:function(json){
 			 if(json.returnCode==0){
+				 //获取当前商品的
+				 
 				 getCartInfo();
 			 }
 			hideMask();
@@ -252,65 +236,8 @@ function eventInit(){
 	
 }
 
-//自定义时间显示
-/*function getTime(){
-	//添加时
-	for(var i=9;i<=22;i++){
-		if (i==9)
-			i="0"+i;
-		$('#h').append("<option value='"+i+"'>"+i+"</option>");
-	}
-	//添加分
-	for(var i=0;i<=59;i=i*1+5){
-		if (i>=0 && i<=9)
-			i="0"+i;
-		$('#min').append("<option value='"+i+"'>"+i+"</option>");
-	}
-}*/
-//初始化时间
-function setNowTime(){
-	var d = new Date();
-	 hh = d.getHours();
-	 mm = d.getMinutes();
-	 setH();
-	 setMin();
-}
-//设置小时
-function setH(){
-	if(mm >=50){
-		hh = hh +1;
-	}
-	//添加时
-	if (hh >=9 && hh<= 22){
-		for(var i=hh;i<=22;i++){
-			if (i==9)
-				i="0"+i;
-			$('#h').append("<option value='"+i+"'>"+i+"</option>");
-		}
-	}else{
-		alert("改时间段无法进行点餐")
-	}
-}
-//设置分钟
-function setMin(){
-	if (mm < 50){
-		for(var i=mm*1+10;i<=59;i=i*1+5){
-			if (i>=0 && i<=9)
-				i="0"+i;
-			$('#min').append("<option value='"+i+"'>"+i+"</option>");
-		}
-	}else{
-		for(var i=0;i<=59;i=i*1+5){
-			if (i>=0 && i<=9)
-				i="0"+i;
-			$('#min').append("<option value='"+i+"'>"+i+"</option>");
-		}
-	}
-}
-
 //获取当前登录人购物车中的信息
 function getCartInfo(){
-	showMask();
 	var params = {
 			adminId : adminId
 	}
@@ -341,13 +268,12 @@ function getCartInfo(){
 		}else{
 			qiao.bs.msg({msg:"查询失败哦~",type:'danger'});
 		}
-		hideMask();
 	}});
 }
 
 
 //支付事件
-function payEvent(){
+function payEvent(paySign,appId,timeStamp,nonceStr,paypackage,signature,orderNumber,adminId,orderId){
 	 wx.config({  
 	    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。  
 	    appId: appId, // 必填，公众号的唯一标识  
@@ -376,12 +302,14 @@ function payEvent(){
 					}
 				}});
 			},
-			error:function(res){
-				alert(res);
+			fail:function(res){
+				
 			},
-			cencel:function(res){
-	            alert('cencel pay');
-	        },
+			complete:function(res){
+				//唤醒支付按钮
+				$("#clearing").attr("disabled", false); 
+				$("#clearing").css("background", "#f23030"); 
+	        }
 		});  
 	 });
 }

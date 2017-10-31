@@ -85,6 +85,44 @@ function eventInit(){
 			}});
 		},function(){});
 	});
+	
+	//退单按钮点击事件
+	$('body').on('click',".outRefund",function(e){
+		$("#refundDesc").val("");
+		$('#myModal4').modal('show');
+		var orderNumber =  $(this).parent().attr("orderNumber");
+		$('body').on('click',"#sure",function(e){
+			if(isNull($("#refundDesc").val())){
+				qiao.bs.msg({msg:"请填写您的退单原因",type:'danger'});
+				return false;
+			}
+	    	var params = {
+    			refundDesc:$("#refundDesc").val(),
+	    		orderNumber:orderNumber
+	    	};
+	    	AjaxPostUtil.request({url:path+"/gateway/WechatOutRefundController/applyForRefund",params:params,type:'json',callback:function(json){
+	    		if(json.returnCode==0){
+	    			$('#myModal4').modal('hide');
+	    			qiao.bs.msg({msg:"您的退单请求已经发送给商家，请耐心等待处理结果",type:'success'});
+	    			if (orderType == 1){ //全部订单
+	    				wetherMake="";
+	    				wetherPayment="";
+	    				allOrder();
+	    			}else if (orderType == 2){ //待发货订单
+	    				wetherMake=0;
+	    				wetherPayment=1;
+	    				allOrder();
+	    			}else if (orderType == 3){ //已完成订单
+	    				wetherMake=1;
+	    				wetherPayment=1;
+	    				allOrder();
+	    			}
+	    		}else{
+	    			qiao.bs.msg({msg:json.returnMessage,type:'danger'});
+	    		}
+	    	}});
+		});
+	});
 }
 
 //查看全部订单
@@ -108,6 +146,12 @@ function allOrder(){
 					 return "待发货";
 				 }else if (v1==1 && v2==1){
 					 return "已完成";
+				 }else if (v1 ==2){
+					 return "退款中";
+				 }else if (v1== 3){
+					 return "退款成功";
+				 }else if (v1==4){
+					 return "拒绝退款";
 				 }
 			});
 			//对订单那类型进行修饰
@@ -129,11 +173,22 @@ function allOrder(){
 				 if (v1 == 0 && v2==0 ){
 					 return " <div class='sureshop2 deleteOrder' style='cursor:pointer;'><h5>删除订单</h5></div>"+
 			 		 "<div class='sureshop2 payOrder' style='cursor:pointer;'><h5>支付订单</h5></div>"+
+			 		"<div class='sureshop2 outRefund' style='cursor:pointer;'><h5>申请退单</h5></div>"+
 			 		 "<div class='sureshop2 lookOrder' style='cursor:pointer;'><h5>查看订单</h5></div>";
 				 }else if (v1==1 && v2==0) {
-					 return "<div class='sureshop2 lookOrder' style='cursor:pointer;'><h5>查看订单</h5></div>";
+					 return "<div class='sureshop2 lookOrder' style='cursor:pointer;'><h5>查看订单</h5></div>"+
+					 		"<div class='sureshop2 outRefund' style='cursor:pointer;'><h5>申请退单</h5></div>";
 				 }else if (v1==1 && v2 ==1){
+					 return  "<div class='sureshop2 lookOrder' style='cursor:pointer;'><h5>查看订单</h5></div>"+
+					 "<div class='sureshop2 outRefund' style='cursor:pointer;'><h5>申请退单</h5></div>";
+				 }else if (v1==2){	
 					 return  "<div class='sureshop2 lookOrder' style='cursor:pointer;'><h5>查看订单</h5></div>";
+				 }else if (v1==3){
+					 return  "<div class='sureshop2 lookOrder' style='cursor:pointer;'><h5>查看订单</h5></div>";
+					
+				 }else if (v1==4){
+					 return  "<div class='sureshop2 lookOrder' style='cursor:pointer;'><h5>查看订单</h5></div>";
+					
 				 }
 			});
 			
