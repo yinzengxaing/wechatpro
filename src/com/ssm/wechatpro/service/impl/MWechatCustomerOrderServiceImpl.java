@@ -39,18 +39,13 @@ public class MWechatCustomerOrderServiceImpl implements MWechatCustomerOrderServ
 	
 	private static String ORDER_NAME ="wechat_customer_order_log_"; 
 	private static String SHOPPING_NAME = "wechat_customer_order_shopping_log_";
-	String order_log = null; // 表示数据表名(订单表)
-	String shopping_log = null;//表示产品信息表
-	
-	public MWechatCustomerOrderServiceImpl() {
-		order_log = ORDER_NAME + DateUtil.getTimeSixAndToString();// 拼接数据表名
-		shopping_log =SHOPPING_NAME + DateUtil.getTimeSixAndToString();//拼接数据表
-	}
 	
 	//添加一个订单
 	@SuppressWarnings("static-access")
 	@Override
 	public void addOrder(InputObject inputObject, OutputObject outputObject)throws Exception {
+		String order_log = ORDER_NAME + DateUtil.getTimeSixAndToString();// 拼接数据表名 表示数据表名(订单表)
+		String shopping_log =SHOPPING_NAME + DateUtil.getTimeSixAndToString();//拼接数据表 表示产品信息表
 		Map<String, Object> wechatLogParams = inputObject.getWechatLogParams();
 		Map<String, Object> params = inputObject.getParams();
 		params.put("id", wechatLogParams.get("id").toString());
@@ -155,6 +150,7 @@ public class MWechatCustomerOrderServiceImpl implements MWechatCustomerOrderServ
 	 */
 	@Override
 	public void updatePayState(InputObject inputObject, final OutputObject outputObject) throws Exception {
+		String order_log = ORDER_NAME + DateUtil.getTimeSixAndToString();// 拼接数据表名 表示数据表名(订单表)
 		// 获取订单id
 		// 获取登录人id
 		// 创建流水号
@@ -193,7 +189,6 @@ public class MWechatCustomerOrderServiceImpl implements MWechatCustomerOrderServ
 			dayNo = Integer.parseInt(dayNoMap.get("MaxDayNo")+""); // 获取当前最大日流水号
 		}
 		//提取订单日期 拼接订单的表
-		String order_log= ORDER_NAME+DateUtil.getTimeSixAndToString();
 		params.put("order_log", order_log); // 表名
 		params.put("wetherPaymentTime", DateUtil.getTimeAndToString());
 		params.put("lastUpdateTime", DateUtil.getTimeAndToString()); // 最后更新时间

@@ -36,6 +36,9 @@ public class WeChatApiUtil {
     private static final String UPLOAD_MEDIA = "https://api.weixin.qq.com/cgi-bin/media/uploadimg";
     // 素材下载:不支持视频文件的下载(GET)
     private static final String DOWNLOAD_MEDIA = "http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=%s&media_id=%s";
+    //新增图片素材接口地址
+    private static final String NEW_IMAGE_UPLOAD ="http://file.api.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=TYPE";
+   
 
     public static String getTokenUrl(String appId, String appSecret) {
         return String.format(ACCESS_TOKEN, appId, appSecret);
@@ -142,7 +145,8 @@ public class WeChatApiUtil {
             return null;
         }
 
-        String url = UPLOAD_MEDIA;
+        //String url = UPLOAD_MEDIA;
+        String url = NEW_IMAGE_UPLOAD;
         JSONObject jsonObject = null;
         PostMethod post = new PostMethod(url);
         post.setRequestHeader("Connection", "Keep-Alive");
@@ -251,16 +255,16 @@ public class WeChatApiUtil {
     }
 
     public static void main(String[] args) {
-        File f = new File("D:/tomcat7/webapps/wechatpro/upload/role/logo/0c75cbd6de9d477aa4546621dd9dd088.jpg");
+        File f = new File("C:/Users/yzx/Desktop/Desert.jpg");
         String appId = "wxf5179dd713bc6e36";
         String appSecret = "946bd10ae09c79733e7def85ff0a3f62";
         String token = WeChatApiUtil.getToken(appId, appSecret);
         JSONObject o = WeChatApiUtil.uploadMedia(f, token, "image");
-        //System.out.println(o.toString());
+        System.out.println(o.toString());
 
         //下载刚刚上传的图片以id命名
-//        String media_id = o.getString("media_id");
-//        File t = WeChatApiUtil.downloadMedia("D:/"+media_id+".png", token, media_id);
+        String media_id = o.getString("media_id");
+       File t = WeChatApiUtil.downloadMedia("D:/"+media_id+".png", token, media_id);
 
     }
 }

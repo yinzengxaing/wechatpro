@@ -8,31 +8,34 @@ public class Constants {
 	
 	public static final String WECHAT_PAY_FOR_PREPAY_ID_URL = "ihttps://api.mch.wexin.qq.com/pay/unifiedorder";//微信统一支付获取prepay_id接口
 	
-//	public static final String WECHAT_FOR_SIGNATURE = "http://z1714z2699.imwork.net/wechatpro/html/phoneModelOne/orderList.html";//测试使用
-//	public static final String KEY  = "276ef476761549c3bd9853a2ceba5eb7";//商户平台的key值//测试使用
-//	public static final String APPSECRET = "946bd10ae09c79733e7def85ff0a3f62";//测试使用
-//	public static final String APPID = "wxf5179dd713bc6e36";//测试使用
-//	public static final String MCH_ID ="1364180602";//商户号ID 测试使用
-//	public static final String PATH = "http://z1714z2699.imwork.net/wechatpro";//测试使用
-//	public static final String SSL_PATH="D:/apiclientCert/apiclient_cert.p12"; //退款使用的证书地址
-//	public static final String IP="172.21.3.51"; //本地ip
-	
-	
-	public static final String WECHAT_FOR_SIGNATURE = "http://weixinorder.maxburger.com.cn/wechatpro/html/phoneModelOne/orderList.html?adminId=";//主账号
-	public static final String KEY  = "5EC4C1E34DF34589826C49375EF14FB3";//商户平台的key值//主账号
-	public static final String APPSECRET = "de3ff5c9eaf5859d0d6d5250d39eed9d";//主账号
-	public static final String APPID = "wx95cdc7bd59759712";//主账号
-	public static final String MCH_ID ="1444842502";//商户号ID 主账号
-	public static final String PATH = "http://weixinorder.maxburger.com.cn/wechatpro";//主账号
+	public static final String WECHAT_FOR_SIGNATURE = "http://z1714z2699.imwork.net/wechatpro/html/phoneModelOne/orderList.html";//测试使用
+	public static final String KEY  = "276ef476761549c3bd9853a2ceba5eb7";//商户平台的key值//测试使用
+	public static final String APPSECRET = "946bd10ae09c79733e7def85ff0a3f62";//测试使用
+	public static final String APPID = "wxf5179dd713bc6e36";//测试使用
+	public static final String MCH_ID ="1364180602";//商户号ID 测试使用
+	public static final String PATH = "http://z1714z2699.imwork.net/wechatpro";//测试使用
 	public static final String SSL_PATH="D:/apiclientCert/apiclient_cert.p12"; //退款使用的证书地址
-	public static final String IP="116.255.224.3"; //本地ip
+	public static final String IP="172.21.3.51"; //本地ip
 	
-//	public static final String WECHAT_FOR_SIGNATURE = "http://maxburger.com.cn/wechatpro/html/phoneModelOne/orderList.html";//主账号
-//	public static final String KEY  = "0ae259025f4b437dab3988a61671880d";//商户平台的key值//主账号
+//max大号	
+//	public static final String WECHAT_FOR_SIGNATURE = "http://weixinorder.maxburger.com.cn/wechatpro/html/phoneModelOne/orderList.html?adminId=";//主账号
+//	public static final String KEY  = "5EC4C1E34DF34589826C49375EF14FB3";//商户平台的key值//主账号
 //	public static final String APPSECRET = "de3ff5c9eaf5859d0d6d5250d39eed9d";//主账号
 //	public static final String APPID = "wx95cdc7bd59759712";//主账号
-//	public static final String MCH_ID ="1386015702";//商户号ID 主账号
-//	public static final String PATH = "http://maxburger.com.cn/wechatpro";//主账号
+//	public static final String MCH_ID ="1444842502";//商户号ID 主账号
+//	public static final String PATH = "http://weixinorder.maxburger.com.cn/wechatpro";//主账号
+//	public static final String SSL_PATH="D:/apiclientCert/apiclient_cert.p12"; //退款使用的证书地址
+//	public static final String IP="116.255.224.3"; //本地ip
+	
+// 牛肉饭
+//	public static final String WECHAT_FOR_SIGNATURE = "http://niuroufanorder.maxburger.com.cn/wechatpro/html/phoneModelOne/orderList.html?adminId=";//主账号
+//	public static final String KEY  = "";//商户平台的key值//主账号
+//	public static final String APPSECRET = "e18463ffacc776c1163d77e33f6b202b";//主账号
+//	public static final String APPID = "wx4885931d45bc30e2";//主账号
+//	public static final String MCH_ID ="1493476902";//商户号ID 主账号
+//	public static final String PATH = "http://niuroufanorder.maxburger.com.cn/wechatpro";//主账号
+//	public static final String SSL_PATH="D:/apiclientCert_niuroufan/apiclient_cert.p12"; //退款使用的证书地址
+//	public static final String IP="116.255.224.3"; //本地ip
 	
 	public static final String TOKEINVALID ="40001";
 	public static final String STATE ="true";

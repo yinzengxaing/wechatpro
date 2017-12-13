@@ -30,6 +30,7 @@ public class CustomExceptionResolver implements HandlerExceptionResolver{
 		String excetionType = null;
 		if(exception != null) {
 			exception.printStackTrace();
+			logger.error("error={}",exception);
 		}
 		CustomException customException = null;
 		if(exception instanceof CustomException){

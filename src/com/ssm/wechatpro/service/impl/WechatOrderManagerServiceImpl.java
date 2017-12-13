@@ -68,21 +68,18 @@ public class WechatOrderManagerServiceImpl implements WechatOrderManagerService 
 	 * @throws Exception
 	 */
 	public void selectOrderFormInfo (InputObject inputObject, OutputObject outputObject) throws Exception{
-		// tableName 表名
-		// orderId 订单列表id
-		// orderNumber 订单号
-		// 获取订单id和订单号
 		Map<String, Object> mapParam = inputObject.getParams();
-		String tableName = ORDERlOGTABLENAME + DateUtil.getTimeSixAndToString(); // 拼接表名
+		String string = mapParam.get("orderNumber").toString();
+		String data = string.substring(12,18);
+		String tableName = ORDERlOGTABLENAME + data; // 拼接表名
 		mapParam.put("tableName", tableName);
 		// 查询商品的基本信息
 		Map<String, Object> productBasic =  wechatOrderManagerMapper.selectOrderFormBasic(mapParam);
 		
 		// 拼接商品详情表的表名
-		mapParam.put("detailTableName", ORDERSHOPPINGTABLENAMW + DateUtil.getTimeSixAndToString());
+		mapParam.put("detailTableName", ORDERSHOPPINGTABLENAMW +data);
 		// 返回该订单中包含的商品信息
 		List<Map<String, Object>> productList = wechatOrderManagerMapper.selectOrderFormDetail(mapParam);
-		
 		outputObject.setBean(productBasic);
 		outputObject.setBeans(productList);
 	}

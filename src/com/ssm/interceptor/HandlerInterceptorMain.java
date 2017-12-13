@@ -31,8 +31,7 @@ public class HandlerInterceptorMain implements HandlerInterceptor{
 	//用于身份认证、身份授权、  
 	//比如身份认证，如果认证不通过表示当前用户没有登录，需要此方法拦截不再向下执行
 	@Override
-    public boolean preHandle(HttpServletRequest request,
-            HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
     	new PutObject(request,response);
     	boolean passNo = false;
     	HttpServletRequest servletRequest = (HttpServletRequest) request;

@@ -3,21 +3,27 @@ package com.ssm.wechatpro.service.impl;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.ssm.wechatpro.dao.WechatUserMapper;
 import com.ssm.wechatpro.object.InputObject;
 import com.ssm.wechatpro.object.OutputObject;
+import com.ssm.wechatpro.object.PutObject;
 import com.ssm.wechatpro.service.EmpowerWebpageService;
 import com.ssm.wechatpro.util.Constants;
+import com.ssm.wechatpro.util.WeixinUtil;
 import com.wechat.service.GetOpenIdByCode;
 
 @Service
-public class EmpowerWebpageServiceImpl implements EmpowerWebpageService {
-
+public class EmpowerWebpageServiceImpl  implements EmpowerWebpageService {
 	@Resource
 	WechatUserMapper wechatUserMapper;
+	private static Logger logger = LoggerFactory.getLogger(EmpowerWebpageServiceImpl.class);  
 	
 	/**
 	 * 通过code获取openid
@@ -27,37 +33,41 @@ public class EmpowerWebpageServiceImpl implements EmpowerWebpageService {
 	 * @throws Exception
 	 */
 	@Override
-	public void getOpenidBycode(InputObject inputObject,OutputObject outputObject) throws Exception{
+	public void getOpenidBycode(InputObject inputObject,OutputObject outputObject,HttpServletRequest request,HttpServletResponse response) throws Exception{
 		//判断session 中是否已经存在用户 、不存在会抛出空指针异常
-		Map<String, Object> map = inputObject.getWechatLogParams();//获取openid
-		try {
-			int size = map.size();
-			if (size >= 0  || !map.isEmpty()){
-				outputObject.setBean(map);
-			}else{
-				Map<String ,Object> params = inputObject.getParams();
-				String code = (String) params.get("code");
-				Map<String,Object> bean = GetOpenIdByCode.getRequest1(Constants.APPID, Constants.APPSECRET, code);
-				if(bean == null){
-					outputObject.setreturnMessage("session为空");
-					return;
-				}
-				Map<String,Object> user = wechatUserMapper.selectWechatUserByOpenId(bean);
-				outputObject.setWechatLogParams(user);
-				outputObject.setBean(user);
-			}
-		} catch (Exception e) {
-			Map<String ,Object> params = inputObject.getParams();
-			String code = (String) params.get("code");
-			Map<String,Object> bean = GetOpenIdByCode.getRequest1(Constants.APPID, Constants.APPSECRET, code);
-			if(bean == null){
-				outputObject.setreturnMessage("session为空");
-				return;
-			}
-			Map<String,Object> user = wechatUserMapper.selectWechatUserByOpenId(bean);
+		Map<String, Object> user = inputObject.getWechatLogParams();//获取openid
+		Map<String ,Object> params = inputObject.getParams();
+		String code = (String) params.get("code");
+		Map<String,Object> bean = GetOpenIdByCode.getRequest1(Constants.APPID, Constants.APPSECRET, code);
+		//用户请求不是从前台发出的
+		if (bean == null && !user.isEmpty()){
 			outputObject.setWechatLogParams(user);
 			outputObject.setBean(user);
+		}else{
+			try {
+				//当前session中的用户和发送消息获得的用户不想符合
+				if (!user.isEmpty()){
+					if (!user.get("openid").equals(bean.get("openid"))){ 
+						user =  wechatUserMapper.selectWechatUserByOpenId(bean);
+						outputObject.setWechatLogParams(user);
+					}
+				}
+			//未获取到用户session中不存在用户	
+			} catch (Exception e) {
+				user =  wechatUserMapper.selectWechatUserByOpenId(bean);
+			}finally{
+				try {
+					outputObject.setWechatLogParams(user);
+				//session没有初始化
+				} catch (Exception e2) {
+					new PutObject(request,response);
+					request.getSession().setAttribute("admTsyWechatUser", user);
+					logger.error("login-error={}",e2);
+				}
+				outputObject.setBean(user);
+			}
 		}
+
 	}
 	
 	/**
@@ -74,5 +84,4 @@ public class EmpowerWebpageServiceImpl implements EmpowerWebpageService {
 		outputObject.setWechatLogParams(bean);
 	}
 
-	
 }

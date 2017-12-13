@@ -31,10 +31,10 @@ public class HandlerInterceptorGateway implements HandlerInterceptor{
 	//比如身份认证，如果认证不通过表示当前用户没有登录，需要此方法拦截不再向下执行
 	@Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-    	new PutObject(request,response);
     	HttpServletRequest servletRequest = (HttpServletRequest) request;
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
+		new PutObject(request,response);
 		String url = servletRequest.getContextPath() + servletRequest.getServletPath();		
 		Map<String,Object> wechatUser = InputObject.getWechatLogInParams();
 		if(wechatUser == null ){//判断session是否为空

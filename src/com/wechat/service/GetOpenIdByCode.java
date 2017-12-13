@@ -3,8 +3,14 @@ package com.wechat.service;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Resource;
+
+import org.apache.http.HttpRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.ssm.util.TokenThread;
 import com.ssm.wechatpro.object.OutputObject;
+import com.ssm.wechatpro.service.impl.EmpowerWebpageServiceImpl;
 import com.ssm.wechatpro.util.Constants;
 import com.ssm.wechatpro.util.WeixinUtil;
 import net.sf.json.JSONObject;
@@ -19,9 +25,12 @@ public class GetOpenIdByCode {
 	@Resource
 	public static OutputObject outputObject = new OutputObject();
 	
+	private static Logger logger = LoggerFactory.getLogger(GetOpenIdByCode.class);  
+	
 	public static final String DEF_CHATSET = "UTF-8";
 	public static final int DEF_CONN_TIMEOUT = 30000;
 	public static final int DEF_READ_TIMEOUT = 30000;
+	public static final String OAUTHUSERINFO = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code";
 	public static String userAgent = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.66 Safari/537.36";
 
 	/**
@@ -51,10 +60,11 @@ public class GetOpenIdByCode {
 			bean.put("refresh_token",  object.getString("refresh_token"));
 		} catch (Exception e) {
 			e.printStackTrace();
+			logger.error("getRequest1-error={}",e);
 		}
 		return bean;
+//			return bean;
 	}
-	
 	/**
 	 * 获取用户信息
 	 * @param access_token

@@ -13,10 +13,8 @@ function dataInit(){
 			$("#saveBean").hide();
 			$("#deleteBean").hide();
 	}
-	alert("menuVersion="+menuVersion);
     //版本号为空获取版本号，否则直接查询版本下所有菜单
 	if(menuVersion==null){
-		alert(1);
 		AjaxPostUtil.request({url:path+"/post/WechatButtomMenuController/getmenuVersion",params:{},type:'json',callback:function(json){
 			if(json.returnCode==0){
 				menuVersion=json.bean.menuVersion;
@@ -30,7 +28,6 @@ function dataInit(){
 			};
 		AjaxPostUtil.request({url:path+"/post/WechatButtomMenuController/selectMenuByVersion",params:params,type:'json',callback:function(json){
 			if(json.returnCode==0){
-				alert(2);
 				var source = $("#menuListBean").html();  
 			    var template = Handlebars.compile(source);
 			    $("#menuNameDiv").html(template(json));
@@ -41,7 +38,6 @@ function dataInit(){
 }
 //菜单添加增加菜单建
 function loadMenuMation(){
-	alert(3);
 	var strAdd = '<div class="menu"><div class="bt-name firstAddMenu"><img src="../../assest/img/tianjia.png" class="addMenuPng"/></div></div>';
 	var strBeanAdd = '<li class="rowMenu addSecondMenu"><a href="javascript:;"><img src="../../assest/img/tianjia.png" class="addMenuPng"/></a></li>';
 	var menuFirst = $(".menu");
@@ -133,6 +129,7 @@ function eventInit(){
 					rebackInt=i+1;
 					if(i!=4){
 					rebackContext= $("#context").children("div:eq("+i+")").text();
+					
 					}else{
 						if(isNull($('#rolePrompt').val())){
 							qiao.bs.msg({msg:"回复内容不能为空",type:'danger'});
@@ -174,7 +171,6 @@ function eventInit(){
 	}); 
 	//一级菜单触发事件
 	$('body').on('click', '.menu', function(e){
-		alert(4);
 		if ($(this).hasClass("cura")) {
 			$(this).children(".new-sub").hide(); //当前菜单下的二级菜单隐藏
 			$(".menu").removeClass("cura"); //同一级的菜单项

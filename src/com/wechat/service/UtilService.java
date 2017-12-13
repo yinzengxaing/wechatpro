@@ -12,6 +12,9 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.json.JSONObject;
 
 public class UtilService {
@@ -21,6 +24,7 @@ public class UtilService {
     public static final int DEF_READ_TIMEOUT = 30000;
     public static String userAgent =  "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.66 Safari/537.36";
     
+    private static Logger logger = LoggerFactory.getLogger(UtilService.class);  
 	/**
 	 * 聚合数据
 	 * @param strUrl 请求地址
@@ -65,6 +69,7 @@ public class UtilService {
 			}
 			rs = sb.toString();
 		} catch (IOException e) {
+			logger.error("网络请求错误  class-net-error={}",e);
 			e.printStackTrace();
 		} finally {
 			if (out != null) {
@@ -94,6 +99,7 @@ public class UtilService {
 			try {
 				sb.append(i.getKey()).append("=").append(URLEncoder.encode(i.getValue() + "", "UTF-8")).append("&");
 			} catch (UnsupportedEncodingException e) {
+				logger.error("urlencode-error={}",e);
 				e.printStackTrace();
 			}
 		}

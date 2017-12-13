@@ -3,16 +3,19 @@ package com.ssm.wechatpro.util;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.axis.handlers.soap.MustUnderstandChecker;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import com.ctc.wstx.util.DataUtil;
 import com.ssm.wechatpro.bean.wechat.ResponseArticle;
 import com.ssm.wechatpro.bean.wechat.ResponseMusicMessage;
 import com.ssm.wechatpro.bean.wechat.ResponseNewsMessage;
@@ -66,7 +69,7 @@ public class MessageUtil {
 		xstream.alias("xml", textMessage.getClass());
 		return xstream.toXML(textMessage);
 	}
-
+	
 	/**
 	 * 音乐消息对象转换成xml
 	 * @param musicMessage  音乐消息对象
@@ -131,5 +134,17 @@ public class MessageUtil {
 		}
 		return size;
 	}
-
+	public static void main(String [] args){
+		ResponseMusicMessage responseMusicMessage = new ResponseMusicMessage();
+		responseMusicMessage.setCreateTime(12111);
+		responseMusicMessage.setFromUserName("hhh");
+		responseMusicMessage.setFuncFlag(12);
+		responseMusicMessage.setMsgType("music");
+		responseMusicMessage.setToUserName("sdsdsa");
+		String musicMessageToXml = musicMessageToXml(responseMusicMessage);
+		System.out.println(musicMessageToXml);
+		
+	}
 }
+
+

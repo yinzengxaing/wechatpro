@@ -64,7 +64,6 @@ public class UnifiedorderService {
         String sign = OrderUtil.sign(params, key);  
         params.put("sign", sign);  
         String xmlResult = OrderUtil.ArrayToXml(params);
-        log.info("weixin getPrepayidParams:{}", params);
         try{
 			result = post(url,xmlResult);
 			log.info("weixin getPrepayid:{}", result);  
@@ -80,6 +79,7 @@ public class UnifiedorderService {
 	        signMap.put("paySign", paySign2);
 		}catch (Exception e) {
 			e.printStackTrace();
+	        log.info("weixin getPrepayidParams-e:{}", e);
 		}
         return signMap;
     }  
@@ -118,7 +118,8 @@ public class UnifiedorderService {
                 bis.close();    
             }    
         }catch (Exception e) {    
-            e.printStackTrace();    
+            e.printStackTrace();  
+            log.info("weixin getPrepayidParams-e:{}", e);
         }    
         myPost.releaseConnection();    
         return responseString;    
@@ -137,8 +138,10 @@ public class UnifiedorderService {
             }
         } catch (DocumentException e) {
             e.printStackTrace();
+            log.info("weixin getPrepayidParams-e:{}", e);
         } catch (Exception e) {
             e.printStackTrace();
+            log.info("weixin getPrepayidParams-e:{}", e);
         }
         return map;
     }

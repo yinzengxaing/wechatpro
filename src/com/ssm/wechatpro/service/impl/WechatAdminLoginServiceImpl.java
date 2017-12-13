@@ -383,7 +383,6 @@ public class WechatAdminLoginServiceImpl implements WechatAdminLoginService {
 			map.put("id", bean.get("id"));
 			List<Map<String,Object>> beans = wechatAdminLoginMapper.selectByUser(map);//查询所有的一级菜单
 			
-			
 			if(beans.get(0).get("wechatRoleState").toString().equals(Constants.USER_STATEBYPASSWORD)){//查看角色是否为上线状态
 				for(Map<String,Object> b : beans){//遍历每一条数据
 					b.put("userId", map.get("id"));
@@ -406,8 +405,13 @@ public class WechatAdminLoginServiceImpl implements WechatAdminLoginService {
 		Map<String, Object> beanLog = new HashMap<>();
 		beanLog.put("loginTable", Constants.LOGIN_TABLE+DateUtil.getTimeSixAndToString());
 		beanLog.put("no", no);
-		beanLog.put("loginPlace", IPService.getAddressByLoginIp(inputObject.getRequest().getRemoteHost()));//获取登录用户的地址
-		beanLog.put("loginIp", inputObject.getRequest().getRemoteHost());//获取登录用户的IP
+		try{
+			beanLog.put("loginPlace", IPService.getAddressByLoginIp(inputObject.getRequest().getRemoteHost()));//获取登录用户的地址
+			beanLog.put("loginIp", inputObject.getRequest().getRemoteHost());//获取登录用户的IP
+		}catch (Exception e) {
+			beanLog.put("loginPlace", "未获取");//获取登录用户的地址
+			beanLog.put("loginIp", "127.0.0.1");//获取登录用户的IP
+		}
 		beanLog.put("loginData", DateUtil.getTimeAndToString());
 		beanLog.put("loginNumSuccess", amount);//查询登录成功次数再+1
 		wechatAdminLoginLogMapper.insertLoginLog(beanLog);

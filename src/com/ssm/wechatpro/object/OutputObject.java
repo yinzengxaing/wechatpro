@@ -20,7 +20,6 @@ public class OutputObject extends PutObject{
 	public static Object returnMessage;
 	public static Object returnCode;
 	
-	
 	public OutputObject(){
 		bean = new HashMap<String, Object>();
 		beans = new ArrayList<Map<String,Object>>();

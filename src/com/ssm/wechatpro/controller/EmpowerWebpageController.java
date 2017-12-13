@@ -1,6 +1,8 @@
 package com.ssm.wechatpro.controller;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,8 +26,8 @@ public class EmpowerWebpageController {
 	 */
 	@RequestMapping("/gateway/EmpowerWebpageController/getOpenidBycode")
 	@ResponseBody
-	public void getOpenidBycode(InputObject inputObject,OutputObject outputObject) throws Exception{
-		empowerWebpageService.getOpenidBycode(inputObject, outputObject);
+	public void getOpenidBycode(InputObject inputObject,OutputObject outputObject,HttpServletRequest request,HttpServletResponse response) throws Exception{
+		empowerWebpageService.getOpenidBycode(inputObject, outputObject, request, response);
 	}
 	
 	/**
@@ -36,7 +38,7 @@ public class EmpowerWebpageController {
 	 */
 	@RequestMapping("/gateway/EmpowerWebpageController/updateSession")
 	@ResponseBody
-	public void updateSession(InputObject inputObject,OutputObject outputObject) throws Exception{
+	public void updateSession(InputObject inputObject,OutputObject outputObject ) throws Exception{
 		empowerWebpageService.updateSession(inputObject, outputObject);
 	}
 

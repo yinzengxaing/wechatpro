@@ -9,10 +9,12 @@ function dataInit(){
 	base = new Base64();
 	AjaxPostUtil.request({url:path+"/post/wechatAdminLoginController/selectSession",params:{},type:'json',callback:function(jsonSession){
 		if(jsonSession.returnCode==0){
+			
 			var goEasy = new GoEasy({
 			    appkey: 'BC-c5e986fba5d14d38b2b2c5b4b072fc8c'
 			});
 			goEasy.subscribe({
+				
 				channel: jsonSession.bean.adminNo,
 				onMessage: function (message) {
 					qiao.bs.msg({msg:message.content,type:'success'});

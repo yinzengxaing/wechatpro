@@ -2,9 +2,11 @@ package com.ssm.wechatpro.util;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.KeyStore;
@@ -18,11 +20,15 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sf.json.JSONObject;
 
 import com.ssm.wechatpro.bean.wechat.AccessToken;
 import com.ssm.wechatpro.bean.wechat.Menu;
 import com.ssm.wechatpro.manager.MyX509TrustManager;
+import com.ssm.wechatpro.service.impl.EmpowerWebpageServiceImpl;
 
 /**
  * 公众平台通用接口工具类
@@ -34,6 +40,8 @@ public class WeixinUtil {
 	public final static String access_token_url = "https://api.weixin.qq.com/cgi-bin/token?" + "grant_type=client_credential&appid=APPID&secret=APPSECRET";
 	// 菜单创建（POST） 限100（次/天）
 	public static String menu_create_url = "https://api.weixin.qq.com/cgi-bin/menu/create?" + "access_token=ACCESS_TOKEN";
+	
+	private static Logger logger = LoggerFactory.getLogger(WeixinUtil.class);  
 
 	/**
 	 * 发起https请求并获取结果
@@ -42,19 +50,25 @@ public class WeixinUtil {
 	 * @param requestMethod  请求方式（GET、POST）
 	 * @param outputStr  提交的数据
 	 * @return JSONObject(通过JSONObject.get(key)的方式获取json对象的属性值)
+	 * @throws IOException 
 	 */
-	public static JSONObject httpRequest(String requestUrl, String requestMethod, String outputStr) throws Exception {
+	public static JSONObject httpRequest(String requestUrl, String requestMethod, String outputStr)   {
+		HttpsURLConnection httpUrlConn = null;
+		OutputStream outputStream = null ;
+		InputStream inputStream = null;
+		
 		JSONObject jsonObject = null;
 		StringBuffer buffer = new StringBuffer();
 		// 创建SSLContext对象，并使用我们指定的信任管理器初始化
 		TrustManager[] tm = { new MyX509TrustManager() };
+		try{
 		SSLContext sslContext = SSLContext.getInstance("SSL", "SunJSSE");
 		sslContext.init(null, tm, new java.security.SecureRandom());
 		// 从上述SSLContext对象中得到SSLSocketFactory对象
 		SSLSocketFactory ssf = sslContext.getSocketFactory();
 
 		URL url = new URL(requestUrl);
-		HttpsURLConnection httpUrlConn = (HttpsURLConnection) url.openConnection();
+		 httpUrlConn = (HttpsURLConnection) url.openConnection();
 		httpUrlConn.setSSLSocketFactory(ssf);
 		httpUrlConn.setDoOutput(true);
 		httpUrlConn.setDoInput(true);
@@ -62,19 +76,18 @@ public class WeixinUtil {
 		// 设置请求方式（GET/POST）
 		httpUrlConn.setRequestMethod(requestMethod);
 
-		if ("GET".equalsIgnoreCase(requestMethod))
 			httpUrlConn.connect();
 
 		// 当有数据需要提交时
 		if (null != outputStr) {
-			OutputStream outputStream = httpUrlConn.getOutputStream();
+			 outputStream = httpUrlConn.getOutputStream();
 			// 注意编码格式，防止中文乱码
 			outputStream.write(outputStr.getBytes("UTF-8"));
 			outputStream.close();
 		}
 
 		// 将返回的输入流转换成字符串
-		InputStream inputStream = httpUrlConn.getInputStream();
+		 inputStream = httpUrlConn.getInputStream();
 		InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "utf-8");
 		BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
@@ -84,11 +97,24 @@ public class WeixinUtil {
 		}
 		bufferedReader.close();
 		inputStreamReader.close();
-		// 释放资源
-		inputStream.close();
-		inputStream = null;
-		httpUrlConn.disconnect();
 		jsonObject = JSONObject.fromObject(buffer.toString());
+		}catch(Exception e){
+			logger.error("网络请求错误  class-httpRequest-error={}",e);
+			e.printStackTrace();
+		}finally{
+			// 释放资源
+			try {
+				if(inputStream != null){
+					inputStream.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			inputStream = null;
+			if (httpUrlConn != null ){
+				httpUrlConn.disconnect();
+			}
+		}
 		return jsonObject;
 	}
 
@@ -104,7 +130,6 @@ public class WeixinUtil {
 		AccessToken accessToken = null;
 		String requestUrl = access_token_url.replace("APPID", appid).replace("APPSECRET", appsecret);
 		JSONObject jsonObject = httpRequest(requestUrl, "GET", null);
-		System.out.println(jsonObject);
 		// 如果请求成功
 		if (null != jsonObject) {
 			accessToken = new AccessToken();
@@ -170,6 +195,7 @@ public class WeixinUtil {
            os.flush();
            os.close();
        } catch (Exception e) {
+    	   logger.error("网络请求错误  class-connectWeiXinInterface-error={}",e);
            e.printStackTrace();
        }
        return 0;
@@ -179,59 +205,6 @@ public class WeixinUtil {
      * 获取微信支付退款的认证证书凭证
      */
 	public static void getApiKey() throws Exception{
-		
-/*		  	KeyStore keyStore  = KeyStore.getInstance("PKCS12");
-	        FileInputStream instream = new FileInputStream(new File(Constants.SSL_PATH));
-	        try {
-	            keyStore.load(instream, Constants.MCH_ID.toCharArray());
-	        } finally {
-	            instream.close();
-	        }
-
-	        // Trust own CA and all self-signed certs
-	        @SuppressWarnings("deprecation")
-			SSLContext sslcontext = SSLContexts.custom()
-	                .loadKeyMaterial(keyStore, Constants.MCH_ID.toCharArray())
-	                .build();
-	        // Allow TLSv1 protocol only
-	        @SuppressWarnings({ "deprecation"})
-			SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
-	                sslcontext,
-	                new String[] { "TLSv1" },
-	                null,
-	                SSLConnectionSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER);
-	        CloseableHttpClient httpclient = HttpClients.custom()
-	                .setSSLSocketFactory(sslsf)
-	                .build();
-	        try {
-
-	            HttpGet httpget = new HttpGet("https://api.mch.weixin.qq.com/secapi/pay/refund");
-
-	            System.out.println("executing request" + httpget.getRequestLine());
-
-	            CloseableHttpResponse response = httpclient.execute(httpget);
-	            try {
-	                HttpEntity entity = response.getEntity();
-
-	                System.out.println("----------------------------------------");
-	                System.out.println(response.getStatusLine());
-	                if (entity != null) {
-	                    System.out.println("Response content length: " + entity.getContentLength());
-	                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(entity.getContent()));
-	                    String text;
-	                    while ((text = bufferedReader.readLine()) != null) {
-	                        System.out.println(text);
-	                    }
-	                   
-	                }
-	                EntityUtils.consume(entity);
-	            } finally {
-	                response.close();
-	            }
-	        } finally {
-	            httpclient.close();
-	        }
-    }*/
 		
 		// 证书文件(微信商户平台-账户设置-API安全-API证书-下载证书)
 		String keyStorePath = Constants.SSL_PATH;

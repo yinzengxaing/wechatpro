@@ -183,10 +183,6 @@ public class DateUtil {
 		 return str.substring(0, 6);
 	}
 	public static void main(String[] args) throws Exception {
-		String orderNumber = "85550200010320171010e98083";
-		String order_log ="wechat_customer_order_log_"+ orderNumber.substring(12,18 );
-		String adminId = orderNumber.substring(6, 12);
-		String adminIds = String.format("%01d",Integer.parseInt(adminId));
-		System.out.println(adminIds);
+			System.out.println(getTimeSixAndToString());
 	}
 }

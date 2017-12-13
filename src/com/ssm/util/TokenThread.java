@@ -22,7 +22,7 @@ public class TokenThread implements Runnable {
     public static AccessToken accessToken = null;  
   
     public void run() {  
-        while (true) {  
+      while (true) {  
             try {
                 accessToken = WeixinUtil.getAccessToken(appid,appsecret);  
                 if (null != accessToken) {
@@ -42,6 +42,7 @@ public class TokenThread implements Runnable {
                 log.error("{}", e);  
             } catch (Exception e) {
 				e.printStackTrace();
+				 log.error("{}", e);  
 			}  
         }  
     }  
