@@ -127,10 +127,15 @@ public class WechatProductServiceImpl implements WechatProductService {
 			return;
 		}
 		int maxCount = 0; // 表示商品的优先级
+		
+		try {
 		// 查询优先级
 		Map<String, Object> maxPriorityCount = wechatProductMapper.selectMaxPriority();
 		if(Integer.parseInt((maxPriorityCount.get("productPriority")+"")) >= 0){
 			maxCount = Integer.parseInt((maxPriorityCount.get("productPriority")+""));
+		}
+		}catch (Exception e) {
+			
 		}
 		maxCount += 1;
 		//加入创建人id即为当前用户

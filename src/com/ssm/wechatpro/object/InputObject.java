@@ -20,10 +20,11 @@ public class InputObject extends PutObject {
 	
 	/**
 	 * 网页请求content-type为application/x-www-form-urlencoded
+	 * @return 
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	public static void setParams() throws Exception{
+	public static String setParams() throws Exception{
 		//以Map集合存储页面表单传递过来的所有参数的键值对
 		Map<String, String[]> formMap = getRequest().getParameterMap();
 		keySet = formMap.keySet();
@@ -37,6 +38,7 @@ public class InputObject extends PutObject {
 			}
 			map.put(key, stb.toString());
 		}
+		return null;
 	}
 	
 	public static void setParams(Map<String, Object> map){

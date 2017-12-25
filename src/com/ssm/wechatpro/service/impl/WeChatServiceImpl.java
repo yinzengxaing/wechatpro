@@ -36,7 +36,7 @@ public class WeChatServiceImpl implements WeChatService {
 	 * @param request
 	 */
 	@Override
-	public String WechatReply(HttpServletRequest request) {
+	public synchronized String WechatReply(HttpServletRequest request) {
 		String respMessage = null;
 		try {
 			String respContent = "欢迎使用麦克思小麦机器人";// 默认返回的文本消息内容
@@ -70,11 +70,9 @@ public class WeChatServiceImpl implements WeChatService {
 			} else if (msgType.equals(Constants.REQ_MESSAGE_TYPE_IMAGE)) {// 图片消息
 				// 取得图片地址
 				String picUrl = requestMap.get("PicUrl"); 
-				
 				respContent = "您好，该公众号目前作为开发使用，请微信搜索max-burger关注正在运营的公众号\n很抱歉给您带来不便";
 			} else if (msgType.equals(Constants.REQ_MESSAGE_TYPE_LOCATION)) {//地理位置消息
 				respContent = "您好，该公众号目前作为开发使用，请微信搜索max-burger关注正在运营的公众号\n很抱歉给您带来不便";
-				System.out.println("sssssssssssssssss");
 				String access_token = TokenThread.accessToken.getToken();// 获取access_token
 				GetUserMationService.getRequest1(fromUserName);// 查看用户信息
 			} else if (msgType.equals(Constants.REQ_MESSAGE_TYPE_LINK)) {// 链接消息

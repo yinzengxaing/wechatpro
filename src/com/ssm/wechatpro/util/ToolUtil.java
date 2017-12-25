@@ -1,6 +1,9 @@
 package com.ssm.wechatpro.util;
 
 import java.security.MessageDigest;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -63,5 +66,30 @@ public class ToolUtil {
 			}
 		}
 	    return true;
+	}
+	
+	/**
+	 * 获取当前日期(2016-12-29 11:23:09)
+	 * 
+	 * @return
+	 */
+	public static String getTimeAndToString() {
+		Date dt = new Date();
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String nowTime = df.format(dt);
+		return nowTime;
+	}
+	
+	/**
+	 * 判断是否为空
+	 * @param str
+	 * @return
+	 */
+	public static boolean isNull(String str){
+		if(str==null||str.equals("")||str.equals("null")){
+			return true;
+		}else{
+			return false;
+		}
 	}
 }

@@ -19,15 +19,6 @@ public interface MWechatProductService {
 	//根据分类获取该分类下的所有商品
 	public void getProductListByType (InputObject inputObject ,OutputObject outputObject) throws Exception;
 	
-	//获取该商店下的所有的套餐
-	public void getAllPackageList(InputObject inputObject, OutputObject outputObject) throws Exception;
-	
-	//获取该商店下的素偶有的可选套餐
-	public void getAllChoosePackageList (InputObject inputObject, OutputObject outputObject) throws Exception;
-	
-	//获取首页显示的餐厅信息
-	public void getIndexProductList(InputObject inputObject ,OutputObject outputObject)throws Exception;
-	
 	//获取一个商品的详情
 	public void getProductDetail(InputObject inputObject,OutputObject outputObject) throws Exception;
 	

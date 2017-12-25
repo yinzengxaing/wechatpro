@@ -1,20 +1,16 @@
 package com.ssm.interceptor;
 
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.ssm.util.CustomException;
 import com.ssm.wechatpro.object.InputObject;
 import com.ssm.wechatpro.object.OutputObject;
 import com.ssm.wechatpro.object.PutObject;
 import com.ssm.wechatpro.util.Constants;
 import com.ssm.wechatpro.util.JudgeUtil;
-
 
 public class HandlerInterceptorGateway implements HandlerInterceptor{
 	

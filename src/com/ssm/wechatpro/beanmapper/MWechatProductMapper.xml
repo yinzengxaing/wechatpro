@@ -293,4 +293,54 @@
 	AND a.packageLogo = b.id
 	</if>
 	</select>
+	
+	<!-- 获取商店内所有的产品 -->
+	<select id="getAllProduct" resultType="java.util.Map" parameterType="java.util.Map" >
+			SELECT
+			a.id AS productId,
+			a.productName,
+			a.productIntegral,
+			a.productDesc,
+			a.productPrice,
+			a.productPriority, 
+			a.productType AS productTypeId,
+			a.createTime ,
+			b.optionPath AS productLogo,
+			c.productState ,
+			c.productNum ,
+			c.productNowNum,
+			d.typeName,
+			e.adminShopName,
+			e.adminId
+		FROM
+			wechat_product AS a,
+			wechat_option AS b,
+			wechat_product_restaurant AS c,
+			wechat_product_type AS d,
+			wechat_admin_login_mation AS e
+		WHERE
+			a.id IN (
+				SELECT
+					productId
+				FROM
+					wechat_product_restaurant
+				WHERE
+					productType = 1
+				AND c.adminRestaurantId  = #{adminId}
+			)
+		AND a.productState = 2
+		AND a.productLogo = b.id
+		AND a.id = c.productId
+		AND a.productType = d.id
+		AND e.adminId = #{adminId}
+		AND c.productState = 1
+		AND STRCMP(#{NowTime}, a.startTime) > 0
+		AND 0 > STRCMP(#{NowTime}, a.endTime)
+		GROUP BY
+			a.id
+		ORDER BY
+			a.productPriority ASC 
+	
+	</select>
+	
 </mapper>          

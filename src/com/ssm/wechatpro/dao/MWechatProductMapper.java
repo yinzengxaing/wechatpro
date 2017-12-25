@@ -16,6 +16,9 @@ public interface MWechatProductMapper {
 	//获取该商店下的所有商品类型
 	public List<Map<String, Object>> getAllType(Map<String, Object> map) throws Exception;
 	
+	//获取该商店下所有的商品
+	public List<Map<String, Object>> getAllProduct(Map<String , Object> map) throws Exception;
+	
 	//根据获得的类型 获取该类型中的商品的信息
 	public List<Map<String, Object>> getProductListByType(Map<String,Object> map) throws Exception;
 	

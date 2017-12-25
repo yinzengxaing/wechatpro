@@ -44,6 +44,25 @@ public class MWechatCustomerOrderServiceImpl implements MWechatCustomerOrderServ
 	@SuppressWarnings("static-access")
 	@Override
 	public void addOrder(InputObject inputObject, OutputObject outputObject)throws Exception {
+		//获取前台传入参数的集合
+		Map<String, Object> params2 = inputObject.getParams();
+		 String string = params2.get("oderId").toString();
+		 
+		 /**
+		  * 调用dao进行处理
+		  */
+		 mWechatCustomerOrderMapper.addOrder(params2);
+		 
+		 List<Map<String,Object>> allOrder = mWechatCustomerOrderMapper.getAllOrder(params2);
+		 
+		 outputObject.setBeans(allOrder);
+		 outputObject.settotal(allOrder.size());
+		 outputObject.setreturnMessage("啊 错了");
+		
+		/**
+		 * 
+		 * 
+		 */
 		String order_log = ORDER_NAME + DateUtil.getTimeSixAndToString();// 拼接数据表名 表示数据表名(订单表)
 		String shopping_log =SHOPPING_NAME + DateUtil.getTimeSixAndToString();//拼接数据表 表示产品信息表
 		Map<String, Object> wechatLogParams = inputObject.getWechatLogParams();

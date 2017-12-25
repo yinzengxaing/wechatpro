@@ -1,9 +1,18 @@
 $(function(e){
 	dataInit();
+	eventInit();
 });
 
 function dataInit(){
-	eventInit();
+	AjaxPostUtil.request({url:path+"/post/wechatAdminLoginController/selectSession",params:{},type:'json',callback:function(jsonSession){		
+		if(jsonSession.returnCode==0){
+			if(!isNull(jsonSession.bean)){
+				location.href = 'pcsuccess.html';
+			}
+		}else{
+			
+		}
+	}});
 }
 
 function eventInit(){

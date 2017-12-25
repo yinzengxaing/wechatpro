@@ -10,7 +10,7 @@
 	<link rel="shortcut icon" href="../../assest/icon/maxLogo.jpg">
 	<link type="text/css" rel="stylesheet" href="../../assest/phoneModelFirst/css/module.css"  />
 </head>
-<body style="font-size:12px">
+<body >
 	<div class="header">
 		<div class="header-background"></div>
 		<div class="toolbar statusbar-padding">
@@ -20,80 +20,86 @@
 			</div>
 		</div>
 	</div>
- 	<div id="loading"><img src="../../assest/img/netlogo.png" /></div> 
-	<div class="con">
-		<aside>
-			<div class="menu-left scrollbar-none r-line" id="sidebar">
-				<ul id="typeListUl">
-				
-				</ul>
-			</div>
-		</aside>
-		<section class="menu-right padding-all j-content" style="position:absolute;">
-			<h5 id="typeName">美食列表</h5>
-			<ul id="productListUl">
-			</ul>
-		</section>
-	</div>
-	
-	<div class="comm-bar-container" id="" >
-		<font class="glyphicon glyphicon-chevron-up" style="position:absolute;top:-25px; cursor:pointer; display:none;"  id="getCartProduct"></font>
-		<!-- 加入购物车中的商品列表 -->
-		<div id="catProductDiv"  style="display:none ;z-index:99;">
+	<div class="commodity-body">
+		<div class="commodity-left">
+		  <div class="innerbox">
+		  	<!-- 放置商品类别的列表 -->
+			<ul id="typeListUl">
+    		
+	    	</ul>
+		  </div>
 		</div>
+		<!-- 放置商品列表的div -->
+		<div class="commodity-right" id="productList-div">
+
+		</div>
+		<div class="commodity-black"></div>
+	
+	<div class="comm-bar-container" >
+	<font class="glyphicon glyphicon-chevron-up" style="position:absolute;top:-25px; cursor:pointer;  id="getCartProduct"></font>
+	<!--  
+		加入购物车中的商品列表
+		<div id="catProductDiv"  z-index:99;">
+			<div class="comm-bar">
+				<div class="comm-bar-left">
+					<h6 style=" margin:0;">可乐</h6>
+					<h6 style=" margin:0;">￥10</h6>
+				</div>
+				<div class="comm-bar-right">
+					<font class="glyphicon addInCart" style="font-size:30px;float:right;cursor:pointer;"
+					buyProductId="{{wechatCommodity}}" productType="{{wechatCommodityType}}" adminId="{{wechatCommodityAdminId}}"
+					productPrice="{{productPrice}}"
+					><img src="../../assest/img/jia.png" ></font>
+					<font  class="count" style="font-size:20px;float:right;margin:8px 4px;margin:15px 10px 0 10px;">1</font>
+					<font class="glyphicon redInCart" style="font-size:30px;float:right;cursor:pointer;"
+					buyProductId="{{wechatCommodity}}" productType="{{wechatCommodityType}}" adminId="{{wechatCommodityAdminId}}"
+					productPrice="{{productPrice}}"
+					><img src="../../assest/img/jian.png"></font>
+				</div>
+			</div>
+		</div> -->
 	</div>
-	
-	<!--遮罩层 -->
-	<div id="wrap" class="mask-layer"></div>
-	
-	<!-- 加载遮罩层 -->
-	<div id="mask" class="mask"></div>   
 	
 	<!-- 结算界面 -->
-	<div  id="clearDiv" class="payment-bar"  style="display:none">
+	<div  id="clearDiv" class="payment-bar" style="display:none;" >
 		<div class="shop-total">
-			<strong>总价：<i class="total" id="AllTotal">0.00</i></strong>
+			<strong>总价：<i class="total" id="AllTotal">0.00</i>元</strong>
 		</div>
 		<a  style="cursor:pointer;" class="settlement" id="selectOver">选好了</a>
 	</div>
-	<div id="navigate"></div>
+	
 	<!-- 页面加载层 -->
-	<div id="preloader">  
-	  <div id="status">
-	  </div>  
-	</div>
+	<div id="navigate"></div>
+	<div id="preloader"><div id="status"></div></div>
+	
+	<!--遮罩层 -->
+	<div id="wrap" class="mask-layer"></div>
+	<!-- 加载遮罩层 -->
+	<div id="mask" class="mask"></div>  
 	
 	<script id="productListBean" type="text/x-handlebars-template">
 		{{#each rows}}
-				<li class="w-3">
-					<div class="minBox">
-						<div class="minBoxImg">
-							<img class="img-thumbnail img-noborder" src="{{#productLogo productLogo}}{{/productLogo}}" />
-						</div>
-						<div class="minBoxFont">
-							<div>
-								<font class="proName">{{productName}}</font>
-							</div>
-							<div>
-								<font class="proPrice"><span style="font-size:14px;float:left;">￥</span>{{productPrice}}</font>
-							</div>
-							<div class="product-count">
-								<font class="toCart glyphicon" style="font-size:30px;padding:0; float:right;cursor:pointer;"
-								 buyProductId="{{productId}}" productType="{{productType}}" adminId="{{adminId}}" productPrice="{{productPrice}}">
-								<img src="../../assest/img/jia.png">
-								</font>
-								<font class="count proCount"  buyProductId="{{productId}}" productType="{{productType}}" style="font-size:20px;float:right;margin:8px 4px;margin:15px 10px 0 10px;">{{productCount}}</font>
-								<font class="redCart glyphicon" style="font-size:30px;padding:0;float:right;cursor:pointer; cursor:pointer;"
- 								buyProductId="{{productId}}" productType="{{productType}}" adminId="{{adminId}}" productPrice="{{productPrice}}">
-								<img src="../../assest/img/jian.png">
-								</font>
-							</div>
-						</div>
-						
+			<div class="food-div" id="typeId_{{typeId}}">
+				<h5>{{typeName}}</h5>
+				{{#each productList}}
+				<div class="product-minBox">
+					<div class="minBox_Img">
+						<img class="img-thumbnail img-noborder img-product-logo" src="{{#productLogo productLogo}}{{/productLogo}}" />
 					</div>
-				</li>
+					
+					<div class="procuat-Font">
+						<div class="proName">{{productName}}</div>
+						<div class="proPrice"><span style="font-size: 12px;  color: black;">￥</span>{{productPrice}}</div>
+						<div class="product-count">
+							<font class="redCart" style="cursor:pointer;"buyProductId="{{productId}}" productType="{{productTypeId}}" adminId="{{adminId}}" productPrice="{{productPrice}}"><img src="../../assest/img/jian.png"></font>
+							<font class="count proCount"  buyProductId="{{productId}}" productType="{{productType}}">{{#productCount productCount}}{{/productCount}}</font>
+							<font class="toCart" style="cursor:pointer;"buyProductId="{{productId}}" productType="{{productTypeId}}" adminId="{{adminId}}" productPrice="{{productPrice}}"><img src="../../assest/img/jia.png"></font> 
+						</div>
+					</div>
+				</div>
+				{{/each}}
+			</div>
  		{{/each}}
-		<div class="height-50px"></div>
 	</script>
 	
 	<script id="cartBenas" type="text/x-handlebars-template">
@@ -116,13 +122,12 @@
 				</div>
 			</div>
  		{{/each}}
-	
 	</script>
-
+	<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>    
 	<!-- 获得该城市所有的分类列表 -->
 	<script id="typeListBean" type="text/x-handlebars-template">
 		{{#each rows}}
-			<li id="{{typeId}}" typeName ="{{typeName}}" style="cursor:pointer;"><img class="img-thumbnail img-noborder" src="{{#typeLogo optionPath}}{{/typeLogo}}"/></li>
+			<li style="cursor:pointer;"><a href="#typeId_{{typeId}}"><img class="type-item img-thumbnail img-noborder" src="{{#typeLogo optionPath}}{{/typeLogo}}"/></a></li>
 		{{/each}}
 	</script>
 	
@@ -138,7 +143,6 @@
 	<script type="text/javascript" src="../../js/util/main.js"></script>
 	<script type="text/javascript" src="../../js/util/handlebars-v4.0.5.js"></script>
 	<script type="text/javascript" src="../../js/phoneModelOne/common/navigate.js"></script>
-	<script type="text/javascript" src="../../js/phoneModelOne/commodity.js"></script>
-	
+  	<script type="text/javascript" src="../../js/phoneModelOne/commodity.js"></script> 
 </body>
 </html>

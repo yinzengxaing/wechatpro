@@ -101,12 +101,15 @@ public class WechatProductTypeServiceImpl implements WechatProductTypeService {
 			return;
 		}
 		
-		// 获取上线商品分类中优先级值最大的
-		Map<String, Object> priorityMap = wechatProductTypeMapper.getMaxTypePriority();
 		int priority = 0;
-		
+		// 获取上线商品分类中优先级值最大的
+		try{
+		Map<String, Object> priorityMap = wechatProductTypeMapper.getMaxTypePriority();
 		if(!JudgeUtil.isNull(priorityMap.get("priority") + "")){
 			priority = Integer.parseInt(priorityMap.get("priority") + "");
+		}
+		}catch (Exception e) {
+			priority = 0;
 		}
 		priority += 1;
 		

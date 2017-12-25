@@ -3,9 +3,11 @@ package com.ssm.wechatpro.service.impl;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.http.HttpRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -33,14 +35,14 @@ public class EmpowerWebpageServiceImpl  implements EmpowerWebpageService {
 	 * @throws Exception
 	 */
 	@Override
-	public void getOpenidBycode(InputObject inputObject,OutputObject outputObject,HttpServletRequest request,HttpServletResponse response) throws Exception{
+	public void getOpenidBycode(InputObject inputObject,OutputObject outputObject,ServletRequest request) throws Exception{
 		//判断session 中是否已经存在用户 、不存在会抛出空指针异常
 		Map<String, Object> user = inputObject.getWechatLogParams();//获取openid
 		Map<String ,Object> params = inputObject.getParams();
-		String code = (String) params.get("code");
+		String code = params.get("code").toString();
 		Map<String,Object> bean = GetOpenIdByCode.getRequest1(Constants.APPID, Constants.APPSECRET, code);
 		//用户请求不是从前台发出的
-		if (bean == null && !user.isEmpty()){
+		if (bean == null){
 			outputObject.setWechatLogParams(user);
 			outputObject.setBean(user);
 		}else{
@@ -60,8 +62,7 @@ public class EmpowerWebpageServiceImpl  implements EmpowerWebpageService {
 					outputObject.setWechatLogParams(user);
 				//session没有初始化
 				} catch (Exception e2) {
-					new PutObject(request,response);
-					request.getSession().setAttribute("admTsyWechatUser", user);
+					((HttpServletRequest) request).getSession().setAttribute("admTsyWechatUser", user);
 					logger.error("login-error={}",e2);
 				}
 				outputObject.setBean(user);

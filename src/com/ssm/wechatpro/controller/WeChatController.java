@@ -22,7 +22,7 @@ public class WeChatController {
 	 * @throws Exception 
 	 */
 	@RequestMapping("wechat/WechatPost")
-	public void WechatPost(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public synchronized void WechatPost(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		/**
 		 * 1.确认请求来自微信服务器
 		 */

@@ -57,42 +57,6 @@ public class MWechatProductController {
 	}
 	
 	/**
-	 * 获取该商店下的所有的套餐
-	 * @param inputObject
-	 * @param outputObject
-	 * @throws Exception
-	 */
-	@RequestMapping("/gateway/MWechatProductController/getAllPackageList")
-	@ResponseBody
-	public void getAllPackageList (InputObject inputObject, OutputObject outputObject) throws Exception{
-		mWechatProductService.getAllPackageList(inputObject, outputObject);
-	}
-	
-	/**
-	 * 获取该商店下的所有的可选套餐
-	 * @param inputObject
-	 * @param outputObject
-	 * @throws Exception
-	 */
-	@RequestMapping("/gateway/MWechatProductController/getAllChoosePackageList")
-	@ResponseBody
-	public void getAllChoosePackageList (InputObject inputObject, OutputObject outputObject) throws Exception{
-		mWechatProductService.getAllChoosePackageList(inputObject, outputObject);
-	}
-	
-	/**
-	 *	获取首页展示的商品
-	 * @param inputObject
-	 * @param outputObject
-	 * @throws Exception
-	 */
-	@RequestMapping("/gateway/MWechatProductController/getIndexProductList")
-	@ResponseBody
-	public void getIndexProductList (InputObject inputObject, OutputObject outputObject) throws Exception{
-		mWechatProductService.getIndexProductList(inputObject, outputObject);
-	}
-	
-	/**
 	 *	获取商品详情
 	 * @param inputObject
 	 * @param outputObject

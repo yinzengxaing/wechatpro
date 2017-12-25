@@ -205,8 +205,6 @@ function eventInit(){
 		 }
 		 AjaxPostUtil.request({url:path+"/gateway/MWechatShoppingCartController/addProduct",params:params,type:'json',callback:function(json){
 			 if(json.returnCode==0){
-				 
-				 
 				 getCartInfo();
 			 }
 			 hideMask();

@@ -97,7 +97,11 @@
 			</list>
 		</property>
 	</bean>
-
+	
+	<!-- 启动AspectJ自动代理 配置AOP切面 -->
+    <!-- <aop:aspectj-autoproxy/>
+    <bean class="com.ssm.wechatpro.object.OutputObjectput" /> -->
+	
 	<aop:config>
 		<aop:advisor advice-ref="druid-stat-interceptor" pointcut-ref="druid-stat-pointcut" />
 	</aop:config>

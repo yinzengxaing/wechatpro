@@ -69,7 +69,8 @@
 		FROM
 			wechat_product_type
 		WHERE
-			typeName = #{typeName}	
+			typeName = #{typeName}
+		AND typeState != 4	
 	</select>
 
 	<!-- 添加一个商品类型 -->

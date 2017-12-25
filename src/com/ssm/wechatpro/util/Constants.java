@@ -29,7 +29,7 @@ public class Constants {
 	
 // 牛肉饭
 //	public static final String WECHAT_FOR_SIGNATURE = "http://niuroufanorder.maxburger.com.cn/wechatpro/html/phoneModelOne/orderList.html?adminId=";//主账号
-//	public static final String KEY  = "";//商户平台的key值//主账号
+//	public static final String KEY  = "06020B52B1BA4AE4AF2A9838463A51CE";//商户平台的key值//主账号
 //	public static final String APPSECRET = "e18463ffacc776c1163d77e33f6b202b";//主账号
 //	public static final String APPID = "wx4885931d45bc30e2";//主账号
 //	public static final String MCH_ID ="1493476902";//商户号ID 主账号
