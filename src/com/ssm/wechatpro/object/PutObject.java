@@ -6,22 +6,32 @@ import javax.servlet.http.HttpServletResponse;
 
 public class PutObject {
 	
-	public static HttpServletRequest request;
-	public static HttpServletResponse response;
+
+	private static ThreadLocal<HttpServletRequest> _request = new ThreadLocal<HttpServletRequest>();  
+    private static ThreadLocal<HttpServletResponse> _response = new ThreadLocal<HttpServletResponse>();
 	
 	public PutObject(){
 		
 	}
 	
 	public PutObject(HttpServletRequest request,HttpServletResponse response){
-		PutObject.request = request;
-		PutObject.response = response;
+		_request.set(request);
+		_response.set(response);
 	}
 
 	public static HttpServletRequest getRequest() {
-		return PutObject.request;
+		HttpServletRequest request = _request.get();  
+        return request;
 	}
+	
 	public static HttpServletResponse getResponse() {
-		return PutObject.response;
+		HttpServletResponse response = _response.get();  
+        return response;
 	}
+	
+	public static void removeRequest() {  
+        _request.remove();  
+        _response.remove();
+    }
+	
 }

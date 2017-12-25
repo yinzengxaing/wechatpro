@@ -11636,13 +11636,14 @@ body {
 	font-size:26px;
 }
 .mask-layer{
-	width:100%;
+ 	width:100%;
 	height:100%;
 	background-color:#ccc;
 	opacity:0.5;
 	z-index:1;
 	position:absolute;
-	 display: none; 
+	 display: none;  
+	position: fixed;
 }
 ----------------------------------------------------购物详情页面开始----------------------------------------------------
 .shopDetails_s p{

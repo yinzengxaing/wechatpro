@@ -77,6 +77,7 @@ public class HandlerInterceptorGateway implements HandlerInterceptor{
         		}
         	}
         	OutputObject.put();
+        	PutObject.removeRequest();
         }else{
         	//非ajax请求时
         	if(OutputObject.getCode()==Constants.WRONG){
@@ -88,6 +89,7 @@ public class HandlerInterceptorGateway implements HandlerInterceptor{
         		}
         	}
         	OutputObject.put();
+        	PutObject.removeRequest();
         }
     }
 

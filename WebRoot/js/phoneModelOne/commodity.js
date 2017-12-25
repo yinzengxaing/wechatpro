@@ -181,7 +181,131 @@ function eventInit() {
 		 }});
 	});
 	
+	//购物车详情事件
+	$('body').on('click', '#getCartProduct', function(e){
+		if(catState == 0){
+			catState = 1 ;
+			getProductInfo();
+			$('#catProductDiv').show();
+			$('#wrap').show();
+			hideMask();
+		}else if (catState == 1 ){
+			catState = 0;
+			$('#catProductDiv').hide();
+			$('#wrap').hide();
+		}
+	});
+	
+	//购物车内＋号 事件
+	$('body').on('click', '.addInCart', function(e){
+		showMask();
+		var s = $(this).parent();
+		var wechatCommodity = $(this).attr("buyProductId");//获取商品id
+		var wechatCommodityType = $(this).attr("productType");//获取商品的类型
+		var wechatCommodityAdminId = $(this).attr("adminId");//获取商店的id
+		var productPrice = $(this).attr("productPrice");
+		
+		 var params = {
+				 wechatCommodity:wechatCommodity,
+				 wechatCommodityType:wechatCommodityType,
+				 wechatCommodityAdminId:wechatCommodityAdminId
+		 }
+		 AjaxPostUtil.request({url:path+"/gateway/MWechatShoppingCartController/addProduct",params:params,type:'json',callback:function(json){
+			 if(json.returnCode==0){
+					var proCount = $(".proCount");
+					proCount.each(function() {
+					    var thisWechatCommodity = $(this).attr("buyProductId");//获取商品id
+						var thisWechatCommodityType = $(this).attr("productType");//获取商品的类型
+						if (thisWechatCommodity == wechatCommodity  &&   thisWechatCommodityType == wechatCommodityType){
+							count = $(this).html();
+							$(this).html(accAdd(count, 1));
+						}
+					});
+					var count = s.find('.count').html();
+					 s.find('.count').html(count*1+1);
+					 totalCount = totalCount*1+1;
+					 s.find('.count').show();
+					s.find('.redCart').show();
+			 		$('#clearDiv').show();
+			 		$('#getCartProduct').show();
+			 		totalPrice = accAdd(totalPrice, productPrice);
+					$('#AllTotal').html(totalPrice);
+				 }else{
+					 qiao.bs.msg({msg:"添加失败",type:'danger'});
+				 }
+			 hideMask();
+		 }});
+	});
+	//购物车内 －号 事件
+	$('body').on('click', '.redInCart', function(e){
+		showMask();
+		var s = $(this).parent();
+		var wechatCommodity = $(this).attr("buyProductId");//获取商品id
+		var wechatCommodityType = $(this).attr("productType");//获取商品的类型
+		var wechatCommodityAdminId = $(this).attr("adminId");//获取商店的id
+		var productPrice = $(this).attr("productPrice");
+		var proCount = $(".proCount");
+		var params = {
+				 wechatCommodity:wechatCommodity,
+				 wechatCommodityType:wechatCommodityType,
+				 wechatCommodityAdminId:wechatCommodityAdminId
+		 }
+		 AjaxPostUtil.request({url:path+"/gateway/MWechatShoppingCartController/deleteProductCount",params:params,type:'json',callback:function(json){
+			 if(json.returnCode==0){
+					c = s.find(".count").html();
+					if (c <= 1){
+						s.parent().remove();
+					}else{
+						s.find(".count").html(accSub(c, 1));
+					}
+					
+					proCount.each(function() {
+					    var thisWechatCommodity = $(this).attr("buyProductId");//获取商品id
+						var thisWechatCommodityType = $(this).attr("productType");//获取商品的类型
+						if (thisWechatCommodity == wechatCommodity  &&   thisWechatCommodityType == wechatCommodityType){
+							count = $(this).html();
+							 newCount=accSub(count, 1);
+							 if (newCount <=0){
+								 mys = $(this).parent();
+								 mys.find('.count').hide(); 
+								 mys.find('.redCart').hide();
+								 mys.find('.count').html("0");
+								 
+							 }else{
+								 $(this).html(newCount);
+							 }
+						}
+					});
+				 totalCount = totalCount*1-1;
+				 if (totalCount == 0){
+				 		$('#clearDiv').hide();
+				 		$('#getCartProduct').hide();
+				 }
+				 totalPrice=accSub(totalPrice, productPrice);
+				 if (totalPrice <= 0){
+					totalCount = 0;
+					totalPrice = 0.00;
+					$('#clearDiv').hide();
+			 		$('#getCartProduct').hide();
+			 		catState = 0;
+					$('#catProductDiv').hide();
+					$('#wrap').hide();
+				 }else{
+					 $('#AllTotal').html(totalPrice);
+				 }
+			 }else{
+				 qiao.bs.msg({msg:"删除失败",type:'danger'});
+			 }
+			 hideMask();
+		 }});
+		
+	});
 
+	//选好了按钮点击事件
+	$('body').on('click', '#selectOver', function(e){
+		location.href ="orderList.html?adminId="+adminId;
+	});
+	
 }
 
 
@@ -230,6 +354,40 @@ function getCartInfo() {
 			hideMask();
 		}
 	});
+}
+
+
+/**
+ * 获取购物车内商品信息
+ */
+function getProductInfo(){
+	var params = {
+			adminId : adminId
+	}
+	showMask();
+	AjaxPostUtil.request({url:path+"/gateway/MWechatProductController/getCartDetail",params:params,type:'json',callback:function(json){
+		if(json.returnCode==0){
+			if (json.bean.totalCount != 0){ 
+			//填充数据
+			totalCount = json.bean.totalCount;
+			totalPrice = json.bean.totalPrice;
+			$('#AllTotal').html(totalPrice);	
+			var source = $("#cartBenas").html();
+			var template = Handlebars.compile(source);
+			$("#catProductDiv").html(template(json));
+			}else{
+				totalCount = 0;
+				totalPrice = 0.00;
+				$("#catProductDiv").empty();
+				$('#clearDiv').hide();
+		 		$('#getCartProduct').hide();
+				$('#wrap').hide();
+			}
+		}else{
+			qiao.bs.msg({msg:"查询失败哦~",type:'danger'});
+		}
+		hideMask();
+	}});
 }
 
 /*

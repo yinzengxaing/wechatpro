@@ -36,7 +36,6 @@
 		<div class="commodity-black"></div>
 	
 	<div class="comm-bar-container" >
-	<font class="glyphicon glyphicon-chevron-up" style="position:absolute;top:-25px; cursor:pointer;  id="getCartProduct"></font>
 	<!--  
 		加入购物车中的商品列表
 		<div id="catProductDiv"  z-index:99;">
@@ -58,6 +57,10 @@
 				</div>
 			</div>
 		</div> -->
+		<font class="glyphicon glyphicon-chevron-up" style="position:absolute;top:-25px; cursor:pointer; display:none;"  id="getCartProduct"></font>
+		<!-- 加入购物车中的商品列表 -->
+		<div id="catProductDiv"  style="display:none ;z-index:99;">
+		</div>
 	</div>
 	
 	<!-- 结算界面 -->
@@ -92,7 +95,7 @@
 						<div class="proPrice"><span style="font-size: 12px;  color: black;">￥</span>{{productPrice}}</div>
 						<div class="product-count">
 							<font class="redCart" style="cursor:pointer;"buyProductId="{{productId}}" productType="{{productTypeId}}" adminId="{{adminId}}" productPrice="{{productPrice}}"><img src="../../assest/img/jian.png"></font>
-							<font class="count proCount"  buyProductId="{{productId}}" productType="{{productType}}">{{#productCount productCount}}{{/productCount}}</font>
+							<font class="count proCount"  buyProductId="{{productId}}" productType="{{productTypeId}}">{{#productCount productCount}}{{/productCount}}</font>
 							<font class="toCart" style="cursor:pointer;"buyProductId="{{productId}}" productType="{{productTypeId}}" adminId="{{adminId}}" productPrice="{{productPrice}}"><img src="../../assest/img/jia.png"></font> 
 						</div>
 					</div>
