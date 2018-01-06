@@ -62,7 +62,7 @@
 	FROM
 	wechat_user
 		WHERE
-	1 = 1 and openid = #{openid}
+	 openid = #{openid}
 	</select>
 	
 	<!-- 查询用户关注情况 -->

@@ -66,10 +66,8 @@ public class UnifiedorderService {
         String xmlResult = OrderUtil.ArrayToXml(params);
         try{
 			result = post(url,xmlResult);
-			log.info("weixin getPrepayid:{}", result);  
 			Map<String,Object> bean = readStringXmlOut(result);
 			String prepayId = bean.get("prepay_id").toString();
-	        
 	        signMap.put("appId", Constants.APPID);
 	        signMap.put("timeStamp", System.currentTimeMillis() / 1000 + "");
 	        signMap.put("package", "prepay_id="+prepayId);

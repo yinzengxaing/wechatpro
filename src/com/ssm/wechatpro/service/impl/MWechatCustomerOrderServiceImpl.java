@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import com.ssm.wechatpro.dao.MWechatCustomerOrderMapper;
 import com.ssm.wechatpro.dao.MWechatShoppingCartMapper;
+import com.ssm.wechatpro.dao.WechatUserMapper;
 import com.ssm.wechatpro.object.InputObject;
 import com.ssm.wechatpro.object.OutputObject;
 import com.ssm.wechatpro.service.MWechatCustomerOrderService;
@@ -35,6 +36,9 @@ public class MWechatCustomerOrderServiceImpl implements MWechatCustomerOrderServ
 	private MWechatShoppingCartMapper mWechatShoppingCartMapper;
 	
 	@Resource
+	WechatUserMapper wechatUserMapper;
+	
+	@Resource
 	private WechatOrderService wechatOrderService;
 	
 	private static String ORDER_NAME ="wechat_customer_order_log_"; 
@@ -44,29 +48,35 @@ public class MWechatCustomerOrderServiceImpl implements MWechatCustomerOrderServ
 	@SuppressWarnings("static-access")
 	@Override
 	public void addOrder(InputObject inputObject, OutputObject outputObject)throws Exception {
-		//获取前台传入参数的集合
-		Map<String, Object> params2 = inputObject.getParams();
-		 String string = params2.get("oderId").toString();
-		 
-		 /**
-		  * 调用dao进行处理
-		  */
-		 mWechatCustomerOrderMapper.addOrder(params2);
-		 
-		 List<Map<String,Object>> allOrder = mWechatCustomerOrderMapper.getAllOrder(params2);
-		 
-		 outputObject.setBeans(allOrder);
-		 outputObject.settotal(allOrder.size());
-		 outputObject.setreturnMessage("啊 错了");
-		
-		/**
-		 * 
-		 * 
-		 */
 		String order_log = ORDER_NAME + DateUtil.getTimeSixAndToString();// 拼接数据表名 表示数据表名(订单表)
 		String shopping_log =SHOPPING_NAME + DateUtil.getTimeSixAndToString();//拼接数据表 表示产品信息表
 		Map<String, Object> wechatLogParams = inputObject.getWechatLogParams();
+		
 		Map<String, Object> params = inputObject.getParams();
+		String wechatNowUser = "";
+		try{
+			 wechatNowUser = wechatLogParams.get("wechatNowUser").toString();
+		}catch (Exception e) {
+			wechatNowUser ="";
+		}
+		if (JudgeUtil.isNull(wechatNowUser)){
+			//客户为第一次点餐 插入客户联系方式
+			Map<String ,Object> map = new HashMap<>();
+			map.put("wechatNowUser", params.get("phoneNumber").toString());
+			map.put("openid",wechatLogParams.get("openid").toString());
+			wechatUserMapper.updateWechatUser(map);
+			wechatLogParams.put("wechatNowUser", params.get("phoneNumber").toString());
+			outputObject.setWechatLogParams(wechatLogParams);
+		}else if (!wechatNowUser.equals(params.get("phoneNumber").toString())){
+			//客户的联系方式发生了改变
+			Map<String ,Object> map = new HashMap<>();
+			map.put("wechatNowUser", params.get("phoneNumber").toString());
+			map.put("openid",wechatLogParams.get("openid").toString());
+			wechatUserMapper.updateWechatUser(map);
+			wechatLogParams.put("wechatNowUser", params.get("phoneNumber").toString());
+			outputObject.setWechatLogParams(wechatLogParams);
+		}
+		
 		params.put("id", wechatLogParams.get("id").toString());
 		//外卖
 		if (params.get("orderType").equals("5") && params.get("eatTime").toString().equals("undefined")){
@@ -177,7 +187,7 @@ public class MWechatCustomerOrderServiceImpl implements MWechatCustomerOrderServ
 		Map<String, Object> params = inputObject.getParams();   // 订单号、商店id（adminId orderNumber）
 		
 		// 获取不到当前登录人信息
-		if(JudgeUtil.isNull(loginParam.get("id") + "")){
+		if(JudgeUtil.isNull(loginParam.get("id").toString())){
 			return ;
 		}
 		GoEasy goEasy = new GoEasy("BC-c5e986fba5d14d38b2b2c5b4b072fc8c");
@@ -194,7 +204,7 @@ public class MWechatCustomerOrderServiceImpl implements MWechatCustomerOrderServ
 		
 		String adminId =  "000000" + params.get("adminId")+""; // 表示商店id添加前导0
 		// 查询当天该商店中的订单数量（tableName //订单表的名字   orderNumberChild // 商店id和当前日期拼接字符串）
-		String shopIdAndNowDay = adminId.substring(adminId.length() -  6, adminId.length()) +  DateUtil.getTimeToString(); // 商店id和当前日期进行拼接
+		String shopIdAndNowDay = adminId.substring(adminId.length()-6, adminId.length()) +  DateUtil.getTimeToString(); // 商店id和当前日期进行拼接
 		Map<String, Object> maxDayNoParam = new HashMap<>();
 		maxDayNoParam.put("tableName", order_log); // 订单表名
 		maxDayNoParam.put("orderIdAndNowDay", shopIdAndNowDay); // 商店id和当前日期进行拼接
