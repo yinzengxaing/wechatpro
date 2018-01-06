@@ -12110,7 +12110,7 @@ body {
 加载等待的遮罩层
 */
 .mask {
-/* 	background: url(../img/timg.gif) center no-repeat;    */
+ 	background: url(../img/timg.gif) center no-repeat;    
 	position: relative;
 	top: 0px;
 	filter: alpha(opacity = 60);

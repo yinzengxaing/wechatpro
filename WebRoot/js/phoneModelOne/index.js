@@ -1,5 +1,7 @@
 var code = "";
 var base = null;
+var latitude = "" ;
+var longitude = ""; 
 
 $(function(e){
 	getImage();
@@ -9,18 +11,43 @@ $(function(e){
 function dataInit(){
 	code = $.req("code");
 	base = new Base64();
-	AjaxPostUtil.request({url:path+"/gateway/EmpowerWebpageController/getOpenidBycode",params:{code:code},type:'json',callback:function(jsonall){
+	AjaxPostUtil.request({url:path+"/gateway/WechatUserController/selectLatitudeAndLongtitude",params:{},type:'json',callback:function(jsonall){
 		if(jsonall.returnCode==0){
-			if(isNull(jsonall.bean)){
-				$("#city").html("未获取到用户位置信息 ，请重新登录~");
-				$("#username").html("欢迎您:"+base.decode(jsonall.bean.nickname));
-			}else{
+			if (!isNull(jsonall.bean)){
 				$("#city").html(jsonall.bean.Location);
 				$("#username").html("欢迎您:"+base.decode(jsonall.bean.nickname));
+			}else{
+				var geolocation = new BMap.Geolocation();
+			    geolocation.getCurrentPosition(function (r) {  
+			        if (this.getStatus() == BMAP_STATUS_SUCCESS) {  
+			            var mk = new BMap.Marker(r.point);  
+			            latitude = r.point.lat;  //维度
+			            longitude = r.point.lng;  //经度
+			        }else{
+			        	latitude =34.775803;
+			        	longitude=113.630876;
+			        }
+			    	var params={
+			    			longitude:longitude,
+			    			latitude:latitude,
+			    			code:code	
+			    	};
+			    	AjaxPostUtil.request({url:path+"/gateway/EmpowerWebpageController/getOpenidBycode",params:params,type:'json',callback:function(jsonall){
+			    		if(jsonall.returnCode==0){
+			    			if(isNull(jsonall.bean)){
+			    				$("#city").html("未获取到用户位置信息 ，请重新登录~");
+			    				$("#username").html("欢迎您:"+base.decode(jsonall.bean.nickname));
+			    			}else{
+			    				$("#city").html(jsonall.bean.Location);
+			    				$("#username").html("欢迎您:"+base.decode(jsonall.bean.nickname));
+			    			}
+			    		}else{
+			    			qiao.bs.msg({msg:jsonall.returnMessage,type:'danger'});	
+			    			location.href = 'sessionNull.html';
+			    		}
+			    	}});
+			        });
 			}
-		}else{
-			qiao.bs.msg({msg:jsonall.returnMessage,type:'danger'});	
-			location.href = 'sessionNull.html';
 		}
 	}});
 }
