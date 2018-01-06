@@ -104,8 +104,6 @@ function eventInit() {
 
 	});
 	
-	
-
 	//页面中+号事件
 	$('body').on('click', '.toCart', function(e){
 		showMask();
@@ -313,7 +311,8 @@ function eventInit() {
 /*
    设置+ 和 - 的隐藏和消失
 */
-function setCountState() { // 遍历当前页面所有的product-count
+function setCountState() { 
+	// 遍历当前页面所有的product-count
 	$(".product-count").each(function() {
 		var s = $(this);
 		var count = s.find('.count').html()

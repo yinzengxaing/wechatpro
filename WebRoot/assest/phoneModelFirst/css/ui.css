@@ -11586,7 +11586,6 @@ body {
     color: red;
     font-weight: bold;
     float: right;
-    margin-bottom: 20px;
     width: 100%;
     text-align: right;
 /*     border: 1px solid; */
@@ -12111,8 +12110,8 @@ body {
 加载等待的遮罩层
 */
 .mask {
-	background: url(../img/timg.gif)center center no-repeat;  
-	position: absolute;
+/* 	background: url(../img/timg.gif) center no-repeat;    */
+	position: relative;
 	top: 0px;
 	filter: alpha(opacity = 60);
 	background-color: #777;
@@ -12206,7 +12205,6 @@ body {
 .product-count{
     width: 100%;
     height: 39px;
-    /* border: 1px solid blue; */
     float: right;
     text-align: right;
     margin-top: 15px;
@@ -12214,8 +12212,13 @@ body {
 
 .procuat-Font{
 float: right;
-    /* border: 1px solid yellow; */
     width: 45%;
     height: 100%;
     margin-right: 8px;
+}
+
+.price-head{
+	width: 100%;
+    height: 91px;
+    float: right;
 }

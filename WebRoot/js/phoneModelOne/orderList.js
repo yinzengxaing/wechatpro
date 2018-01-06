@@ -36,21 +36,30 @@ var ss = "";
 
 $(function(e){
 	receiveData();
-	dataInit();
-});
-
-//数据的初始化
-function dataInit(){
 	if (adminId == ""){
 		adminId = $.req("adminId");
 	}
-	getCartInfo();
-	eventInit();
+	
 	var calendartime = new lCalendar();
 	calendartime.init({
 		'trigger': '#geteateTime',
 		'type': 'time'
 	});
+	dataInit();
+	eventInit();
+});
+
+//数据的初始化
+function dataInit(){
+	//获取当前用户所填写的手机号
+	AjaxPostUtil.request({url:path+"/gateway/WechatUserController/selectLatitudeAndLongtitude",params:{},type:'json',callback:function(json){
+		if(json.returnCode==0){
+			if (!isNull(json.bean.wechatNowUser)){
+				$("#phoneNumber").val(json.bean.wechatNowUser);
+				}
+			}
+		getCartInfo();
+	}});
 }
 
 //事件的触发
@@ -225,7 +234,6 @@ function eventInit(){
 		 AjaxPostUtil.request({url:path+"/gateway/MWechatShoppingCartController/deleteProductCount",params:params,type:'json',callback:function(json){
 			 if(json.returnCode==0){
 				 //获取当前商品的
-				 
 				 getCartInfo();
 			 }
 			hideMask();
