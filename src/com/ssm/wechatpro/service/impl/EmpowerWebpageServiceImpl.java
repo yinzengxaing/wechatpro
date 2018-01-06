@@ -36,6 +36,7 @@ public class EmpowerWebpageServiceImpl  implements EmpowerWebpageService {
 	 */
 	@Override
 	public void getOpenidBycode(InputObject inputObject,OutputObject outputObject,ServletRequest request) throws Exception{
+		
 		//判断session 中是否已经存在用户 、不存在会抛出空指针异常
 		Map<String, Object> user = inputObject.getWechatLogParams();//获取openid
 		Map<String ,Object> params = inputObject.getParams();

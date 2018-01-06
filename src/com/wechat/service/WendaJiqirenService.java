@@ -50,9 +50,11 @@ public class WendaJiqirenService {
 			if (object.getInt("error_code") == 0) {
 				JSONObject bean = object.getJSONObject("result");
 				return_data = bean.get("text").toString();
+/*				System.out.println(return_data);*/
 				// System.out.println(bean.get("text"));
 			} else {
 				return_data = "麦克思机器人小麦:我们识别哦，这是"+content;
+/*				System.out.println(return_data);*/
 //				return_data = object.get("error_code") + ":"
 //						+ object.get("reason");
 				// System.out.println(object.get("error_code") + ":"
@@ -144,8 +146,8 @@ public class WendaJiqirenService {
 		return sb.toString();
 	}
 
-	// public static void main(String[] args) {
-	// getRequest1("你是谁");
-	// }
+	 public static void main(String[] args) {
+	 getRequest1("你好");
+	 }
 
 }

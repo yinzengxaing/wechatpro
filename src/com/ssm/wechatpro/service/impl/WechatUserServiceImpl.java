@@ -125,7 +125,7 @@ public class WechatUserServiceImpl implements WechatUserService {
 	}
   
 	/***
-	 * 订阅
+	 * 取消订阅
 	 * @amparam inputObject
 	 * @par outputObject
 	 * @throws Exception
@@ -135,11 +135,12 @@ public class WechatUserServiceImpl implements WechatUserService {
 		Map<String,Object> map = new HashMap<String, Object>();
 		map.put("openid", openid);
 		map.put("subscribe", 0);
+		System.out.println(map);
 		wechatUserMapper.updateWechatSubscribe(map);
 	}
 
 	/***
-	 * 取消订阅
+	 * 订阅
 	 * @amparam inputObject
 	 * @par outputObject
 	 * @throws Exception
@@ -157,6 +158,7 @@ public class WechatUserServiceImpl implements WechatUserService {
 		}else{
 			map = GetUserMationService.getRequest1(openid);
 			wechatUserMapper.insertWechatUser(map);
+			
 		}
 	}
 
