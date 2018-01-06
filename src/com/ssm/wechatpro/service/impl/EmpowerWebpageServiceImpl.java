@@ -75,7 +75,6 @@ public class EmpowerWebpageServiceImpl  implements EmpowerWebpageService {
 				user.put("longitude", params.get("longitude").toString());
 				user.put("Location", Location);
 				outputObject.setBean(user);
-				System.out.println(user);
 			}
 		}
 

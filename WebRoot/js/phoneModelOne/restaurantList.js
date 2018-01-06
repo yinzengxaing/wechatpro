@@ -10,7 +10,6 @@ $(function(e){
 });
 
 function eventInit(){
-	
 	//获取城市列表
 	$('body').on('click',"#moreCity",function(e){
 		location.href="allCityList.html";

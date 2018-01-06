@@ -47,10 +47,11 @@ public class WendaJiqirenService {
 		try {
 			result = net(url, params, "GET");
 			JSONObject object = JSONObject.fromObject(result);
+/*			System.out.println(object);*/
 			if (object.getInt("error_code") == 0) {
 				JSONObject bean = object.getJSONObject("result");
 				return_data = bean.get("text").toString();
-/*				System.out.println(return_data);*/
+				/*System.out.println(return_data);*/
 				// System.out.println(bean.get("text"));
 			} else {
 				return_data = "麦克思机器人小麦:我们识别哦，这是"+content;
@@ -147,7 +148,7 @@ public class WendaJiqirenService {
 	}
 
 	 public static void main(String[] args) {
-	 getRequest1("你好");
+	 //getRequest1("你好");
 	 }
 
 }
