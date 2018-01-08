@@ -1,7 +1,7 @@
 var code = "";
 var base = null;
-var latitude = "" ;
-var longitude = ""; 
+var latitude = 34.775803 ;
+var longitude = 113.630876; 
 
 $(function(e){
 	getImage();
@@ -17,7 +17,6 @@ function dataInit(){
 				$("#city").html(jsonall.bean.Location);
 				$("#username").html("欢迎您:"+base.decode(jsonall.bean.nickname));
 			}else{
-				showMask();
 				var geolocation = new BMap.Geolocation();
 			    geolocation.getCurrentPosition(function (r) {  
 			        if (this.getStatus() == BMAP_STATUS_SUCCESS) {  
@@ -46,7 +45,6 @@ function dataInit(){
 			    			qiao.bs.msg({msg:jsonall.returnMessage,type:'danger'});	
 			    			location.href = 'sessionNull.html';
 			    		}
-			    		hideMask();
 			    	}});
 			        });
 			}
@@ -113,19 +111,4 @@ function eventInit(){
 		location.href="wait.html?orderType=1";
 	});
 	
-}
-
-/*
-显示遮罩层
-*/
-function showMask() {
-	$("#mask").css("height", $(document).height());
-	$("#mask").css("width", $(document).width());
-	$("#mask").show();
-}
-/*
-隐藏遮罩层
-*/
-function hideMask() {
-	$("#mask").hide();
 }
