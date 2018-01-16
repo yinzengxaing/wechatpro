@@ -43,4 +43,7 @@ public interface MWechatCustomerOrderMapper {
 	// 删除当前用户在该商店中购物车中的商品
 	public void deleteShopCartProduct(Map<String, Object> map ) throws Exception;
 	
+	//根据订单编号查询信息
+	public Map<String, Object> checkOrderByNo(Map<String, Object> resultMap)throws Exception;
+	
 }

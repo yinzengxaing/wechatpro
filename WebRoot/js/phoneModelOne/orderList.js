@@ -296,7 +296,8 @@ function payEvent(paySign,appId,timeStamp,nonceStr,paypackage,signature,orderNum
 			signType: 'MD5', // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'  
 			paySign: paySign, // 支付签名  
 			success:function(res){
-				var myParams = {
+				location.href="moneySuccess.html?orderNumber="+orderNumber+"&orderId="+orderId;
+				/*var myParams = {
 						adminId:adminId,
 						orderNumber:orderNumber
 				}
@@ -306,7 +307,8 @@ function payEvent(paySign,appId,timeStamp,nonceStr,paypackage,signature,orderNum
 					}else{
 						alert("支付失败");
 					}
-				}});
+				}});*/
+				
 			},
 			fail:function(res){
 				

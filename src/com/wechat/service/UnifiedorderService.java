@@ -42,6 +42,8 @@ public class UnifiedorderService {
      */  
     public static Map<String,Object> getPrepayid(String sub_mch_id,String key,String out_trade_no,String total_fee,String openid, InputObject inputObject,OutputObject outputObject) throws Exception{  
     	String result = null;
+    	Map<String, Object> map = inputObject.getParams();// 订单号、商店id（adminId orderNumber）
+    	Map<String, Object> loginParam = inputObject.getWechatLogParams(); // 获取当前登录人的信息
         //封装h5页面调用参数
         Map<String ,Object> signMap = new HashMap<>();
         String url="https://api.mch.weixin.qq.com/pay/unifiedorder";
@@ -51,19 +53,21 @@ public class UnifiedorderService {
         params.put("appid", Constants.APPID);  
         params.put("mch_id", Constants.MCH_ID); //商户号
         if (!Constants.MCH_ID.equals("1364180602")){ //若不是测试商户号填写子商户号
-        params.put("sub_mch_id",sub_mch_id );  //子商户号
+        	params.put("sub_mch_id",sub_mch_id );  //子商户号
         }
         params.put("nonce_str", nonce_str);  
         params.put("body", body);  
         params.put("out_trade_no", out_trade_no);  
         params.put("total_fee", total_fee);  
         params.put("spbill_create_ip", Constants.IP);  
-        params.put("notify_url", Constants.PATH+"/html/phoneModelOne/index.html");  
+        params.put("notify_url", Constants.PATH+"/gateway/WechatOrderController/notifyPay");
+        params.put("attach",map.get("adminId")+","+loginParam.get("id"));//附加数据，给回调接口传的参数
         params.put("trade_type", "JSAPI"); 
         params.put("openid", openid); 
+        
         String sign = OrderUtil.sign(params, key);  
         params.put("sign", sign);  
-        String xmlResult = OrderUtil.ArrayToXml(params);
+        String xmlResult = OrderUtil.ArrayToXml(params);//将map集合转成xml,供回调接口使用
         try{
 			result = post(url,xmlResult);
 			Map<String,Object> bean = readStringXmlOut(result);

@@ -175,7 +175,7 @@ public class MWechatCustomerOrderServiceImpl implements MWechatCustomerOrderServ
 	}
 
 	/**
-	 * 更改商品的支付状态
+	 * 更改商品的支付状态  2018.01.14废弃不用
 	 */
 	@Override
 	public void updatePayState(InputObject inputObject, final OutputObject outputObject) throws Exception {
@@ -564,7 +564,6 @@ public class MWechatCustomerOrderServiceImpl implements MWechatCustomerOrderServ
 		double price = Double.parseDouble(orderDetailByOrderId.get("orderPrice").toString());
 		int total_fee = (int)(price * 100);
 		
-		
 		//调用支付接口
 		Map<String, Object> payParams = new HashMap<String,Object>();
 		payParams.put("out_trade_no", orderId);
@@ -577,6 +576,7 @@ public class MWechatCustomerOrderServiceImpl implements MWechatCustomerOrderServ
 		inputObject.setParams(payParams);
 		wechatOrderService.getOrderParameter(inputObject, outputObject);
 	}
+
 	
 
 }

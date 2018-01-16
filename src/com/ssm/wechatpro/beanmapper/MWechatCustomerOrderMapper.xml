@@ -352,4 +352,27 @@
 			wechatCustomerLoginId = #{id}
 		AND wechatCommodityAdminId = #{adminId}
 	</delete>
+	
+	<!-- 根据订单编号查询信息 -->
+	<select id="checkOrderByNo" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			id,
+			orderNumber,
+			createId,
+			createTime,
+			wetherPaymentTime,
+			wetherPayment,
+			orderEatTime,
+			orderAdminId,
+			orderType,
+			wetherMake,
+			orderPrice,
+			dayNo,
+			phoneNumber,
+			orderDesc
+		FROM
+			${order_log}
+		WHERE
+			orderNumber = #{out_trade_no}
+	</select>
 </mapper>          

@@ -1,6 +1,8 @@
 package com.ssm.wechatpro.controller;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +42,17 @@ public class WechatOrderController {
 		wechatOrderService.orderRefund(inputObject, outputObject);
 	}
 	
+	/**
+	 * 异步回调改变订单状态
+	 * @param inputObject
+	 * @param outputObject
+	 * @throws Exception
+	 */
+	@RequestMapping("/gateway/WechatOrderController/notifyPay")
+	@ResponseBody
+	public void notifyPay(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		wechatOrderService.notifyPay(request, response);
+	}
 	
 	
 }
