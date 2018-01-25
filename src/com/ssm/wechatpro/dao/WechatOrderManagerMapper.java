@@ -52,4 +52,12 @@ public interface WechatOrderManagerMapper {
 	 * @throws Exception
 	 */
 	public List<Map<String, Object>> selectProductTotal (Map<String, Object> map) throws Exception;
+	
+	/**
+	 * 根据搜索的日期进行查询,订单统计
+	 * @param mapParam
+	 * @param pageBounds
+	 * @return
+	 */
+	public List<Map<String, Object>> selectAllOrderByDate(Map<String, Object> mapParam, PageBounds pageBounds);
 }

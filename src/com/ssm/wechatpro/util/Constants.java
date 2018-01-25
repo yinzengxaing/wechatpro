@@ -6,7 +6,7 @@ package com.ssm.wechatpro.util;
  */
 public class Constants {
 	
-	public static final String WECHAT_PAY_FOR_PREPAY_ID_URL = "ihttps://api.mch.wexin.qq.com/pay/unifiedorder";//微信统一支付获取prepay_id接口
+	public static final String WECHAT_PAY_FOR_PREPAY_ID_URL = "https://api.mch.wexin.qq.com/pay/unifiedorder";//微信统一支付获取prepay_id接口
 	
 	public static final String WECHAT_FOR_SIGNATURE = "http://z1714z2699.imwork.net/wechatpro/html/phoneModelOne/orderList.html";//测试使用
 	public static final String KEY  = "276ef476761549c3bd9853a2ceba5eb7";//商户平台的key值//测试使用
@@ -15,7 +15,7 @@ public class Constants {
 	public static final String MCH_ID ="1364180602";//商户号ID 测试使用
 	public static final String PATH = "http://z1714z2699.imwork.net/wechatpro";//测试使用
 	public static final String SSL_PATH="D:/apiclientCert/apiclient_cert.p12"; //退款使用的证书地址
-	public static final String IP="172.21.3.51"; //本地ip
+	public static final String IP="192.168.0.106"; //本地ip
 	
 //max大号	
 //	public static final String WECHAT_FOR_SIGNATURE = "http://weixinorder.maxburger.com.cn/wechatpro/html/phoneModelOne/orderList.html?adminId=";//主账号

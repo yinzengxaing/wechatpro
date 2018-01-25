@@ -27,4 +27,11 @@ public interface WechatOrderManagerService {
 	 * @throws Exception
 	 */
 	public void updateMake(InputObject inputObject, OutputObject outputObject) throws Exception;
+
+	/**
+	 * 根据搜索的日期进行查询
+	 * @param inputObject
+	 * @param outputObject
+	 */
+	public void selectAllOrderByDate(InputObject inputObject,OutputObject outputObject)throws Exception;
 }

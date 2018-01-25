@@ -12,6 +12,7 @@ import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import com.ssm.wechatpro.dao.UploadMapper;
 import com.ssm.wechatpro.dao.WechatScollorPicMapper;
+import com.ssm.wechatpro.dao.WechatUserMapper;
 import com.ssm.wechatpro.object.InputObject;
 import com.ssm.wechatpro.object.OutputObject;
 import com.ssm.wechatpro.service.WechatScollorPicService;
@@ -27,6 +28,8 @@ public class WechatScollorPicServiceImpl implements WechatScollorPicService{
 	private WechatScollorPicMapper wechatScollorPicMapper;
 	@Resource
 	private UploadMapper uploadMapper;
+	@Resource
+	private WechatUserMapper wechatUserMapper;
 	
 	/**
 	 * 添加广告
@@ -133,6 +136,8 @@ public class WechatScollorPicServiceImpl implements WechatScollorPicService{
 	@Override
 	public void selectAllScollorList(InputObject inputObject,OutputObject outputObject) throws Exception {
 		List<Map<String,Object>> selectAllScollorList = wechatScollorPicMapper.selectAllScollorList();
+		Map<String, Object> map = inputObject.getWechatLogParams();
+		outputObject.setBean(map);
 		outputObject.setBeans(selectAllScollorList);
 		outputObject.settotal(selectAllScollorList.size());
 	}

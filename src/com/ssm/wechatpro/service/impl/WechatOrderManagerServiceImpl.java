@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import com.ssm.wechatpro.dao.WechatOrderManagerMapper;
@@ -110,6 +111,56 @@ public class WechatOrderManagerServiceImpl implements WechatOrderManagerService 
 			productInfo.put("id", map.get("id") + "");
 			wechatOrderManagerMapper.updateMakeAddNum(productInfo);
 		}
+	}
+	
+	/**
+	 * 根据搜索的日期进行查询,订单统计
+	 */
+	@Override
+	public void selectAllOrderByDate(InputObject inputObject, OutputObject outputObject) throws Exception {
+			
+		// tableName
+		// orderAdminId  餐厅id
+		// shopIdAndDay 六位餐厅id和当前日期拼接
+		// 获取该商店登录id
+		Map<String, Object> map = inputObject.getLogParams();
+		Map<String, Object> mapParam = inputObject.getParams();
+		String orderDate = mapParam.get("search").toString();
+		String orderYear = null;
+		if(!orderDate.isEmpty()){
+			if(orderDate.length()>7){
+				//获取年月份(201801)，判断查询哪张表
+				String a = orderDate.substring(0, orderDate.lastIndexOf('-'));
+				orderYear = a.replace("-", "");
+			}else if(orderDate.length()<=7){
+				orderYear = orderDate.replace("-", "");
+			}
+			mapParam.put("tableName", ORDERlOGTABLENAME + orderYear);
+		}else{
+			mapParam.put("tableName", ORDERlOGTABLENAME + DateUtil.getTimeSixAndToString()); // 添加表名
+		}
+		
+		if(JudgeUtil.isNull(map.get("id") + "")){
+			return ;
+		}
+		// 尽心分页处理
+		int page = Integer.parseInt(mapParam.get("offset").toString())/Integer.parseInt(mapParam.get("limit").toString());
+		page++;
+		int limit = Integer.parseInt(mapParam.get("limit").toString());
+		
+		
+//		String shopIdAndDay = "000000" + map.get("id") + "";
+		// 拼接商店id和当前日期字符串
+//		mapParam.put("shopIdAndDay", shopIdAndDay.substring(shopIdAndDay.length()-6, shopIdAndDay.length()) + DateUtil.getTimeToString());
+		mapParam.put("orderAdminId", map.get("id") + "");
+		List<Map<String,Object>> returnInfo = wechatOrderManagerMapper.selectAllOrderByDate(mapParam, new PageBounds(page, limit));
+		PageList<Map<String, Object>> pageList = (PageList<Map<String,Object>>)returnInfo;
+		
+		// 获取当前页数
+		int total = pageList.getPaginator().getTotalCount();
+		outputObject.setBeans(returnInfo);
+		outputObject.settotal(total);
+		
 	}
 	
 }

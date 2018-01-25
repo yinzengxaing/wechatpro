@@ -110,4 +110,31 @@
 		AND orderShopping.wechatCommodityType = 1
 		AND orderShopping.productID = product.id
 	</select>
+	
+	<!-- 根据搜索的日期进行查询,订单统计 -->
+	<select id="selectAllOrderByDate" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			orderLog.id,
+			orderLog.orderNumber,
+			orderLog.wetherPaymentTime,
+			orderLog.wetherPayment,
+			orderLog.orderType,
+		 	orderLog.dayNo,
+		 	orderLog.phoneNumber,
+		 	orderLog.orderEatTime,
+		 	orderLog.orderDesc,
+		 	orderLog.orderAdminId,
+			orderLog.lastUpdateTime
+		FROM
+			${tableName} AS orderLog
+		WHERE
+			orderLog.wetherPayment = 1
+		AND orderLog.orderAdminId = #{orderAdminId}
+		AND wetherMake = 0
+		
+		<if test="search != null and search != ''">
+			AND	orderLog.createTime LIKE '%${search}%'
+		</if>
+		ORDER BY orderLog.createTime ASC
+	</select>
 </mapper>          

@@ -212,7 +212,7 @@ var TableInit =  function (){
 			limit : params.limit,
 			offset : params.offset,
 			orderType : $("#selectOrderType").val(),
-		}
+		};
 		return temp;
 	};
 	return oTableInit;
@@ -227,7 +227,7 @@ window.EvenInit = {
 		var param = {
 				orderId : id,
 				orderNumber : orderNumber,
-		}
+		};
 		AjaxPostUtil.request({url: path + "/post/wechatOrderManagerController/selectOrderFormInfo", params:param, type:"json", callback:function(json){
 			if(json.returnCode == 0){
 				$("#orderNumber").html(json.bean.orderNumber);
@@ -281,7 +281,7 @@ window.EvenInit = {
 		orderNumber = row.orderNumber; // 通过获取的订单id来进行查询订单的详情
 		$('#myModal1').modal('show');
 	}
-}
+};
 
 function operateFormatter(value, row, index) {
 	return [

@@ -253,4 +253,22 @@
 	VALUES
 	(#{loginPhone},#{createTime},#{loginIdentity},#{loginState},#{loginType},#{loginScore},#{membershipCardId})
 	</insert>
+	
+	<!-- 判断当前用户的地理位置是否发生变化 -->
+	<select id="selectLation" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			id
+		FROM
+			wechat_user
+		WHERE
+			openid = #{openid}
+		AND 
+			Latitude = 'Latitude'
+		AND 
+			Longitude = 'Longitude'
+		AND 
+			Accuracy = 'Precision'
+		AND
+			Location = 'Location'
+	</select>
 </mapper>   

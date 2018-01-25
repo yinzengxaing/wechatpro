@@ -38,5 +38,7 @@ public interface WechatUserMapper {
 	
 	// 添加新的登陆用户
 	public void insertMWechatLoginUser(Map<String,Object> map) throws Exception;
+
+	public Map<String, Object> selectLation(Map<String, Object> map)throws Exception;
 	
 }

@@ -71,6 +71,7 @@ public class UnifiedorderService {
         try{
 			result = post(url,xmlResult);
 			Map<String,Object> bean = readStringXmlOut(result);
+			System.out.println(bean);
 			String prepayId = bean.get("prepay_id").toString();
 	        signMap.put("appId", Constants.APPID);
 	        signMap.put("timeStamp", System.currentTimeMillis() / 1000 + "");

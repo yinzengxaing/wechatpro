@@ -49,4 +49,16 @@ public class WechatOrderManagerController {
 	public void updateMake(InputObject inputObject, OutputObject outputObject) throws Exception{
 		wechatOrderManagerService.updateMake(inputObject, outputObject);
 	}
+	
+	/**
+	 * 根据搜索的日期进行查询,订单统计
+	 * @param inputObject
+	 * @param outputObject
+	 * @throws Exception
+	 */
+	@RequestMapping("/post/wechatOrderManagerController/selectAllOrderByDate")
+	@ResponseBody
+	public void selectAllOrderByDate(InputObject inputObject, OutputObject outputObject) throws Exception{
+		wechatOrderManagerService.selectAllOrderByDate(inputObject, outputObject);
+	}
 }

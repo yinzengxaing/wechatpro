@@ -4,13 +4,15 @@ var latitude = 34.775803 ;
 var longitude = 113.630876; 
 
 $(function(e){
+//	dataInit();
 	getImage();
 	eventInit();
+	code = $.req("code");
+	base = new Base64();
 });
 
 function dataInit(){
-	code = $.req("code");
-	base = new Base64();
+	
 	AjaxPostUtil.request({url:path+"/gateway/WechatUserController/selectLatitudeAndLongtitude",params:{},type:'json',callback:function(jsonall){
 		if(jsonall.returnCode==0){
 			if (!isNull(jsonall.bean)){
@@ -19,14 +21,20 @@ function dataInit(){
 			}else{
 				var geolocation = new BMap.Geolocation();
 			    geolocation.getCurrentPosition(function (r) {  
-			        if (this.getStatus() == BMAP_STATUS_SUCCESS) {  
-			            var mk = new BMap.Marker(r.point);  
-			            latitude = r.point.lat;  //维度
-			            longitude = r.point.lng;  //经度
-			        }else{
-			        	latitude =34.775803;
-			        	longitude=113.630876;
-			        }
+			    	if (this.getStatus() == BMAP_STATUS_SUCCESS) { 
+			    		
+			    		var mk = new BMap.Marker(r.point);  
+				        if(r.accuracy == null){
+				        	
+				            latitude = 34.75661;
+					        longitude= 113.649644;
+				        }else{
+				            latitude = r.point.lat;  //维度
+					        longitude = r.point.lng;  //经度
+				        }
+				    }else{
+				        alert("地理位置获取失败");
+				    }
 			    	var params={
 			    			longitude:longitude,
 			    			latitude:latitude,
@@ -53,6 +61,7 @@ function dataInit(){
 }
 
 function getImage(){
+	
 	//轮播图自动播放
 	 $('#carousel-ad').carousel({
 	        interval: 2500
@@ -60,6 +69,59 @@ function getImage(){
 	 //加载轮播图图片
 	 AjaxPostUtil.request({url:path+"/gateway/WechatScollorPicController/selectAllScollorList",params:{},type:'json',callback:function(json){
 		 if(json.returnCode==0){
+			 if(!isNull(json.bean)){
+				 $("#city").html(json.bean.Location);
+				 $("#username").html("欢迎您:"+base.decode(json.bean.nickname));
+			 }else{
+				 $("#indexDiv").removeClass("show");
+				 $("#indexDiv").addClass("hide");
+				 var geolocation = new BMap.Geolocation();
+				    geolocation.getCurrentPosition(function (r) {  
+				    	
+				    	if (this.getStatus() == BMAP_STATUS_SUCCESS) { 
+				    		
+				    		var mk = new BMap.Marker(r.point);  
+					        if(r.accuracy == null){
+					        	
+					            latitude = 34.75661;
+						        longitude= 113.649644;
+					        }else{
+					            latitude = r.point.lat;  //维度
+						        longitude = r.point.lng;  //经度
+					        }
+					    }else{
+					        alert("地理位置获取失败");
+					    }
+				    	var params={
+				    			longitude:longitude,
+				    			latitude:latitude,
+				    			code:code	
+				    	};
+				    	
+				    	
+				    	showMask();
+				    	AjaxPostUtil.request({url:path+"/gateway/EmpowerWebpageController/getOpenidBycode",params:params,type:'json',callback:function(jsonall){
+				    		if(jsonall.returnCode==0){
+				    			if(isNull(jsonall.bean)){
+				    				$("#city").html("未获取到用户位置信息 ，请重新登录~");
+				    				$("#username").html("欢迎您:"+base.decode(jsonall.bean.nickname));
+				    				
+				    			}else{
+				    				$("#city").html(jsonall.bean.Location);
+				    				$("#username").html("欢迎您:"+base.decode(jsonall.bean.nickname));
+				    			}
+				    			
+				    		}else{
+				    			qiao.bs.msg({msg:jsonall.returnMessage,type:'danger'});	
+				    			location.href = 'sessionNull.html';
+				    		}
+				    		 hideMask();
+				    	}});
+				    	
+				        });
+				   
+				   
+			 }
 			 if (json.total > 0){
 				 //填充数据
 				 for (var i=0;i<json.total;i=i*1+1){
@@ -82,9 +144,10 @@ function getImage(){
 		    	$(this).addClass("active");
 		    	}
 		   	});
+			
 		  }
 		 }
-		 dataInit();
+//		 dataInit();
 		}});
 }
 
@@ -112,3 +175,18 @@ function eventInit(){
 	});
 	
 }
+
+function showMask(){  
+	
+    $("#mask").css("height",$(document).height()); 
+    $("#mask").css("width",$(document).width());  
+    $("#mask").show();     
+}  
+/**
+ * 隐藏遮罩层
+ */
+function hideMask(){
+	$("#indexDiv").removeClass("hide");
+	$("#indexDiv").addClass("show");
+    $("#mask").hide();     
+}  

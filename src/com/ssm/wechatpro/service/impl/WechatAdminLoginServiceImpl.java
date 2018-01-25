@@ -383,22 +383,27 @@ public class WechatAdminLoginServiceImpl implements WechatAdminLoginService {
 			map.put("id", bean.get("id"));
 			List<Map<String,Object>> beans = wechatAdminLoginMapper.selectByUser(map);//查询所有的一级菜单
 			
-			if(beans.get(0).get("wechatRoleState").toString().equals(Constants.USER_STATEBYPASSWORD)){//查看角色是否为上线状态
-				for(Map<String,Object> b : beans){//遍历每一条数据
-					b.put("userId", map.get("id"));
-					List<Map<String,Object>> items = wechatAdminMenuMapper.selectByBelongto(b);
-					b.put("menuList", items);
-					b.put("size", items.size());
+//			if(beans.size() == 0){
+//				outputObject.setreturnMessage("信息正在审核中！");
+//			}else {
+				if(beans.get(0).get("wechatRoleState").toString().equals(Constants.USER_STATEBYPASSWORD)){//查看角色是否为上线状态
+					for(Map<String,Object> b : beans){//遍历每一条数据
+						b.put("userId", map.get("id"));
+						List<Map<String,Object>> items = wechatAdminMenuMapper.selectByBelongto(b);
+						b.put("menuList", items);
+						b.put("size", items.size());
+					}
+					outputObject.setBeans(beans);
+					//查询该角色下的所有权限
+					List<Map<String,Object>> permission = wechatAdminLoginMapper.selectPowerByRole(map);
+					outputObject.setLogParams(bean);
+					outputObject.setLogMenuParams(beans);
+					outputObject.setLogPermissionParams(permission);
+				}else{
+					outputObject.setreturnMessage("角色不在上线状态，请先审核！");
 				}
-				outputObject.setBeans(beans);
-				//查询该角色下的所有权限
-				List<Map<String,Object>> permission = wechatAdminLoginMapper.selectPowerByRole(map);
-				outputObject.setLogParams(bean);
-				outputObject.setLogMenuParams(beans);
-				outputObject.setLogPermissionParams(permission);
-			}else{
-				outputObject.setreturnMessage("角色不在上线状态，请先审核！");
-			}
+//			}
+			
 		}
 		//登录日志
 		String no = map.get("adminNo").toString();

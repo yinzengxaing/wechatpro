@@ -4,7 +4,30 @@
 <mapper namespace="com.ssm.wechatpro.dao.MWechatProductMapper">
 	<!-- 获取该地区中的所有商店 -->
 	<select id="getAllRestaurant" parameterType="java.util.Map" resultType="java.util.Map">
-		SELECT
+		SELECT * FROM(
+			SELECT
+				a.adminId,
+				a.adminShopName,
+				a.adminWorkXCoordinate,
+				a.adminWorkYCoordinate,
+				a.adminKfBusinessHours,
+				adminWorkPlace,
+				ROUND(6378.137*2*ASIN(SQRT(POW(SIN((#{lat}*PI()/180-adminWorkYCoordinate*PI()/180)/2),2)+COS(#{lat}*PI()/180)*COS(adminWorkYCoordinate*PI()/180)*POW(SIN((#{long}*PI()/180-adminWorkXCoordinate*PI()/180)/2),2)))*10000)/10000 AS distance
+			FROM
+				wechat_admin_login_mation AS a
+			WHERE
+				adminId IN (
+					SELECT
+						id
+					FROM
+						wechat_admin_login
+					WHERE
+						adminIdentity = 1
+				)
+			AND adminWorkPlace LIKE '%${adminWorkPlace}%'
+			ORDER BY distance ASC
+		) a <!-- WHERE a.distance &lt; 5  -->
+		<!-- SELECT
 			a.adminId,
 			a.adminShopName,
 			a.adminWorkXCoordinate,
@@ -22,7 +45,7 @@
 				WHERE
 					adminIdentity = 1
 			)
-		AND adminWorkPlace LIKE '%${adminWorkPlace}%'
+		AND adminWorkPlace LIKE '%${adminWorkPlace}%' -->
 	</select>
 	
 	<!-- 根据商店id 获取该商店中的所有的商品类型 -->

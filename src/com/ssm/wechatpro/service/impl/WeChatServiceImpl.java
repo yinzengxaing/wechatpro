@@ -82,7 +82,7 @@ public class WeChatServiceImpl implements WeChatService {
 			}
 			if (msgType.equals(Constants.REQ_MESSAGE_TYPE_EVENT)) {// 事件推送
 				String eventType = requestMap.get("Event");// 事件类型
-/*				if (eventType.equals(Constants.EVENT_TYPE_LOCATION)){//获取地理位置
+				/*if (eventType.equals(Constants.EVENT_TYPE_LOCATION)){//获取地理位置
 					Map<String,Object> map = new HashMap<String, Object>();
 					Map<String,Object> city = GetCity.getUserCity(requestMap.get("Latitude"), requestMap.get("Longitude"));
 					map.put("openid", fromUserName);
@@ -90,7 +90,15 @@ public class WeChatServiceImpl implements WeChatService {
 					map.put("Longitude", requestMap.get("Longitude"));
 					map.put("Precision", requestMap.get("Precision"));
 					map.put("Location", city.get("city"));
-					wechatUserService.updateWechatUserLocation(map);
+					System.out.println(map);
+					//判断一下用户地理位置是否发生变化
+					Map<String, Object> queryLocation = wechatUserService.selectLation(map);
+					System.err.println(queryLocation);
+					if(queryLocation!=null){
+						System.out.println("456map"+map);
+						wechatUserService.updateWechatUserLocation(map);
+					}
+					System.out.println("当前地理位置未改变");
 				}else */if (eventType.equals(Constants.EVENT_TYPE_SUBSCRIBE)) {// 订阅
 					wechatUserService.subscribe(fromUserName);
 				} else if (eventType.equals(Constants.EVENT_TYPE_UNSUBSCRIBE)) {// 取消订阅------取消订阅后用户再收不到公众号发送的消息，因此不需要回复消息

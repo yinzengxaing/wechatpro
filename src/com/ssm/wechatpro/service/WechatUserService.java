@@ -24,4 +24,6 @@ public interface WechatUserService {
 	public void selectLatitudeAndLongtitude(InputObject inputObject, OutputObject outputObject) throws Exception;
 	
 	public void updateWechatUserMassage(Map<String, Object> map) throws Exception;
+
+	public Map<String, Object> selectLation(Map<String, Object> map)throws Exception;
 }

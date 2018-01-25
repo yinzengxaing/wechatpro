@@ -171,6 +171,7 @@ public class WechatUserServiceImpl implements WechatUserService {
 	@Override
 	public void updateWechatUserLocation(Map<String, Object> map) throws Exception {
 		wechatUserMapper.updateWechatUserLoaction(map);
+		
 	}
 
 	/***
@@ -207,5 +208,15 @@ public class WechatUserServiceImpl implements WechatUserService {
 		wechatUserMapper.insertMWechatLoginUser(loginUser);
 		map.put("wechatLoginId", loginUser.get("id"));
 		wechatUserMapper.updateWechatUser(map);
+	}
+
+	/**
+	 * 判断当前用户的地理位置是否与上次登录的位置相同
+	 */
+	@Override
+	public Map<String, Object> selectLation(Map<String, Object> map)
+			throws Exception {
+		Map<String, Object> params = wechatUserMapper.selectLation(map);
+		return params;
 	}
 }

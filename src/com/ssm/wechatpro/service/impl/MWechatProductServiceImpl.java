@@ -45,20 +45,27 @@ public class MWechatProductServiceImpl implements MWechatProductService {
 		}else{
 			resParams.put("adminWorkPlace",wechatLogParams.get("Location"));
 		}
-		Map<String, Object> returnMap = new HashMap<String,Object>();
-		returnMap.put("longitude", wechatLogParams.get("longitude").toString());
-		returnMap.put("latitude", wechatLogParams.get("latitude").toString());
+//		Map<String, Object> returnMap = new HashMap<String,Object>();
+//		returnMap.put("longitude", wechatLogParams.get("longitude").toString());
+//		returnMap.put("latitude", wechatLogParams.get("latitude").toString());
 		
+		resParams.put("long", wechatLogParams.get("longitude").toString());
+		resParams.put("lat", wechatLogParams.get("latitude").toString());
 		List<Map<String,Object>> allRestaurant = mWechatProductMapper.getAllRestaurant(resParams);
 		if (allRestaurant.size() <= 0){
 			outputObject.setreturnMessage("您所在的地区没有餐厅，请更换地区后再试~");
-			returnMap.put("city", resParams.get("adminWorkPlace"));
-			outputObject.setBean(returnMap);
+//			returnMap.put("city", resParams.get("adminWorkPlace"));
+//			outputObject.setBean(returnMap);
+			resParams.put("city", resParams.get("adminWorkPlace"));
+			outputObject.setBean(resParams);
 			return;
 		}else{
-			returnMap.put("allRestaurant", allRestaurant);
-			returnMap.put("city", resParams.get("adminWorkPlace"));
-			outputObject.setBean(returnMap);
+//			returnMap.put("allRestaurant", allRestaurant);
+//			returnMap.put("city", resParams.get("adminWorkPlace"));
+//			outputObject.setBean(returnMap);
+			resParams.put("allRestaurant", allRestaurant);
+			resParams.put("city", resParams.get("adminWorkPlace"));
+			outputObject.setBean(resParams);
 		}
 	}
 

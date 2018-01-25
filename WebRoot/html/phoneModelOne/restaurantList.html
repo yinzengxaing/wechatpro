@@ -52,10 +52,14 @@
 		{{#each bean.allRestaurant}}
 			<li class="rest_li chooseShop" shoppingName="Max">
 				<font class="glyphicon glyphicon-map-marker"></font>
-				<font class="rest_li_font" name="shopName" shop="{{adminId}}">{{#compare1 adminShopName adminWorkXCoordinate adminWorkYCoordinate}}{{/compare1}}</font>
+				<font class="rest_li_font" name="shopName" shop="{{adminId}}">{{adminShopName}}({{distance}}km)</font>
 			</li>
 		{{/each}}
 	</script>
+	<!-- 
+		<font class="rest_li_font" name="shopName" shop="{{adminId}}">{{adminShopName}}({{distance}}km)</font>
+		<font class="rest_li_font" name="shopName" shop="{{adminId}}">{{#compare1 adminShopName adminWorkXCoordinate adminWorkYCoordinate}}{{/compare1}}</font> -->
+	<script type="text/javascript" src="../../assest/js/jquery.js"></script>
 	<script type="text/javascript" src="../../assest/js/jquery.js"></script>
 	<script type="text/javascript" src="../../assest/phoneModelFirst/js/classDefine/swiper-3.2.5.min.js"></script>
 	<script type="text/javascript" src="../../assest/phoneModelFirst/js/classDefine/ectouch.js"></script>

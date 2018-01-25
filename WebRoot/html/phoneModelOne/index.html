@@ -11,8 +11,8 @@
 	<link type="text/css" rel="stylesheet" href="../../assest/phoneModelFirst/css/module.css"  />
 </head>
 <body>
-<div>
 	<div>
+		<div id="indexDiv" class="show">
 			<!-- 头部标题 -->
 			<span id="city" style="float:left;line-height:50px; margin-left:16px;">获取信息中请稍后...</span>
 			<span id="username" style="line-height:50px; margin-right:16px; float:right;"></span>
@@ -87,14 +87,17 @@
 					</div>
 				</div>
 				<div class="change_line"></div>
+		</div>
 	</div>
-</div>
 		<!-- 页面加载层 -->
 	<div id="preloader">  
 	  <div id="status"></div>  
 	</div>
+	<!--加载遮罩层 -->
+	<div id="mask" class="mask" style="color:white;">
+	</div> 
   	<!-- 获取广告列表 -->
-	<script id="adBean" type="text/x-handlebars-template">
+	<script  id="adBean" type="text/x-handlebars-template">
 		{{#each rows}}
 			<div class="item  img">
 				<img class="img-responsive" src="{{#optionPath optionPath}}{{/optionPath}}" style="width: 100%;height: 100%;">

@@ -69,6 +69,11 @@
             "class": "icon-file-alt",
             "title": "门店详情",
             "url": "../../html/restaurant/storeDetail.html"
+          },
+          {
+            "class": "icon-file-alt",
+            "title": "订单统计",
+            "url": "../../html/restaurant/orderCount.html"
           }
         ],
         "class": "icon-tasks",
