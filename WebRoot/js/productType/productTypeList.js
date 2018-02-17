@@ -127,7 +127,7 @@ var TableInit = function (){
 		return temp;
 	};
 	return oTableInit;
-}
+};
 
 //操作按钮点击事件
 window.EvenInit = {

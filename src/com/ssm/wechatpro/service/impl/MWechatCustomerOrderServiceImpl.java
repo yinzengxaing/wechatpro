@@ -3,12 +3,17 @@ package com.ssm.wechatpro.service.impl;
 import io.goeasy.GoEasy;
 import io.goeasy.publish.GoEasyError;
 import io.goeasy.publish.PublishListener;
+
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import com.ssm.wechatpro.dao.MWechatCustomerOrderMapper;
 import com.ssm.wechatpro.dao.MWechatShoppingCartMapper;
@@ -44,6 +49,8 @@ public class MWechatCustomerOrderServiceImpl implements MWechatCustomerOrderServ
 	private static String ORDER_NAME ="wechat_customer_order_log_"; 
 	private static String SHOPPING_NAME = "wechat_customer_order_shopping_log_";
 	
+	private static final Logger logger = LoggerFactory
+			.getLogger(MWechatCustomerOrderServiceImpl.class);
 	//添加一个订单
 	@SuppressWarnings("static-access")
 	@Override
@@ -85,7 +92,7 @@ public class MWechatCustomerOrderServiceImpl implements MWechatCustomerOrderServ
 		}
 		//订单号 订单总金额  openId 商家id
 		String orderNumber = "";//订单编号
-		double totalPrice =0.0;//总价格
+		BigDecimal totalPrice = new BigDecimal(0);;//总价格
 		String openid = wechatLogParams.get("openid").toString();
 		String adminId_ = "";//商店id，从购物车查出
 		String orderId="";//订单id
@@ -101,11 +108,12 @@ public class MWechatCustomerOrderServiceImpl implements MWechatCustomerOrderServ
 		orderNumber = str1+str2+str3+str4;//拼接订单号
 		//计算订单总价格
 		for (Map<String, Object> map2 : beans) {
-			 int count = Integer.parseInt(map2.get("wechatCommodityCount").toString());
-			 double price =Double.parseDouble(map2.get("productPrice").toString());
-			 double thisPric = count*price;
-			 totalPrice+=thisPric;
+			 BigDecimal count = new BigDecimal(map2.get("wechatCommodityCount").toString());
+			 BigDecimal price = new BigDecimal(map2.get("productPrice").toString());
+			 BigDecimal thisPric = count.multiply(price);
+			 totalPrice = totalPrice.add(thisPric);
 		}
+		logger.info("----增加订单时计算的订单价格totalPrice："+totalPrice);
 		//添加订单
 		Map<String, Object> orderParams = new HashMap<String,Object>();
 		orderParams.put("order_log", order_log);
@@ -133,6 +141,7 @@ public class MWechatCustomerOrderServiceImpl implements MWechatCustomerOrderServ
 		orderParams.put("orderPrice", totalPrice);
 		//联系方式（js判断联系方式是否合格）
 		orderParams.put("phoneNumber", params.get("phoneNumber"));
+		logger.info("addOrder_orderParams:"+orderParams);
 		mWechatCustomerOrderMapper.addOrder(orderParams);
 		
 		//添加订单成功后，获取订单id
@@ -158,8 +167,11 @@ public class MWechatCustomerOrderServiceImpl implements MWechatCustomerOrderServ
 		itemsParams.put("shopping_log", shopping_log);
 		itemsParams.put("ordetItems", list);
 		mWechatCustomerOrderMapper.addOrderItem(itemsParams);
-
-		int total_fee = (int) (totalPrice*100);
+		BigDecimal mm = new BigDecimal("100");
+		int total_fee = totalPrice.multiply(mm).intValue();
+		
+		System.out.println("totalPrice="+totalPrice+",total_fee="+total_fee);
+		logger.info("----将要保存的订单价格totalPrice（计算）："+totalPrice+",total_fee（保存）="+total_fee);
 		//调用支付接口
 		Map<String, Object> payParams = new HashMap<String,Object>();
 		payParams.put("out_trade_no", orderNumber);
@@ -561,8 +573,9 @@ public class MWechatCustomerOrderServiceImpl implements MWechatCustomerOrderServ
 		params.put("id", params.get("orderId"));
 		
 		Map<String, Object> orderDetailByOrderId = mWechatCustomerOrderMapper.getOrderDetailByOrderId(params);
-		double price = Double.parseDouble(orderDetailByOrderId.get("orderPrice").toString());
-		int total_fee = (int)(price * 100);
+		BigDecimal price = new BigDecimal(orderDetailByOrderId.get("orderPrice").toString());
+		BigDecimal mm = new BigDecimal("100");
+		int total_fee = price.multiply(mm).intValue();
 		
 		//调用支付接口
 		Map<String, Object> payParams = new HashMap<String,Object>();

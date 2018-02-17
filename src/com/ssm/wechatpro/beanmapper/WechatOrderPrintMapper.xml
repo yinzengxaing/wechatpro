@@ -99,7 +99,7 @@
 			AND orderInf.lastUpdateTime >= #{preTime}
 		</if>
 		AND  #{nowTime} >= orderInf.lastUpdateTime
-		AND orderInf.orderNumber LIKE "%${nowDay}%"
+		<!-- AND orderInf.orderNumber LIKE "%${nowDay}%" -->
 		AND wetherPayment != 0
 	</select>
 </mapper>

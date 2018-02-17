@@ -139,6 +139,7 @@ public class WechatAdminLoginServiceImpl implements WechatAdminLoginService {
 					bean.put("adminWorkXCoordinate",map.get("adminWorkXCoordinate").toString());
 					bean.put("adminWorkYCoordinate",map.get("adminWorkYCoordinate").toString());
 					bean.put("id",map.get("id").toString());
+					bean.put("searchShopKey", map.get("searchShopKey").toString());//门店搜索关键字
 					wechatAdminLoginMationMapper.insertLoginMation(bean);
 				}
 			}

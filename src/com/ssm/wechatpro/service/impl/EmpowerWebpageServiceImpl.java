@@ -35,17 +35,22 @@ public class EmpowerWebpageServiceImpl  implements EmpowerWebpageService {
 	public void getOpenidBycode(InputObject inputObject,OutputObject outputObject,ServletRequest request) throws Exception{
 		//判断session 中是否已经存在用户 、不存在会抛出空指针异常
 		Map<String, Object> user = inputObject.getWechatLogParams();//获取openid
+		System.out.println("session 中user="+user);
 		Map<String ,Object> params = inputObject.getParams();
+		System.out.println("params="+params);
 		String code = params.get("code").toString();
 		//获取用户的地理位置
 		Map<String,Object> city = GetCity.getUserCity(params.get("latitude").toString(), params.get("longitude").toString());
-		String Location = city.get("city").toString();
+//		String Location = city.get("city").toString();
+		String District = city.get("district").toString();//二七区
+		String Location = city.get("city").toString();//郑州市
 		Map<String,Object> bean = GetOpenIdByCode.getRequest1(Constants.APPID, Constants.APPSECRET, code);
 		//用户请求不是从前台发出的
 		if (bean == null){
 			user.put("latitude", params.get("latitude").toString());
 			user.put("longitude", params.get("longitude").toString());
-			user.put("Location", Location);
+			user.put("Location", Location);//郑州市
+			user.put("District", District);//二七区
 			outputObject.setWechatLogParams(user);
 			outputObject.setBean(user);
 		}else{
@@ -57,6 +62,7 @@ public class EmpowerWebpageServiceImpl  implements EmpowerWebpageService {
 						user.put("latitude", params.get("latitude").toString());
 						user.put("longitude", params.get("longitude").toString());
 						user.put("Location", Location);
+						user.put("District", District);//二七区
 						outputObject.setWechatLogParams(user);
 					}
 				}
@@ -65,15 +71,18 @@ public class EmpowerWebpageServiceImpl  implements EmpowerWebpageService {
 				user =  wechatUserMapper.selectWechatUserByOpenId(bean);
 			}finally{
 				try {
+					//保证session中和返回页面的数据保持一致
+					user.put("latitude", params.get("latitude").toString());
+					user.put("longitude", params.get("longitude").toString());
+					user.put("Location", Location);
+					user.put("District", District);//二七区
 					outputObject.setWechatLogParams(user);
 				//session没有初始化
 				} catch (Exception e2) {
 					((HttpServletRequest) request).getSession().setAttribute("admTsyWechatUser", user);
 					logger.error("login-error={}",e2);
 				}
-				user.put("latitude", params.get("latitude").toString());
-				user.put("longitude", params.get("longitude").toString());
-				user.put("Location", Location);
+				
 				outputObject.setBean(user);
 			}
 		}
@@ -91,6 +100,7 @@ public class EmpowerWebpageServiceImpl  implements EmpowerWebpageService {
 		Map<String,Object> map = inputObject.getParams();//获取新的城市
 		Map<String,Object> bean = inputObject.getWechatLogParams();
 		bean.put("Location", map.get("Location").toString());//更新
+		bean.put("District", map.get("District").toString());//更新
 		outputObject.setWechatLogParams(bean);
 	}
 

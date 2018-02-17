@@ -161,7 +161,8 @@
 		  b.adminKfPhone adminKfPhone,
 		  b.adminKfBusinessHours adminKfBusinessHours,
 		  b.adminRecommend adminRecommend,
-		  b.adminCharacteristic adminCharacteristic
+		  b.adminCharacteristic adminCharacteristic,
+		  b.searchShopKey searchShopKey
 	  FROM
 		  wechat_admin_login a,
 		  wechat_admin_login_mation b,
@@ -234,7 +235,8 @@
 			b.adminWorkPlace,
 			b.adminKfPhone,
 			b.adminShopCard,
-		    b.adminShopName 
+		    b.adminShopName,
+		    b.searchShopKey 
 		FROM
 			wechat_admin_login a,
 			wechat_admin_login_mation b
@@ -269,7 +271,8 @@
 				b.adminWorkPlace,
 				b.adminWorkXCoordinate,
 				b.adminWorkYCoordinate,
-				b.adminCharacteristic
+				b.adminCharacteristic,
+				b.searchShopKey
 			FROM
 				wechat_admin_login a,
 				wechat_admin_login_mation b
@@ -312,7 +315,10 @@
 				 	 a.adminWorkXCoordinate = #{adminWorkXCoordinate},
 				 </if>
 				 <if test="adminWorkYCoordinate != '' and adminWorkYCoordinate != null">
-				 	 a.adminWorkYCoordinate = #{adminWorkYCoordinate}
+				 	 a.adminWorkYCoordinate = #{adminWorkYCoordinate},
+				 </if>
+				 <if test="searchShopKey != '' and searchShopKey != null">
+				 	 a.searchShopKey = #{searchShopKey}
 				 </if>
 			 </set>
 			WHERE

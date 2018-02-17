@@ -156,9 +156,9 @@ var TableInit =  function (){
             	align:"center",
             	formatter: function (value, row, index) {
             		if(value == 1)
-            			return "<font>立即堂食</font>";
+            			return "<font>立即取餐</font>";
             		else if(value == 2)
-            			return "<font>稍后堂食</font>";
+            			return "<font>稍后取餐</font>";
             		else if(value == 3){
             			return "<font>立即外带</blue>";
             		}else if(value == 4 ){

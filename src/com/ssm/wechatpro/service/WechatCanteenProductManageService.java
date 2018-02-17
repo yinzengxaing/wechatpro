@@ -89,5 +89,13 @@ public interface WechatCanteenProductManageService {
 	 * @param outputObject
 	 * @throws Exception
 	 */
-	public void selectForShopInfo(InputObject inputObject, OutputObject outputObject) throws Exception;	
+	public void selectForShopInfo(InputObject inputObject, OutputObject outputObject) throws Exception;
+
+	/**
+	 * 各个门店修改地址，营业时间等
+	 * @param inputObject
+	 * @param outputObject
+	 * @throws Exception
+	 */
+	public void updateProductForShop(InputObject inputObject, OutputObject outputObject)throws Exception;	
 }

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -17,7 +16,7 @@ import com.ssm.wechatpro.object.InputObject;
 import com.ssm.wechatpro.object.OutputObject;
 import com.ssm.wechatpro.service.MWechatProductService;
 import com.ssm.wechatpro.util.DateUtil;
-import com.ssm.wechatpro.util.JudgeUtil;
+import com.ssm.wechatpro.util.ToolUtil;
 /**
  * 手机端查看产品的service 实现类
  *
@@ -40,31 +39,31 @@ public class MWechatProductServiceImpl implements MWechatProductService {
 		Map<String, Object> wechatLogParams = inputObject.getWechatLogParams();
 		Map<String, Object> params = inputObject.getParams();
 		Map<String, Object> resParams = new HashMap<String, Object>();
-		if (!params.get("city").equals("undefined")){
-			resParams.put("adminWorkPlace",params.get("city"));	
-		}else{
-			resParams.put("adminWorkPlace",wechatLogParams.get("Location"));
+		//params是判断是从城市列表中选择的城市，还是从首页传过来的值
+		if (!params.get("city").equals("undefined")){//从城市列表选择的值
+			resParams.put("searchShopKey1",params.get("city"));	
+		}else{//从首页传过来的值
+			resParams.put("searchShopKey1",wechatLogParams.get("Location"));//郑州市
+			resParams.put("searchShopKey2", wechatLogParams.get("District"));//二七区
 		}
-//		Map<String, Object> returnMap = new HashMap<String,Object>();
-//		returnMap.put("longitude", wechatLogParams.get("longitude").toString());
-//		returnMap.put("latitude", wechatLogParams.get("latitude").toString());
-		
 		resParams.put("long", wechatLogParams.get("longitude").toString());
 		resParams.put("lat", wechatLogParams.get("latitude").toString());
+		System.out.println("--resParams="+resParams);
 		List<Map<String,Object>> allRestaurant = mWechatProductMapper.getAllRestaurant(resParams);
+		System.out.println(allRestaurant);
 		if (allRestaurant.size() <= 0){
 			outputObject.setreturnMessage("您所在的地区没有餐厅，请更换地区后再试~");
-//			returnMap.put("city", resParams.get("adminWorkPlace"));
-//			outputObject.setBean(returnMap);
-			resParams.put("city", resParams.get("adminWorkPlace"));
+			resParams.put("city", resParams.get("searchShopKey2"));
 			outputObject.setBean(resParams);
 			return;
 		}else{
-//			returnMap.put("allRestaurant", allRestaurant);
-//			returnMap.put("city", resParams.get("adminWorkPlace"));
-//			outputObject.setBean(returnMap);
+			if (!params.get("city").equals("undefined")){
+				resParams.put("city", resParams.get("searchShopKey1"));
+			}else{
+				resParams.put("city", resParams.get("searchShopKey2"));
+			}
 			resParams.put("allRestaurant", allRestaurant);
-			resParams.put("city", resParams.get("adminWorkPlace"));
+			
 			outputObject.setBean(resParams);
 		}
 	}
@@ -74,6 +73,9 @@ public class MWechatProductServiceImpl implements MWechatProductService {
 	public void getAllType(InputObject inputObject, OutputObject outputObject) throws Exception {
 		Map<String, Object> params = inputObject.getParams();
 		Map<String, Object> wechatLogParams = inputObject.getWechatLogParams();
+		params.put("nowTime", ToolUtil.getNowTimeAndToString());
+		//查询当前时间是否为营业时间
+		Map<String, Object> beginParams = mWechatProductMapper.selectIsBegin(params);
 		List<Map<String,Object>> allType = mWechatProductMapper.getAllType(params);
 		List<Map<String, Object>> returnList = new ArrayList<>();
 		for (Map<String, Object> map2 : allType) {
@@ -82,6 +84,7 @@ public class MWechatProductServiceImpl implements MWechatProductService {
 			map.put("typeId", map2.get("typeId"));
 			map.put("NowTime", DateUtil.getNowTime());
 			List<Map<String,Object>> productListByType = mWechatProductMapper.getProductListByType(map);
+//			System.out.println("productListByType="+productListByType);
 			if (!productListByType.isEmpty()){
 				//查看该物品是否在购物车中
 				for (Map<String, Object> map3 : productListByType) {
@@ -103,6 +106,7 @@ public class MWechatProductServiceImpl implements MWechatProductService {
 				returnList.add(map2);
 			}
 		}
+		outputObject.setBean(beginParams);
 		outputObject.setBeans(returnList);
 	}
 	
@@ -128,9 +132,9 @@ public class MWechatProductServiceImpl implements MWechatProductService {
 					map.put("productCount", 0);
 				}
 				map.put("productType", 1);
-			}
-	
-			outputObject.setBeans(productListByType);
+		}
+//		System.out.println("123productListByType="+productListByType);
+		outputObject.setBeans(productListByType);
 	}
 
 	/**

@@ -1,5 +1,5 @@
-var adminId = ""
-
+var adminId = "";
+var start_time = "";
 var totalCount = 0;
 var catState = 0; // 购物车显示状态 默认为0 不显示
 var totalPrice = 0.00;
@@ -8,7 +8,7 @@ $(function() {
 
 	receiveData();
 	dataInit();
-})
+});
 
 /*
   商品信息初始化
@@ -16,10 +16,11 @@ $(function() {
 function dataInit() {
 	if (adminId == "") {
 		adminId = $.req("adminId");
+		start_time = $.req("time");
 	}
 	var params = {
 		adminId : adminId
-	}
+	};
 	// 获取美食类别列表
 	AjaxPostUtil.request({
 		url : path + "/gateway/MWechatProductController/getAllType",params : params,type : 'json',callback : function(json) {
@@ -53,6 +54,22 @@ function dataInit() {
 			 		$('#clearDiv').show();
 			 		$('#getCartProduct').show();
 				}
+				//停止营业
+				if(json.bean == null){
+					swal({ 
+						title : '<p style="font-size:24px;color:black;font-weight:500;">本店已打烊</p><p style="font-size:24px;color:black;font-weight:500;">感谢小主光临本店</p>', 
+						text: '营业时间：'+start_time,
+						imageUrl : "../../assest/icon/stop_store.png",
+						imageSize :  "120x120",
+						html : true,
+						confirmButtonText : "确认",
+						confirmButtonColor : "#1571c6",
+					}); 
+					$("#selectOver").attr("href","#");
+					$("#selectOver").css("background-color","black");
+				}else{//正常营业
+					$("#selectOver").attr("disabled",false);
+				}
 			} else {
 				location.href = 'sessionNull.html';
 			}
@@ -63,6 +80,11 @@ function dataInit() {
 }
 
 function eventInit() {
+	
+//	$('body').on('click','#showInfo', function(e){
+//		alert($(this).attr("id"));
+//	});
+	
 	// 锚点跳转滑动效果
 	$('body').on('click','a',function(e) {
 		if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '')&& location.hostname == this.hostname) {
@@ -116,7 +138,7 @@ function eventInit() {
 				 wechatCommodity:wechatCommodity,
 				 wechatCommodityType:wechatCommodityType,
 				 wechatCommodityAdminId:wechatCommodityAdminId
-		 }
+		 };
 		 AjaxPostUtil.request({url:path+"/gateway/MWechatShoppingCartController/addProduct",params:params,type:'json',callback:function(json){
 			 if(json.returnCode==0){
 				var count = s.find('.count').html();
@@ -147,7 +169,7 @@ function eventInit() {
 				 wechatCommodity:wechatCommodity,
 				 wechatCommodityType:wechatCommodityType,
 				 wechatCommodityAdminId:wechatCommodityAdminId
-		 }
+		 };
 		 AjaxPostUtil.request({url:path+"/gateway/MWechatShoppingCartController/deleteProductCount",params:params,type:'json',callback:function(json){
 			 if(json.returnCode==0){
 				 var count = s.find('.count').html();
@@ -179,6 +201,17 @@ function eventInit() {
 		 }});
 	});
 	
+	//点击商品图片弹出商品介绍
+//	$('body').on('click', '.minBox_Img', function(e){
+//		console.log($(this).find('img').attr('proName')+','+$(this).find('img').attr('proDesc'));
+//		//商品图片
+//		var img = $(this).find('img').attr('src');
+//		var prodName = $(this).find('img').attr('proName');
+//		var prodDesc = $(this).find('img').attr('proDesc');
+//		swal({ title : prodName, text : prodDesc, imageUrl: "../../assest/img/lengyin.jpg"}); 
+//		
+//	});
+	
 	//购物车详情事件
 	$('body').on('click', '#getCartProduct', function(e){
 		if(catState == 0){
@@ -207,7 +240,7 @@ function eventInit() {
 				 wechatCommodity:wechatCommodity,
 				 wechatCommodityType:wechatCommodityType,
 				 wechatCommodityAdminId:wechatCommodityAdminId
-		 }
+		 };
 		 AjaxPostUtil.request({url:path+"/gateway/MWechatShoppingCartController/addProduct",params:params,type:'json',callback:function(json){
 			 if(json.returnCode==0){
 					var proCount = $(".proCount");
@@ -247,7 +280,7 @@ function eventInit() {
 				 wechatCommodity:wechatCommodity,
 				 wechatCommodityType:wechatCommodityType,
 				 wechatCommodityAdminId:wechatCommodityAdminId
-		 }
+		 };
 		 AjaxPostUtil.request({url:path+"/gateway/MWechatShoppingCartController/deleteProductCount",params:params,type:'json',callback:function(json){
 			 if(json.returnCode==0){
 					c = s.find(".count").html();
@@ -315,7 +348,7 @@ function setCountState() {
 	// 遍历当前页面所有的product-count
 	$(".product-count").each(function() {
 		var s = $(this);
-		var count = s.find('.count').html()
+		var count = s.find('.count').html();
 		if (count == 0) {
 			s.find('.count').hide();
 			s.find('.redCart').hide();
@@ -330,7 +363,7 @@ function getCartInfo() {
 	showMask();
 	var params = {
 		adminId : adminId
-	}
+	};
 	AjaxPostUtil.request({
 		url : path + "/gateway/MWechatProductController/getCartDetail",params : params,type : 'json',callback : function(json) {
 			if (json.returnCode == 0) {
@@ -348,7 +381,7 @@ function getCartInfo() {
 					$('#getCartProduct').show();
 				}
 			} else {
-				alert("未查询到数据");
+				swal({ title: "", text: "未查询到数据", type: "warning"});
 			}
 			hideMask();
 		}
@@ -362,7 +395,7 @@ function getCartInfo() {
 function getProductInfo(){
 	var params = {
 			adminId : adminId
-	}
+	};
 	showMask();
 	AjaxPostUtil.request({url:path+"/gateway/MWechatProductController/getCartDetail",params:params,type:'json',callback:function(json){
 		if(json.returnCode==0){

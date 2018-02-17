@@ -100,6 +100,17 @@ var TableInit = function () {
                 	}
                 }
             },{
+                field: 'searchShopKey',
+                title: '门店搜索关键字',
+                align: 'center',
+                width: '100',
+                formatter: function (value, row, index) {
+                	if(isNull(value)){
+                		value = '-';
+                	}
+                	return '<a style="word-wrap:break-word;">'+value+'</a>';
+                }
+            },{
 	            field: 'operate',
 	            title: '操作',
 	            width: '160',
@@ -131,7 +142,7 @@ var TableInit = function () {
     };
     
     return oTableInit;
-}
+};
 
 window.EvenInit = {
 	//显示门店信息
@@ -154,6 +165,7 @@ window.EvenInit = {
     			$("#adminWorkYCoordinate").html(json.bean.adminWorkYCoordinate);
     			$("#adminShopCard").html(json.bean.adminShopCard);
     			$("#adminShopKey").html(json.bean.adminShopKey);
+    			$("#searchShopKey").html(json.bean.searchShopKey);
     		}else{
     			qiao.bs.msg({msg:json.returnMessage,type:'danger'});
     		}
@@ -178,7 +190,7 @@ window.EvenInit = {
     		//显示门店中的商品信息
 	    	var myparams = {
 	    			adminRestaurantId:adminRestaurantId,
-	    	}
+	    	};
 	    	AjaxPostUtil.request({url:path+"/post/WechatProductRestaurantController/getProduct",params:myparams,type:'json',callback:function(json){
 	    		  $("#selectProDiv").html("");
 	    		if (json.returnCode==0){

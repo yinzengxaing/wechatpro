@@ -178,6 +178,7 @@
 	<select id="selectForShopInfo" resultType="java.util.Map" parameterType="java.util.Map">
 		SELECT
 			a.adminNo,
+			b.id,
 			b.realName,
 			b.adminShopName,
 			b.adminKfPhone,
@@ -186,7 +187,8 @@
 			b.adminWorkPlace,
 			b.adminWorkXCoordinate,
 			b.adminWorkYCoordinate,
-			b.adminCharacteristic
+			b.adminCharacteristic,
+			b.searchShopKey
 		FROM
 			wechat_admin_login a,
 			wechat_admin_login_mation b
@@ -197,4 +199,19 @@
 			a.adminIdentity = '1'
 		)
 	</select>
+	
+	<!-- 各个门店修改地址，营业时间等 -->
+	<update id="updateProductForShop" parameterType="java.util.Map">
+		UPDATE 
+			wechat_admin_login_mation
+		SET
+			adminKfPhone = #{adminKfPhone},
+			adminKfBusinessHours = #{adminKfBusinessHours},
+			adminWorkPlace = #{adminWorkPlace},
+			adminWorkXCoordinate = #{adminWorkXCoordinate},
+			adminWorkYCoordinate = #{adminWorkYCoordinate},
+			searchShopKey = #{searchShopKey}
+		WHERE
+			id = #{rowId}
+	</update>
 </mapper>

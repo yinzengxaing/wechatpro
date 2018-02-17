@@ -9,6 +9,7 @@
 	<link rel="stylesheet" type="text/css" href="../../assest/phoneModelFirst/css/ui.css">
 	<link rel="shortcut icon" href="../../assest/icon/maxLogo.jpg">
 	<link type="text/css" rel="stylesheet" href="../../assest/phoneModelFirst/css/module.css"  />
+	<link type="text/css" rel="stylesheet" href="../../assest/sweetalert/css/sweetalert.css"  />
 </head>
 <body >
 	<div class="header">
@@ -35,31 +36,32 @@
 		</div>
 		<div class="commodity-black"></div>
 	
-	<div class="comm-bar-container" >
-		<font class="glyphicon glyphicon-chevron-up" style="position:absolute;top:-25px; cursor:pointer; display:none;"  id="getCartProduct"></font>
-		<!-- 加入购物车中的商品列表 -->
-		<div id="catProductDiv"  style="display:none ;z-index:99;">
+		<div class="comm-bar-container" >
+			<font class="glyphicon glyphicon-chevron-up" style="position:absolute;top:-25px; cursor:pointer; display:none;"  id="getCartProduct"></font>
+			<!-- 加入购物车中的商品列表 -->
+			<div id="catProductDiv"  style="display:none ;z-index:99;">
+			</div>
 		</div>
-	</div>
-	
-	<!-- 结算界面 -->
-	<div  id="clearDiv" class="payment-bar" style="display:none;" >
-		<div class="shop-total">
-			<strong>总价：<i class="total" id="AllTotal">0.00</i>元</strong>
+		
+		<!-- 结算界面 -->
+		<div  id="clearDiv" class="payment-bar" style="display:none;" >
+			<div class="shop-total">
+				<strong>总价：<i class="total" id="AllTotal">0.00</i>元</strong>
+			</div>
+			<button style="cursor:pointer;" class="settlement" id="selectOver" disabled="disabled">选好了</button>
 		</div>
-		<a  style="cursor:pointer;" class="settlement" id="selectOver">选好了</a>
+		
+		<!-- 页面加载层 -->
+		<div id="navigate"></div>
+		<div id="preloader"><div id="status"></div></div>
+		
+		<!--遮罩层 -->
+		<div id="wrap" class="mask-layer"></div>
+		<!-- 加载遮罩层 -->
+		<div id="mask" class="mask">
+	
+		</div>  
 	</div>
-	
-	<!-- 页面加载层 -->
-	<div id="navigate"></div>
-	<div id="preloader"><div id="status"></div></div>
-	
-	<!--遮罩层 -->
-	<div id="wrap" class="mask-layer"></div>
-	<!-- 加载遮罩层 -->
-	<div id="mask" class="mask">
-
-	</div>  
 	<script id="productListBean" type="text/x-handlebars-template">
 		{{#each rows}}
 			<div class="food-div" id="typeId_{{typeId}}">
@@ -67,7 +69,7 @@
 				{{#each productList}}
 				<div class="product-minBox">
 					<div class="minBox_Img">
-						<img class="img-thumbnail img-noborder img-product-logo" src="{{#productLogo productLogo}}{{/productLogo}}" />
+						<img proName="{{productName}}" proDesc="{{productDesc}}" class="img-thumbnail img-noborder img-product-logo" src="{{#productLogo productLogo}}{{/productLogo}}" />
 					</div>
 					<div class="procuat-Font">
 						<div class="price-head">
@@ -75,7 +77,7 @@
 							<div class="proPrice"><span style="font-size: 12px;  color: black;">￥</span>{{productPrice}}</div>
 						</div>
 						<div class="product-count">
-							<font class="redCart" style="cursor:pointer;"buyProductId="{{productId}}" productType="{{productTypeId}}" adminId="{{adminId}}" productPrice="{{productPrice}}"><img src="../../assest/img/jian.png"></font>
+							<font class="redCart" style="cursor:pointer;" buyProductId="{{productId}}" productType="{{productTypeId}}" adminId="{{adminId}}" productPrice="{{productPrice}}"><img src="../../assest/img/jian.png"></font>
 							<font class="count proCount" style="margin-left: 5px; margin-right: 5px;"   buyProductId="{{productId}}" productType="{{productTypeId}}">{{#productCount productCount}}{{/productCount}}</font>
 							<font class="toCart" style="cursor:pointer;"buyProductId="{{productId}}" productType="{{productTypeId}}" adminId="{{adminId}}" productPrice="{{productPrice}}"><img src="../../assest/img/jia.png"></font> 
 						</div>
@@ -122,7 +124,7 @@
 	<script type="text/javascript" src="../../assest/phoneModelFirst/js/classDefine/common.js"></script>
 	<script type="text/javascript" src="../../assest/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="../../assest/phoneModelFirst/js/aui-swipe.js"></script>
-	
+	<script type="text/javascript" src="../../assest/sweetalert/js/sweetalert.min.js"/></script>
 	<script type="text/javascript" src="../../assest/bootstrap/qiao.js"></script>
 	<script type="text/javascript" src="../../js/util/main.js"></script>
 	<script type="text/javascript" src="../../js/util/handlebars-v4.0.5.js"></script>

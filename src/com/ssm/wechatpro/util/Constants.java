@@ -15,7 +15,7 @@ public class Constants {
 	public static final String MCH_ID ="1364180602";//商户号ID 测试使用
 	public static final String PATH = "http://z1714z2699.imwork.net/wechatpro";//测试使用
 	public static final String SSL_PATH="D:/apiclientCert/apiclient_cert.p12"; //退款使用的证书地址
-	public static final String IP="192.168.0.106"; //本地ip
+	public static final String IP="192.168.0.108"; //本地ip
 	
 //max大号	
 //	public static final String WECHAT_FOR_SIGNATURE = "http://weixinorder.maxburger.com.cn/wechatpro/html/phoneModelOne/orderList.html?adminId=";//主账号
@@ -84,6 +84,10 @@ public class Constants {
 	public static final String SCOLLOR_NUM = "0";//通知顺序为0
 	public static final String PRODUCT = "0";//分发产品时，产品状态。产品数量。产品当前数量
 	public static final String WECHAT_OPTION_STATE_NORMARL = "1";
+	
+	public static final String CITY_PARENT_ID_ZERO = "0";//父级ID
+	public static final String CITY_First = "1";//城市的一级类别（26个字母）
+	public static final String CITY_SECOND = "2";//城市的二级类别（城市名称）
 	
 	public static final String SHOP = "1";
 	public static final String PACKAGE = "2";

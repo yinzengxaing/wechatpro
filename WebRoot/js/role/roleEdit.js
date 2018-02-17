@@ -38,7 +38,7 @@ function dataInit(){
 				$("#logo").attr("src",path + "/" + json.bean.optionPath);
 				$("#editPrompt").val(json.bean.wechatRoleDesc);
 				imgId = json.bean.wechatRoleHeadPortrait;
-				var zTreeObj = $.fn.zTree.getZTreeObj("treeDemo")  
+				var zTreeObj = $.fn.zTree.getZTreeObj("treeDemo"); 
 			    var zTree = zTreeObj.getCheckedNodes(false);  
 			    var pid= json.bean.userZ; /**此处数据前后必须拼接;*/  
 			    for (var i = 0; i < zTree.length; i++) {

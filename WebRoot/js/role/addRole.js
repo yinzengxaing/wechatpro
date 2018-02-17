@@ -62,7 +62,7 @@ function eventInit(){
 			    wechatRoleDesc:$('#rolePrompt').val(),
 				wechatRoleHeadPortrait:imgId,
 				shuzu:v,
-		}
+		};
 		AjaxPostUtil.request({url:path+"/post/WechatAdminRoleController/addRole",params:params,type:'json',callback:function(json){
 			if(json.returnCode==0){
 		        qiao.bs.msg({msg:"添加成功",type:'success'});

@@ -17,6 +17,35 @@ function dataInit(){
 
 function eventInit(){
 	
+	$('#member_week').multiselect({
+		 buttonClass: 'btn-over',
+		 enableClickableOptGroups: true,
+		 inheritClass: true,
+		 enableCollapsibleOptGroups: true,
+		 includeSelectAllOption: false,
+		 enableFiltering: true,
+		 buttonWidth:'49%',
+		 maxHeight: '200',
+		 nonSelectedText: '请选择',
+		 includeSelectAllOption: true,//全选  
+		 selectAllText: '全选',//全选的checkbox名称  
+		 selectAllJustVisible: true,//选择所有的。true为全选可见的  
+	});
+	$('#member_month').multiselect({
+		 buttonClass: 'btn-over',
+		 enableClickableOptGroups: true,
+		 inheritClass: true,
+		 enableCollapsibleOptGroups: true,
+		 includeSelectAllOption: false,
+		 enableFiltering: true,
+		 buttonWidth:'49%',
+		 maxHeight: '300',
+		 nonSelectedText: '请选择',
+		 includeSelectAllOption: true,//全选  
+		 selectAllText: '全选',//全选的checkbox名称  
+		 selectAllJustVisible: true,//选择所有的。true为全选可见的  
+	});
+	
 	// 点击开始结束时间按钮
 	$("input[name=optionsRadios]").on("click", function(){
 		if($(this).val() == "Y"){
@@ -25,6 +54,17 @@ function eventInit(){
 			$("#selectTime").hide();
 			startTime ="";
 			endTime = "";
+		}
+	});
+	
+	$("#productNature").on('change', function(){
+		if($("#productNature").val() == 0){
+			$("#productDiv").removeClass("show");
+			$("#productDiv").addClass("hide");
+		}
+		if($("#productNature").val() == 1){
+			$("#productDiv").removeClass("hide");
+			$("#productDiv").addClass("show");
 		}
 	});
 	
@@ -86,7 +126,7 @@ function eventInit(){
 		} 
 		if(imgId==null){
 			 $("#saveMenu").removeAttr("disabled");
-			qiao.bs.msg({msg:"请选择商品LOGO",type:'danger'});
+			 qiao.bs.msg({msg:"请选择商品LOGO",type:'danger'});
 		}else{
 			//设置参数
 			var params  = {
@@ -101,7 +141,17 @@ function eventInit(){
 				startTime : startTime,
 				endTime : endTime,
 				flag : flag,
-				}
+				productNature : $("#productNature").val(),
+				productTime : $("#productTime").val(),
+				showStartTime1 : $("#showStartTime1").val(),
+				showEndTime1 : $("#showEndTime1").val(),
+				showStartTime2 : $("#showStartTime2").val(),
+				showEndTime2 : $("#showEndTime2").val(),
+				showStartTime3 : $("#showStartTime3").val(),
+				showEndTime3 : $("#showEndTime3").val(),
+				memberWeek : returnSelStr($("#member_week").val()),
+				memberMonth : returnSelStr($("#member_month").val())
+			};
 			//进行商品的修改
 			AjaxPostUtil.request({url:path+"/post/WechatProductController/updateProduct",params:params,type:'json',callback:function(json){
 				if(json.returnCode == 0){
@@ -188,6 +238,7 @@ function getAllBandTag(){
 	//获取所有已经上线的品牌
 	AjaxPostUtil.request({url:path+"/post/WechatProductBrandTagController/getBrandTagOnline",params:{},type:'json',callback:function(json){
 		if(json.returnCode==0){
+			console.log(json);
 			//填充数据
 			var source = $("#brandTagListBean").html();
 			var template = Handlebars.compile(source);
@@ -210,6 +261,9 @@ function setData(){
 			id: id
 	};
 	AjaxPostUtil.request({url:path+"/post/WechatProductController/getPrductById",params:params,type:'json',callback:function(json){
+		
+		if(json.returnCode == 0){
+			console.log(json);
 			$('#productName').val(json.bean.productName);
 			$("#logo").attr('src',path+"/"+json.bean.productLogo);
 			imgId = json.bean.imgId;
@@ -220,6 +274,40 @@ function setData(){
 			$("#bandTagMenu").val(json.bean.productBrandTag);
 			$("#startTime").val(json.bean.startTime);
 			$("#endTime").val(json.bean.endTime);
+			$("#productNature").val(json.bean.productNature);
+			if(json.bean.productNature==1){
+				$("#productNature").attr("现点现做");
+				$("#productDiv").removeClass("hide");
+				$("#productDiv").addClass("show");
+				$("#productTime").val(json.bean.productTime);
+				$("#showStartTime1").val(json.bean.showStartTime1);
+				$("#showEndTime1").val(json.bean.showEndTime1);
+				$("#showStartTime2").val(json.bean.showStartTime2);
+				$("#showEndTime2").val(json.bean.showEndTime2);
+				$("#showStartTime3").val(json.bean.showStartTime3);
+				$("#showEndTime3").val(json.bean.showEndTime3);
+			}
+			$("#member_week").val(json.bean.member_week);
+			var str = "";
+			if(json.bean.member_week != null){
+				str = json.bean.member_week.split(",");
+				$('#member_week option').each(function(i,content){
+			    	if(str.indexOf(content.value)>=0){
+			            this.selected=true;
+			        }
+			    });
+				$("#member_week").multiselect('refresh');
+			}
+			$("#member_month").val(json.bean.member_month);
+			if(json.bean.member_month != null){
+				str = json.bean.member_month.split(",");
+				$('#member_month option').each(function(i,content){
+			    	if(str.indexOf(content.value)>=0){
+			            this.selected=true;
+			        }
+			    });
+				$("#member_month").multiselect('refresh');
+			}
 			if(json.bean.startTime != "00:00"){
 				$("#selectTime").show();
 				$("#optionsRadios1").attr("checked", "true");
@@ -227,6 +315,19 @@ function setData(){
 				$("#selectTime").hide();
 				$("#optionsRadios2").attr("checked", "true");
 			}
+		}else{
+			qiao.bs.msg({msg:"参数报错.",type:'danger'});
 		}
-	});
+		
+	}});
+}
+
+
+//multiselect转换字符串
+function returnSelStr(str){
+	if(isNull(str)){
+		return null;
+	}else{
+		return str.toString(",");
+	}
 }

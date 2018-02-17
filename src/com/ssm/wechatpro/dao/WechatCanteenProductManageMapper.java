@@ -152,4 +152,11 @@ public interface WechatCanteenProductManageMapper {
 	 * @throws Exception
 	 */
 	public Map<String, Object> selectForShopInfo(Map<String, Object> map) throws Exception;
+
+	/**
+	 * 各个门店修改地址，营业时间等
+	 * @param mapParam
+	 * @throws Exception
+	 */
+	public void updateProductForShop(Map<String, Object> mapParam)throws Exception;
 }

@@ -41,6 +41,11 @@
 					<a href="#" class="btn-minimize"><i class="halflings-icon chevron-up"></i></a>
 				</div>
 			</div>
+			<div class="form-group" style="position: relative; margin:1% 0 0 80%;" >
+				<button type="button" id="updateBtn" class="btn btn-primary">修改</button>
+				<button type="button" id="cancleBtn" class="btn">取消</button>
+				<button type="button" id="saveBtn" class="btn" disabled="disabled">保存</button>
+			</div>
 			<div id="" class="box-content">
 				<div class="form-group dialog-50">
 			    	<label for="txt_departmentname" class="dialog-label-20" >餐厅人员号：</label>
@@ -55,21 +60,9 @@
 			    	</div>
 			    </div>
 			    <div class="form-group dialog-50">
-			    	<label for="txt_departmentname" class="dialog-label-20" >门店电话：</label>
-			    	<div class="dialog-div-75">
-			    		<font id="adminKfPhone"></font>
-			    	</div>
-			    </div>
-			    <div class="form-group dialog-50">
 			    	<label for="txt_departmentname" class="dialog-label-20" >门店特色：</label>
 			    	<div class="dialog-div-75">
 			    		<font id="adminCharacteristic"></font>
-			    	</div>
-			    </div>
-			    <div class="form-group dialog-50">
-			    	<label for="txt_departmentname" class="dialog-label-20" >营业时间：</label>
-			    	<div class="dialog-div-75">
-			    		<font id="adminKfBusinessHours"></font>
 			    	</div>
 			    </div>
 			    <div class="form-group dialog-50">
@@ -78,25 +71,43 @@
 			   			<font id="adminRecommend"></font>
 		    		</div>
 		    	</div>
+			    <div class="form-group dialog-50">
+			    	<label for="txt_departmentname" class="dialog-label-20" >门店电话：</label>
+			    	<div class="dialog-div-75">
+			    		<input type="text" class="exitDiv" readonly id="adminKfPhone" style="border: 0px;background-color:white;"></input>
+			    	</div>
+			    </div>
+			    <div class="form-group dialog-50">
+			    	<label for="txt_departmentname" class="dialog-label-20" >营业时间：</label>
+			    	<div class="dialog-div-75">
+			    		<input type="text" class="exitDiv" readonly id="adminKfBusinessHours" style="border: 0px;background-color:white;"></input>
+			    	</div>
+			    </div>
+			     <div class="form-group dialog-50">
+			    	<label for="txt_departmentname" class="dialog-label-20" >门店搜索关键字：</label>
+			    	<div class="dialog-div-75">
+			    		<input type="text" class="exitDiv" readonly id="searchShopKey" style="border: 0px;background-color:white;width:100%;"></input>
+			    	</div>
+			    </div>
 		    	<div class="form-group dialog-50">
 		    		<label for="txt_departmentname" class="dialog-label-20" >门店地址：</label>
 		    		<div class="dialog-div-75">
-		    			<font id="adminWorkPlace"></font>
+		    			<input type="text" class="exitDiv" readonly id="adminWorkPlace" style="border: 0px;width:80%;background-color:white;"></input>
 		    		</div>
 		    	</div>
 		    	<div class="form-group dialog-50">
 		    		<label for="txt_departmentname" class="dialog-label-20" >门店经度：</label>
 		    		<div class="dialog-div-75">
-		    			<font id="adminWorkXCoordinate"></font>
+		    			<input type="text" readonly id="adminWorkXCoordinate" style="border: 0px;background-color:white;"></input>
 		    		</div>
 		    	</div>
 		    	<div class="form-group dialog-50">
 		    		<label for="txt_departmentname" class="dialog-label-20" >门店纬度：</label>
 		    		<div class="dialog-div-75">
-		    			<font id="adminWorkYCoordinate"></font>
+		    			<input type="text" readonly id="adminWorkYCoordinate" style="border: 0px;background-color:white;"></input>
 		    		</div>
 		    	</div>
-		    	<div class="form-group dialog-100" id="ditu" style="height: 200px;">
+		    	<div class="form-group dialog-100" id="ditu" style="height: 400px;">
 		    		<label for="txt_departmentname" class="dialog-label-10" >地图：</label>
 		    		<div class="dialog-div-80" id="container" style="height: 100%;">
 	    				

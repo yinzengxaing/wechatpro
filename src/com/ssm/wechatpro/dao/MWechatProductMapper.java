@@ -36,4 +36,6 @@ public interface MWechatProductMapper {
 	
 	//获取一个商品的详细信息
 	public Map<String, Object> getProductDetail(Map<String, Object> map) throws Exception;
+
+	public Map<String, Object> selectIsBegin(Map<String, Object> params)throws Exception;
 }

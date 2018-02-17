@@ -126,6 +126,25 @@ public class WechatProductServiceImpl implements WechatProductService {
 			outputObject.setreturnMessage("该产品名称已经存在，请重新输入！");
 			return;
 		}
+		//判断展示开始时间是否大于展示结束时间
+		String showStartTime1 = map.get("showStartTime1") + "";
+		String showEndTime1 = map.get("showEndTime1") + "";
+		if(showStartTime1.compareTo(showEndTime1) > 0){
+			outputObject.setreturnMessage("展示开始时间1不能大于展示结束时间1");
+			return ;
+		}
+		String showStartTime2 = map.get("showStartTime2") + "";
+		String showEndTime2 = map.get("showEndTime2") + "";
+		if(showStartTime2.compareTo(showEndTime2) > 0){
+			outputObject.setreturnMessage("展示开始时间2不能大于展示结束时间2");
+			return ;
+		}
+		String showStartTime3 = map.get("showStartTime3") + "";
+		String showEndTime3 = map.get("showEndTime3") + "";
+		if(showStartTime3.compareTo(showEndTime3) > 0){
+			outputObject.setreturnMessage("展示开始时间3不能大于展示结束时间3");
+			return ;
+		}
 		int maxCount = 0; // 表示商品的优先级
 		
 		try {

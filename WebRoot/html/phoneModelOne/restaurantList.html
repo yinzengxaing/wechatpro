@@ -27,12 +27,6 @@
 			<span class="glyphicon glyphicon-chevron-down" id="moreCity" style=" cursor:pointer;"></span>
 		</div>
 	</div>
-	
-	<div class="shopListselect">
-		<div class="textShopList"><h5>门店列表</h5><span class="glyphicon glyphicon-home"></span> </div>
-		
-	</div>
-	
 	<div class="line" id="resDiv">
 		<ul id="restaurantSelect" class="table table-striped">
 			
@@ -50,15 +44,13 @@
 	</div> 
 	<script id="restaurantBean" type="text/x-handlebars-template"> 
 		{{#each bean.allRestaurant}}
-			<li class="rest_li chooseShop" shoppingName="Max">
-				<font class="glyphicon glyphicon-map-marker"></font>
-				<font class="rest_li_font" name="shopName" shop="{{adminId}}">{{adminShopName}}({{distance}}km)</font>
+			<li class="rest_li chooseShop" shoppingName="Max" style="{{queryIndex @index}}">
+				<font class="glyphicon glyphicon-map-marker" style="{{queryClass @index}}"></font>
+				<font class="rest_li_font" name="shopName" shop="{{adminId}}">{{adminShopName}}({{queryDistance distance}})</font>
+				<label><img src="../../assest/icon/arrow-1.png" style="width:15px;height:15px;"></img>{{adminWorkPlace}}</label>
 			</li>
 		{{/each}}
 	</script>
-	<!-- 
-		<font class="rest_li_font" name="shopName" shop="{{adminId}}">{{adminShopName}}({{distance}}km)</font>
-		<font class="rest_li_font" name="shopName" shop="{{adminId}}">{{#compare1 adminShopName adminWorkXCoordinate adminWorkYCoordinate}}{{/compare1}}</font> -->
 	<script type="text/javascript" src="../../assest/js/jquery.js"></script>
 	<script type="text/javascript" src="../../assest/js/jquery.js"></script>
 	<script type="text/javascript" src="../../assest/phoneModelFirst/js/classDefine/swiper-3.2.5.min.js"></script>

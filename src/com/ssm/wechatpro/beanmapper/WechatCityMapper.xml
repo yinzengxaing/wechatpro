@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.wechatpro.dao.WechatCityMapper">
+
+	<!-- 查询一级列表 -->
+	<select id="queryCityAllByList" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT
+			c.id,
+			c.cityName,
+			c.cityType,
+			c.cityLevel,
+			c.cityLetter,
+			c.parentId,
+			m.realName
+		FROM
+			wechat_city c
+		JOIN wechat_admin_login_mation m ON m.adminId = c.createId
+		<if test="searchParams != '' and searchParams != null">
+			AND
+				cityName LIKE '%${searchParams}%' 
+		</if>
+		<if test="searchType !='' and searchType != null">
+		    AND cityType like '%${searchType}%'
+		</if>
+		ORDER BY c.cityType,c.id
+	</select>
+	
+	<!-- 查询一级列表，用作select查询 -->
+	<select id="queryCityOneBySelect" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT
+			c.id,
+			c.cityName
+		FROM
+			wechat_city c
+		WHERE
+			c.cityType = #{cityType}
+	</select>
+	
+	<!-- 根据parentId查询二级列表 -->
+	<select id="queryCityTwoByList" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT
+			c.id,
+			c.cityName,
+			c.cityType,
+			c.cityLevel,
+			c.cityLetter,
+			'城市' cityGrade,
+			c.parentId
+		FROM
+			wechat_city c
+		WHERE
+			c.parentId = #{parentId}
+	</select>
+	
+	<!-- 根据ID查询一条记录信息 -->
+	<select id="queryCityById" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT
+			c.id,
+			c.cityName,
+			c.cityType,
+			c.cityLevel,
+			c.cityLetter,
+			c.parentId
+		FROM
+			wechat_city c
+		WHERE
+			c.id = #{id}
+	</select>
+	
+	<!-- 添加城市 -->
+	<insert id="addCity" parameterType="java.util.Map">
+		INSERT 
+		INTO
+			wechat_city
+			(id,parentId,cityName,cityType,cityLevel,cityLetter,createTime,createId)
+		VALUES
+			(#{id},#{parentId},#{cityName},#{cityType},#{cityLevel},#{cityLetter},#{createTime},#{createId})
+	</insert>
+	
+	<!-- 根据类别查询信息 -->
+	<select id="queryCityByType" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT
+			c.id,
+			c.cityName
+		FROM
+			wechat_city c
+		WHERE
+			c.parentId = #{parentId}
+		AND
+			c.cityName = #{cityName}
+	</select>
+	
+	<!-- 删除所属一级的二级类别 -->
+	<delete id="deleteCityByParentId" parameterType="java.util.Map">
+		DELETE
+		FROM
+			wechat_city
+		WHERE
+			parentId = #{parentId}
+	</delete>
+	
+	<!-- 删除一级类别 -->
+	<delete id="deleteCityById" parameterType="java.util.Map">
+		DELETE
+		FROM
+			wechat_city
+		WHERE
+			id = #{id}
+	</delete>
+	
+	<!-- 根据ID修改一条记录信息 -->
+	<update id="updateCityById" parameterType="java.util.Map">
+		UPDATE
+			wechat_city
+		<set>
+			<if test="cityName != '' and cityName != null">
+				cityName = #{cityName},
+			</if>
+			<if test="cityType != '' and cityType != null">
+				cityType = #{cityType},
+			</if>
+			<if test="cityLevel != '' and cityLevel != null">
+				cityLevel = #{cityLevel},
+			</if>
+			<if test="cityLetter != '' and cityLetter != null">
+				cityLetter = #{cityLetter},
+			</if>
+			<if test="parentId != '' and parentId != null">
+				parentId = #{parentId},
+			</if>
+			<if test="createId != '' and createId != null">
+				createId = #{createId},
+			</if>
+			<if test="createTime != '' and createTime != null">
+				createTime = #{createTime},
+			</if>
+		</set>
+		WHERE
+			id = #{id}
+	</update>
+	
+	<!-- 微信端查询所有城市 -->
+	<select id="queryAllCity" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT
+			c.id,
+			c.cityName,
+			c.cityType type,
+			c.cityLevel,
+			c.cityLetter,
+			c.parentId pId
+		FROM
+			wechat_city c
+	</select>
+</mapper>

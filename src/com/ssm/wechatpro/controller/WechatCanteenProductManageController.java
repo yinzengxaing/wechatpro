@@ -133,4 +133,16 @@ public class WechatCanteenProductManageController {
 	public void selectForShopInfo(InputObject inputObject, OutputObject outputObject) throws Exception{
 		wechatCanteenProductManageService.selectForShopInfo(inputObject, outputObject);
 	}
+	
+	/**
+	 * 各个门店修改地址，营业时间等
+	 * @param inputObject
+	 * @param outputObject
+	 * @throws Exception
+	 */
+	@RequestMapping("/post/wechatCanteenProductManageController/updateProductForShop")
+	@ResponseBody
+	public void updateProductForShop(InputObject inputObject, OutputObject outputObject) throws Exception{
+		wechatCanteenProductManageService.updateProductForShop(inputObject, outputObject);
+	}
 }

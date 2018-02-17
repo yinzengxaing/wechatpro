@@ -126,7 +126,7 @@ var TableInit = function () {
     };
     
     return oTableInit;
-}
+};
 
 window.EvenInit = {
 	

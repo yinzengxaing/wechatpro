@@ -125,7 +125,7 @@ function eventInit(){
 				}
 				var count ="#count"+myThis.attr("productId");
 				var  items = myThis.attr("adminId")+"-"+myThis.attr("productType")+"-"+myThis.attr("productId")+"-"+$(count).html()+"-"+myThis.attr("cartId");
-				orderItems += items+","
+				orderItems += items+",";
 			}
 		});
 		//若用户没用选取商品

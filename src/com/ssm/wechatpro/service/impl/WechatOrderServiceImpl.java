@@ -20,6 +20,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.ssm.wechatpro.dao.MWechatCustomerOrderMapper;
 import com.ssm.wechatpro.dao.WechatProductRestaurantMapper;
 import com.ssm.wechatpro.object.InputObject;
@@ -28,7 +31,6 @@ import com.ssm.wechatpro.service.WechatOrderService;
 import com.ssm.wechatpro.util.Constants;
 import com.ssm.wechatpro.util.DateUtil;
 import com.ssm.wechatpro.util.JudgeUtil;
-import com.ssm.wechatpro.util.OrderUtil;
 import com.wechat.service.GetJSSDKParameter;
 import com.wechat.service.RefundService;
 import com.wechat.service.UnifiedorderService;
@@ -45,6 +47,8 @@ public class WechatOrderServiceImpl implements WechatOrderService {
 	private static String ORDER_NAME ="wechat_customer_order_log_"; 
 	String order_log = ORDER_NAME + DateUtil.getTimeSixAndToString();// 拼接数据表名 表示数据表名(订单表)
 	
+	private static final Logger logger = LoggerFactory
+			.getLogger(WechatOrderServiceImpl.class);
 	@Override
 	public void getOrderParameter(InputObject inputObject, OutputObject outputObject) throws Exception {
 		Map<String, Object> params = inputObject.getParams();
@@ -72,8 +76,6 @@ public class WechatOrderServiceImpl implements WechatOrderService {
 		map.put("orderNumber", params.get("orderNumber").toString());
 		map.put("orderId", params.get("orderId"));
 		map.put("adminId",params.get("adminId").toString());
-		
-		System.out.println("map="+map);
 		
 		outputObject.setBean(map);
 		
@@ -129,7 +131,7 @@ public class WechatOrderServiceImpl implements WechatOrderService {
 	/**
 	 * 支付成功异步回调
 	 */
-	@SuppressWarnings("unused")
+//	@SuppressWarnings("unused")
 	@Override
 	public void notifyPay(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
@@ -139,7 +141,6 @@ public class WechatOrderServiceImpl implements WechatOrderService {
 	    String result_code = null;
 	    String resXml = null;//反馈给服务器的通知xml
 	    Map<String, Object> resultMap = new HashMap<String, Object>();//回调传的xml转map
-	    Map<String, Object> returnXml = new HashMap<String, Object>();//响应微信服务器要生成xml前传的参数
 	    try {
 	    	//获取HTTP请求的输入流
 	        InputStream inStream = request.getInputStream();
@@ -152,13 +153,10 @@ public class WechatOrderServiceImpl implements WechatOrderService {
 	        outSteam.close();
 	        inStream.close();
 	        String resultStr  = new String(outSteam.toByteArray(),"utf-8");// 获取微信调用我们notify_url的返回信息
-	        System.out.println("支付成功的回调："+resultStr);
-	        
+	        logger.info("支付成功的回调："+resultStr);
 	        resultMap = UnifiedorderService.readStringXmlOut(resultStr);
- 	        System.out.println("回调接口的resultMap="+resultMap);
- 	        
- 	        String total_fee = (String)resultMap.get("total_fee");//1分显示的是1
- 	        Double fee = Double.valueOf(total_fee);
+ 	        BigDecimal total_fee = new BigDecimal(resultMap.get("total_fee").toString());//1分显示的是1
+ 	        BigDecimal fee = total_fee;
  	        String sign = (String) resultMap.get("sign");
  	        result_code = (String) resultMap.get("result_code");
  	        out_trade_no = (String) resultMap.get("out_trade_no");//订单编号
@@ -167,57 +165,57 @@ public class WechatOrderServiceImpl implements WechatOrderService {
  	        if(return_code.equals("SUCCESS") && result_code.equals("SUCCESS")){
 	        	//支付成功的业务逻辑
  	        	 Map<String, Object> orderMap = mWechatCustomerOrderMapper.checkOrderByNo(resultMap);
- 	        	 String orderPrice = orderMap.get("orderPrice").toString();
- 	        	 Double price = Double.valueOf(orderPrice);
- 	        	 price =price*100;
+// 	        	 String orderPrice = 
+ 	        	 BigDecimal orderPrice = new BigDecimal(orderMap.get("orderPrice").toString());
+ 	        	 BigDecimal monyeBig = new BigDecimal("100");
+ 	        	 BigDecimal price = orderPrice.multiply(monyeBig);
  	        	//根据订单编号查询当前订单是否已经处理
 	 	        if(orderMap.get("wetherPayment").toString().equals("1")){//已支付
-	 	        	System.out.println("已支付，给微信服务器反馈信息");
+	 	        	logger.info("已支付，给微信服务器反馈信息");
 	 	        	// 通知微信.异步确认成功.必写.不然会一直通知后台.八次之后就认为交易失败了.  
-                    resXml = "<xml>" + "<return_code><![CDATA[SUCCESS]]></return_code>"  
-                            + "<return_msg><![CDATA[OK]]></return_msg>" + "</xml> ";  
-    			    response.getWriter().write(resXml);
+    			    response.getWriter().write(setXml("SUCCESS", "OK"));
 	 	        }else{//未支付
-	 	        	System.out.println("fee="+fee+",price="+price);
-	 	        	if(fee.compareTo(price) == 0){//Double比较，金额相同
-        				//更新订单
-        				System.out.println("开始更新订单");
-        				updatePayStateByBack(resultMap,request,response);
-        				System.out.println("更新订单成功");
-        				//响应微信服务器
-        				// 通知微信.异步确认成功.必写.不然会一直通知后台.八次之后就认为交易失败了.  
-                        resXml = "<xml>" + "<return_code><![CDATA[SUCCESS]]></return_code>"  
-                                + "<return_msg><![CDATA[OK]]></return_msg>" + "</xml> ";  
-        	  	        response.getWriter().write(resXml);
-        				
-        			}else{
-        				System.out.println("金额异常");
-        				//响应微信服务器
-        	  	        // 通知微信.异步确认成功.必写.不然会一直通知后台.八次之后就认为交易失败了.  
-                        resXml = "<xml>" + "<return_code><![CDATA[FAIL]]></return_code>"  
-                                + "<return_msg><![CDATA[金额异常]]></return_msg>" + "</xml> ";  
-        	  	        response.getWriter().write(resXml);
-        			}
+	 	        	logger.info("异步回调验证金额：fee="+fee+",price="+price);
+	 	        	
+	 	        	//更新订单
+    				logger.info("开始更新订单");
+    				updatePayStateByBack(resultMap,request,response);
+    				logger.info("更新订单成功");
+    				// 通知微信.异步确认成功.必写.不然会一直通知后台.八次之后就认为交易失败了.  
+    				response.getWriter().write(setXml("SUCCESS", "OK"));
+    				logger.info(setXml("SUCCESS", "OK"));
+	 	        	
+//	 	        	if(fee.compareTo(price) == 0){//Double比较，金额相同
+//        				//更新订单
+//        				logger.info("开始更新订单");
+//        				updatePayStateByBack(resultMap,request,response);
+//        				logger.info("更新订单成功");
+//        				// 通知微信.异步确认成功.必写.不然会一直通知后台.八次之后就认为交易失败了.  
+//        				response.getWriter().write(setXml("SUCCESS", "OK"));
+//        				logger.info(setXml("SUCCESS", "OK"));
+//        			}else{
+//        				 response.getWriter().write(setXml("FAIL", "金额异常"));
+//        				 logger.info(setXml("FAIL", "金额异常"));
+//        			}
 	 	        }
 	         }else{
-	        	System.out.println("支付失败或有问题");
-	        	//响应微信服务器
-	        	// 通知微信.异步确认成功.必写.不然会一直通知后台.八次之后就认为交易失败了.  
-                resXml = "<xml>" + "<return_code><![CDATA[FAIL]]></return_code>"  
-                        + "<return_msg><![CDATA[支付失败]]></return_msg>" + "</xml> ";  
-	  	        response.getWriter().write(resXml);
+	        	 response.getWriter().write(setXml("FAIL", "金额异常"));
+				 logger.info(setXml("FAIL", "支付失败或有问题"));
 	         }
 	    }  catch (Exception e) {
 	    	System.out.printf("微信回调接口出现错误：",e);
-	    	//响应微信服务器
-	    	// 通知微信.异步确认成功.必写.不然会一直通知后台.八次之后就认为交易失败了.  
-            resXml = "<xml>" + "<return_code><![CDATA[FAIL]]></return_code>"  
-                    + "<return_msg><![CDATA[回调接口出现错误]]></return_msg>" + "</xml> ";  
-  	        response.getWriter().write(resXml);
-	    } 
+    		response.getWriter().write(setXml("FAIL", "微信回调接口出现错误"));
+			logger.info(setXml("FAIL", "微信回调接口出现错误"));
+	    }
+		
+	    
 		
 	}
 
+	 //返回微信服务  
+    public static String setXml(String return_code,String return_msg){    
+           return "<xml><return_code><![CDATA["+return_code+"]]></return_code><return_msg><![CDATA["+return_msg+"]]></return_msg></xml>";    
+    }    
 	/**
 	 * 更新订单状态
 	 * @param resultMap
@@ -252,7 +250,6 @@ public class WechatOrderServiceImpl implements WechatOrderService {
 				try {
 					response.getWriter().write("消息发布失败, 错误编码：" + error.getCode() + " 错误信息： " + error.getContent());
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -264,9 +261,8 @@ public class WechatOrderServiceImpl implements WechatOrderService {
 		Map<String, Object> maxDayNoParam = new HashMap<>();
 		maxDayNoParam.put("tableName", order_log); // 订单表名
 		maxDayNoParam.put("orderIdAndNowDay", shopIdAndNowDay); // 商店id和当前日期进行拼接
-		System.out.println("回调接口商店拼接：maxDayNoParam="+maxDayNoParam);
+		logger.info("回调接口商店拼接：maxDayNoParam="+maxDayNoParam);
 		Map<String, Object> dayNoMap = mWechatCustomerOrderMapper.selectMaxDayNo(maxDayNoParam);
-		System.out.println("流水号：dayNoMap="+dayNoMap);
 		int dayNo = 0; // 该家商店当天的流水号
 		// 判断当天当商店是否有订单卖出
 		if(dayNoMap == null) {
@@ -281,12 +277,12 @@ public class WechatOrderServiceImpl implements WechatOrderService {
 		params.put("lastUpdateTime", DateUtil.getTimeAndToString()); // 最后更新时间
 		params.put("dayNo", dayNo + 1);// 日流水号增加1
 		params.put("orderNumber",resultMap.get("out_trade_no"));
-		System.out.println("回调成功修改状态：params="+params);
+		logger.info("回调成功修改状态：params="+params);
 		mWechatCustomerOrderMapper.updatePayState(params);
 		Map<String, Object> deleteShopCartInfo = new HashMap<>();
 		deleteShopCartInfo.put("id",StringUtils.substringBeforeLast(attach, ",") + ""); // 登录人id 
 		deleteShopCartInfo.put("adminId", StringUtils.substringBefore(attach, ",") + "");  // 商店id
-		System.out.println("回调成功删除订单：deleteShopCartInfo="+deleteShopCartInfo);
+		logger.info("回调成功删除订单：deleteShopCartInfo="+deleteShopCartInfo);
 		// 删除当前用户在指定商店中购物车上中的商品
 		mWechatCustomerOrderMapper.deleteShopCartProduct(deleteShopCartInfo);
 	}

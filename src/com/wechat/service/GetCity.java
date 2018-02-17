@@ -6,10 +6,6 @@ import java.util.Map;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
-
 
 public class GetCity {
 
@@ -21,13 +17,14 @@ public class GetCity {
 		params.put("type", "010");
 		Map<String,Object> bean = new HashMap<String,Object>();
 		try {
-			result = UtilService.net(url, params, "GET");
-			 JSONObject jsonObject = JSONObject.fromObject(result);  
+				result = UtilService.net(url, params, "GET");
+				JSONObject jsonObject = JSONObject.fromObject(result);  
 		        JSONArray jsonArray = JSONArray.fromObject(jsonObject.getString("addrList"));  
 		        JSONObject j_2 = JSONObject.fromObject(jsonArray.get(0));  
-		        String allAdd = j_2.getString("admName");  
+		        String allAdd = j_2.getString("admName"); 
 		        String arr[] = allAdd.split(",");
-		        bean.put("city", arr[1]);
+		        bean.put("city", arr[1]);//河南省,郑州市
+		        bean.put("district", arr[2]);//河南省,郑州市,二七区
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

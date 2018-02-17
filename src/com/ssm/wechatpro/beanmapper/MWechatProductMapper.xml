@@ -4,15 +4,18 @@
 <mapper namespace="com.ssm.wechatpro.dao.MWechatProductMapper">
 	<!-- 获取该地区中的所有商店 -->
 	<select id="getAllRestaurant" parameterType="java.util.Map" resultType="java.util.Map">
-		SELECT * FROM(
+		SELECT *,
+			CAST(dist AS DECIMAL(10,2)) distance
+		FROM(
 			SELECT
 				a.adminId,
 				a.adminShopName,
 				a.adminWorkXCoordinate,
 				a.adminWorkYCoordinate,
 				a.adminKfBusinessHours,
-				adminWorkPlace,
-				ROUND(6378.137*2*ASIN(SQRT(POW(SIN((#{lat}*PI()/180-adminWorkYCoordinate*PI()/180)/2),2)+COS(#{lat}*PI()/180)*COS(adminWorkYCoordinate*PI()/180)*POW(SIN((#{long}*PI()/180-adminWorkXCoordinate*PI()/180)/2),2)))*10000)/10000 AS distance
+				a.adminWorkPlace,
+				a.searchShopKey,
+				ROUND(6378.137*2*ASIN(SQRT(POW(SIN((#{lat}*PI()/180-adminWorkYCoordinate*PI()/180)/2),2)+COS(#{lat}*PI()/180)*COS(adminWorkYCoordinate*PI()/180)*POW(SIN((#{long}*PI()/180-adminWorkXCoordinate*PI()/180)/2),2)))*10000)/10000 AS dist
 			FROM
 				wechat_admin_login_mation AS a
 			WHERE
@@ -24,28 +27,10 @@
 					WHERE
 						adminIdentity = 1
 				)
-			AND adminWorkPlace LIKE '%${adminWorkPlace}%'
-			ORDER BY distance ASC
-		) a <!-- WHERE a.distance &lt; 5  -->
-		<!-- SELECT
-			a.adminId,
-			a.adminShopName,
-			a.adminWorkXCoordinate,
-			a.adminWorkYCoordinate,
-			a.adminKfBusinessHours,
-			adminWorkPlace
-		FROM
-			wechat_admin_login_mation AS a
-		WHERE
-			adminId IN (
-				SELECT
-					id
-				FROM
-					wechat_admin_login
-				WHERE
-					adminIdentity = 1
-			)
-		AND adminWorkPlace LIKE '%${adminWorkPlace}%' -->
+			AND searchShopKey LIKE '%${searchShopKey1}%'
+			AND searchShopKey LIKE '%${searchShopKey2}%'
+			ORDER BY dist ASC
+		) h <!-- WHERE h.distance &lt; 10  -->
 	</select>
 	
 	<!-- 根据商店id 获取该商店中的所有的商品类型 -->
@@ -363,7 +348,25 @@
 			a.id
 		ORDER BY
 			a.productPriority ASC 
+	</select>
 	
+	<!-- 查询当前时间是否为营业时间 -->
+	<select id="selectIsBegin" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT
+			a.adminId,
+			a.adminShopName,
+			a.adminWorkXCoordinate,
+			a.adminWorkYCoordinate,
+			a.adminKfBusinessHours,
+			a.adminWorkPlace
+		FROM
+			wechat_admin_login_mation AS a
+		WHERE
+			a.adminId = #{adminId}
+		AND
+			STRCMP(#{nowTime},substring_index(a.adminKfBusinessHours, '-',1)) > 0
+		AND
+			0 > STRCMP(#{nowTime},substring_index(a.adminKfBusinessHours, '-',-1))
 	</select>
 	
 </mapper>          

@@ -9,6 +9,7 @@ $(function(e){
 });
 
 function dataInit(){
+	 
 	if (isNull(productTypeId)){
 		productTypeId = $.req("productTypeId");
 	}
@@ -17,6 +18,46 @@ function dataInit(){
 }
 
 function eventInit(){
+	
+	$('#member_week').multiselect({
+		 buttonClass: 'btn-over',
+		 enableClickableOptGroups: true,
+		 inheritClass: true,
+		 enableCollapsibleOptGroups: true,
+		 includeSelectAllOption: false,
+		 enableFiltering: true,
+		 buttonWidth:'49%',
+		 maxHeight: '200',
+		 nonSelectedText: '请选择',
+		 includeSelectAllOption: true,//全选  
+		 selectAllText: '全选',//全选的checkbox名称  
+		 selectAllJustVisible: true,//选择所有的。true为全选可见的  
+	});
+	$('#member_month').multiselect({
+		 buttonClass: 'btn-over',
+		 enableClickableOptGroups: true,
+		 inheritClass: true,
+		 enableCollapsibleOptGroups: true,
+		 includeSelectAllOption: false,
+		 enableFiltering: true,
+		 buttonWidth:'49%',
+		 maxHeight: '300',
+		 nonSelectedText: '请选择',
+		 includeSelectAllOption: true,//全选  
+		 selectAllText: '全选',//全选的checkbox名称  
+		 selectAllJustVisible: true,//选择所有的。true为全选可见的  
+	});
+	
+	$("#productNature").on('change', function(){
+		if($("#productNature").val() == 0){
+			$("#productDiv").removeClass("show");
+			$("#productDiv").addClass("hide");
+		}
+		if($("#productNature").val() == 1){
+			$("#productDiv").removeClass("hide");
+			$("#productDiv").addClass("show");
+		}
+	});
 	
 	// 点击开始结束时间按钮
 	$("input[name=optionsRadios]").on("click", function(){
@@ -109,6 +150,16 @@ function eventInit(){
 				startTime : startTime,
 				endTime : endTime,
 				flag : flag,
+				productNature : $("#productNature").val(),
+				productTime : $("#productTime").val(),
+				showStartTime1 : $("#showStartTime1").val(),
+				showEndTime1 : $("#showEndTime1").val(),
+				showStartTime2 : $("#showStartTime2").val(),
+				showEndTime2 : $("#showEndTime2").val(),
+				showStartTime3 : $("#showStartTime3").val(),
+				showEndTime3 : $("#showEndTime3").val(),
+				memberWeek : returnSelStr($("#member_week").val()),
+				memberMonth : returnSelStr($("#member_month").val())
 			};
 			//进行商品的添加
 			AjaxPostUtil.request({url:path+"/post/WechatProductController/addProduct",params:params,type:'json',callback:function(json){
@@ -207,6 +258,14 @@ function getAllBandTag(){
 	}});
 }
 
+//multiselect转换字符串
+function returnSelStr(str){
+	if(isNull(str)){
+		return null;
+	}else{
+		return str.toString(",");
+	}
+}
 
 
 

@@ -26,9 +26,9 @@ function dataInit(){
 			$("#dayNo").html(json.bean.dayNo);
 			var orderType = json.bean.orderType;
 			if (orderType == 1){
-				$("#orderType").html("立即堂食");
+				$("#orderType").html("立即取餐");
 			}else if (orderType == 2){
-				$("#orderType").html("稍后堂食("+json.bean.orderEatTime+")");
+				$("#orderType").html("稍后取餐("+json.bean.orderEatTime+")");
 			}else if (orderType == 3){
 				$("#orderType").html("立即外带");
 			}else if (orderType == 4){

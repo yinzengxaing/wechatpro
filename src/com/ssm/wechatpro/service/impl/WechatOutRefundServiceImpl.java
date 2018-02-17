@@ -4,6 +4,7 @@ import io.goeasy.GoEasy;
 import io.goeasy.publish.GoEasyError;
 import io.goeasy.publish.PublishListener;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -118,8 +119,13 @@ public class WechatOutRefundServiceImpl implements WechatOutRefundService {
 		if (processState.equals("1")){
 			//调用退单接口进行退单操作
 			Map<String, Object> orderPrice = wechatOutRefundMapper.getOrderParams(params);
-			Double totalPrice = Double.parseDouble(orderPrice.get("orderPrice").toString());
-			int total_fee = (int) (totalPrice*100);
+//			Double totalPrice = Double.parseDouble(orderPrice.get("orderPrice").toString());
+//			int total_fee = (int) (totalPrice*100);
+			
+			BigDecimal totalPrice = new BigDecimal(orderPrice.get("orderPrice").toString());
+			BigDecimal mm = new BigDecimal(100);
+			int total_fee = totalPrice.multiply(mm).intValue();
+			
 			params.put("orderPrice", total_fee);
 			Map<String, Object>  refundParams = new HashMap<>();
 			

@@ -44,15 +44,15 @@
 			<div class="box-content" style="text-align: center;">
 				<form>
 					<div class="controls form-group">
-						<span class="add-on">门店名：</span>
+						<span class="add-on">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;门店名：</span>
 						<input type="text" class="span6 typeahead form-control authenTiCation-input" id="adminShopName" />
 					</div>
 					<div class="controls form-group">
-						<span class="add-on">门店电话：</span>
+						<span class="add-on">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;门店电话：</span>
 						<input type="text" class="span6 typeahead form-control authenTiCation-input" id="adminKfPhone" />
 					</div>
 					<div class="controls form-group">
-						<span class="add-on">商户号：</span>
+						<span class="add-on">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;商户号：</span>
 						<input type="text" class="span6 typeahead form-control authenTiCation-input" id="adminShopCard" />
 					</div>
 					<div class="controls form-group">
@@ -60,39 +60,48 @@
 						<input type="text" class="span6 typeahead form-control authenTiCation-input" id="adminShopKey" />
 					</div>
 					<div class="controls form-group">
-						<span class="add-on">门店特色：</span>
+						<span class="add-on">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;门店特色：</span>
 						<textarea type="text" class="span6 typeahead form-control authenTiCation-input" maxlength="200" rows="3" id="adminCharacteristic" ></textarea>
 					</div>
 					<div class="controls form-group">
-						<span class="add-on">营业时间：</span>
+						<span class="add-on">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;营业时间：</span>
 						<input type="text" class="span6 typeahead form-control authenTiCation-input" id="adminKfBusinessHours" />
 						<div class="someDesc">
 							<p class="rolePrompt">填写时间的格式，比如上午8:00-12:00,下午13:00-18:00</p>
 						</div>
 					</div>
 					<div class="controls form-group">
-						<span class="add-on">门店推荐：</span>
+						<span class="add-on">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;门店推荐：</span>
 						<textarea type="text" class="span6 typeahead form-control authenTiCation-input" maxlength="200" rows="3" id="adminRecommend" ></textarea>
 					</div>
 					<div class="controls form-group">
-						<span class="add-on">门店地址：</span>
-						<input type="text" class="span6 typeahead form-control authenTiCation-input" readonly id="adminWorkPlace" />
+						<span class="add-on">门店搜索关键字：</span>
+						<input type="text" class="span6 typeahead form-control authenTiCation-input" id="searchShopKey" />
+						<div class="someDesc">
+							<p class="rolePrompt">多个关键字之间以","分割(必填),如郑州,高新区,长阳路</p>
+						</div>
 					</div>
 					<div class="controls form-group">
-						<span class="add-on">门店经度：</span>
+						<span class="add-on">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;门店地址：</span>
+						<input type="text" class="span6 typeahead form-control authenTiCation-input" id="adminWorkPlace" />
+					</div>
+					<div class="controls form-group">
+						<span class="add-on">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;门店经度：</span>
 						<input type="text" class="span6 typeahead form-control authenTiCation-input" readonly id="adminWorkXCoordinate" />
 					</div>
 					<div class="controls form-group">
-						<span class="add-on">门店纬度：</span>
+						<span class="add-on">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;门店纬度：</span>
 						<input type="text" class="span6 typeahead form-control authenTiCation-input" readonly id="adminWorkYCoordinate" />
 					</div>
+					<div class="controls form-group">
+						<span  class="dialog-label-10" style="margin-left:20%">地图：</span>
+					</div>
 					<div class="controls form-group" id="ditu" style="height: 200px; text-align:center;">
-			    		<span  class="dialog-label-10" style="margin-left:22%">地图：</span>
-			    		<div class="dialog-50" id="container" style="height: 100%; width="360px";">
+			    		<div class="dialog-50" id="container" style="height: 480px; width:50%;">
 			    			
 			    		</div>
 			    	</div>
-					<div class="form-actions form-group">
+					<div class="form-actions form-group" style="margin-top:20%;">
 					  <button type="button" id="saveMenu" class="btn btn-primary">保存</button>
 					  <button type="button" id="returnBack" class="btn">取消</button>
 					</div>

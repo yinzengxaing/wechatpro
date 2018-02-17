@@ -286,6 +286,24 @@ public class WechatCanteenProductManageServiceImpl implements WechatCanteenProdu
 	}
 	
 	/**
+	 * 各个门店修改地址，营业时间等
+	 */
+	@Override
+	public void updateProductForShop(InputObject inputObject,OutputObject outputObject) throws Exception {
+		// 获得登录人的id
+		Map<String, Object> map = inputObject.getLogParams();
+		// 获得相对应的参数
+		Map<String, Object> mapParam = inputObject.getParams();
+		if(JudgeUtil.isNull(map.get("id") + "")){
+			return ;
+		}else{
+			mapParam.put("adminId", map.get("id") + "");
+			// 更新状态
+			wechatCanteenProductManageMapper.updateProductForShop(mapParam);
+		}
+	}
+	
+	/**
 	 * 删除一周前未付款的订单
 	 * @param map
 	 * @throws Exception

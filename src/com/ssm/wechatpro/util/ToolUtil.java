@@ -3,7 +3,9 @@ package com.ssm.wechatpro.util;
 import java.security.MessageDigest;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -81,6 +83,17 @@ public class ToolUtil {
 	}
 	
 	/**
+	 * 获取当前时间（11:23）
+	 * @return
+	 */
+	public static String getNowTimeAndToString(){
+		Date dt = new Date();
+		DateFormat df = new SimpleDateFormat("HH:mm");
+		String nowTime = df.format(dt);
+		return nowTime;
+	}
+	
+	/**
 	 * 判断是否为空
 	 * @param str
 	 * @return
@@ -92,4 +105,29 @@ public class ToolUtil {
 			return false;
 		}
 	}
+	
+	/**
+	 * 将数据转化为菜单形式
+	 * @param beans
+	 * @return
+	 */
+	public static List<Map<String, Object>> createDataToMenu(List<Map<String, Object>> beans) {
+		List<Map<String, Object>> treeAncestors = new ArrayList<>();
+		for(Map<String, Object> bean : beans){
+			if(bean.get("type").toString().equals(Constants.CITY_First)){//一级类别
+				treeAncestors.add(bean);
+			}
+		}
+		for(Map<String, Object> bean : treeAncestors){
+			List<Map<String, Object>> treeParent = new ArrayList<>();
+			for(Map<String, Object> item : beans){
+				if(item.get("pId").toString().equals(bean.get("id").toString())){
+					treeParent.add(item);
+				}
+			}
+			bean.put("cityList", treeParent);
+			bean.put("size", treeParent.size());
+		}
+		return treeAncestors;
+	}  
 }

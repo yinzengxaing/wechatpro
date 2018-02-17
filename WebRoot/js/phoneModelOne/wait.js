@@ -157,9 +157,9 @@ function allOrder(){
 			//对订单那类型进行修饰
 			Handlebars.registerHelper("orderType",function(v1,options){
 				 if (v1 == 1){
-					 return "立即堂食";
+					 return "立即取餐";
 				 }else if (v1 == 2){
-					 return "稍后堂食";
+					 return "稍后取餐";
 				 }else if(v1 == 3){
 					 return "立即外带";
 				 }else if(v1 == 4){

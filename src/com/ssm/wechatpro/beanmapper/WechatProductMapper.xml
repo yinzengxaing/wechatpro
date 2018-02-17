@@ -49,7 +49,17 @@
 			product.createTime AS createTime,
 			brand_tag.brandTagName AS brandTagName,
 			type.typeName AS typeName,
-			admin_login.adminNo AS adminNo
+			admin_login.adminNo AS adminNo,
+			product.productNature productNature,
+			product.productTime productTime,
+			product.showStartTime1 showStartTime1,
+			product.showEndTime1 showEndTime1,
+			product.showStartTime2 showStartTime2,
+			product.showEndTime2 showEndTime2,
+			product.showStartTime3 showStartTime3,
+			product.showEndTime3 showEndTime3,
+			product.memberWeek member_week,
+			product.memberMonth member_month
 		FROM
 			wechat_product AS product,
 			wechat_product_brand_tag AS brand_tag,
@@ -80,7 +90,17 @@
 			product.productOpinion AS productOpinion,
 			brand_tag.brandTagName AS brandTagName,
 			type.typeName AS typeName,
-			admin_login.adminNo AS adminNo
+			admin_login.adminNo AS adminNo,
+			product.productNature productNature,
+			product.productTime productTime,
+			product.showStartTime1 showStartTime1,
+			product.showEndTime1 showEndTime1,
+			product.showStartTime2 showStartTime2,
+			product.showEndTime2 showEndTime2,
+			product.showStartTime3 showStartTime3,
+			product.showEndTime3 showEndTime3,
+			product.memberWeek member_week,
+			product.memberMonth member_month
 		FROM
 			wechat_product AS product,
 			wechat_product_brand_tag AS brand_tag,
@@ -128,7 +148,33 @@
 			createId,
 			createTime,
 			productOpinion,
-			productPriority
+			productPriority,
+			productNature,
+			productTime
+			<if test="showStartTime1 != null and showStartTime1 != '' ">
+			,showStartTime1
+			</if>
+			<if test="showEndTime1 != null and showEndTime1 != '' ">
+			,showEndTime1
+			</if>
+			<if test="showStartTime2 != null and showStartTime2 != '' ">
+			,showStartTime2
+			</if>
+			<if test="showEndTime2 != null and showEndTime2 != '' ">
+			,showEndTime2
+			</if>
+			<if test="showStartTime3 != null and showStartTime3 != '' ">
+			,showStartTime3
+			</if>
+			<if test="showEndTime3 != null and showEndTime3 != '' ">
+			,showEndTime3
+			</if>
+			<if test="memberWeek != null and memberWeek != '' ">
+			,memberWeek
+			</if>
+			<if test="memberMonth != null and memberMonth != '' ">
+			,memberMonth
+			</if>
 		)
 		VALUES
 			(
@@ -143,7 +189,32 @@
 				#{endTime},
 				</if>
 				#{productIntegral},#{productKeyStr},#{productBrandTag},#{createId},#{createTime},
-				#{productOpinion}, #{productPriority}
+				#{productOpinion}, #{productPriority},
+				#{productNature},#{productTime}
+				<if test="showStartTime1 != null and showStartTime1 != '' ">
+					,#{showStartTime1}
+				</if>
+				<if test="showEndTime1 != null and showEndTime1 != '' ">
+					,#{showEndTime1}
+				</if>
+				<if test="showStartTime2 != null and showStartTime2 != '' ">
+					,#{showStartTime2}
+				</if>
+				<if test="showEndTime2 != null and showEndTime2 != '' ">
+					,#{showEndTime2}
+				</if>
+				<if test="showStartTime3 != null and showStartTime3 != '' ">
+					,#{showStartTime3}
+				</if>
+				<if test="showEndTime3 != null and showEndTime3 != '' ">
+					,#{showEndTime3}
+				</if>
+				<if test="memberWeek != null and memberWeek != '' ">
+					,#{memberWeek}
+				</if>
+				<if test="memberMonth != null and memberMonth != '' ">
+					,#{memberMonth}
+				</if>
 			)
 	</insert>
 
@@ -185,8 +256,38 @@
 				productBrandTag = #{productBrandTag},
 		</if>
 		<if test="productOpinion != null ">
-				productOpinion = #{productOpinion},
-		</if>									
+				productOpinion = #{productOpinion}
+		</if>
+		<if test="productNature != null and productNature != '' ">
+			,productNature = #{productNature}
+		</if>
+		<if test="productTime != null and productTime != '' ">
+			,productTime = #{productTime}
+		</if>
+		<if test="showStartTime1 != null and showStartTime1 != '' ">
+			,showStartTime1 = #{showStartTime1}
+		</if>
+		<if test="showEndTime1 != null and showEndTime1 != '' ">
+			,showEndTime1 = #{showEndTime1}
+		</if>
+		<if test="showStartTime2 != null and showStartTime2 != '' ">
+			,showStartTime2 = #{showStartTime2}
+		</if>
+		<if test="showEndTime2 != null and showEndTime2 != '' ">
+			,showEndTime2 = #{showEndTime2}
+		</if>
+		<if test="showStartTime3 != null and showStartTime3 != '' ">
+			,showStartTime3 = #{showStartTime3}
+		</if>
+		<if test="showEndTime3 != null and showEndTime3 != '' ">
+			,showEndTime3 = #{showEndTime3}
+		</if>
+		<if test="memberWeek != null and memberWeek != '' ">
+			,memberWeek = #{memberWeek}
+		</if>
+		<if test="memberMonth != null and memberMonth != '' ">
+			,memberMonth = #{memberMonth}
+		</if>								
 		</set>
 		WHERE
 			id = #{id}		

@@ -55,7 +55,7 @@ var TableInit = function () {
             showToggle:true,                    //是否显示详细视图和列表视图的切换按钮
             cardView: false,                    //是否显示详细视图
             detailView: false,                  //是否显示父子表
-            columns: [{
+            columns: [ {
             	field: 'Number',
             	title: '序号',
             	width: '50',
@@ -127,7 +127,7 @@ var TableInit = function () {
     };
     
     return oTableInit;
-}
+};
 
 window.EvenInit = {
     'click .RoleOfA': function (e, value, row, index) {
@@ -159,6 +159,7 @@ window.EvenInit = {
 				$("#adminHomePlace").html(isUndefineReturnNull(json.bean.adminHomePlace));
 				$("#adminPoliticalLandscape").html(isUndefineReturnNull(json.bean.adminPoliticalLandscape));
 				$("#adminQq").html(isUndefineReturnNull(json.bean.adminQq));
+				$("#searchShopKey").html(isUndefineReturnNull(json.bean.searchShopKey));
 				
 				if(json.bean.adminIdentityShow == "餐厅人员" || json.bean.adminIdentityShow == "餐厅人员认证"){
 					$("#shopName").show();

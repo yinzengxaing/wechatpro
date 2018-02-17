@@ -22,7 +22,8 @@
 		      adminRecommend,
 		      adminCharacteristic,
 		      adminWorkXCoordinate,
-		      adminWorkYCoordinate
+		      adminWorkYCoordinate,
+		      searchShopKey
 	      )values(
 		      #{realName,jdbcType=VARCHAR},
 		      #{adminSex,jdbcType=INTEGER},
@@ -42,7 +43,8 @@
 		      #{adminRecommend,jdbcType=VARCHAR},
 		      #{adminCharacteristic,jdbcType=VARCHAR},
 		      #{adminWorkXCoordinate,jdbcType=VARCHAR},
-		      #{adminWorkYCoordinate,jdbcType=VARCHAR}
+		      #{adminWorkYCoordinate,jdbcType=VARCHAR},
+		      #{searchShopKey,jdbcType=VARCHAR}
 	      )
    </insert>
    
@@ -56,7 +58,8 @@
 	        adminWorkPlace,
 	        adminHomePlace,
 	        adminPoliticalLandscape,
-	        adminQq
+	        adminQq,
+	        searchShopKey
 	     from wechat_admin_login_mation where adminId=#{id}
    </select>
    
@@ -116,6 +119,9 @@
 	   		</if>
 	   		<if test="adminWorkYCoordinate != '' and adminWorkYCoordinate != null">
 	   			adminWorkYCoordinate=#{adminWorkYCoordinate}	
+	   		</if>
+	   		<if test="searchShopKey != '' and searchShopKey != null">
+	   			searchShopKey=#{searchShopKey}	
 	   		</if>
 	   		</set>
 	   	where adminId=#{id}

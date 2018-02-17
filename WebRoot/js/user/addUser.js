@@ -5,44 +5,84 @@ $(function(e){
 });
 
 function dataInit(){
-	map = new AMap.Map('container', {
-		 resizeEnable: true,
-       zoom: 11,
-       center: [116.397428, 39.90923]
+	
+	 //创建地图，实例化地图
+    var map = new AMap.Map('container', {
+    	resizeEnable: true,
+        zoom:11,
+        center: [116.397428, 39.90923]   
 	});
+    //异步加载地图
+    map.plugin(["AMap.ToolBar"], function() {
+        map.addControl(new AMap.ToolBar());
+    });
+    
+    setTimeout(function(){
+		//延迟，重新设置地图比例（如果不设置，当网页加载出来的时候，地图不能显示）
+        map.setZoom(13);
+	}, 2000);
 	//加载插件
 	AMap.service('AMap.Geocoder',function(){//回调函数
 	    //实例化Geocoder
 	    geocoder = new AMap.Geocoder({
 	    });
-	    //TODO: 使用geocoder 对象完成相关功能
 	});
 	//在地图上进行标记
 	var marker = new AMap.Marker({
-      map:map,
-      bubble:true
+	     map:map,
+	     bubble:true
 	});
+	
+	/*
+	* 输入提示
+	*/
+	var autoOptions = {
+	    input: "adminWorkPlace",
+	};
+	
+	var auto;
+	AMap.plugin('AMap.Autocomplete',function(){//回调函数
+		auto = new AMap.Autocomplete(autoOptions);
+	});
+	
+	var placeSearch;
+	AMap.service('AMap.PlaceSearch',function(){//回调函数
+		 placeSearch = new AMap.PlaceSearch({
+		     map: map
+		 });  //构造地点查询类
+	});
+	
+	AMap.event.addListener(auto, "select", select);//注册监听，当选中某条记录时会触发
+	
+	function select(e) {
+			placeSearch.setCity(e.poi.adcode);
+			placeSearch.search(e.poi.name,function(status, result){
+			});
+	}
 	//通过地址获取经纬度
 	var input = document.getElementById('adminWorkPlace');
-	map.on('click',function(e){
-      marker.setPosition(e.lnglat);
-      geocoder.getAddress(e.lnglat,function(status,result){
-			if(status=='complete'){
-				input.value = result.regeocode.formattedAddress;
-				var address = input.value;
-				geocoder.getLocation(address,function(status,result){
-					if(status=='complete'&&result.geocodes.length){
-						marker.setPosition(result.geocodes[0].location);
-						map.setCenter(marker.getPosition());
-						$("#adminWorkXCoordinate").val(result.geocodes[0].location.lng);
-						$("#adminWorkYCoordinate").val(result.geocodes[0].location.lat);
-					}else{
-					}
-	            })
-			}else{
-			}
-      });
-	});
+	
+	 map.on('click',function(e){
+	     marker.setPosition(e.lnglat);
+	     geocoder.getAddress(e.lnglat,function(status,result){
+				if(status=='complete'){
+					input.value = result.regeocode.formattedAddress;
+					var address = input.value;
+					geocoder.getLocation(address,function(status,result){
+						if(status=='complete'&&result.geocodes.length){
+							marker.setPosition(result.geocodes[0].location);
+							map.setCenter(marker.getPosition());
+							$("#adminWorkXCoordinate").val(result.geocodes[0].location.lng);
+							$("#adminWorkYCoordinate").val(result.geocodes[0].location.lat);
+						}else{
+							alert("获取位置失败,请重试");
+						}
+		            });
+				}else{
+					alert("获取位置失败,请重试");
+				};
+	     });
+	 });
 	  input.onchange = function(e){
 	      var address = input.value;
 	      geocoder.getLocation(address,function(status,result){
@@ -52,9 +92,11 @@ function dataInit(){
 					$("#adminWorkXCoordinate").val(result.geocodes[0].location.lng);
 					$("#adminWorkYCoordinate").val(result.geocodes[0].location.lat);
 				}else{
+					alert("获取位置失败,请重试");
 				}
-	      })
-	  }
+	      });
+	  };
+	
 	eventInit();
 }
 
@@ -100,6 +142,9 @@ function eventInit(){
 		}else if(isNull($("#adminWorkPlace").val())){
 			qiao.bs.msg({msg:"地址信息不能为空",type:'danger'});
 			return;
+		}else if(isNull($("#searchShopKey").val())){
+			qiao.bs.msg({msg:"门店搜索关键字不能为空",type:'danger'});
+			return;
 		}else if($("#adminIdentity").val()==5){
 			if(isNull($("#adminKfPhone").val())){
 				qiao.bs.msg({msg:"门店客服电话不能为空",type:'danger'});
@@ -131,7 +176,8 @@ function eventInit(){
 					adminCharacteristic:$("#adminCharacteristic").val(),
 					adminWorkXCoordinate:$("#adminWorkXCoordinate").val(),
 					adminWorkYCoordinate:$("#adminWorkYCoordinate").val(),
-			}
+					searchShopKey: $("#searchShopKey").val(),
+			};
 			AjaxPostUtil.request({url:path+"/post/wechatAdminLoginController/insertUser",params:params,type:'json',callback:function(json){
 				if(json.returnCode==0){
 			        qiao.bs.msg({msg:"添加成功",type:'success'});
@@ -157,7 +203,8 @@ function eventInit(){
 					adminCharacteristic:$("#adminCharacteristic").val(),
 					adminWorkXCoordinate:$("#adminWorkXCoordinate").val(),
 					adminWorkYCoordinate:$("#adminWorkYCoordinate").val(),
-			}
+					searchShopKey: $("#searchShopKey").val(),
+			};
 			AjaxPostUtil.request({url:path+"/post/wechatAdminLoginController/insertUser",params:params,type:'json',callback:function(json){
 				if(json.returnCode==0){
 			        qiao.bs.msg({msg:"添加成功",type:'success'});

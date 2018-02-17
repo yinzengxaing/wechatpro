@@ -115,6 +115,7 @@ function eventInit(){
 		};
 		AjaxPostUtil.request({url:path+"/post/WechatProductController/getPrductById",params:params,type:'json',callback:function(json){
 			if (json.returnCode == 0){
+				console.log(json);
 				//将查询的数据进行显示
 				$('#productName').html(json.bean.productName);
 				$('#productPrice').html(json.bean.productPrice);
@@ -149,6 +150,38 @@ function eventInit(){
 				$('#productKeyStr').html(json.bean.productKeyStr);	
 				var sellTime = json.bean.startTime + "~" + json.bean.endTime;
 				$("#sellTime").html(sellTime);
+				
+				if(json.bean.productNature == 1){
+					$("#productNature").html("现点现做");
+					$("#productTime").html(json.bean.productTime+"分钟");
+					if(json.bean.showStartTime1!=null && json.bean.showEndTime1 != null){
+						var showTime1 = json.bean.showStartTime1+"~"+json.bean.showEndTime1;
+						$("#showTime1").html(showTime1);
+					}
+					if(json.bean.showStartTime2!=null && json.bean.showEndTime2 != null){
+						var showTime2 = json.bean.showStartTime2+"~"+json.bean.showEndTime2;
+						$("#showTime2").html(showTime2);
+					}
+					if(json.bean.showStartTime3!=null && json.bean.showEndTime3 != null){
+						var showTime3 = json.bean.showStartTime3+"~"+json.bean.showEndTime3;
+						$("#showTime3").html(showTime3);
+					}
+					$("#productDiv").removeClass("hide");
+					$("#productDiv").addClass("show");
+				}else{
+					$("#productNature").html("无");
+				}
+				
+				if(json.bean.member_week != 'null'){
+					$("#member_week").html(json.bean.member_week);
+				}else{
+					$("#member_week").html("");
+				}
+				if(json.bean.member_month != 'null'){
+					$("#member_month").html(json.bean.member_month);
+				}else{
+					$("#member_week").val("");
+				}
 				// 显示查看商品的模态框
 				$("#myModalShowProduct").modal("show");
 			}
@@ -195,7 +228,6 @@ function eventInit(){
 			});
 		},function(){});
 	});
-	
 	
 	//菜单排序事件
 	menuSort();
@@ -246,12 +278,12 @@ function menuSort(){
     	var typeStr = "";
     	  $(".typeLi").each(function(index){
     		  var typeId = $(this).attr("productTypeId");
-    		  index = index * 1 + 1
+    		  index = index * 1 + 1;
     		  typeStr = typeStr + index + "-" +typeId +",";
     	  });
     	  var param = {
     			  typeStr :typeStr  
-    	  }
+    	  };
     	  
   		AjaxPostUtil.request({url:path+"/post/WechatProductMenuController/updateTypeMenu",params:param,type:'json',callback:function(json){
 			if(json.returnCode == 0){
@@ -273,12 +305,12 @@ function productSort(){
 	    	var productStr = "";
 	    	  $(".productLi").each(function(index){
 	    		  var productId = $(this).attr("productId");
-	    		  index = index * 1 + 1
+	    		  index = index * 1 + 1;
 	    		  productStr = productStr + index + "-" +productId +",";
 	    	  });
 	    	  var param = {
 	    			  productStr :productStr  
-	    	  }
+	    	  };
 	  		AjaxPostUtil.request({url:path+"/post/WechatProductMenuController/updateProductMenu",params:param,type:'json',callback:function(json){
 				if(json.returnCode == 0){
 					qiao.bs.msg({msg:"商品位置修改成功！",type:'success'});
@@ -287,4 +319,13 @@ function productSort(){
 				}
 			}});
 	  });
+}
+//multiselect转换字符串
+function returnSelStr(str){
+	if(isNull(str)){
+		alert("--"+str);
+		return null;
+	}else{
+		return str.toString(",");
+	}
 }

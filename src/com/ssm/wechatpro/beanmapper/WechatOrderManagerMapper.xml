@@ -43,7 +43,7 @@
 		<if test="orderType != null and orderType != ''">
 				AND orderType = #{orderType}
 		</if>
-		ORDER BY orderLog.dayNo ASC
+		ORDER BY orderLog.dayNo DESC
 	</select>
 	
 	<!-- 查看订单的基本信息 -->
@@ -54,9 +54,9 @@
 			orderLog.wetherPaymentTime,
 			CASE
 		WHEN orderType = 1 THEN
-			"立即堂食"
+			"立即取餐"
 		WHEN orderType = 2 THEN
-			"稍后堂食"
+			"稍后取餐"
 		WHEN orderType = 3 THEN
 			"立即外带"
 		WHEN orderType = 4 THEN

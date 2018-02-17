@@ -78,6 +78,127 @@
 						<span style="color:#FF9966">*</span><span class="add-on">产品价格：</span>
 						<input type="text" class="span6 typeahead form-control authenTiCation-input" id="productPrice" name="menuPrice"/>
 					</div>
+					
+					<div class="controls form-group secondMenu margin-top-40">
+						<span style="color:#FF9966">*</span><span class="add-on">产品属性：</span>
+						
+						<select id="productNature" class="span6 typeahead form-control">
+							<option value="0">无</option>
+							<option value="1">现点现做</option>
+						</select>
+					</div>
+					
+					<div id="productDiv" class="hide">
+						<div class="controls form-group secondMenu margin-top-40">
+							<span style="color:#FF9966">*</span><span class="add-on">完成耗时：</span>
+							<select id="productTime" class="span6 typeahead form-control">
+								<option value="0">0</option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">7</option>
+								<option value="8">8</option>
+								<option value="9">9</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+								<option value="12">12</option>
+								<option value="13">13</option>
+								<option value="14">14</option>
+								<option value="15">15</option>
+							</select>
+							<div class="someDesc">
+								<p class="rolePrompt">现点现卖的产品完成耗时(分钟)</p>
+							</div>
+						</div>
+						<div class="controls form-group secondMenu margin-top-40" id="showTime">
+							<span style="color:#FF9966">*</span><span class="add-on">展示时间-1：</span>
+							<label class="radio">
+								开始时间：<input type="time" name="showStartTime1" id="showStartTime1"  >
+							</label>
+							<label class="radio">
+								结束时间：<input type="time" name="showEndTime1" id="showEndTime1" >
+							</label>
+						</div>
+						<div class="controls form-group secondMenu margin-top-40" id="showTime2">
+							<span style="color:#FF9966">*</span><span class="add-on">展示时间-2：</span>
+							<label class="radio">
+								开始时间：<input type="time" name="showStartTime2" id="showStartTime2"  >
+							</label>
+							<label class="radio">
+								结束时间：<input type="time" name="showEndTime2" id="showEndTime2" >
+							</label>
+						</div>
+						<div class="controls form-group secondMenu margin-top-40" id="showTime3">
+							<span style="color:#FF9966">*</span><span class="add-on">展示时间-3：</span>
+							<label class="radio">
+								开始时间：<input type="time" name="showStartTime3" id="showStartTime3"  >
+							</label>
+							<label class="radio">
+								结束时间：<input type="time" name="showEndTime3" id="showEndTime3" >
+							</label>
+						</div>
+					</div>
+					
+					<div class="controls form-group secondMenu margin-top-40">
+						<span style="color:#FF9966">*</span><span class="add-on">周会员日：</span>
+						<!-- <input type="text" class="span6 typeahead form-control" id="member_week" name="member_week"/> -->
+						<select id="member_week" class="select2" multiple>
+							<option value="周一">周一</option>
+							<option value="周二">周二</option>
+							<option value="周三">周三</option>
+							<option value="周四">周四</option>
+							<option value="周五">周五</option>
+							<option value="周六">周六</option>
+							<option value="周日">周日</option>
+						</select>
+						<div class="someDesc">
+							<p class="rolePrompt">每周的优惠日</p>
+						</div>
+					</div>
+					
+					<div class="controls form-group secondMenu margin-top-40">
+						<span style="color:#FF9966">*</span><span class="add-on">月会员日：</span>
+						<select id="member_month" class="select2" multiple>
+							<option value="01">1</option>
+							<option value="02">2</option>
+							<option value="03">3</option>
+							<option value="04">4</option>
+							<option value="05">5</option>
+							<option value="06">6</option>
+							<option value="07">7</option>
+							<option value="08">8</option>
+							<option value="09">9</option>
+							<option value="10">10</option>
+							<option value="11">11</option>
+							<option value="12">12</option>
+							<option value="13">13</option>
+							<option value="14">14</option>
+							<option value="15">15</option>
+							<option value="16">16</option>
+							<option value="17">17</option>
+							<option value="18">18</option>
+							<option value="19">19</option>
+							<option value="20">20</option>
+							<option value="21">21</option>
+							<option value="22">22</option>
+							<option value="23">23</option>
+							<option value="24">24</option>
+							<option value="25">25</option>
+							<option value="26">26</option>
+							<option value="27">27</option>
+							<option value="28">28</option>
+							<option value="29">29</option>
+							<option value="30">30</option>
+							<option value="31">31</option>
+						</select>
+						<div class="someDesc">
+							<p class="rolePrompt">每月的优惠日</p>
+						</div>
+					</div>
+					
 					<div class="controls form-group secondMenu margin-top-40">
 						<span style="color:#FF9966">*</span><span class="add-on">产品类别：</span>
 						<select id="typeMenu" class="span6 typeahead form-control">
@@ -110,11 +231,6 @@
 					  <button type="submit" id="saveMenu" class="btn btn-primary">保存</button>
 					  <button type="button" class="btn" id="cancleBean">取消</button>
 					</div>
-					<br/>
-					<br/>
-					<br/>
-					<br/>
-					<br/>
 				</form>   
 			</div>
 		</div>

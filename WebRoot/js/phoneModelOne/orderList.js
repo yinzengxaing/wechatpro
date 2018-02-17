@@ -112,13 +112,13 @@ function eventInit(){
 	$('body').on('click', '#clearing', function(e){
 		//判断订单类型
 		if(liji == 1 && tangshi == 1){
-			orderType = 1;//立即堂食
+			orderType = 1;//立即取餐
 			eatTime="";
 		}else if(liji == 1 && waidai == 1){
 			eatTime="";
 			orderType = 3;//立即外带
 		}else if(shaowan == 1 && tangshi == 1){
-			orderType = 2;//稍晚堂食
+			orderType = 2;//稍晚取餐
 			var t = $('#geteateTime').val();
 			if (t == ""){
 				qiao.bs.msg({msg:"取餐时间不能为空",type:'danger'});
@@ -158,7 +158,7 @@ function eventInit(){
 				eatTime:eatTime,
 				adminId:adminId,
 				remark:$("#remark").val()
-		}
+		};
 		AjaxPostUtil.request({url:path+"/gateway/MWechatCustomerOrderController/addOrder",params:params,type:'json',callback:function(jsonPa){
 			if (jsonPa.returnCode == 0){
 				if(jsonPa.bean!=null){
@@ -211,7 +211,7 @@ function eventInit(){
 				 wechatCommodity:wechatCommodity,
 				 wechatCommodityType:wechatCommodityType,
 				 wechatCommodityAdminId:wechatCommodityAdminId
-		 }
+		 };
 		 AjaxPostUtil.request({url:path+"/gateway/MWechatShoppingCartController/addProduct",params:params,type:'json',callback:function(json){
 			 if(json.returnCode==0){
 				 getCartInfo();
@@ -230,7 +230,7 @@ function eventInit(){
 				 wechatCommodity:wechatCommodity,
 				 wechatCommodityType:wechatCommodityType,
 				 wechatCommodityAdminId:wechatCommodityAdminId
-		 }
+		 };
 		 AjaxPostUtil.request({url:path+"/gateway/MWechatShoppingCartController/deleteProductCount",params:params,type:'json',callback:function(json){
 			 if(json.returnCode==0){
 				 //获取当前商品的
@@ -246,7 +246,7 @@ function eventInit(){
 function getCartInfo(){
 	var params = {
 			adminId : adminId
-	}
+	};
 	AjaxPostUtil.request({url:path+"/gateway/MWechatProductController/getCartDetail",params:params,type:'json',callback:function(json){
 		if(json.returnCode==0){
 			if (json.bean.totalCount != 0){ 
@@ -297,17 +297,6 @@ function payEvent(paySign,appId,timeStamp,nonceStr,paypackage,signature,orderNum
 			paySign: paySign, // 支付签名  
 			success:function(res){
 				location.href="moneySuccess.html?orderNumber="+orderNumber+"&orderId="+orderId;
-				/*var myParams = {
-						adminId:adminId,
-						orderNumber:orderNumber
-				}
-				AjaxPostUtil.request({url:path+"/gateway/MWechatCustomerOrderController/updatePayState",params:myParams,type:'json',callback:function(json){
-					if(json.returnCode == 0){
-						location.href="moneySuccess.html?orderNumber="+orderNumber+"&orderId="+orderId;
-					}else{
-						alert("支付失败");
-					}
-				}});*/
 				
 			},
 			fail:function(res){

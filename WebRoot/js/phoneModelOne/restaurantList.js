@@ -17,11 +17,13 @@ function eventInit(){
 	//确认餐厅按钮点击事件
 	$('#restaurantSelect').on('click',".chooseShop",function(e){
 		var adminId = $(this).find("font[name=shopName]").attr("shop");
-		location.href="commodity.html?adminId="+adminId;
+		var time = $(this).find("font[name=shopName]").attr("data-time");
+		location.href="commodity.html?adminId="+adminId+"&time="+time;
 	});
 }
 
 function dataInit(){
+	//判断是否从城市列表中传过来的值
 	if (city == ""){
 		city = $.req("city");
 	}
@@ -31,12 +33,29 @@ function dataInit(){
 	AjaxPostUtil.request({url:path+"/gateway/MWechatProductController/getAllRestaurant",params:params,type:'json',callback:function(json){
 		if(json.returnCode==0){
 			$("#city").html(json.bean.city);
-			latitude = json.bean.latitude;
-			longitude = json.bean.longitude;
-			/*Handlebars.registerHelper("compare1", function(v1,v2,v3,options){
-				var s = GetDistance(latitude,longitude,v3,v2);
-					return v1+"("+s+"Km)";
-			});*/
+//			latitude = json.bean.latitude;
+//			longitude = json.bean.longitude;
+			//第一个变色
+			Handlebars.registerHelper("queryIndex", function(v1){
+				if(v1 == 0){
+					var str = "background-color:rgb(199, 0, 11);color: white";  //第一个li
+					return str;
+				}
+			});
+			Handlebars.registerHelper("queryClass", function(v1){
+				if(v1 == 0){
+					var str = "color: white";  //第一个li
+					return str;
+				}
+			});
+			//第一个变色
+			Handlebars.registerHelper("queryDistance", function(v1){ //km
+				if(v1 < 1){//若是小于1km，则换算成以米为单位的距离
+					return v1*1000+"米";
+				}else{
+					return v1+"公里";
+				}
+			});
 			//填充数据
 			var source = $("#restaurantBean").html();  
 		    var template = Handlebars.compile(source);
